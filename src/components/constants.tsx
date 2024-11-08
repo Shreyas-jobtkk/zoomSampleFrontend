@@ -1,0 +1,1 @@
+export const homePage = "http://localhost:4000"

@@ -1,0 +1,24 @@
+/* Define the custom styles for cells and headers */
+.table-header {
+    background-color: lightgray;
+  }
+  
+  .table-header-cell {
+    height: 40px; /* Set header height */
+    vertical-align: middle; /* Ensure vertical alignment of header text */
+  }
+  
+  .table-cell {
+    height: 50px; /* Set cell height */
+    overflow: hidden; /* Hide overflowing content */
+    display: flex; /* Use flexbox for vertical centering */
+    align-items: center; /* Vertically center content */
+    justify-content: flex-start; /* Align content to the start of the cell */
+  }
+  
+  .table-cell .overflow-content {
+    overflow: auto; /* Allow scroll for overflowing content */
+    max-height: 50px; /* Ensure it does not exceed max height */
+    width: 100%; /* Take full width of the cell */
+  }
+  
