@@ -1,6 +1,6 @@
-import React from 'react';
-import Radio from '@mui/material/Radio';
-import { styled } from '@mui/material/styles';
+import React from "react";
+import Radio from "@mui/material/Radio";
+import { styled } from "@mui/material/styles";
 
 interface RadioButtonGroupRoundProps {
   options: Array<{ label: string; value: string }>;
@@ -10,13 +10,13 @@ interface RadioButtonGroupRoundProps {
 }
 
 const StyledRadio = styled(Radio)(({ theme }) => ({
-  '&.MuiRadio-root': {
+  "&.MuiRadio-root": {
     color: theme.palette.primary.main,
   },
-  '&.Mui-checked': {
+  "&.Mui-checked": {
     color: theme.palette.primary.dark,
   },
-  '& .MuiSvgIcon-root': {
+  "& .MuiSvgIcon-root": {
     fontSize: 24, // Adjust the size as needed
   },
 }));
@@ -28,11 +28,16 @@ const RadioButtonGroupRound: React.FC<RadioButtonGroupRoundProps> = ({
   name,
 }) => {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+    <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
       {options.map((option) => (
         <div
           key={option.value}
-          style={{ display: 'flex', alignItems: 'center', marginRight: '16px', marginBottom: '8px' }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginRight: "16px",
+            marginBottom: "8px",
+          }}
         >
           <StyledRadio
             checked={selectedValue === option.value}

@@ -24,9 +24,9 @@ function App() {
           role: role,
         }),
       });
-      const res = await req.json()
+      const res = await req.json();
       const signature = res.signature as string;
-      startMeeting(signature)
+      startMeeting(signature);
     } catch (e) {
       console.log(e);
     }
@@ -40,7 +40,7 @@ function App() {
         language: "en-US",
         patchJsMedia: true,
         leaveOnPageUnload: true,
-      })
+      });
       await client.join({
         signature: signature,
         sdkKey: sdkKey,
@@ -50,7 +50,7 @@ function App() {
         userEmail: userEmail,
         tk: registrantToken,
         zak: zakToken,
-      })
+      });
       console.log("joined successfully");
     } catch (error) {
       console.log(error);

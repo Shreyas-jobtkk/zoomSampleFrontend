@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { TextField, IconButton, InputAdornment } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React, { useState } from "react";
+import { TextField, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 interface PasswordInputProps {
   value: string;
@@ -18,14 +18,14 @@ interface PasswordInputProps {
 const PasswordInput: React.FC<PasswordInputProps> = ({
   value,
   onChange,
-  borderColor = 'black',
-  borderWidth = '1px',
-  padding = '10px',
+  borderColor = "black",
+  borderWidth = "1px",
+  padding = "10px",
   borderRadius,
-  backgroundColor = 'white',
-  placeholder = '',
-  width = '200px',
-  height = '50px',
+  backgroundColor = "white",
+  placeholder = "",
+  width = "200px",
+  height = "50px",
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -35,7 +35,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 
   return (
     <TextField
-      type={isPasswordVisible ? 'text' : 'password'}
+      type={isPasswordVisible ? "text" : "password"}
       value={value}
       onChange={onChange}
       variant="outlined"

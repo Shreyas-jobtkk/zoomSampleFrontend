@@ -1,9 +1,9 @@
-import React from 'react';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { TimePicker as MuiTimePicker } from '@mui/x-date-pickers/TimePicker';
-import { TextField } from '@mui/material';
-import dayjs, { Dayjs } from 'dayjs';
+import React from "react";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { TimePicker as MuiTimePicker } from "@mui/x-date-pickers/TimePicker";
+import { TextField } from "@mui/material";
+import dayjs, { Dayjs } from "dayjs";
 
 interface TimePickerProps {
   label?: string; // Optional label prop
@@ -13,7 +13,7 @@ interface TimePickerProps {
 }
 
 const TimePicker: React.FC<TimePickerProps> = ({
-  label = 'Basic time picker',
+  label = "Basic time picker",
   scale = 1,
   value = dayjs(), // Default value to current time
   onChange,
@@ -21,7 +21,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <MuiTimePicker
-        sx={{ width: 150,scale:scale,marginTop:1 }}
+        sx={{ width: 150, scale: scale, marginTop: 1 }}
         label={label}
         ampm={false} // Disable AM/PM for 24-hour format
         value={value}
@@ -31,7 +31,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
           textField: {
             inputProps: {
               sx: {
-                height: '1.3vh', // Set height in viewport height (vh)
+                height: "1.3vh", // Set height in viewport height (vh)
               },
             },
           },

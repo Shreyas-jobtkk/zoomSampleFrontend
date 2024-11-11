@@ -1,20 +1,19 @@
-
 // import TranslatorHomePage from '../components/TranslatorHomePage'
-import { Route, Routes } from 'react-router-dom';
-import UserMenu from '../Pages/User/UserMenuPage'; // Adjust the import path as needed
+import { Route, Routes } from "react-router-dom";
+import UserMenu from "../Pages/User/UserMenuPage"; // Adjust the import path as needed
 // import UserLogin from '../Pages/User/UserLoginPage'; // Adjust the import path as needed
 
-import TranslatorLogin from '../Pages/Translator/TranslatorLoginPage'; // Adjust the import path as needed
-import TranslatorMenu from '../Pages/Translator/TranslatorMenuPage'; // Adjust the import path as needed
+import TranslatorLogin from "../Pages/Translator/TranslatorLoginPage"; // Adjust the import path as needed
+import TranslatorMenu from "../Pages/Translator/TranslatorMenuPage"; // Adjust the import path as needed
 
-import AdminLogin from '../Pages/Admin/AdminLoginPage'; // Adjust the import path as needed
-import AdminMenu from '../Pages/Admin/AdminMenuPage'; // Adjust the import path as needed
+import AdminLogin from "../Pages/Admin/AdminLoginPage"; // Adjust the import path as needed
+import AdminMenu from "../Pages/Admin/AdminMenuPage"; // Adjust the import path as needed
 // import CompaniesList from '../Pages/Admin/AdminMenu/CompaniesListPage';
 
-import Sample from '../components/Sample'; // Adjust the import path as needed
+import Sample from "../components/Sample"; // Adjust the import path as needed
 
-import ResponderLogin from '../Pages/Responder/ResponderLoginPage'; // Adjust the import path as needed
-import ResponderMenu from '../Pages/Responder/ResponderMenuPage';
+import ResponderLogin from "../Pages/Responder/ResponderLoginPage"; // Adjust the import path as needed
+import ResponderMenu from "../Pages/Responder/ResponderMenuPage";
 
 const AppRoutes = () => (
   <Routes>
@@ -27,7 +26,6 @@ const AppRoutes = () => (
     <Route path="/AdminMenu" element={<AdminMenu />} />
     <Route path="/ResponderMenu" element={<ResponderMenu />} />
     {/* <Route path="/CompaniesList" element={<CompaniesList />} /> */}
-
   </Routes>
 );
 

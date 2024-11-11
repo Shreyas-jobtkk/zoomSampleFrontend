@@ -1,5 +1,5 @@
-import React from 'react';
-import { TextField } from '@mui/material';
+import React from "react";
+import { TextField } from "@mui/material";
 
 interface TextInputProps {
   value: string;
@@ -17,13 +17,13 @@ interface TextInputProps {
 const TextInput: React.FC<TextInputProps> = ({
   value,
   onChange,
-  borderColor = 'black',
-  borderWidth = '1px',
-  padding = '10px',
+  borderColor = "black",
+  borderWidth = "1px",
+  padding = "10px",
   borderRadius,
-  width = '200px',
-  height = '50px',
-  backgroundColor = 'white',
+  width = "200px",
+  height = "50px",
+  backgroundColor = "white",
   placeholder,
 }) => {
   return (

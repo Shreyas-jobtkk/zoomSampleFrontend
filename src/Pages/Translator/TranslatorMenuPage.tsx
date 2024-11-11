@@ -1,25 +1,23 @@
-import { useEffect, useState, useRef } from 'react';
-import io from 'socket.io-client';
+import { useEffect, useState, useRef } from "react";
+import io from "socket.io-client";
 import "../../App.css";
-import ringtoneFile from '../../components/ringtone.mp3';
-import { useLocation } from 'react-router-dom';
-import MenuHeader from '../../components/LV3/Header/MenuHeader';
-import ButtonAtom from '../../components/LV1/Button/ButtonAtom/ButtonAtom';
-import { useNavigate } from 'react-router-dom';
+import ringtoneFile from "../../components/ringtone.mp3";
+import { useLocation } from "react-router-dom";
+import MenuHeader from "../../components/LV3/Header/MenuHeader";
+import ButtonAtom from "../../components/LV1/Button/ButtonAtom/ButtonAtom";
+import { useNavigate } from "react-router-dom";
 
 // import axios from 'axios';
 
 // let homePage = "https://zoomsamplebackend.onrender.com"
 // let homePage = "http://localhost:4000"
 
-import { homePage } from '../../components/constants';
+import { homePage } from "../../components/constants";
 
 // Connect to the socket.io server
 const socket = io(homePage);
 let zoomStartURL: string;
 let uniqueId: string;
-
-
 
 function TranslatorLogin() {
   // const [notificationsEnabled, setNotificationsEnabled] = useState(false);
@@ -29,9 +27,9 @@ function TranslatorLogin() {
 
   const location = useLocation();
   const { message } = location.state || {}; // Safely access state
-  const terminal_id = message.terminal_id
+  const terminal_id = message.terminal_id;
 
-  const [status, setStatus] = useState('inactive') // State to hold the selected status
+  const [status, setStatus] = useState("inactive"); // State to hold the selected status
   // const [status, setStatus] = useState(message.status || '') // State to hold the selected status
 
   // Handler for changing the status
@@ -41,48 +39,47 @@ function TranslatorLogin() {
 
     console.log(467, terminal_id);
     // const terminal_id = message.terminal_id
-    const personStatus = event.target.value
+    const personStatus = event.target.value;
     const data = { terminal_id, personStatus };
 
     try {
       // alert(event.target.value)
       const response = await fetch(`${homePage}/api/terminalActivity`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
 
       const result = await response.json();
-      console.log('Success:', result);
+      console.log("Success:", result);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   // Send API request when user is active or inactive
   const sendActivityStatus = async (status: any) => {
-
     // const terminal_id = message.terminal_id
-    const personStatus = status
-    console.log(135, terminal_id)
+    const personStatus = status;
+    console.log(135, terminal_id);
     const data = { terminal_id, personStatus };
 
     try {
       // alert(event.target.value)
       const response = await fetch(`${homePage}/api/terminalActivity`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
 
       const result = await response.json();
-      console.log('Success:', result);
+      console.log("Success:", result);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -107,25 +104,28 @@ function TranslatorLogin() {
       // ringing = true
       setTimeout(() => {
         // handleRingtoneStop();
-        console.log(144, isAudioPlaying())
+        console.log(144, isAudioPlaying());
 
         // if (ringing && !callReceived) {
         if (isAudioPlaying()) {
           setIsPlaying(false);
           const data = {
-            dial: 'forcible disconnect', // Replace with actual value
+            dial: "forcible disconnect", // Replace with actual value
             uniqueId: uniqueId,
           };
 
           const now = new Date();
-          const formattedDate = now.toLocaleString() + '.' + String(now.getMilliseconds()).padStart(3, '0');
+          const formattedDate =
+            now.toLocaleString() +
+            "." +
+            String(now.getMilliseconds()).padStart(3, "0");
           console.log(123, formattedDate);
 
-          socket.emit('dataFromFrontend', data);
+          socket.emit("dataFromFrontend", data);
           // notResponded = true
           // console.log(143, notResponded)
           // handleRingtoneStop();
-          alert("you missed a call")
+          alert("you missed a call");
         }
         // handleDisconnect();
       }, 10000);
@@ -135,7 +135,7 @@ function TranslatorLogin() {
   useEffect(() => {
     // Handle browser/tab close
     const handleBeforeUnload = () => {
-      alert(145)
+      alert(145);
       sendActivityStatus("inactive"); // User is closing the page (inactive)
       // event.preventDefault();
     };
@@ -144,11 +144,11 @@ function TranslatorLogin() {
     // sendActivityStatus("active");
 
     // Add event listener to detect when the browser or tab is closed
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     // Cleanup event listener when component unmounts
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
 
@@ -156,40 +156,43 @@ function TranslatorLogin() {
     // Add path to your ringtone file
     // if (message.status == "active") {
     // Listen for messages from the server when notifications are enabled
-    socket.on('message', (data) => {
+    socket.on("message", (data) => {
       console.log(141, data);
       console.log(111, data.terminal_id);
       console.log(211, message.terminal_id);
       if (message.terminal_id == data.terminal_id) {
-        if (data.connectingLink === 'calling') {
-          uniqueId = data.uniqueId
+        if (data.connectingLink === "calling") {
+          uniqueId = data.uniqueId;
           // console.log(2457, status);
           console.log(21, data, uniqueId);
           // Play ringtone when there is an incoming call
-          handleRingtoneStart()
-          setStatus('inactive');
-          sendActivityStatus("inactive")
+          handleRingtoneStart();
+          setStatus("inactive");
+          sendActivityStatus("inactive");
           // console.log(189, status)
         }
       }
-      if (data.connectingLink === 'disconnected' && data.uniqueId == uniqueId) {
+      if (data.connectingLink === "disconnected" && data.uniqueId == uniqueId) {
         console.log(31, data, uniqueId);
         // Stop the ringtone if the call is disconnected
         handleRingtoneStop();
         // console.log(243, notResponded)
         // if (notResponded == false) {
-        setStatus('active');
-        sendActivityStatus("active")
+        setStatus("active");
+        sendActivityStatus("active");
         // }
       }
-      if (data.connectingLink === 'terminal joined' && data.terminal_id == message.terminal_id) {
+      if (
+        data.connectingLink === "terminal joined" &&
+        data.terminal_id == message.terminal_id
+      ) {
         console.log(111, data.terminal_id);
         console.log(211, message.terminal_id);
         console.log(411, data);
         // console.log(3357, data.connectingLink);
         handleRingtoneStop();
-        setStatus('inactive');
-        sendActivityStatus("inactive")
+        setStatus("inactive");
+        sendActivityStatus("inactive");
       }
       // setStatus('inactive');
     });
@@ -198,10 +201,10 @@ function TranslatorLogin() {
     //   console.log(136, startUrl)
     //   zoomStartURL = startUrl
     // });
-    socket.on('startUrl', (meetingData) => {
+    socket.on("startUrl", (meetingData) => {
       if (meetingData.uniqueId == uniqueId) {
-        console.log(136, meetingData, uniqueId)
-        zoomStartURL = meetingData.url
+        console.log(136, meetingData, uniqueId);
+        zoomStartURL = meetingData.url;
         // socket.emit('userUniqueId', uniqueId)
       }
       // setTimeout(() => {
@@ -212,7 +215,7 @@ function TranslatorLogin() {
 
     // Clean up the socket connection on component unmount
     return () => {
-      socket.off('message');
+      socket.off("message");
     };
   }, [status]);
 
@@ -233,21 +236,24 @@ function TranslatorLogin() {
 
       // setStatus('inactive');
 
-      const date = new Date().toLocaleString('ja-JP', {
-        timeZone: 'Asia/Tokyo',
-        hour12: false,
-      }).replace(/\//g, '-').replace(',', '')
+      const date = new Date()
+        .toLocaleString("ja-JP", {
+          timeZone: "Asia/Tokyo",
+          hour12: false,
+        })
+        .replace(/\//g, "-")
+        .replace(",", "");
 
       const data = {
-        dial: 'terminal joined', // Replace with actual value
-        terminal_id: message.terminal_id,  // Replace with actual value
+        dial: "terminal joined", // Replace with actual value
+        terminal_id: message.terminal_id, // Replace with actual value
         date: date,
-        uniqueId: uniqueId
+        uniqueId: uniqueId,
       };
 
       console.log(158, data);
       // Emit the 'dataFromFrontend' event to the server
-      socket.emit('dataFromFrontend', data);
+      socket.emit("dataFromFrontend", data);
 
       // // Emit data to the server
       // socket.emit('dataFromFrontend', { username: 'admin', action: 'startMeeting' });
@@ -257,41 +263,38 @@ function TranslatorLogin() {
   };
 
   function startMeeting() {
-    console.log(137)
+    console.log(137);
 
     // const zoomLink = `https://zoom.us/j/7193586721?pwd=OUcLui5QIHATeQ0B0JCzl11RbRQVCO.1`;
 
-
     // Set a fallback in case the Zoom app doesn't open immediately
     setTimeout(() => {
-      window.open(zoomStartURL, '_blank');
-    }, 1000);  // 1 second delay
+      window.open(zoomStartURL, "_blank");
+    }, 1000); // 1 second delay
   }
 
-  const navigateToAdministratorList = () => {
-
-  };
+  const navigateToAdministratorList = () => {};
 
   const navigateToInterpreterEvaluationList = () => {
-    navigate('/InterpreterEvaluationList');
+    navigate("/InterpreterEvaluationList");
   };
 
   const navigateToMeetingHistoryList = () => {
-    navigate('/MeetingHistoryList');
+    navigate("/MeetingHistoryList");
   };
 
   const navigateToMeetingInvitationList = () => {
-    navigate('/MeetingInvitationList');
+    navigate("/MeetingInvitationList");
   };
 
   const setStatusToActive = () => {
-    setStatus('active')
-    sendActivityStatus("active")
+    setStatus("active");
+    sendActivityStatus("active");
   };
   const setStatusToInactive = () => {
-    setStatus('inactive');
-    sendActivityStatus("inactive")
-  }
+    setStatus("inactive");
+    sendActivityStatus("inactive");
+  };
 
   return (
     <div className="App">
@@ -326,43 +329,41 @@ function TranslatorLogin() {
             onClick={navigateToInterpreterEvaluationList}
             label="通訳評価一覧"
             width="40vw"
-            padding='5vh 5vw 5vh 2vw'
-            margin='2vh 5vw'
+            padding="5vh 5vw 5vh 2vw"
+            margin="2vh 5vw"
           />
           <ButtonAtom
             onClick={navigateToMeetingHistoryList}
             label="ミーティング履歴一覧"
             width="40vw"
-            padding='5vh 5vw 5vh 2vw'
-            margin='2vh 5vw'
-
+            padding="5vh 5vw 5vh 2vw"
+            margin="2vh 5vw"
           />
           <ButtonAtom
             onClick={navigateToMeetingInvitationList}
             label="ミーティング招待一覧"
             width="40vw"
-            padding='5vh 5vw 5vh 2vw'
-            margin='2vh 5vw'
-
+            padding="5vh 5vw 5vh 2vw"
+            margin="2vh 5vw"
           />
         </div>
-        <div >
+        <div>
           <div className="row">
             <ButtonAtom
               onClick={setStatusToInactive}
               label="準備中"
               width="20vw"
-              padding='5vh 5vw 5vh 2vw'
-              margin='2vh 2vw'
-              disabled={status === 'inactive'}
+              padding="5vh 5vw 5vh 2vw"
+              margin="2vh 2vw"
+              disabled={status === "inactive"}
             />
             <ButtonAtom
               onClick={setStatusToActive}
               label="受付"
               width="20vw"
-              padding='5vh 5vw 5vh 2vw'
-              margin='2vh 2vw'
-              disabled={status === 'active'}
+              padding="5vh 5vw 5vh 2vw"
+              margin="2vh 2vw"
+              disabled={status === "active"}
             />
           </div>
 
@@ -371,22 +372,20 @@ function TranslatorLogin() {
               onClick={navigateToAdministratorList}
               label="拒否"
               width="20vw"
-              padding='5vh 5vw 5vh 2vw'
-              margin='2vh 2vw'
+              padding="5vh 5vw 5vh 2vw"
+              margin="2vh 2vw"
             />
             <ButtonAtom
               onClick={getSignature}
               label="承諾"
               width="20vw"
-              padding='5vh 5vw 5vh 2vw'
-              margin='2vh 2vw'
+              padding="5vh 5vw 5vh 2vw"
+              margin="2vh 2vw"
               disabled={!isPlaying}
             />
           </div>
         </div>
       </div>
-
-
     </div>
   );
 }

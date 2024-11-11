@@ -1,29 +1,27 @@
 // components/Login.tsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import LoginHeader from '../../Header/LoginHeader';
-import LoginButton from '../../components/LV1/Button/LoginButton/LoginButton';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import LoginHeader from "../../Header/LoginHeader";
+import LoginButton from "../../components/LV1/Button/LoginButton/LoginButton";
 
-import TextWithBorder from '../../components/LV1/TextWithBorder/TextWithBorder';
-import TextInput from '../../components/LV1/TextInput/TextInput';
+import TextWithBorder from "../../components/LV1/TextWithBorder/TextWithBorder";
+import TextInput from "../../components/LV1/TextInput/TextInput";
 
-import PasswordInput from '../../components/LV1/PasswordInput/PasswordInput';
+import PasswordInput from "../../components/LV1/PasswordInput/PasswordInput";
 
 // let homePage = "https://zoomsamplebackend.onrender.com"
 // let homePage = "http://localhost:4000"
 
-import { homePage } from '../../components/constants';
-import { useTranslation } from 'react-i18next';
+import { homePage } from "../../components/constants";
+import { useTranslation } from "react-i18next";
 
 const ResponderLogin: React.FC = () => {
-
-  const [inputValue, setInputValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(e.target.value);
   };
-
 
   const navigate = useNavigate();
 
@@ -31,38 +29,36 @@ const ResponderLogin: React.FC = () => {
     setInputValue(e.target.value);
   };
 
-  
-
   const { t } = useTranslation();
-
 
   const handleButtonClick = () => {
     // setLoading(true); // Set loading to true when fetching starts
     fetch(`${homePage}/api/users`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         // setUsers(data);
         console.log(45);
-        console.log('Fetched users:', data); // Log the fetched users
+        console.log("Fetched users:", data); // Log the fetched users
         // setLoading(false); // Set loading to false after data is fetched
-        const userData = data.find((person: any) => person.name_of_institution === inputValue);
+        const userData = data.find(
+          (person: any) => person.name_of_institution === inputValue
+        );
 
         if (userData) {
           // Perform some action here if found
           console.log(133, userData);
-          navigate('/ResponderMenu', {
+          navigate("/ResponderMenu", {
             state: {
-              message: userData
-            }
+              message: userData,
+            },
           });
         } else {
           // Handle the case where no match is found
-          console.log('No match found');
+          console.log("No match found");
         }
-
       })
-      .catch(error => {
-        console.error('Error fetching users:', error);
+      .catch((error) => {
+        console.error("Error fetching users:", error);
         // setLoading(false); // Set loading to false if there's an error
       });
   };
@@ -70,10 +66,10 @@ const ResponderLogin: React.FC = () => {
   return (
     <div>
       <LoginHeader />
-      
-      <div className='login-layout'>
-        <div className='login-container' >
-        {/* <div className='login-id'>
+
+      <div className="login-layout">
+        <div className="login-container">
+          {/* <div className='login-id'>
             <TextWithBorder
               text="ユーザーＩＤ"
             />
@@ -81,39 +77,25 @@ const ResponderLogin: React.FC = () => {
               value={inputValue}
               onChange={handleInputChange} />
           </div> */}
-          
 
-          <div className='login-id'>
-            <TextWithBorder
-              text="ユーザーＩＤ"
-            />
-            <TextInput
-              value={inputValue}
-              onChange={handleInputChange}
-            />
+          <div className="login-id">
+            <TextWithBorder text="ユーザーＩＤ" />
+            <TextInput value={inputValue} onChange={handleInputChange} />
           </div>
-          <div className='login-id'>
-            <TextWithBorder
-              text="パスワード"
-            />
+          <div className="login-id">
+            <TextWithBorder text="パスワード" />
             <PasswordInput
               value={passwordValue}
               onChange={handlePasswordChange}
             />
           </div>
         </div>
-        
 
         {/* <main><button onClick={handleButtonClick}>{t('User Login')}</button></main> */}
-        <div className='login-button'>
-          <LoginButton
-            onClick={handleButtonClick}
-            label="ログイン"
-          />
+        <div className="login-button">
+          <LoginButton onClick={handleButtonClick} label="ログイン" />
         </div>
-
       </div>
-
     </div>
   );
 };
