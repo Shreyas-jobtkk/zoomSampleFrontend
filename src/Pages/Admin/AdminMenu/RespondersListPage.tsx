@@ -1,16 +1,694 @@
-
+import DatePicker from "../../../components/LV1/DatePicker/DatePicker";
+import TimePicker from "../../../components/LV1/TimePicker/TimePicker"; // Adjust the import path as needed
+import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
+import { useState } from "react";
+import dayjs, { Dayjs } from "dayjs";
+import { Box, TextField, Typography } from "@mui/material";
+import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
+import MenuHeader from "../../../components/LV3/Header/MenuHeader";
+import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
+import DataTable from "../../../components/LV3/DataTable/DataTable";
+import { Height } from "@mui/icons-material";
 
 function RespondersList() {
+  // State for selected start and end times
+  const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
+    dayjs()
+  );
+  const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(dayjs());
 
-    return (
-        <div className="admin-menu-nav-page" >
-            {/* <div className="screen-title">画面ID:DSP10001</div> */}
-            <h3 className="menu-title">
-                応対者一覧
-            </h3>
+  // State for selected start and end dates
+  const [selectedStartDate, setSelectedStartDate] = useState<Dayjs | null>(
+    null
+  );
+  const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(null);
+  const headers = [
+    "No",
+    "開始日時",
+    "終了日時",
+    "企業Ｎｏ",
+    "企業名",
+    "店舗Ｎｏ",
+    "店舗名",
+    "契約Ｎｏ",
+    "応対者名",
+    "フリガナ",
+  ];
+  const data = [
+    {
+      No: 1,
+      開始日時: "2024-11-01 09:00",
+      終了日時: "2024-11-01 10:00",
+      企業Ｎｏ: "1001",
+      企業名: "Company A",
+      店舗Ｎｏ: "3001",
+      店舗名: "Sales",
+      契約Ｎｏ: "4001",
+      応対者名: "北海　一朗太",
+      フリガナ: "ホッカイ　イチロウタ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 2,
+      開始日時: "2024-11-01 10:00",
+      終了日時: "2024-11-01 11:00",
+      企業Ｎｏ: "1002",
+      企業名: "Company B",
+      店舗Ｎｏ: "3002",
+      店舗名: "Customer Service",
+      契約Ｎｏ: "4002",
+      応対者名: "佐藤　一郎",
+      フリガナ: "サトウ　イチロウ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 3,
+      開始日時: "2024-11-01 11:00",
+      終了日時: "2024-11-01 12:00",
+      企業Ｎｏ: "1003",
+      企業名: "Company C",
+      店舗Ｎｏ: "3003",
+      店舗名: "Sales",
+      契約Ｎｏ: "4003",
+      応対者名: "鈴木　一郎",
+      フリガナ: "スズキ　イチロウ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 4,
+      開始日時: "2024-11-01 12:00",
+      終了日時: "2024-11-01 13:00",
+      企業Ｎｏ: "1004",
+      企業名: "Company D",
+      店舗Ｎｏ: "3004",
+      店舗名: "Support",
+      契約Ｎｏ: "4004",
+      応対者名: "高橋　美咲",
+      フリガナ: "タカハシ　ミサキ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 5,
+      開始日時: "2024-11-01 13:00",
+      終了日時: "2024-11-01 14:00",
+      企業Ｎｏ: "1005",
+      企業名: "Company E",
+      店舗Ｎｏ: "3005",
+      店舗名: "HR",
+      契約Ｎｏ: "4005",
+      応対者名: "田中　剛",
+      フリガナ: "タナカ　ゴウ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 6,
+      開始日時: "2024-11-01 14:00",
+      終了日時: "2024-11-01 15:00",
+      企業Ｎｏ: "1006",
+      企業名: "Company F",
+      店舗Ｎｏ: "3006",
+      店舗名: "Marketing",
+      契約Ｎｏ: "4006",
+      応対者名: "中村　春菜",
+      フリガナ: "ナカムラ　ハルナ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 7,
+      開始日時: "2024-11-01 15:00",
+      終了日時: "2024-11-01 16:00",
+      企業Ｎｏ: "1007",
+      企業名: "Company G",
+      店舗Ｎｏ: "3007",
+      店舗名: "Operations",
+      契約Ｎｏ: "4007",
+      応対者名: "村田　浩二",
+      フリガナ: "ムラタ　コウジ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 8,
+      開始日時: "2024-11-01 16:00",
+      終了日時: "2024-11-01 17:00",
+      企業Ｎｏ: "1008",
+      企業名: "Company H",
+      店舗Ｎｏ: "3008",
+      店舗名: "Customer Service",
+      契約Ｎｏ: "4008",
+      応対者名: "渡辺　太郎",
+      フリガナ: "ワタナベ　タロウ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 9,
+      開始日時: "2024-11-01 17:00",
+      終了日時: "2024-11-01 18:00",
+      企業Ｎｏ: "1009",
+      企業名: "Company I",
+      店舗Ｎｏ: "3009",
+      店舗名: "Sales",
+      契約Ｎｏ: "4009",
+      応対者名: "井上　由美",
+      フリガナ: "イノウエ　ユミ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 10,
+      開始日時: "2024-11-01 18:00",
+      終了日時: "2024-11-01 19:00",
+      企業Ｎｏ: "1010",
+      企業名: "Company J",
+      店舗Ｎｏ: "3010",
+      店舗名: "Support",
+      契約Ｎｏ: "4010",
+      応対者名: "小林　正樹",
+      フリガナ: "コバヤシ　マサキ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 11,
+      開始日時: "2024-11-02 09:00",
+      終了日時: "2024-11-02 10:00",
+      企業Ｎｏ: "1011",
+      企業名: "Company K",
+      店舗Ｎｏ: "3011",
+      店舗名: "HR",
+      契約Ｎｏ: "4011",
+      応対者名: "吉田　英子",
+      フリガナ: "ヨシダ　エイコ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 12,
+      開始日時: "2024-11-02 10:00",
+      終了日時: "2024-11-02 11:00",
+      企業Ｎｏ: "1012",
+      企業名: "Company L",
+      店舗Ｎｏ: "3012",
+      店舗名: "Sales",
+      契約Ｎｏ: "4012",
+      応対者名: "伊藤　恵",
+      フリガナ: "イトウ　ケイ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 13,
+      開始日時: "2024-11-02 11:00",
+      終了日時: "2024-11-02 12:00",
+      企業Ｎｏ: "1013",
+      企業名: "Company M",
+      店舗Ｎｏ: "3013",
+      店舗名: "Marketing",
+      契約Ｎｏ: "4013",
+      応対者名: "岡田　大輔",
+      フリガナ: "オカダ　ダイスケ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 14,
+      開始日時: "2024-11-02 12:00",
+      終了日時: "2024-11-02 13:00",
+      企業Ｎｏ: "1014",
+      企業名: "Company N",
+      店舗Ｎｏ: "3014",
+      店舗名: "Customer Service",
+      契約Ｎｏ: "4014",
+      応対者名: "中川　幸子",
+      フリガナ: "ナカガワ　サチコ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 15,
+      開始日時: "2024-11-02 13:00",
+      終了日時: "2024-11-02 14:00",
+      企業Ｎｏ: "1015",
+      企業名: "Company O",
+      店舗Ｎｏ: "3015",
+      店舗名: "HR",
+      契約Ｎｏ: "4015",
+      応対者名: "石井　勝",
+      フリガナ: "イシイ　カツ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 16,
+      開始日時: "2024-11-02 14:00",
+      終了日時: "2024-11-02 15:00",
+      企業Ｎｏ: "1016",
+      企業名: "Company P",
+      店舗Ｎｏ: "3016",
+      店舗名: "Development",
+      契約Ｎｏ: "4016",
+      応対者名: "佐々木　愛",
+      フリガナ: "ササキ　アイ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 17,
+      開始日時: "2024-11-02 15:00",
+      終了日時: "2024-11-02 16:00",
+      企業Ｎｏ: "1017",
+      企業名: "Company Q",
+      店舗Ｎｏ: "3017",
+      店舗名: "Support",
+      契約Ｎｏ: "4017",
+      応対者名: "高田　健",
+      フリガナ: "タカダ　ケン",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 18,
+      開始日時: "2024-11-02 16:00",
+      終了日時: "2024-11-02 17:00",
+      企業Ｎｏ: "1018",
+      企業名: "Company R",
+      店舗Ｎｏ: "3018",
+      店舗名: "Sales",
+      契約Ｎｏ: "4018",
+      応対者名: "鈴木　花子",
+      フリガナ: "スズキ　ハナコ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 19,
+      開始日時: "2024-11-02 17:00",
+      終了日時: "2024-11-02 18:00",
+      企業Ｎｏ: "1019",
+      企業名: "Company S",
+      店舗Ｎｏ: "3019",
+      店舗名: "Marketing",
+      契約Ｎｏ: "4019",
+      応対者名: "佐藤　美和",
+      フリガナ: "サトウ　ミワ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 20,
+      開始日時: "2024-11-02 18:00",
+      終了日時: "2024-11-02 19:00",
+      企業Ｎｏ: "1020",
+      企業名: "Company T",
+      店舗Ｎｏ: "3020",
+      店舗名: "Customer Service",
+      契約Ｎｏ: "4020",
+      応対者名: "中山　博",
+      フリガナ: "ナカヤマ　ヒロシ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 21,
+      開始日時: "2024-11-02 19:00",
+      終了日時: "2024-11-02 20:00",
+      企業Ｎｏ: "1021",
+      企業名: "Company U",
+      店舗Ｎｏ: "3021",
+      店舗名: "Development",
+      契約Ｎｏ: "4021",
+      応対者名: "橋本　雄大",
+      フリガナ: "ハシモト　ユウダイ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 22,
+      開始日時: "2024-11-02 20:00",
+      終了日時: "2024-11-02 21:00",
+      企業Ｎｏ: "1022",
+      企業名: "Company V",
+      店舗Ｎｏ: "3022",
+      店舗名: "HR",
+      契約Ｎｏ: "4022",
+      応対者名: "山田　聡",
+      フリガナ: "ヤマダ　サトシ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 23,
+      開始日時: "2024-11-02 21:00",
+      終了日時: "2024-11-02 22:00",
+      企業Ｎｏ: "1023",
+      企業名: "Company W",
+      店舗Ｎｏ: "3023",
+      店舗名: "Sales",
+      契約Ｎｏ: "4023",
+      応対者名: "藤井　優",
+      フリガナ: "フジイ　ユウ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 24,
+      開始日時: "2024-11-02 22:00",
+      終了日時: "2024-11-02 23:00",
+      企業Ｎｏ: "1024",
+      企業名: "Company X",
+      店舗Ｎｏ: "3024",
+      店舗名: "Support",
+      契約Ｎｏ: "4024",
+      応対者名: "田村　信",
+      フリガナ: "タムラ　シン",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 25,
+      開始日時: "2024-11-03 09:00",
+      終了日時: "2024-11-03 10:00",
+      企業Ｎｏ: "1025",
+      企業名: "Company Y",
+      店舗Ｎｏ: "3025",
+      店舗名: "Operations",
+      契約Ｎｏ: "4025",
+      応対者名: "前田　直樹",
+      フリガナ: "マエダ　ナオキ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 26,
+      開始日時: "2024-11-03 10:00",
+      終了日時: "2024-11-03 11:00",
+      企業Ｎｏ: "1026",
+      企業名: "Company Z",
+      店舗Ｎｏ: "3026",
+      店舗名: "Customer Service",
+      契約Ｎｏ: "4026",
+      応対者名: "佐々木　仁",
+      フリガナ: "ササキ　ジン",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 27,
+      開始日時: "2024-11-03 11:00",
+      終了日時: "2024-11-03 12:00",
+      企業Ｎｏ: "1027",
+      企業名: "Company AA",
+      店舗Ｎｏ: "3027",
+      店舗名: "HR",
+      契約Ｎｏ: "4027",
+      応対者名: "加藤　奈々",
+      フリガナ: "カトウ　ナナ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 28,
+      開始日時: "2024-11-03 12:00",
+      終了日時: "2024-11-03 13:00",
+      企業Ｎｏ: "1028",
+      企業名: "Company BB",
+      店舗Ｎｏ: "3028",
+      店舗名: "Development",
+      契約Ｎｏ: "4028",
+      応対者名: "岩田　真紀",
+      フリガナ: "イワタ　マキ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 29,
+      開始日時: "2024-11-03 13:00",
+      終了日時: "2024-11-03 14:00",
+      企業Ｎｏ: "1029",
+      企業名: "Company CC",
+      店舗Ｎｏ: "3029",
+      店舗名: "Sales",
+      契約Ｎｏ: "4029",
+      応対者名: "長谷川　浩",
+      フリガナ: "ハセガワ　ヒロシ",
+      店舗Ｎｎ: "",
+    },
+    {
+      No: 30,
+      開始日時: "2024-11-03 14:00",
+      終了日時: "2024-11-03 15:00",
+      企業Ｎｏ: "1030",
+      企業名: "Company DD",
+      店舗Ｎｏ: "3030",
+      店舗名: "Marketing",
+      契約Ｎｏ: "4030",
+      応対者名: "木村　俊",
+      フリガナ: "キムラ　シュン",
+      店舗Ｎｎ: "",
+    },
+  ];
 
+  const columnWidths = [5, 20, 20, 8, 10, 10, 10, 10, 10, 10];
+  const columnAlignments: ("left" | "center" | "right")[] = ["right"];
+
+  const searchConditions = () => {};
+
+  // Handle start date change
+  const handleStartDateChange = (date: Dayjs | null) => {
+    setSelectedStartDate(date);
+    console.log(
+      "Selected Start Date:",
+      date ? date.format("YYYY-MM-DD") : "None"
+    ); // Log the selected start date
+  };
+
+  // Handle end date change
+  const handleEndDateChange = (date: Dayjs | null) => {
+    setSelectedEndDate(date);
+    console.log(
+      "Selected End Date:",
+      date ? date.format("YYYY-MM-DD") : "None"
+    ); // Log the selected end date
+  };
+
+  // Handle start time change
+  const handleStartTimeChange = (newValue: Dayjs | null) => {
+    setSelectedStartTime(newValue);
+    console.log(
+      "Selected Start Time:",
+      newValue ? newValue.format("HH:mm:ss") : "None"
+    ); // Log the selected start time
+  };
+
+  // Handle end time change
+  const handleEndTimeChange = (newValue: Dayjs | null) => {
+    setSelectedEndTime(newValue);
+    console.log(
+      "Selected End Time:",
+      newValue ? newValue.format("HH:mm:ss") : "None"
+    ); // Log the selected end time
+  };
+
+  // Format the full datetime strings for display
+  const formatFullDateTime = (date: Dayjs | null, time: Dayjs | null) => {
+    if (!date || !time) return "None";
+    return `${date.format("YYYY-MM-DD")} ${time.format("HH:mm:ss")}`;
+  };
+
+  const [textValue1, setTextValue1] = useState<string>("");
+  const [textValue2, setTextValue2] = useState<string>("");
+  const [textValue3, setTextValue3] = useState<string>("");
+  const [textValue4, setTextValue4] = useState<string>("");
+  const [textValue6, setTextValue6] = useState<string>("");
+  const [textValue7, setTextValue7] = useState<string>("");
+  const [textValue8, setTextValue8] = useState<string>("");
+  const [textValue9, setTextValue9] = useState<string>("");
+  const [textValue5, setTextValue5] = useState<string>("");
+  const [textValue10, setTextValue10] = useState<string>("");
+
+  const [selectedOption, setSelectedOption] = useState<string>("");
+
+  const options = [
+    { label: "None", value: "" },
+    { label: "Option 1", value: "option1" },
+    { label: "Option 2", value: "option2" },
+    { label: "Option 3", value: "option3" },
+  ];
+
+  const handleSelectionChange = (
+    selectedData: Array<{ No: string | number; [key: string]: string | number }>
+  ) => {
+    console.log("Selected Data:", selectedData);
+  };
+
+  return (
+    <div className="admin-menu-nav-page">
+      <MenuHeader title="応対者一覧" />
+      <Box
+        sx={{
+          border: "1px solid #ccc",
+          borderRadius: "8px",
+          padding: "1vh 1vw",
+          display: "flex",
+          flexDirection: "column",
+          margin: "1vh 0",
+
+          // transform: 'scaleY(0.8)',
+          // overflowY: 'auto',
+        }}
+      >
+        <div className="select-range">
+          {/* <div style={{ display: 'flex', alignItems: 'center', margin: '0 20px' }}> */}
+          <div>登録日時</div>
+          <div>開始日時：</div>
+          <DatePicker label="" onDateChange={handleStartDateChange} />
+          {/* <div>{formatFullDateTime(selectedStartDate, selectedStartTime)}</div> Display full start datetime */}
+          <TimePicker
+            label="Select Start Time"
+            value={selectedStartTime}
+            onChange={handleStartTimeChange} // Use the separate handler for start time
+          />
+
+          <span>~</span>
+
+          <span>終了日時：</span>
+          <DatePicker label="" onDateChange={handleEndDateChange} />
+          {/* <div>{formatFullDateTime(selectedEndDate, selectedEndTime)}</div> Display full end datetime */}
+          <TimePicker
+            label="Select End Time"
+            value={selectedEndTime}
+            onChange={handleEndTimeChange} // Use the separate handler for end time
+          />
         </div>
-    );
+        <div className="responders-search-container">
+          <div className="number-detail-column">
+            <div className="margin-bottom">
+              <ButtonAtom
+                onClick={searchConditions}
+                label="企業検索"
+                width="90px"
+                margin="2px"
+              />
+              <TextBoxWithLabel
+                label="企業No"
+                width="12vw" // Uncomment to set a custom width
+                value={textValue10}
+                onChange={(e: any) => setTextValue10(e.target.value)}
+              />
+            </div>
+
+            <TextBoxWithLabel
+              label="契約No"
+              width="12vw" // Uncomment to set a custom width
+              value={textValue1}
+              onChange={(e: any) => setTextValue1(e.target.value)}
+            />
+          </div>
+          <div className="name-detail-column">
+            <div className="margin-bottom">
+              <TextBoxWithLabel
+                label="フリガナ"
+                width="25vw" // Uncomment to set a custom width
+                value={textValue2}
+                onChange={(e: any) => setTextValue2(e.target.value)}
+              />
+              <TextBoxWithLabel
+                label="企業名"
+                width="25vw" // Uncomment to set a custom width
+                value={textValue3}
+                onChange={(e: any) => setTextValue3(e.target.value)}
+              />
+            </div>
+            <div>
+              <div className="person-name-details">
+                <div>
+                  <TextBoxWithLabel
+                    label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                    labelWidth="120px"
+                    width="15vw" // Uncomment to set a custom width
+                    value={textValue4}
+                    onChange={(e: any) => setTextValue4(e.target.value)}
+                  />
+                  <TextBoxWithLabel
+                    label="対応者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+                    labelWidth="120px"
+                    width="15vw" // Uncomment to set a custom width
+                    value={textValue5}
+                    onChange={(e: any) => setTextValue5(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <TextBoxWithLabel
+                    label="メイ"
+                    labelWidth="35px"
+                    width="15vw" // Uncomment to set a custom width
+                    value={textValue6}
+                    onChange={(e: any) => setTextValue6(e.target.value)}
+                  />
+                  <TextBoxWithLabel
+                    label="名"
+                    labelWidth="35px"
+                    width="15vw" // Uncomment to set a custom width
+                    value={textValue7}
+                    onChange={(e: any) => setTextValue7(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="last-column">
+            <div className="store-details">
+              <div>
+                <ButtonAtom
+                  onClick={searchConditions}
+                  label="店舗検索"
+                  width="90px"
+                />
+                <TextBoxWithLabel
+                  label="店舗No"
+                  width="12vw" // Uncomment to set a custom width
+                  value={textValue9}
+                  onChange={(e: any) => setTextValue9(e.target.value)}
+                />
+              </div>
+              <div>
+                <TextBoxWithLabel
+                  label="フリガナ"
+                  width="12vw" // Uncomment to set a custom width
+                  value={textValue8}
+                  onChange={(e: any) => setTextValue8(e.target.value)}
+                />
+                <TextBoxWithLabel
+                  label="店舗名"
+                  width="12vw" // Uncomment to set a custom width
+                  value={textValue9}
+                  onChange={(e: any) => setTextValue9(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="last-row">
+              <div className="search-button">
+                <ButtonAtom
+                  onClick={searchConditions}
+                  label="検索"
+                  margin="0 5vw"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </Box>
+      {/* <ButtonAtom
+                onClick={searchConditions}
+                label="新規"
+            /> */}
+      <DataTable // Customize header height
+        headers={headers}
+        data={data}
+        maxHeight="calc(82vh - 260px)"
+        onSelectionChange={handleSelectionChange}
+        operationButton="新規"
+        onClick={searchConditions}
+      />
+      <ButtonAtom
+        onClick={searchConditions}
+        label="閲覧"
+
+        // margin='0 2vw'
+      />
+      <ButtonAtom
+        onClick={searchConditions}
+        label="編集"
+
+        // margin='0 2vw'
+      />
+      <ButtonAtom
+        onClick={searchConditions}
+        label="削除"
+
+        // margin='0 2vw'
+      />
+    </div>
+  );
 }
 
 export default RespondersList;

@@ -12,8 +12,8 @@
     .timer {
       border: 1px solid black;
       padding: 10px;
-    }    
-  }  
+    }
+  }
 }
 
 .app-nav-bar {
@@ -55,30 +55,32 @@
   height: 100%;
   /* Adjust as needed */
   overflow-y: auto;
-  white-space: nowrap;        /* Prevents text from wrapping to the next line */
-  overflow: hidden;           /* Hides any overflowed content */
+  white-space: nowrap; /* Prevents text from wrapping to the next line */
+  overflow: hidden; /* Hides any overflowed content */
   text-overflow: ellipsis;
+  margin-left: 1vw;
 
-  .select-range{
+  .select-range {
     display: flex;
     align-items: center;
-    margin: 0 20px;
     gap: 2vw;
-
+    margin-bottom: 0.5vw;
   }
 
   .interpreter-evaluation-search-container,
-  .meeting-history-search-container, 
-  .administrator-search-container {
+  .meeting-history-search-container,
+  .administrator-search-container,
+  .companies-search-container,
+  .store-search-container,
+  .responders-search-container {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 1vh 1vw;
 
     .number-detail-column {
       display: flex;
       flex-direction: column;
-      margin-top: -1vh;
+      margin-right: 1vw;
 
       .margin-bottom {
         margin-bottom: 1vh;
@@ -96,9 +98,6 @@
       .person-name-details {
         display: flex;
         gap: 2vw;
-
-       
-        /* flex-direction: column; */
       }
     }
 
@@ -108,16 +107,43 @@
         margin-top: 3vh;
 
         .search-button {
-          margin-left: auto
+          margin-left: auto;
+          /* margin-top: auto */
         }
       }
     }
 
     /* .operation-button-container{} */
   }
+}
 
-  .administrator-search-container {
-    padding: 5vh 0;
+.store-search-container {
+  .store-number-label {
+    margin-top: 3vh;
+  }
+  .last-column {
+    margin-top: auto;
+    margin-bottom: 1vh;
+  }
+  .name-detail-column {
+    .margin-bottom {
+      margin-bottom: 3vh !important ;
+    }
+  }
+}
+
+.responders-search-container {
+  .number-detail-column {
+    .margin-bottom {
+      margin-bottom: 3vh !important ;
+    }
+  }
+  .last-column {
+    margin-left: -6vw;
+    .store-details {
+      display: flex;
+      gap: 1vw;
+    }
   }
 }
 
@@ -136,7 +162,6 @@
     display: flex;
     flex-direction: column;
   }
-
 }
 
 .administrator-list-menu-search-container {
@@ -175,5 +200,4 @@
     display: flex;
     flex-direction: column;
   }
-
 }

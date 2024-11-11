@@ -1,9 +1,15 @@
-import React from 'react';
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import React from "react";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 
 interface Option {
   label: string;
-  value: string;
+  value: string | number;
 }
 
 interface SelectOptionProps {
@@ -13,7 +19,7 @@ interface SelectOptionProps {
   height?: number;
   onChange: (value: string) => void;
   value: string;
-  labelText?: string; 
+  labelText?: string;
 }
 
 const SelectOption: React.FC<SelectOptionProps> = ({
