@@ -257,6 +257,7 @@ function InterpreterEvaluationList() {
   return (
     <div className="admin-menu-nav-page">
       <MenuHeader title="通訳評価一覧" />
+      <div className="search-label">検索条件</div>
       <Box
         sx={{
           border: "1px solid #ccc",
@@ -303,7 +304,7 @@ function InterpreterEvaluationList() {
                 margin="2px"
               />
               <TextBoxWithLabel
-                label="契約検索No"
+                label="契約No"
                 width="12vw" // Uncomment to set a custom width
                 value={textValue10}
                 onChange={(e: any) => setTextValue10(e.target.value)}
@@ -326,12 +327,6 @@ function InterpreterEvaluationList() {
           <div className="name-detail-column">
             <div className="margin-bottom">
               <TextBoxWithLabel
-                label="フリガナ"
-                width="29vw" // Uncomment to set a custom width
-                value={textValue2}
-                onChange={(e: any) => setTextValue2(e.target.value)}
-              />
-              <TextBoxWithLabel
                 label="企業名"
                 width="29vw" // Uncomment to set a custom width
                 value={textValue3}
@@ -342,30 +337,18 @@ function InterpreterEvaluationList() {
               <div className="person-name-details">
                 <div>
                   <TextBoxWithLabel
-                    label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
-                    labelWidth="150px"
-                    width="8vw" // Uncomment to set a custom width
-                    value={textValue4}
-                    onChange={(e: any) => setTextValue4(e.target.value)}
-                  />
-                  <TextBoxWithLabel
                     label="通訳者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
-                    labelWidth="150px"
-                    width="8vw" // Uncomment to set a custom width
+                    labelWidth="120px"
+                    width="12vw" // Uncomment to set a custom width
                     value={textValue5}
                     onChange={(e: any) => setTextValue5(e.target.value)}
                   />
                 </div>
                 <div>
                   <TextBoxWithLabel
-                    label="メイ"
-                    width="8vw" // Uncomment to set a custom width
-                    value={textValue6}
-                    onChange={(e: any) => setTextValue6(e.target.value)}
-                  />
-                  <TextBoxWithLabel
                     label="名"
-                    width="8vw" // Uncomment to set a custom width
+                    labelWidth="40px"
+                    width="12vw" // Uncomment to set a custom width
                     value={textValue7}
                     onChange={(e: any) => setTextValue7(e.target.value)}
                   />
@@ -375,12 +358,6 @@ function InterpreterEvaluationList() {
           </div>
           <div className="last-column">
             <div>
-              <TextBoxWithLabel
-                label="フリガナ"
-                width="29vw" // Uncomment to set a custom width
-                value={textValue8}
-                onChange={(e: any) => setTextValue8(e.target.value)}
-              />
               <TextBoxWithLabel
                 label="店舗名"
                 width="29vw" // Uncomment to set a custom width
@@ -411,7 +388,7 @@ function InterpreterEvaluationList() {
       <DataTable // Customize header height
         headers={headers}
         data={data}
-        maxHeight="calc(82vh - 260px)"
+        maxHeight="calc(80vh - 260px)"
         onSelectionChange={handleSelectionChange}
       />
       <ButtonAtom

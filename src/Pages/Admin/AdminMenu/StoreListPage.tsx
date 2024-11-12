@@ -303,6 +303,7 @@ function StoreList() {
   return (
     <div className="admin-menu-nav-page">
       <MenuHeader title="店舗一覧" />
+      <div className="search-label">検索条件</div>
       <Box
         sx={{
           border: "1px solid #ccc",
@@ -359,6 +360,7 @@ function StoreList() {
             <div className="store-number-label">
               <TextBoxWithLabel
                 label="店舗No"
+                disabled={false}
                 width="12vw" // Uncomment to set a custom width
                 value={textValue1}
                 onChange={(e: any) => setTextValue1(e.target.value)}
@@ -379,12 +381,14 @@ function StoreList() {
                 <div>
                   <TextBoxWithLabel
                     label="フリガナ"
+                    disabled={false}
                     width="29vw" // Uncomment to set a custom width
                     value={textValue6}
                     onChange={(e: any) => setTextValue6(e.target.value)}
                   />
                   <TextBoxWithLabel
                     label="店舗名"
+                    disabled={false}
                     width="29vw" // Uncomment to set a custom width
                     value={textValue7}
                     onChange={(e: any) => setTextValue7(e.target.value)}

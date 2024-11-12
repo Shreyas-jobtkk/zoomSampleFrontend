@@ -16,7 +16,7 @@ interface TextBoxProps {
 const TextBox: React.FC<TextBoxProps> = ({
   label,
   width = "150px",
-  height = "3.9vh", // Default height for Box in vh
+  height = "35px", // Default height for Box in vh
   fontSize, // Default font size in em for label and TextField
   labelWidth = "85px", // Default label width
   disabled = true, // Default disabled state is false

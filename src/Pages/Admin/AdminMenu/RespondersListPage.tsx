@@ -503,6 +503,7 @@ function RespondersList() {
   return (
     <div className="admin-menu-nav-page">
       <MenuHeader title="応対者一覧" />
+      <div className="search-label">検索条件</div>
       <Box
         sx={{
           border: "1px solid #ccc",
@@ -558,6 +559,7 @@ function RespondersList() {
 
             <TextBoxWithLabel
               label="契約No"
+              disabled={false}
               width="12vw" // Uncomment to set a custom width
               value={textValue1}
               onChange={(e: any) => setTextValue1(e.target.value)}
@@ -565,12 +567,6 @@ function RespondersList() {
           </div>
           <div className="name-detail-column">
             <div className="margin-bottom">
-              <TextBoxWithLabel
-                label="フリガナ"
-                width="25vw" // Uncomment to set a custom width
-                value={textValue2}
-                onChange={(e: any) => setTextValue2(e.target.value)}
-              />
               <TextBoxWithLabel
                 label="企業名"
                 width="25vw" // Uncomment to set a custom width
@@ -583,6 +579,7 @@ function RespondersList() {
                 <div>
                   <TextBoxWithLabel
                     label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                    disabled={false}
                     labelWidth="120px"
                     width="15vw" // Uncomment to set a custom width
                     value={textValue4}
@@ -590,6 +587,7 @@ function RespondersList() {
                   />
                   <TextBoxWithLabel
                     label="対応者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+                    disabled={false}
                     labelWidth="120px"
                     width="15vw" // Uncomment to set a custom width
                     value={textValue5}
@@ -599,6 +597,7 @@ function RespondersList() {
                 <div>
                   <TextBoxWithLabel
                     label="メイ"
+                    disabled={false}
                     labelWidth="35px"
                     width="15vw" // Uncomment to set a custom width
                     value={textValue6}
@@ -606,6 +605,7 @@ function RespondersList() {
                   />
                   <TextBoxWithLabel
                     label="名"
+                    disabled={false}
                     labelWidth="35px"
                     width="15vw" // Uncomment to set a custom width
                     value={textValue7}
@@ -631,12 +631,6 @@ function RespondersList() {
                 />
               </div>
               <div>
-                <TextBoxWithLabel
-                  label="フリガナ"
-                  width="12vw" // Uncomment to set a custom width
-                  value={textValue8}
-                  onChange={(e: any) => setTextValue8(e.target.value)}
-                />
                 <TextBoxWithLabel
                   label="店舗名"
                   width="12vw" // Uncomment to set a custom width

@@ -18,7 +18,7 @@ const ButtonAtom: React.FC<ButtonAtomProps> = ({
   width = "70px", // Default width
   padding = "5px 20px", // Default padding
   margin = "5px", // Default margin
-  height = "25px", // Default height
+  height = "35px", // Default height
 }) => {
   return (
     <Button

@@ -58,13 +58,24 @@
   white-space: nowrap; /* Prevents text from wrapping to the next line */
   overflow: hidden; /* Hides any overflowed content */
   text-overflow: ellipsis;
-  margin-left: 1vw;
+  margin: 0 1vw;
+
+  .search-label {
+    position: relative;
+    top: 3vh;
+    left: 1vw;
+    /* padding: 0 4px; */
+    background-color: #f1f2f3;
+    border: 1px solid #ccc;
+    width: 150px;
+    text-align: center;
+  }
 
   .select-range {
     display: flex;
     align-items: center;
     gap: 2vw;
-    margin-bottom: 0.5vw;
+    margin-bottom: 1vw;
   }
 
   .interpreter-evaluation-search-container,
@@ -72,7 +83,8 @@
   .administrator-search-container,
   .companies-search-container,
   .store-search-container,
-  .responders-search-container {
+  .responders-search-container,
+  .meeting-invitation-container {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -145,6 +157,11 @@
       gap: 1vw;
     }
   }
+  .name-detail-column {
+    .margin-bottom {
+      margin-bottom: 6vh !important ;
+    }
+  }
 }
 
 .translator-menu-button-container {
@@ -183,6 +200,18 @@
     .search-button {
       margin-left: auto;
     }
+  }
+}
+
+.interpreter-evaluation-search-container,
+.meeting-history-search-container,
+.meeting-invitation-container {
+  .person-name-details {
+    margin-top: 5vh;
+  }
+
+  .last-row {
+    margin-top: 6vh !important;
   }
 }
 

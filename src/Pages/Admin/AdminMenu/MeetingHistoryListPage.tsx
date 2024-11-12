@@ -247,9 +247,7 @@ function MeetingHistoryList() {
       {/* <div className="screen-title">画面ID:DSP10001</div> */}
       {/* <h3 className="menu-title">通訳評価一覧</h3> */}
       <MenuHeader title="ミーティング履歴一覧" />
-      {/* <Typography sx={{ marginLeft: '10px' }} >
-                検索条件
-            </Typography> */}
+      <div className="search-label">検索条件</div>
 
       <Box
         sx={{
@@ -297,7 +295,7 @@ function MeetingHistoryList() {
                 margin="2px"
               />
               <TextBoxWithLabel
-                label="企業No"
+                label="契約No"
                 width="12vw" // Uncomment to set a custom width
                 value={textValue1}
                 onChange={(e: any) => setTextValue1(e.target.value)}
@@ -319,12 +317,6 @@ function MeetingHistoryList() {
           <div className="name-detail-column">
             <div className="margin-bottom">
               <TextBoxWithLabel
-                label="フリガナ"
-                width="29vw" // Uncomment to set a custom width
-                value={textValue3}
-                onChange={(e: any) => setTextValue3(e.target.value)}
-              />
-              <TextBoxWithLabel
                 label="企業名"
                 width="29vw" // Uncomment to set a custom width
                 value={textValue4}
@@ -335,30 +327,18 @@ function MeetingHistoryList() {
               <div className="person-name-details">
                 <div>
                   <TextBoxWithLabel
-                    label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
-                    labelWidth="150px"
-                    width="8vw" // Uncomment to set a custom width
-                    value={textValue5}
-                    onChange={(e: any) => setTextValue5(e.target.value)}
-                  />
-                  <TextBoxWithLabel
                     label="通訳者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
-                    labelWidth="150px"
-                    width="8vw" // Uncomment to set a custom width
+                    labelWidth="120px"
+                    width="12vw" // Uncomment to set a custom width
                     value={textValue6}
                     onChange={(e: any) => setTextValue6(e.target.value)}
                   />
                 </div>
                 <div>
                   <TextBoxWithLabel
-                    label="メイ"
-                    width="8vw" // Uncomment to set a custom width
-                    value={textValue7}
-                    onChange={(e: any) => setTextValue7(e.target.value)}
-                  />
-                  <TextBoxWithLabel
-                    label="通訳者名"
-                    width="8vw" // Uncomment to set a custom width
+                    label="名"
+                    labelWidth="40px"
+                    width="12vw" // Uncomment to set a custom width
                     value={textValue8}
                     onChange={(e: any) => setTextValue8(e.target.value)}
                   />
@@ -369,13 +349,7 @@ function MeetingHistoryList() {
           <div className="last-column">
             <div>
               <TextBoxWithLabel
-                label="フリガナ"
-                width="29vw" // Uncomment to set a custom width
-                value={textValue9}
-                onChange={(e: any) => setTextValue9(e.target.value)}
-              />
-              <TextBoxWithLabel
-                label="部署名"
+                label="店舗名"
                 width="29vw" // Uncomment to set a custom width
                 value={textValue10}
                 onChange={(e: any) => setTextValue10(e.target.value)}

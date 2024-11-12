@@ -276,7 +276,7 @@ function AdministratorList() {
   return (
     <div className="admin-menu-nav-page">
       <MenuHeader title="管理者一覧" />
-
+      <div className="search-label">検索条件</div>
       <Box
         sx={{
           border: "1px solid #ccc",
@@ -316,8 +316,9 @@ function AdministratorList() {
         <div className="administrator-search-container">
           <div className="number-detail-column">
             <TextBoxWithLabel
+              disabled={false}
               label="管理者No"
-              width="12vw" // Uncomment to set a custom width
+              width="18vw" // Uncomment to set a custom width
               value={textValue1}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
@@ -327,30 +328,36 @@ function AdministratorList() {
               <div className="person-name-details">
                 <div>
                   <TextBoxWithLabel
-                    label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;フリガナ"
-                    labelWidth="150px"
-                    width="8vw" // Uncomment to set a custom width
+                    disabled={false}
+                    label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                    labelWidth="120px"
+                    width="15vw" // Uncomment to set a custom width
                     value={textValue2}
                     onChange={(e: any) => setTextValue2(e.target.value)}
                   />
                   <TextBoxWithLabel
+                    disabled={false}
                     label="管理者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
-                    labelWidth="150px"
-                    width="8vw" // Uncomment to set a custom width
+                    labelWidth="120px"
+                    width="15vw" // Uncomment to set a custom width
                     value={textValue3}
                     onChange={(e: any) => setTextValue3(e.target.value)}
                   />
                 </div>
                 <div>
                   <TextBoxWithLabel
-                    label="フリガナ"
-                    width="12vw" // Uncomment to set a custom width
+                    disabled={false}
+                    label="メイ"
+                    labelWidth="40px"
+                    width="15vw" // Uncomment to set a custom width
                     value={textValue4}
                     onChange={(e: any) => setTextValue4(e.target.value)}
                   />
                   <TextBoxWithLabel
+                    disabled={false}
                     label="名"
-                    width="12vw" // Uncomment to set a custom width
+                    labelWidth="40px"
+                    width="15vw" // Uncomment to set a custom width
                     value={textValue5}
                     onChange={(e: any) => setTextValue5(e.target.value)}
                   />
@@ -374,8 +381,10 @@ function AdministratorList() {
       <DataTable // Customize header height
         headers={headers}
         data={data}
-        maxHeight="calc(82vh - 260px)"
+        maxHeight="calc(87vh - 260px)"
         onSelectionChange={handleSelectionChange}
+        operationButton="新規"
+        onClick={searchConditions}
       />
       <ButtonAtom
         onClick={searchConditions}

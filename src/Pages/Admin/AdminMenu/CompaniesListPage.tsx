@@ -230,6 +230,7 @@ function CompaniesList() {
   return (
     <div className="admin-menu-nav-page">
       <MenuHeader title="企業一覧" />
+      <div className="search-label">検索条件</div>
       <Box
         sx={{
           border: "1px solid #ccc",
@@ -237,7 +238,7 @@ function CompaniesList() {
           padding: "1vh 1vw",
           display: "flex",
           flexDirection: "column",
-          margin: "1vh 0",
+          // margin: "1vh 0",
 
           // transform: 'scaleY(0.8)',
           // overflowY: 'auto',
@@ -269,6 +270,7 @@ function CompaniesList() {
         <div className="companies-search-container">
           <div className="number-detail-column">
             <TextBoxWithLabel
+              disabled={false}
               label="企業No"
               width="12vw" // Uncomment to set a custom width
               value={textValue1}
@@ -284,14 +286,16 @@ function CompaniesList() {
                                 </div> */}
                 <div>
                   <TextBoxWithLabel
+                    disabled={false}
                     label="フリガナ"
                     width="25vw" // Uncomment to set a custom width
                     value={textValue2}
                     onChange={(e: any) => setTextValue2(e.target.value)}
-                    labelWidth="150px"
+                    labelWidth="70px"
                   />
                   <TextBoxWithLabel
-                    labelWidth="150px"
+                    disabled={false}
+                    labelWidth="70px"
                     label="企業名"
                     width="25vw" // Uncomment to set a custom width
                     value={textValue3}
