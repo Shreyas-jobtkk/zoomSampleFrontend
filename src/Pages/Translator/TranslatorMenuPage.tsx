@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import MenuHeader from "../../components/LV3/Header/MenuHeader";
 import ButtonAtom from "../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
+import { Box } from "@mui/material";
 
 // import axios from 'axios';
 
@@ -297,9 +298,9 @@ function TranslatorLogin() {
   };
 
   return (
-    <div className="App">
+    <Box className="App">
       <MenuHeader title="通訳者メニュー" />
-      {/* <div>
+      {/* <Box>
         {isPlaying && (
           <ButtonAtom
             onClick={getSignature}
@@ -307,24 +308,24 @@ function TranslatorLogin() {
             width="100px"
           />
         )}
-      </div> */}
-      {/* {!isPlaying && ( // Hide the div if isPlaying is true
+      </Box> */}
+      {/* {!isPlaying && ( // Hide the Box if isPlaying is true
 
-          <div>
+          <Box>
             <label htmlFor="status">Select Status:</label>
             <select id="status" value={status} onChange={handleChange}>
               <option value="inactive">Inactive</option>
               <option value="active">Active</option>
             </select>    
-          </div>
+          </Box>
         )} */}
       {status && <p>Selected Status: {status}</p>}
 
-      {/* <div>languages:{message.languages_known}</div>
-        <div>terminal_id:{message.terminal_id}</div> */}
+      {/* <Box>languages:{message.languages_known}</Box>
+        <Box>terminal_id:{message.terminal_id}</Box> */}
 
-      <div className="translator-menu-button-container">
-        <div className="navigate-buttons">
+      <Box className="translator-menu-button-container">
+        <Box className="navigate-buttons">
           <ButtonAtom
             onClick={navigateToInterpreterEvaluationList}
             label="通訳評価一覧"
@@ -346,9 +347,9 @@ function TranslatorLogin() {
             padding="5vh 5vw 5vh 2vw"
             margin="2vh 5vw"
           />
-        </div>
-        <div>
-          <div className="row">
+        </Box>
+        <Box>
+          <Box className="row">
             <ButtonAtom
               onClick={setStatusToInactive}
               label="準備中"
@@ -365,9 +366,9 @@ function TranslatorLogin() {
               margin="2vh 2vw"
               disabled={status === "active"}
             />
-          </div>
+          </Box>
 
-          <div className="row">
+          <Box className="row">
             <ButtonAtom
               onClick={navigateToAdministratorList}
               label="拒否"
@@ -383,10 +384,10 @@ function TranslatorLogin() {
               margin="2vh 2vw"
               disabled={!isPlaying}
             />
-          </div>
-        </div>
-      </div>
-    </div>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

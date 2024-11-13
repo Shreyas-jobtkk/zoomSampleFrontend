@@ -7,6 +7,7 @@ import LoginHeader from "../../Header/LoginHeader";
 import TextWithBorder from "../../components/LV1/TextWithBorder/TextWithBorder";
 import TextInput from "../../components/LV1/TextInput/TextInput";
 import PasswordInput from "../../components/LV1/PasswordInput/PasswordInput";
+import { Box } from "@mui/material";
 
 const AdminLogin: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
@@ -37,7 +38,6 @@ const AdminLogin: React.FC = () => {
 
         if (userData) {
           // Perform some action here if found
-          console.log(133, userData);
           navigate("/AdminMenu", {
             state: {
               message: userData,
@@ -55,30 +55,30 @@ const AdminLogin: React.FC = () => {
   };
 
   return (
-    <div>
+    <Box>
       <LoginHeader />
-      <div className="login-layout">
-        <div className="login-container">
-          <div className="login-id">
+      <Box className="login-layout">
+        <Box className="login-container">
+          <Box className="login-id">
             <TextWithBorder text="ユーザーＩＤ" />
             <TextInput value={inputValue} onChange={handleInputChange} />
-          </div>
+          </Box>
 
-          <div className="login-id">
+          <Box className="login-id">
             <TextWithBorder text="パスワード" />
             <PasswordInput
               value={passwordValue}
               onChange={handlePasswordChange}
             />
-          </div>
-        </div>
+          </Box>
+        </Box>
 
         {/* <main><button onClick={handleButtonClick}>{t('User Login')}</button></main> */}
-        <div className="login-button">
+        <Box className="login-button">
           <LoginButton onClick={handleButtonClick} label="ログイン" />
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

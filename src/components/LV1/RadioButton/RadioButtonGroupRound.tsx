@@ -1,6 +1,7 @@
 import React from "react";
 import Radio from "@mui/material/Radio";
 import { styled } from "@mui/material/styles";
+import { Box } from "@mui/material";
 
 interface RadioButtonGroupRoundProps {
   options: Array<{ label: string; value: string }>;
@@ -28,9 +29,9 @@ const RadioButtonGroupRound: React.FC<RadioButtonGroupRoundProps> = ({
   name,
 }) => {
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
+    <Box style={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
       {options.map((option) => (
-        <div
+        <Box
           key={option.value}
           style={{
             display: "flex",
@@ -47,9 +48,9 @@ const RadioButtonGroupRound: React.FC<RadioButtonGroupRoundProps> = ({
             color="default"
           />
           <span>{option.label}</span>
-        </div>
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 };
 

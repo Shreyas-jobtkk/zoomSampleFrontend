@@ -4,6 +4,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs"; // Import Dayjs type
+import { Box } from "@mui/material";
 import "dayjs/locale/ja"; // Import Japanese locale
 
 // Define the props type
@@ -44,7 +45,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={["DatePicker"]}>
-        <div style={scaleStyles}>
+        <Box style={scaleStyles}>
           {" "}
           {/* Apply scaling to the entire DatePicker */}
           <MuiDatePicker
@@ -63,7 +64,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
               },
             }}
           />
-        </div>
+        </Box>
       </DemoContainer>
     </LocalizationProvider>
   );

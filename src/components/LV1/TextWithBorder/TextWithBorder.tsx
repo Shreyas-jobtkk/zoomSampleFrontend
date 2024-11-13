@@ -1,4 +1,5 @@
 import React from "react";
+import { Box } from "@mui/material";
 
 interface TextWithBorderProps {
   text: string;
@@ -29,7 +30,7 @@ const TextWithBorder: React.FC<TextWithBorderProps> = ({
     backgroundColor: "#b3cee5",
   };
 
-  return <div style={style}>{text}</div>;
+  return <Box style={style}>{text}</Box>;
 };
 
 export default TextWithBorder;

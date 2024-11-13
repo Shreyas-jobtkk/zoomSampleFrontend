@@ -1,6 +1,7 @@
 import ButtonAtom from "../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
 import MenuHeader from "../../components/LV3/Header/MenuHeader";
+import { Box } from "@mui/material";
 
 function AdminMenu() {
   const navigate = useNavigate();
@@ -46,13 +47,13 @@ function AdminMenu() {
   };
 
   return (
-    <div>
-      {/* <div className="screen-title">画面ID:DSP10001</div> */}
+    <Box>
+      {/* <Box className="screen-title">画面ID:DSP10001</Box> */}
       <MenuHeader title="管理者メニュー" />
       {/* <h3 className="menu-title">
                 管理者メニュー
             </h3> */}
-      <div>
+      <Box>
         <ButtonAtom
           onClick={navigateToCompaniesList}
           label="企業一覧"
@@ -129,8 +130,8 @@ function AdminMenu() {
         />
         {/* <button >管理者一覧</button>
                 <button >ログ一覧</button> */}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

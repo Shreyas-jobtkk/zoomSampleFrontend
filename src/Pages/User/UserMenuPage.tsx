@@ -11,6 +11,7 @@ import RadioButtonGroupRound from "../../components/LV1/RadioButton/RadioButtonG
 import { useTranslation } from "react-i18next";
 import "../../../src/i18n.js";
 import ButtonAtom from "../../components/LV1/Button/ButtonAtom/ButtonAtom";
+import { Box } from "@mui/material";
 
 // let homePage = "https://zoomsamplebackend.onrender.com"
 // let homePage = "http://localhost:4000"
@@ -320,7 +321,7 @@ function UserMenu() {
   // }
 
   return (
-    <div className="user-menu">
+    <Box className="user-menu">
       <MenuHeader title="通訳希望者メニュー" />
       <RadioButtonGroupRound
         options={radioOptions}
@@ -328,8 +329,8 @@ function UserMenu() {
         onChange={handleRadioChange}
         name="options"
       />
-      <div className="user-message">{t("User message")}</div>
-      <div className="user-call-row">
+      <Box className="user-message">{t("User message")}</Box>
+      <Box className="user-call-row">
         <ButtonAtom
           onClick={() => {
             playRingtone();
@@ -359,8 +360,8 @@ function UserMenu() {
                 <p>{userData?.name_of_institution}</p> */}
 
         {/* <button onClick={getSignature}>Join Meeting</button> */}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

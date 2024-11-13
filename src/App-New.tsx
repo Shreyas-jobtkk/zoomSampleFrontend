@@ -1,5 +1,6 @@
 // import "./App.css";
 import ZoomMtgEmbedded from "@zoom/meetingsdk/embedded";
+import { Box } from "@mui/material";
 
 function App() {
   const client = ZoomMtgEmbedded.createClient();
@@ -58,16 +59,16 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <Box className="App">
       <main>
         <h1>Zoom Meeting SDK Sample React</h1>
         {/* For Component View */}
-        <div id="meetingSDKElement">
+        <Box id="meetingSDKElement">
           {/* Zoom Meeting SDK Component View Rendered Here */}
-        </div>
+        </Box>
         <button onClick={getSignature}>Join Meeting</button>
       </main>
-    </div>
+    </Box>
   );
 }
 

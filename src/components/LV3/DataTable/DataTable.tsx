@@ -280,7 +280,7 @@ const DataTable: React.FC<DataTableProps> = ({
                         <ArrowDownward fontSize="small" />
                       ))}
 
-                    <div
+                    <Box
                       style={{
                         position: "absolute",
                         right: 0,

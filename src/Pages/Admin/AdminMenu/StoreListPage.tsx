@@ -303,9 +303,9 @@ function StoreList() {
   const borderStyle = "1px solid #ccc";
 
   return (
-    <div className="admin-menu-nav-page">
+    <Box className="admin-menu-nav-page">
       <MenuHeader title="店舗一覧" />
-      <div className="search-label">検索条件</div>
+      <Box className="search-label">検索条件</Box>
       <Box
         sx={{
           border: borderStyle,
@@ -319,12 +319,12 @@ function StoreList() {
           // overflowY: 'auto',
         }}
       >
-        <div className="select-range">
-          {/* <div style={{ display: 'flex', alignItems: 'center', margin: '0 20px' }}> */}
-          <div>登録日時</div>
-          <div>開始日時：</div>
+        <Box className="select-range">
+          {/* <Box style={{ display: 'flex', alignItems: 'center', margin: '0 20px' }}> */}
+          <Box>登録日時</Box>
+          <Box>開始日時：</Box>
           <DatePicker label="" onDateChange={handleStartDateChange} />
-          {/* <div>{formatFullDateTime(selectedStartDate, selectedStartTime)}</div> Display full start datetime */}
+          {/* <Box>{formatFullDateTime(selectedStartDate, selectedStartTime)}</Box> Display full start datetime */}
           <TimePicker
             label="Select Start Time"
             value={selectedStartTime}
@@ -335,16 +335,16 @@ function StoreList() {
 
           <span>終了日時：</span>
           <DatePicker label="" onDateChange={handleEndDateChange} />
-          {/* <div>{formatFullDateTime(selectedEndDate, selectedEndTime)}</div> Display full end datetime */}
+          {/* <Box>{formatFullDateTime(selectedEndDate, selectedEndTime)}</Box> Display full end datetime */}
           <TimePicker
             label="Select End Time"
             value={selectedEndTime}
             onChange={handleEndTimeChange} // Use the separate handler for end time
           />
-        </div>
-        <div className="store-search-container">
-          <div className="number-detail-column">
-            <div className="margin-bottom">
+        </Box>
+        <Box className="store-search-container">
+          <Box className="number-detail-column">
+            <Box className="margin-bottom">
               <ButtonAtom
                 onClick={searchConditions}
                 label="企業検索"
@@ -357,9 +357,9 @@ function StoreList() {
                 value={textValue10}
                 onChange={(e: any) => setTextValue10(e.target.value)}
               />
-            </div>
+            </Box>
 
-            <div className="store-number-label">
+            <Box className="store-number-label">
               <TextBoxWithLabel
                 label="店舗No"
                 disabled={false}
@@ -367,20 +367,20 @@ function StoreList() {
                 value={textValue1}
                 onChange={(e: any) => setTextValue1(e.target.value)}
               />
-            </div>
-          </div>
-          <div className="name-detail-column">
-            <div className="margin-bottom">
+            </Box>
+          </Box>
+          <Box className="name-detail-column">
+            <Box className="margin-bottom">
               <TextBoxWithLabel
                 label="企業名"
                 width="29vw" // Uncomment to set a custom width
                 value={textValue3}
                 onChange={(e: any) => setTextValue3(e.target.value)}
               />
-            </div>
-            <div>
-              <div className="person-name-details">
-                <div>
+            </Box>
+            <Box>
+              <Box className="person-name-details">
+                <Box>
                   <TextBoxWithLabel
                     label="フリガナ"
                     disabled={false}
@@ -395,18 +395,18 @@ function StoreList() {
                     value={textValue7}
                     onChange={(e: any) => setTextValue7(e.target.value)}
                   />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="last-column">
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box className="last-column">
             <ButtonAtom
               onClick={searchConditions}
               label="検索"
               margin="0 5vw"
             />
-          </div>
-        </div>
+          </Box>
+        </Box>
       </Box>
       <DataTable // Customize header height
         headers={headers}
@@ -431,7 +431,7 @@ function StoreList() {
         label="削除"
         // margin='0 2vw'
       />
-    </div>
+    </Box>
   );
 }
 
