@@ -300,13 +300,15 @@ function StoreList() {
     console.log("Selected Data:", selectedData);
   };
 
+  const borderStyle = "1px solid #ccc";
+
   return (
     <div className="admin-menu-nav-page">
       <MenuHeader title="店舗一覧" />
       <div className="search-label">検索条件</div>
       <Box
         sx={{
-          border: "1px solid #ccc",
+          border: borderStyle,
           borderRadius: "8px",
           padding: "1vh 1vw",
           display: "flex",

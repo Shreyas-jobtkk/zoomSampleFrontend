@@ -1,0 +1,258 @@
+$border-style: 1px solid #ccc;
+
+.user-menu {
+  .user-message {
+    border: 1px solid black;
+    padding: 10px;
+    width: fit-content;
+    border-radius: 5px;
+    margin: 20px;
+  }
+  .user-call-row {
+    margin-left: 100px;
+    display: flex;
+    .timer {
+      border: 1px solid black;
+      padding: 10px;
+    }
+  }
+}
+
+.app-nav-bar {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.menu-title {
+  text-align: center;
+  padding: 2vh 3vw;
+  margin: 1vh 2vw;
+  background-color: #b3cee5;
+  border: 1px solid black;
+}
+
+.login-layout {
+  margin: 40px 250px;
+
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    /* Stack the groups vertically */
+    gap: 16px;
+    /* Space between the groups */
+
+    .login-id {
+      display: inline-flex;
+    }
+  }
+
+  .login-button {
+    margin: 10px 200px;
+  }
+}
+
+.admin-menu-nav-page {
+  height: 100%;
+  /* Adjust as needed */
+  overflow-y: auto;
+  white-space: nowrap; /* Prevents text from wrapping to the next line */
+  overflow: hidden; /* Hides any overflowed content */
+  text-overflow: ellipsis;
+  margin: 0 1vw;
+
+  .search-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1vh 1vw;
+    display: flex;
+    flex-direction: column;
+    margin: 3vh 0;
+  }
+
+  .search-label {
+    position: relative;
+    bottom: 3vh;
+    left: 1vw;
+    /* padding: 0 4px; */
+    background-color: #f1f2f3;
+    border: $border-style;
+    width: 150px;
+    text-align: center;
+  }
+
+  .select-range {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+    margin-bottom: 1vw;
+  }
+
+  .interpreter-evaluation-search-container,
+  .meeting-history-search-container,
+  .administrator-search-container,
+  .companies-search-container,
+  .store-search-container,
+  .responders-search-container,
+  .meeting-invitation-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .number-detail-column {
+      display: flex;
+      flex-direction: column;
+      margin-right: 1vw;
+
+      .margin-bottom {
+        margin-bottom: 1vh;
+      }
+    }
+
+    .name-detail-column {
+      display: flex;
+      flex-direction: column;
+
+      .margin-bottom {
+        margin-bottom: 1vh;
+      }
+
+      .person-name-details {
+        display: flex;
+        gap: 2vw;
+      }
+    }
+
+    .last-column {
+      .last-row {
+        display: flex;
+        margin-top: 3vh;
+
+        .search-button {
+          margin-left: auto;
+          /* margin-top: auto */
+        }
+      }
+    }
+
+    /* .operation-button-container{} */
+  }
+}
+
+.store-search-container {
+  .store-number-label {
+    margin-top: 3vh;
+  }
+  .last-column {
+    margin-top: auto;
+    margin-bottom: 1vh;
+  }
+  .name-detail-column {
+    .margin-bottom {
+      margin-bottom: 3vh !important ;
+    }
+  }
+}
+
+.responders-search-container {
+  .number-detail-column {
+    .margin-bottom {
+      margin-bottom: 3vh !important ;
+    }
+  }
+  .last-column {
+    margin-left: -6vw;
+    .store-details {
+      display: flex;
+      gap: 1vw;
+    }
+  }
+  .name-detail-column {
+    .margin-bottom {
+      margin-bottom: 6vh !important ;
+    }
+  }
+}
+
+.translator-menu-button-container {
+  display: flex;
+  justify-content: space-between;
+  /* Space out left and right sections */
+  align-items: flex-start;
+  /* Align items to the start of the container */
+
+  /* Full height for demo */
+  padding: 20px;
+  /* Padding for better spacing */
+
+  .navigate-buttons {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.administrator-list-menu-search-container {
+  .first-row {
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+  }
+
+  .last-row {
+    display: flex;
+    align-items: center;
+    margin: 4vh 2vw;
+
+    .name-detail-column {
+      margin-left: 10vw;
+    }
+
+    .search-button {
+      margin-left: auto;
+    }
+  }
+}
+
+.interpreter-evaluation-search-container,
+.meeting-history-search-container,
+.meeting-invitation-container {
+  .person-name-details {
+    margin-top: 5vh;
+  }
+
+  .last-row {
+    margin-top: 6vh !important;
+  }
+}
+
+.description-label {
+  position: relative;
+  bottom: 3vh;
+  left: 1vw;
+  /* padding: 0 4px; */
+  background-color: #f1f2f3;
+  border: $border-style;
+  width: 150px;
+  text-align: center;
+}
+
+.occupy-extreme-right {
+  margin-left: auto;
+}
+
+.responder-menu-button-container {
+  display: flex;
+  justify-content: space-between;
+  /* Space out left and right sections */
+  align-items: flex-start;
+  /* Align items to the start of the container */
+
+  /* Full height for demo */
+  padding: 20px;
+
+  .list-column {
+    display: flex;
+    flex-direction: column;
+  }
+}

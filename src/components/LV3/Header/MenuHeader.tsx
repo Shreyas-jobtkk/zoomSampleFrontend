@@ -9,7 +9,7 @@ interface MenuHeaderProps {
 const MenuHeader: React.FC<MenuHeaderProps> = ({ title }) => {
   return (
     <Typography
-      sx={{ padding: "1vh", height: "6vh" }}
+      sx={{ padding: "1vh", height: "40px" }}
       variant="h5"
       className="menu-title"
     >

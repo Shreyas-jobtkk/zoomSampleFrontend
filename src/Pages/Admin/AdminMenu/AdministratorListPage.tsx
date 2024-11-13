@@ -8,8 +8,10 @@ import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
 import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
+import { useNavigate } from "react-router-dom";
 
 function AdministratorList() {
+  const navigate = useNavigate();
   // State for selected start and end times
   const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
     dayjs()
@@ -216,8 +218,17 @@ function AdministratorList() {
 
   const columnWidths = [5, 20, 20, 8, 10, 10, 10, 10, 10, 10];
   const columnAlignments: ("left" | "center" | "right")[] = ["right"];
+  const [selectedData, setSelectedData] = useState<
+    Array<{ No: string | number; [key: string]: string | number }>
+  >([]);
 
   const searchConditions = () => {};
+  const navigateToInfoPage = () => {
+    navigate("/AdministratorListInfo");
+  };
+  const navigateToEditPage = () => {
+    navigate("/AdministratorListEdit");
+  };
 
   // Handle start date change
   const handleStartDateChange = (date: Dayjs | null) => {
@@ -267,54 +278,30 @@ function AdministratorList() {
   const [textValue4, setTextValue4] = useState<string>("");
   const [textValue5, setTextValue5] = useState<string>("");
 
+  // Handle selection change
   const handleSelectionChange = (
-    selectedData: Array<{ No: string | number; [key: string]: string | number }>
+    newSelectedData: Array<{
+      No: string | number;
+      [key: string]: string | number;
+    }>
   ) => {
-    console.log("Selected Data:", selectedData);
+    // Update the selected data state
+    setSelectedData(newSelectedData);
+
+    // Log the selected data to the console
+    console.log("Selected Data:", newSelectedData);
   };
 
+  const borderStyle = "1px solid #ccc";
+
   return (
-    <div className="admin-menu-nav-page">
+    <Box className="admin-menu-nav-page">
       <MenuHeader title="管理者一覧" />
-      <div className="search-label">検索条件</div>
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          padding: "1vh 1vw",
-          display: "flex",
-          flexDirection: "column",
-          margin: "1vh 0",
 
-          // transform: 'scaleY(0.8)',
-          // overflowY: 'auto',
-        }}
-      >
-        <div className="select-range">
-          <span>登録日時</span>
-
-          <span>開始日時：</span>
-          <DatePicker label="" onDateChange={handleStartDateChange} />
-          {/* <div>{formatFullDateTime(selectedStartDate, selectedStartTime)}</div> Display full start datetime */}
-          <TimePicker
-            label="Select Start Time"
-            value={selectedStartTime}
-            onChange={handleStartTimeChange} // Use the separate handler for start time
-          />
-
-          <span>~</span>
-
-          <span>終了日時：</span>
-          <DatePicker label="" onDateChange={handleEndDateChange} />
-          {/* <div>{formatFullDateTime(selectedEndDate, selectedEndTime)}</div> Display full end datetime */}
-          <TimePicker
-            label="Select End Time"
-            value={selectedEndTime}
-            onChange={handleEndTimeChange} // Use the separate handler for end time
-          />
-        </div>
-        <div className="administrator-search-container">
-          <div className="number-detail-column">
+      <Box className="search-container">
+        <Box className="search-label">検索条件</Box>
+        <Box className="administrator-search-container">
+          <Box className="number-detail-column">
             <TextBoxWithLabel
               disabled={false}
               label="管理者No"
@@ -322,11 +309,11 @@ function AdministratorList() {
               value={textValue1}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
-          </div>
-          <div className="name-detail-column">
-            <div>
-              <div className="person-name-details">
-                <div>
+          </Box>
+          <Box className="name-detail-column">
+            <Box>
+              <Box className="person-name-details">
+                <Box>
                   <TextBoxWithLabel
                     disabled={false}
                     label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
@@ -337,14 +324,14 @@ function AdministratorList() {
                   />
                   <TextBoxWithLabel
                     disabled={false}
-                    label="管理者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+                    label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                     labelWidth="120px"
                     width="15vw" // Uncomment to set a custom width
                     value={textValue3}
                     onChange={(e: any) => setTextValue3(e.target.value)}
                   />
-                </div>
-                <div>
+                </Box>
+                <Box>
                   <TextBoxWithLabel
                     disabled={false}
                     label="メイ"
@@ -361,22 +348,22 @@ function AdministratorList() {
                     value={textValue5}
                     onChange={(e: any) => setTextValue5(e.target.value)}
                   />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="last-column">
-            <div className="last-row">
-              <div className="search-button">
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box className="last-column">
+            <Box className="last-row">
+              <Box className="search-button">
                 <ButtonAtom
                   onClick={searchConditions}
                   label="検索"
                   margin="0 5vw"
                 />
-              </div>
-            </div>
-          </div>
-        </div>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
       </Box>
       <DataTable // Customize header height
         headers={headers}
@@ -387,24 +374,21 @@ function AdministratorList() {
         onClick={searchConditions}
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={navigateToInfoPage}
+        disabled={selectedData.length !== 1}
         label="閲覧"
-
-        // margin='0 2vw'
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={navigateToEditPage}
+        disabled={selectedData.length !== 1}
         label="編集"
-
-        // margin='0 2vw'
       />
       <ButtonAtom
         onClick={searchConditions}
+        disabled={selectedData.length <= 0}
         label="削除"
-
-        // margin='0 2vw'
       />
-    </div>
+    </Box>
   );
 }
 

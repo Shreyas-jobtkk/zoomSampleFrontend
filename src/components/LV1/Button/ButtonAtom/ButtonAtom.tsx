@@ -32,8 +32,8 @@ const ButtonAtom: React.FC<ButtonAtomProps> = ({
         padding,
         margin,
         height,
-        textAlign: "left", // Align text to the left
-        justifyContent: "flex-start", // Align content to the start (left)
+        textAlign: "center", // Align text to the left
+        justifyContent: "center", // Align content to the start (left)
         fontSize: "14px", // Set a base font size
         whiteSpace: "nowrap", // Prevent text from wrapping to the next line
         overflow: "hidden", // Hide overflow text if it exceeds button width

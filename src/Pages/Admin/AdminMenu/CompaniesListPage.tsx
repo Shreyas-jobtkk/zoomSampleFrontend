@@ -227,48 +227,15 @@ function CompaniesList() {
     console.log("Selected Data:", selectedData);
   };
 
+  const borderStyle = "1px solid #ccc";
+
   return (
-    <div className="admin-menu-nav-page">
+    <Box className="admin-menu-nav-page">
       <MenuHeader title="企業一覧" />
-      <div className="search-label">検索条件</div>
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          padding: "1vh 1vw",
-          display: "flex",
-          flexDirection: "column",
-          // margin: "1vh 0",
-
-          // transform: 'scaleY(0.8)',
-          // overflowY: 'auto',
-        }}
-      >
-        <div className="select-range">
-          <span>登録日時</span>
-
-          <span>開始日時：</span>
-          <DatePicker label="" onDateChange={handleStartDateChange} />
-          {/* <div>{formatFullDateTime(selectedStartDate, selectedStartTime)}</div> Display full start datetime */}
-          <TimePicker
-            label="Select Start Time"
-            value={selectedStartTime}
-            onChange={handleStartTimeChange} // Use the separate handler for start time
-          />
-
-          <span>~</span>
-
-          <span>終了日時：</span>
-          <DatePicker label="" onDateChange={handleEndDateChange} />
-          {/* <div>{formatFullDateTime(selectedEndDate, selectedEndTime)}</div> Display full end datetime */}
-          <TimePicker
-            label="Select End Time"
-            value={selectedEndTime}
-            onChange={handleEndTimeChange} // Use the separate handler for end time
-          />
-        </div>
-        <div className="companies-search-container">
-          <div className="number-detail-column">
+      <Box className="search-container">
+        <Box className="search-label">検索条件</Box>
+        <Box className="companies-search-container">
+          <Box className="number-detail-column">
             <TextBoxWithLabel
               disabled={false}
               label="企業No"
@@ -276,15 +243,11 @@ function CompaniesList() {
               value={textValue1}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
-          </div>
-          <div className="name-detail-column">
-            <div>
-              <div className="person-name-details">
-                {/* <div>
-                                    <div className='name-label' >フリガナ</div>
-                                    <div>管理者名</div>
-                                </div> */}
-                <div>
+          </Box>
+          <Box className="name-detail-column">
+            <Box>
+              <Box className="person-name-details">
+                <Box>
                   <TextBoxWithLabel
                     disabled={false}
                     label="フリガナ"
@@ -301,22 +264,22 @@ function CompaniesList() {
                     value={textValue3}
                     onChange={(e: any) => setTextValue3(e.target.value)}
                   />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="last-column">
-            <div className="last-row">
-              <div className="search-button">
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box className="last-column">
+            <Box className="last-row">
+              <Box className="search-button">
                 <ButtonAtom
                   onClick={searchConditions}
                   label="検索"
                   margin="0 5vw"
                 />
-              </div>
-            </div>
-          </div>
-        </div>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
       </Box>
       {/* <ButtonAtom
                 onClick={searchConditions}
@@ -349,7 +312,7 @@ function CompaniesList() {
 
         // margin='0 2vw'
       />
-    </div>
+    </Box>
   );
 }
 

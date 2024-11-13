@@ -241,33 +241,22 @@ function MeetingInvitationList() {
     console.log("Selected Data:", selectedData);
   };
 
+  const borderStyle = "1px solid #ccc";
+
   return (
-    <div className="admin-menu-nav-page">
-      {/* <div className="admin-menu-nav-page" style={{ transform: 'scaleY(0.8)',marginTop: '-10vh' }}></div> */}
-      {/* <div className="screen-title">画面ID:DSP10001</div> */}
+    <Box className="admin-menu-nav-page">
+      {/* <Box className="admin-menu-nav-page" style={{ transform: 'scaleY(0.8)',marginTop: '-10vh' }}></Box> */}
+      {/* <Box className="screen-title">画面ID:DSP10001</Box> */}
       {/* <h3 className="menu-title">通訳評価一覧</h3> */}
       <MenuHeader title="ミーティング招待一覧" />
-      <div className="search-label">検索条件</div>
-
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          padding: "1vh 1vw",
-          display: "flex",
-          flexDirection: "column",
-          margin: "1vh 0",
-
-          // transform: 'scaleY(0.8)',
-          // overflowY: 'auto',
-        }}
-      >
-        <div className="select-range">
+      <Box className="search-container">
+        <Box className="search-label">検索条件</Box>
+        <Box className="select-range">
           <span>ミーティング日時</span>
 
           <span>開始日時：</span>
           <DatePicker label="" onDateChange={handleStartDateChange} />
-          {/* <div>{formatFullDateTime(selectedStartDate, selectedStartTime)}</div> Display full start datetime */}
+          {/* <Box>{formatFullDateTime(selectedStartDate, selectedStartTime)}</Box> Display full start datetime */}
           <TimePicker
             label="Select Start Time"
             value={selectedStartTime}
@@ -278,16 +267,16 @@ function MeetingInvitationList() {
 
           <span>終了日時：</span>
           <DatePicker label="" onDateChange={handleEndDateChange} />
-          {/* <div>{formatFullDateTime(selectedEndDate, selectedEndTime)}</div> Display full end datetime */}
+          {/* <Box>{formatFullDateTime(selectedEndDate, selectedEndTime)}</Box> Display full end datetime */}
           <TimePicker
             label="Select End Time"
             value={selectedEndTime}
             onChange={handleEndTimeChange} // Use the separate handler for end time
           />
-        </div>
-        <div className="meeting-invitation-container">
-          <div className="number-detail-column">
-            <div className="margin-bottom">
+        </Box>
+        <Box className="meeting-invitation-container">
+          <Box className="number-detail-column">
+            <Box className="margin-bottom">
               <ButtonAtom
                 onClick={searchConditions}
                 label="契約検索"
@@ -300,7 +289,7 @@ function MeetingInvitationList() {
                 value={textValue1}
                 onChange={(e: any) => setTextValue1(e.target.value)}
               />
-            </div>
+            </Box>
             <ButtonAtom
               onClick={searchConditions}
               label="通訳者検索"
@@ -313,19 +302,19 @@ function MeetingInvitationList() {
               value={textValue2}
               onChange={(e: any) => setTextValue2(e.target.value)}
             />
-          </div>
-          <div className="name-detail-column">
-            <div className="margin-bottom">
+          </Box>
+          <Box className="name-detail-column">
+            <Box className="margin-bottom">
               <TextBoxWithLabel
                 label="企業名"
                 width="29vw" // Uncomment to set a custom width
                 value={textValue4}
                 onChange={(e: any) => setTextValue4(e.target.value)}
               />
-            </div>
-            <div>
-              <div className="person-name-details">
-                <div>
+            </Box>
+            <Box>
+              <Box className="person-name-details">
+                <Box>
                   <TextBoxWithLabel
                     label="通訳者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                     labelWidth="120px"
@@ -333,8 +322,8 @@ function MeetingInvitationList() {
                     value={textValue6}
                     onChange={(e: any) => setTextValue6(e.target.value)}
                   />
-                </div>
-                <div>
+                </Box>
+                <Box>
                   <TextBoxWithLabel
                     label="名"
                     labelWidth="40px"
@@ -342,20 +331,20 @@ function MeetingInvitationList() {
                     value={textValue8}
                     onChange={(e: any) => setTextValue8(e.target.value)}
                   />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="last-column">
-            <div>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box className="last-column">
+            <Box>
               <TextBoxWithLabel
                 label="店舗名"
                 width="29vw" // Uncomment to set a custom width
                 value={textValue10}
                 onChange={(e: any) => setTextValue10(e.target.value)}
               />
-            </div>
-            <div className="last-row">
+            </Box>
+            <Box className="last-row">
               <span>承諾/拒否：</span>
               <SelectOption
                 label=""
@@ -364,16 +353,16 @@ function MeetingInvitationList() {
                 value={selectedOption}
                 onChange={setSelectedOption}
               />
-              <div className="search-button">
+              <Box className="search-button">
                 <ButtonAtom
                   onClick={searchConditions}
                   label="検索"
                   margin="0 5vw"
                 />
-              </div>
-            </div>
-          </div>
-        </div>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
       </Box>
       <DataTable // Customize header height
         headers={headers}
@@ -393,7 +382,7 @@ function MeetingInvitationList() {
 
         // margin='0 2vw'
       />
-    </div>
+    </Box>
   );
 }
 

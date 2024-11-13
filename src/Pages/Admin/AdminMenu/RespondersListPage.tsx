@@ -500,49 +500,16 @@ function RespondersList() {
     console.log("Selected Data:", selectedData);
   };
 
+  const borderStyle = "1px solid #ccc";
   return (
-    <div className="admin-menu-nav-page">
+    <Box className="admin-menu-nav-page">
       <MenuHeader title="応対者一覧" />
-      <div className="search-label">検索条件</div>
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          padding: "1vh 1vw",
-          display: "flex",
-          flexDirection: "column",
-          margin: "1vh 0",
+      <Box className="search-container">
+        <Box className="search-label">検索条件</Box>
 
-          // transform: 'scaleY(0.8)',
-          // overflowY: 'auto',
-        }}
-      >
-        <div className="select-range">
-          {/* <div style={{ display: 'flex', alignItems: 'center', margin: '0 20px' }}> */}
-          <div>登録日時</div>
-          <div>開始日時：</div>
-          <DatePicker label="" onDateChange={handleStartDateChange} />
-          {/* <div>{formatFullDateTime(selectedStartDate, selectedStartTime)}</div> Display full start datetime */}
-          <TimePicker
-            label="Select Start Time"
-            value={selectedStartTime}
-            onChange={handleStartTimeChange} // Use the separate handler for start time
-          />
-
-          <span>~</span>
-
-          <span>終了日時：</span>
-          <DatePicker label="" onDateChange={handleEndDateChange} />
-          {/* <div>{formatFullDateTime(selectedEndDate, selectedEndTime)}</div> Display full end datetime */}
-          <TimePicker
-            label="Select End Time"
-            value={selectedEndTime}
-            onChange={handleEndTimeChange} // Use the separate handler for end time
-          />
-        </div>
-        <div className="responders-search-container">
-          <div className="number-detail-column">
-            <div className="margin-bottom">
+        <Box className="responders-search-container">
+          <Box className="number-detail-column">
+            <Box className="margin-bottom">
               <ButtonAtom
                 onClick={searchConditions}
                 label="企業検索"
@@ -555,7 +522,7 @@ function RespondersList() {
                 value={textValue10}
                 onChange={(e: any) => setTextValue10(e.target.value)}
               />
-            </div>
+            </Box>
 
             <TextBoxWithLabel
               label="契約No"
@@ -564,19 +531,19 @@ function RespondersList() {
               value={textValue1}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
-          </div>
-          <div className="name-detail-column">
-            <div className="margin-bottom">
+          </Box>
+          <Box className="name-detail-column">
+            <Box className="margin-bottom">
               <TextBoxWithLabel
                 label="企業名"
                 width="25vw" // Uncomment to set a custom width
                 value={textValue3}
                 onChange={(e: any) => setTextValue3(e.target.value)}
               />
-            </div>
-            <div>
-              <div className="person-name-details">
-                <div>
+            </Box>
+            <Box>
+              <Box className="person-name-details">
+                <Box>
                   <TextBoxWithLabel
                     label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                     disabled={false}
@@ -586,15 +553,15 @@ function RespondersList() {
                     onChange={(e: any) => setTextValue4(e.target.value)}
                   />
                   <TextBoxWithLabel
-                    label="対応者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+                    label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                     disabled={false}
                     labelWidth="120px"
                     width="15vw" // Uncomment to set a custom width
                     value={textValue5}
                     onChange={(e: any) => setTextValue5(e.target.value)}
                   />
-                </div>
-                <div>
+                </Box>
+                <Box>
                   <TextBoxWithLabel
                     label="メイ"
                     disabled={false}
@@ -611,13 +578,13 @@ function RespondersList() {
                     value={textValue7}
                     onChange={(e: any) => setTextValue7(e.target.value)}
                   />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="last-column">
-            <div className="store-details">
-              <div>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box className="last-column">
+            <Box className="store-details">
+              <Box>
                 <ButtonAtom
                   onClick={searchConditions}
                   label="店舗検索"
@@ -629,27 +596,27 @@ function RespondersList() {
                   value={textValue9}
                   onChange={(e: any) => setTextValue9(e.target.value)}
                 />
-              </div>
-              <div>
+              </Box>
+              <Box>
                 <TextBoxWithLabel
                   label="店舗名"
                   width="12vw" // Uncomment to set a custom width
                   value={textValue9}
                   onChange={(e: any) => setTextValue9(e.target.value)}
                 />
-              </div>
-            </div>
-            <div className="last-row">
-              <div className="search-button">
+              </Box>
+            </Box>
+            <Box className="last-row">
+              <Box className="search-button">
                 <ButtonAtom
                   onClick={searchConditions}
                   label="検索"
                   margin="0 5vw"
                 />
-              </div>
-            </div>
-          </div>
-        </div>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
       </Box>
       {/* <ButtonAtom
                 onClick={searchConditions}
@@ -681,7 +648,7 @@ function RespondersList() {
 
         // margin='0 2vw'
       />
-    </div>
+    </Box>
   );
 }
 

@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 // import '../src/i18n.js'
 import AppRoutes from "./routes/AppRoutes.js";
 import AppMenuRoutes from "./routes/AdminMenuRoutes.js";
+import AdministratorListRoutes from "./routes/AdministratorListRoutes.js";
+import "./App.scss";
 
 const App: React.FC = () => {
   // const { t, i18n } = useTranslation();
@@ -33,6 +35,7 @@ const App: React.FC = () => {
       <div></div>
       <AppRoutes />
       <AppMenuRoutes />
+      <AdministratorListRoutes />
     </Router>
   );
 };

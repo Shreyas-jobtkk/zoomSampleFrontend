@@ -227,48 +227,16 @@ function CompaniesList() {
     console.log("Selected Data:", selectedData);
   };
 
+  const borderStyle = "1px solid #ccc";
+
   return (
-    <div className="admin-menu-nav-page">
+    <Box className="admin-menu-nav-page">
       <MenuHeader title="通訳者一覧" />
-      <div className="search-label">検索条件</div>
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          padding: "1vh 1vw",
-          display: "flex",
-          flexDirection: "column",
-          margin: "1vh 0",
+      <Box className="search-container">
+        <Box className="search-label">検索条件</Box>
 
-          // transform: 'scaleY(0.8)',
-          // overflowY: 'auto',
-        }}
-      >
-        <div className="select-range">
-          <span>登録日時</span>
-
-          <span>開始日時：</span>
-          <DatePicker label="" onDateChange={handleStartDateChange} />
-          {/* <div>{formatFullDateTime(selectedStartDate, selectedStartTime)}</div> Display full start datetime */}
-          <TimePicker
-            label="Select Start Time"
-            value={selectedStartTime}
-            onChange={handleStartTimeChange} // Use the separate handler for start time
-          />
-
-          <span>~</span>
-
-          <span>終了日時：</span>
-          <DatePicker label="" onDateChange={handleEndDateChange} />
-          {/* <div>{formatFullDateTime(selectedEndDate, selectedEndTime)}</div> Display full end datetime */}
-          <TimePicker
-            label="Select End Time"
-            value={selectedEndTime}
-            onChange={handleEndTimeChange} // Use the separate handler for end time
-          />
-        </div>
-        <div className="companies-search-container">
-          <div className="number-detail-column">
+        <Box className="companies-search-container">
+          <Box className="number-detail-column">
             <TextBoxWithLabel
               label="通訳者No"
               width="12vw" // Uncomment to set a custom width
@@ -276,11 +244,11 @@ function CompaniesList() {
               onChange={(e: any) => setTextValue1(e.target.value)}
               disabled={false}
             />
-          </div>
-          <div className="name-detail-column">
-            <div>
-              <div className="person-name-details">
-                <div>
+          </Box>
+          <Box className="name-detail-column">
+            <Box>
+              <Box className="person-name-details">
+                <Box>
                   <TextBoxWithLabel
                     label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                     width="18vw" // Uncomment to set a custom width
@@ -291,14 +259,14 @@ function CompaniesList() {
                   />
                   <TextBoxWithLabel
                     labelWidth="130px"
-                    label="通訳者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+                    label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                     width="18vw" // Uncomment to set a custom width
                     value={textValue3}
                     onChange={(e: any) => setTextValue3(e.target.value)}
                     disabled={false}
                   />
-                </div>
-                <div>
+                </Box>
+                <Box>
                   <TextBoxWithLabel
                     label="メイ"
                     labelWidth="40px"
@@ -315,22 +283,22 @@ function CompaniesList() {
                     onChange={(e: any) => setTextValue5(e.target.value)}
                     disabled={false}
                   />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="last-column">
-            <div className="last-row">
-              <div className="search-button">
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box className="last-column">
+            <Box className="last-row">
+              <Box className="search-button">
                 <ButtonAtom
                   onClick={searchConditions}
                   label="検索"
                   margin="0 5vw"
                 />
-              </div>
-            </div>
-          </div>
-        </div>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
       </Box>
       {/* <ButtonAtom
                 onClick={searchConditions}
@@ -363,7 +331,7 @@ function CompaniesList() {
 
         // margin='0 2vw'
       />
-    </div>
+    </Box>
   );
 }
 

@@ -21,7 +21,14 @@ function LanguagesSupportList() {
     null
   );
   const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(null);
-  const headers = ["No", "開始日時", "終了日時", "言語Ｎｏ", "言語", "和訳"];
+  const headers = [
+    "No",
+    "開始日時",
+    "終了日時",
+    "言語Ｎｏ",
+    "言語",
+    "フリガナ",
+  ];
   const data = [
     {
       No: 1,
@@ -29,7 +36,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 10:00",
       言語Ｎｏ: "1001",
       言語: "English",
-      和訳: "英語",
+      フリガナ: "英語",
     },
     {
       No: 2,
@@ -37,7 +44,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 11:00",
       言語Ｎｏ: "1002",
       言語: "日本語",
-      和訳: "日本語",
+      フリガナ: "日本語",
     },
     {
       No: 3,
@@ -45,7 +52,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 12:00",
       言語Ｎｏ: "1003",
       言語: "中文",
-      和訳: "中国語",
+      フリガナ: "中国語",
     },
     {
       No: 4,
@@ -53,7 +60,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 13:00",
       言語Ｎｏ: "1004",
       言語: "한국어",
-      和訳: "韓国語",
+      フリガナ: "韓国語",
     },
     {
       No: 5,
@@ -61,7 +68,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 14:00",
       言語Ｎｏ: "1005",
       言語: "Français",
-      和訳: "フランス語",
+      フリガナ: "フランス語",
     },
     {
       No: 6,
@@ -69,7 +76,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 15:00",
       言語Ｎｏ: "1006",
       言語: "Español",
-      和訳: "スペイン語",
+      フリガナ: "スペイン語",
     },
     {
       No: 7,
@@ -77,7 +84,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 16:00",
       言語Ｎｏ: "1007",
       言語: "Deutsch",
-      和訳: "ドイツ語",
+      フリガナ: "ドイツ語",
     },
     {
       No: 8,
@@ -85,7 +92,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 17:00",
       言語Ｎｏ: "1008",
       言語: "Italiano",
-      和訳: "イタリア語",
+      フリガナ: "イタリア語",
     },
     {
       No: 9,
@@ -93,7 +100,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 18:00",
       言語Ｎｏ: "1009",
       言語: "Português",
-      和訳: "ポルトガル語",
+      フリガナ: "ポルトガル語",
     },
     {
       No: 10,
@@ -101,7 +108,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 19:00",
       言語Ｎｏ: "1010",
       言語: "Русский",
-      和訳: "ロシア語",
+      フリガナ: "ロシア語",
     },
     {
       No: 11,
@@ -109,7 +116,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 20:00",
       言語Ｎｏ: "1011",
       言語: "हिन्दी",
-      和訳: "ヒンディー語",
+      フリガナ: "ヒンディー語",
     },
     {
       No: 12,
@@ -117,7 +124,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 21:00",
       言語Ｎｏ: "1012",
       言語: "العربية",
-      和訳: "アラビア語",
+      フリガナ: "アラビア語",
     },
     {
       No: 13,
@@ -125,7 +132,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 22:00",
       言語Ｎｏ: "1013",
       言語: "বাংলা",
-      和訳: "ベンガル語",
+      フリガナ: "ベンガル語",
     },
     {
       No: 14,
@@ -133,7 +140,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-01 23:00",
       言語Ｎｏ: "1014",
       言語: "اردو",
-      和訳: "ウルドゥー語",
+      フリガナ: "ウルドゥー語",
     },
     {
       No: 15,
@@ -141,7 +148,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-02 09:00",
       言語Ｎｏ: "1015",
       言語: "Svenska",
-      和訳: "スウェーデン語",
+      フリガナ: "スウェーデン語",
     },
     {
       No: 16,
@@ -149,7 +156,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-02 10:00",
       言語Ｎｏ: "1016",
       言語: "Ελληνικά",
-      和訳: "ギリシャ語",
+      フリガナ: "ギリシャ語",
     },
     {
       No: 17,
@@ -157,7 +164,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-02 11:00",
       言語Ｎｏ: "1017",
       言語: "Türkçe",
-      和訳: "トルコ語",
+      フリガナ: "トルコ語",
     },
     {
       No: 18,
@@ -165,7 +172,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-02 12:00",
       言語Ｎｏ: "1018",
       言語: "Nederlands",
-      和訳: "オランダ語",
+      フリガナ: "オランダ語",
     },
     {
       No: 19,
@@ -173,7 +180,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-02 13:00",
       言語Ｎｏ: "1019",
       言語: "ภาษาไทย",
-      和訳: "タイ語",
+      フリガナ: "タイ語",
     },
     {
       No: 20,
@@ -181,7 +188,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-02 14:00",
       言語Ｎｏ: "1020",
       言語: "Tiếng Việt",
-      和訳: "ベトナム語",
+      フリガナ: "ベトナム語",
     },
     {
       No: 21,
@@ -189,7 +196,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-02 15:00",
       言語Ｎｏ: "1021",
       言語: "Bahasa Melayu",
-      和訳: "マレー語",
+      フリガナ: "マレー語",
     },
     {
       No: 22,
@@ -197,7 +204,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-02 16:00",
       言語Ｎｏ: "1022",
       言語: "Filipino",
-      和訳: "フィリピン語",
+      フリガナ: "フィリピン語",
     },
     {
       No: 23,
@@ -205,7 +212,7 @@ function LanguagesSupportList() {
       終了日時: "2024-11-02 17:00",
       言語Ｎｏ: "1023",
       言語: "فارسی",
-      和訳: "ペルシャ語",
+      フリガナ: "ペルシャ語",
     },
   ];
 
@@ -268,48 +275,15 @@ function LanguagesSupportList() {
     console.log("Selected Data:", selectedData);
   };
 
+  const borderStyle = "1px solid #ccc";
+
   return (
-    <div className="admin-menu-nav-page">
+    <Box className="admin-menu-nav-page">
       <MenuHeader title="対応言語一覧" />
-      <div className="search-label">検索条件</div>
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          padding: "1vh 1vw",
-          display: "flex",
-          flexDirection: "column",
-          margin: "1vh 0",
-
-          // transform: 'scaleY(0.8)',
-          // overflowY: 'auto',
-        }}
-      >
-        <div className="select-range">
-          <span>登録日時</span>
-
-          <span>開始日時：</span>
-          <DatePicker label="" onDateChange={handleStartDateChange} />
-          {/* <div>{formatFullDateTime(selectedStartDate, selectedStartTime)}</div> Display full start datetime */}
-          <TimePicker
-            label="Select Start Time"
-            value={selectedStartTime}
-            onChange={handleStartTimeChange} // Use the separate handler for start time
-          />
-
-          <span>~</span>
-
-          <span>終了日時：</span>
-          <DatePicker label="" onDateChange={handleEndDateChange} />
-          {/* <div>{formatFullDateTime(selectedEndDate, selectedEndTime)}</div> Display full end datetime */}
-          <TimePicker
-            label="Select End Time"
-            value={selectedEndTime}
-            onChange={handleEndTimeChange} // Use the separate handler for end time
-          />
-        </div>
-        <div className="companies-search-container">
-          <div className="number-detail-column">
+      <Box className="search-container">
+        <Box className="search-label">検索条件</Box>
+        <Box className="companies-search-container">
+          <Box className="number-detail-column">
             <TextBoxWithLabel
               disabled={false}
               label="言語No"
@@ -317,14 +291,14 @@ function LanguagesSupportList() {
               value={textValue1}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
-          </div>
-          <div className="name-detail-column">
-            <div>
-              <div className="person-name-details">
-                <div>
+          </Box>
+          <Box className="name-detail-column">
+            <Box>
+              <Box className="person-name-details">
+                <Box>
                   <TextBoxWithLabel
                     disabled={false}
-                    label="和訳"
+                    label="フリガナ"
                     width="25vw" // Uncomment to set a custom width
                     value={textValue2}
                     onChange={(e: any) => setTextValue2(e.target.value)}
@@ -338,22 +312,22 @@ function LanguagesSupportList() {
                     value={textValue3}
                     onChange={(e: any) => setTextValue3(e.target.value)}
                   />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="last-column">
-            <div className="last-row">
-              <div className="search-button">
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box className="last-column">
+            <Box className="last-row">
+              <Box className="search-button">
                 <ButtonAtom
                   onClick={searchConditions}
                   label="検索"
                   margin="0 5vw"
                 />
-              </div>
-            </div>
-          </div>
-        </div>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
       </Box>
       {/* <ButtonAtom
                 onClick={searchConditions}
@@ -386,7 +360,7 @@ function LanguagesSupportList() {
 
         // margin='0 2vw'
       />
-    </div>
+    </Box>
   );
 }
 

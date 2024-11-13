@@ -2,7 +2,7 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 
-interface TextBoxProps {
+interface TextBoxWithLabelProps {
   label: string;
   width?: string; // Optional width prop for TextField
   height?: string; // Optional height for the Box in vh
@@ -13,7 +13,7 @@ interface TextBoxProps {
   [key: string]: any; // Allow other props to be passed
 }
 
-const TextBox: React.FC<TextBoxProps> = ({
+const TextBoxWithLabel: React.FC<TextBoxWithLabelProps> = ({
   label,
   width = "150px",
   height = "35px", // Default height for Box in vh
@@ -58,4 +58,4 @@ const TextBox: React.FC<TextBoxProps> = ({
   );
 };
 
-export default TextBox;
+export default TextBoxWithLabel;

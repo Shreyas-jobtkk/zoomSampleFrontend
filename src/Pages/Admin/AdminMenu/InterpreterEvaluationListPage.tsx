@@ -254,29 +254,20 @@ function InterpreterEvaluationList() {
     console.log("Selected Data:", selectedData);
   };
 
-  return (
-    <div className="admin-menu-nav-page">
-      <MenuHeader title="通訳評価一覧" />
-      <div className="search-label">検索条件</div>
-      <Box
-        sx={{
-          border: "1px solid #ccc",
-          borderRadius: "8px",
-          padding: "1vh 1vw",
-          display: "flex",
-          flexDirection: "column",
-          margin: "1vh 0",
+  const borderStyle = "1px solid #ccc";
 
-          // transform: 'scaleY(0.8)',
-          // overflowY: 'auto',
-        }}
-      >
-        <div className="select-range">
-          {/* <div style={{ display: 'flex', alignItems: 'center', margin: '0 20px' }}> */}
-          <div>通訳日時</div>
-          <div>開始日時：</div>
+  return (
+    <Box className="admin-menu-nav-page">
+      <MenuHeader title="通訳評価一覧" />
+      <Box className="search-container">
+        <Box className="search-label">検索条件</Box>
+
+        <Box className="select-range">
+          {/* <Box style={{ display: 'flex', alignItems: 'center', margin: '0 20px' }}> */}
+          <Box>通訳日時</Box>
+          <Box>開始日時：</Box>
           <DatePicker label="" onDateChange={handleStartDateChange} />
-          {/* <div>{formatFullDateTime(selectedStartDate, selectedStartTime)}</div> Display full start datetime */}
+          {/* <Box>{formatFullDateTime(selectedStartDate, selectedStartTime)}</Box> Display full start datetime */}
           <TimePicker
             label="Select Start Time"
             value={selectedStartTime}
@@ -287,16 +278,16 @@ function InterpreterEvaluationList() {
 
           <span>終了日時：</span>
           <DatePicker label="" onDateChange={handleEndDateChange} />
-          {/* <div>{formatFullDateTime(selectedEndDate, selectedEndTime)}</div> Display full end datetime */}
+          {/* <Box>{formatFullDateTime(selectedEndDate, selectedEndTime)}</Box> Display full end datetime */}
           <TimePicker
             label="Select End Time"
             value={selectedEndTime}
             onChange={handleEndTimeChange} // Use the separate handler for end time
           />
-        </div>
-        <div className="interpreter-evaluation-search-container">
-          <div className="number-detail-column">
-            <div className="margin-bottom">
+        </Box>
+        <Box className="interpreter-evaluation-search-container">
+          <Box className="number-detail-column">
+            <Box className="margin-bottom">
               <ButtonAtom
                 onClick={searchConditions}
                 label="契約検索"
@@ -310,7 +301,7 @@ function InterpreterEvaluationList() {
                 onChange={(e: any) => setTextValue10(e.target.value)}
                 // disabled={true}
               />
-            </div>
+            </Box>
             <ButtonAtom
               onClick={searchConditions}
               label="通訳者検索"
@@ -323,19 +314,19 @@ function InterpreterEvaluationList() {
               value={textValue1}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
-          </div>
-          <div className="name-detail-column">
-            <div className="margin-bottom">
+          </Box>
+          <Box className="name-detail-column">
+            <Box className="margin-bottom">
               <TextBoxWithLabel
                 label="企業名"
                 width="29vw" // Uncomment to set a custom width
                 value={textValue3}
                 onChange={(e: any) => setTextValue3(e.target.value)}
               />
-            </div>
-            <div>
-              <div className="person-name-details">
-                <div>
+            </Box>
+            <Box>
+              <Box className="person-name-details">
+                <Box>
                   <TextBoxWithLabel
                     label="通訳者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                     labelWidth="120px"
@@ -343,8 +334,8 @@ function InterpreterEvaluationList() {
                     value={textValue5}
                     onChange={(e: any) => setTextValue5(e.target.value)}
                   />
-                </div>
-                <div>
+                </Box>
+                <Box>
                   <TextBoxWithLabel
                     label="名"
                     labelWidth="40px"
@@ -352,20 +343,20 @@ function InterpreterEvaluationList() {
                     value={textValue7}
                     onChange={(e: any) => setTextValue7(e.target.value)}
                   />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="last-column">
-            <div>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+          <Box className="last-column">
+            <Box>
               <TextBoxWithLabel
                 label="店舗名"
                 width="29vw" // Uncomment to set a custom width
                 value={textValue9}
                 onChange={(e: any) => setTextValue9(e.target.value)}
               />
-            </div>
-            <div className="last-row">
+            </Box>
+            <Box className="last-row">
               <span>通訳言語：</span>
               <SelectOption
                 label=""
@@ -374,16 +365,16 @@ function InterpreterEvaluationList() {
                 value={selectedOption}
                 onChange={setSelectedOption}
               />
-              <div className="search-button">
+              <Box className="search-button">
                 <ButtonAtom
                   onClick={searchConditions}
                   label="検索"
                   margin="0 5vw"
                 />
-              </div>
-            </div>
-          </div>
-        </div>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
       </Box>
       <DataTable // Customize header height
         headers={headers}
@@ -397,7 +388,7 @@ function InterpreterEvaluationList() {
 
         // margin='0 2vw'
       />
-    </div>
+    </Box>
   );
 }
 
