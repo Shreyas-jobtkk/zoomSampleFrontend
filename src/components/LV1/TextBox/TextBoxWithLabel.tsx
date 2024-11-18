@@ -8,7 +8,6 @@ interface TextBoxWithLabelProps {
   height?: string; // Optional height for the Box in vh
   fontSize?: string; // Optional font size for label and TextField in em
   labelWidth?: string; // Optional label width prop
-  // margin?: string;
   disabled?: boolean; // Optional disabled prop to disable editing
   [key: string]: any; // Allow other props to be passed
 }
@@ -20,7 +19,6 @@ const TextBoxWithLabel: React.FC<TextBoxWithLabelProps> = ({
   fontSize, // Default font size in em for label and TextField
   labelWidth = "85px", // Default label width
   disabled = true, // Default disabled state is false
-  // margin,
   ...props
 }) => {
   return (
@@ -29,6 +27,7 @@ const TextBoxWithLabel: React.FC<TextBoxWithLabelProps> = ({
       alignItems="center"
       sx={{
         height, // Apply height for the Box in vh
+        width: `calc(${labelWidth} + ${width})`, // Ensure the width is the sum of label and input field width
       }}
     >
       <label
@@ -37,6 +36,7 @@ const TextBoxWithLabel: React.FC<TextBoxWithLabelProps> = ({
           fontSize, // Apply font size for the label in em
           display: "flex", // Ensure the label aligns with input
           alignItems: "center", // Center the label text vertically
+          whiteSpace: "nowrap", // Prevent label from shrinking or wrapping
         }}
       >
         {label}

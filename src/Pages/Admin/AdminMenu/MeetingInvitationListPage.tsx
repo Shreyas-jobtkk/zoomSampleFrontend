@@ -8,6 +8,7 @@ import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
 import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
+import "./AdminMenu.scss";
 
 function MeetingInvitationList() {
   // MeetingHistoryList()

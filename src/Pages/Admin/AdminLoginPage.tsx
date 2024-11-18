@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { homePage } from "../../components/constants";
 import LoginButton from "../../components/LV1/Button/LoginButton/LoginButton";
 import LoginHeader from "../../Header/LoginHeader";
-
+import TextBoxWithLabel from "../../components/LV1/TextBox/TextBoxWithLabel";
+import PasswordBoxWithLabel from "../../components/LV1/TextBox/PasswordBoxWithLabel";
 import TextWithBorder from "../../components/LV1/TextWithBorder/TextWithBorder";
 import TextInput from "../../components/LV1/TextInput/TextInput";
 import PasswordInput from "../../components/LV1/PasswordInput/PasswordInput";
@@ -24,6 +25,7 @@ const AdminLogin: React.FC = () => {
   };
 
   const handleButtonClick = () => {
+    console.log(45);
     // setLoading(true); // Set loading to true when fetching starts
     fetch(`${homePage}/api/users`)
       .then((response) => response.json())
@@ -59,24 +61,37 @@ const AdminLogin: React.FC = () => {
       <LoginHeader />
       <Box className="login-layout">
         <Box className="login-container">
-          <Box className="login-id">
+          {/* <Box className="login-id">
             <TextWithBorder text="ユーザーＩＤ" />
             <TextInput value={inputValue} onChange={handleInputChange} />
+          </Box> */}
+          <TextBoxWithLabel
+            label="ユーザーＩＤ"
+            width="250px" // Uncomment to set a custom width
+            labelWidth="100px"
+            value={inputValue}
+            onChange={handleInputChange}
+            disabled={false}
+          />
+          <PasswordBoxWithLabel
+            label="パスワード"
+            width="250px" // Uncomment to set a custom width
+            labelWidth="100px"
+          />
+          <Box className="login-button">
+            <LoginButton onClick={handleButtonClick} label="ログイン" />
           </Box>
 
-          <Box className="login-id">
+          {/* <Box className="login-id">
             <TextWithBorder text="パスワード" />
             <PasswordInput
               value={passwordValue}
               onChange={handlePasswordChange}
             />
-          </Box>
+          </Box> */}
         </Box>
 
         {/* <main><button onClick={handleButtonClick}>{t('User Login')}</button></main> */}
-        <Box className="login-button">
-          <LoginButton onClick={handleButtonClick} label="ログイン" />
-        </Box>
       </Box>
     </Box>
   );

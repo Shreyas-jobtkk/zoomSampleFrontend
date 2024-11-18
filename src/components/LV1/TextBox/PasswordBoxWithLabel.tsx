@@ -35,6 +35,7 @@ const PasswordBoxWithLabel: React.FC<PasswordBoxWithLabelProps> = ({
       alignItems="center"
       sx={{
         height,
+        width: `calc(${labelWidth} + ${width})`, // Ensures the width is a fixed sum of labelWidth + width
       }}
     >
       <label
@@ -43,6 +44,7 @@ const PasswordBoxWithLabel: React.FC<PasswordBoxWithLabelProps> = ({
           fontSize,
           display: "flex",
           alignItems: "center",
+          whiteSpace: "nowrap", // Prevent label from shrinking
         }}
       >
         {label}

@@ -8,8 +8,11 @@ import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
 import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
+import "./AdminMenu.scss";
+import { useNavigate } from "react-router-dom";
 
 function CompaniesList() {
+  const navigate = useNavigate();
   // State for selected start and end times
   const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
     dayjs()
@@ -23,8 +26,8 @@ function CompaniesList() {
   const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(null);
   const headers = [
     "No",
-    "開始日時",
-    "終了日時",
+    "登録日時",
+    "更新日時",
     "企業Ｎｏ",
     "企業名",
     "フリガナ",
@@ -32,136 +35,136 @@ function CompaniesList() {
   const data = [
     {
       No: 1,
-      開始日時: "2024-11-01 09:00",
-      終了日時: "2024-11-01 10:00",
+      登録日時: "2024-11-01 09:00",
+      更新日時: "2024-11-01 10:00",
       企業Ｎｏ: "1001",
       企業名: "Company A",
       フリガナ: "タカハシ ビョウイン",
     },
     {
       No: 2,
-      開始日時: "2024-11-01 11:00",
-      終了日時: "2024-11-01 12:00",
+      登録日時: "2024-11-01 11:00",
+      更新日時: "2024-11-01 12:00",
       企業Ｎｏ: "1002",
       企業名: "Company B",
       フリガナ: "スズキ シンリョウジョ",
     },
     {
       No: 3,
-      開始日時: "2024-11-02 09:30",
-      終了日時: "2024-11-02 10:30",
+      登録日時: "2024-11-02 09:30",
+      更新日時: "2024-11-02 10:30",
       企業Ｎｏ: "1003",
       企業名: "Company C",
       フリガナ: "イシカワ ケンセツ",
     },
     {
       No: 4,
-      開始日時: "2024-11-02 11:15",
-      終了日時: "2024-11-02 12:15",
+      登録日時: "2024-11-02 11:15",
+      更新日時: "2024-11-02 12:15",
       企業Ｎｏ: "1004",
       企業名: "Company D",
       フリガナ: "ヤマモト ショウジ",
     },
     {
       No: 5,
-      開始日時: "2024-11-03 09:45",
-      終了日時: "2024-11-03 10:45",
+      登録日時: "2024-11-03 09:45",
+      更新日時: "2024-11-03 10:45",
       企業Ｎｏ: "1005",
       企業名: "Company E",
       フリガナ: "コバヤシ ホスピタル",
     },
     {
       No: 6,
-      開始日時: "2024-11-03 11:30",
-      終了日時: "2024-11-03 12:30",
+      登録日時: "2024-11-03 11:30",
+      更新日時: "2024-11-03 12:30",
       企業Ｎｏ: "1006",
       企業名: "Company F",
       フリガナ: "ナカムラ ソウゴウ",
     },
     {
       No: 7,
-      開始日時: "2024-11-04 10:00",
-      終了日時: "2024-11-04 11:00",
+      登録日時: "2024-11-04 10:00",
+      更新日時: "2024-11-04 11:00",
       企業Ｎｏ: "1007",
       企業名: "Company G",
       フリガナ: "フジ サンギョウ",
     },
     {
       No: 8,
-      開始日時: "2024-11-04 12:00",
-      終了日時: "2024-11-04 13:00",
+      登録日時: "2024-11-04 12:00",
+      更新日時: "2024-11-04 13:00",
       企業Ｎｏ: "1008",
       企業名: "Company H",
       フリガナ: "マツイ ガイシャ",
     },
     {
       No: 9,
-      開始日時: "2024-11-05 09:15",
-      終了日時: "2024-11-05 10:15",
+      登録日時: "2024-11-05 09:15",
+      更新日時: "2024-11-05 10:15",
       企業Ｎｏ: "1009",
       企業名: "Company I",
       フリガナ: "イマムラ セイカ",
     },
     {
       No: 10,
-      開始日時: "2024-11-05 11:45",
-      終了日時: "2024-11-05 12:45",
+      登録日時: "2024-11-05 11:45",
+      更新日時: "2024-11-05 12:45",
       企業Ｎｏ: "1010",
       企業名: "Company J",
       フリガナ: "オカダ ヤクヒン",
     },
     {
       No: 11,
-      開始日時: "2024-11-06 09:00",
-      終了日時: "2024-11-06 10:00",
+      登録日時: "2024-11-06 09:00",
+      更新日時: "2024-11-06 10:00",
       企業Ｎｏ: "1011",
       企業名: "Company K",
       フリガナ: "キムラ デンタル",
     },
     {
       No: 12,
-      開始日時: "2024-11-06 11:00",
-      終了日時: "2024-11-06 12:00",
+      登録日時: "2024-11-06 11:00",
+      更新日時: "2024-11-06 12:00",
       企業Ｎｏ: "1012",
       企業名: "Company L",
       フリガナ: "ヨシダ カンパニー",
     },
     {
       No: 13,
-      開始日時: "2024-11-07 09:30",
-      終了日時: "2024-11-07 10:30",
+      登録日時: "2024-11-07 09:30",
+      更新日時: "2024-11-07 10:30",
       企業Ｎｏ: "1013",
       企業名: "Company M",
       フリガナ: "ヤマグチ シュッパン",
     },
     {
       No: 14,
-      開始日時: "2024-11-07 11:15",
-      終了日時: "2024-11-07 12:15",
+      登録日時: "2024-11-07 11:15",
+      更新日時: "2024-11-07 12:15",
       企業Ｎｏ: "1014",
       企業名: "Company N",
       フリガナ: "サイトウ ケンキュウジョ",
     },
     {
       No: 15,
-      開始日時: "2024-11-08 10:00",
-      終了日時: "2024-11-08 11:00",
+      登録日時: "2024-11-08 10:00",
+      更新日時: "2024-11-08 11:00",
       企業Ｎｏ: "1015",
       企業名: "Company O",
       フリガナ: "イケダ ジムショ",
     },
     {
       No: 16,
-      開始日時: "2024-11-08 12:00",
-      終了日時: "2024-11-08 13:00",
+      登録日時: "2024-11-08 12:00",
+      更新日時: "2024-11-08 13:00",
       企業Ｎｏ: "1016",
       企業名: "Company P",
       フリガナ: "ハヤシ リョウイン",
     },
     {
       No: 17,
-      開始日時: "2024-11-09 09:00",
-      終了日時: "2024-11-09 10:00",
+      登録日時: "2024-11-09 09:00",
+      更新日時: "2024-11-09 10:00",
       企業Ｎｏ: "1017",
       企業名: "Company Q",
       フリガナ: "クドウ ゲンバ",
@@ -221,13 +224,32 @@ function CompaniesList() {
   const [textValue4, setTextValue4] = useState<string>("");
   const [textValue5, setTextValue5] = useState<string>("");
 
+  // Handle selection change
   const handleSelectionChange = (
-    selectedData: Array<{ No: string | number; [key: string]: string | number }>
+    newSelectedData: Array<{
+      No: string | number;
+      [key: string]: string | number;
+    }>
   ) => {
-    console.log("Selected Data:", selectedData);
+    // Update the selected data state
+    setSelectedData(newSelectedData);
+
+    // Log the selected data to the console
+    console.log("Selected Data:", newSelectedData);
+  };
+
+  const navigateToInfoPage = () => {
+    navigate("/CompanyListInfo");
+  };
+  const navigateToEditPage = () => {
+    navigate("/CompanyListInfo");
   };
 
   const borderStyle = "1px solid #ccc";
+
+  const [selectedData, setSelectedData] = useState<
+    Array<{ No: string | number; [key: string]: string | number }>
+  >([]);
 
   return (
     <Box className="admin-menu-nav-page">
@@ -295,22 +317,19 @@ function CompaniesList() {
         onClick={searchConditions}
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={navigateToInfoPage}
+        disabled={selectedData.length !== 1}
         label="閲覧"
-
-        // margin='0 2vw'
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={navigateToEditPage}
+        disabled={selectedData.length !== 1}
         label="編集"
-
-        // margin='0 2vw'
       />
       <ButtonAtom
         onClick={searchConditions}
+        disabled={selectedData.length <= 0}
         label="削除"
-
-        // margin='0 2vw'
       />
     </Box>
   );

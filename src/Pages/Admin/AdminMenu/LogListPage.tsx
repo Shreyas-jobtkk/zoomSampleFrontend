@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import "./AdminMenu.scss";
 
 function LogList() {
   return (

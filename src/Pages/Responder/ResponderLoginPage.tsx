@@ -10,6 +10,9 @@ import TextInput from "../../components/LV1/TextInput/TextInput";
 import PasswordInput from "../../components/LV1/PasswordInput/PasswordInput";
 import { Box } from "@mui/material";
 
+import PasswordBoxWithLabel from "../../components/LV1/TextBox/PasswordBoxWithLabel";
+import TextBoxWithLabel from "../../components/LV1/TextBox/TextBoxWithLabel";
+
 // let homePage = "https://zoomsamplebackend.onrender.com"
 // let homePage = "http://localhost:4000"
 
@@ -79,7 +82,7 @@ const ResponderLogin: React.FC = () => {
               onChange={handleInputChange} />
           </Box> */}
 
-          <Box className="login-id">
+          {/* <Box className="login-id">
             <TextWithBorder text="ユーザーＩＤ" />
             <TextInput value={inputValue} onChange={handleInputChange} />
           </Box>
@@ -89,13 +92,26 @@ const ResponderLogin: React.FC = () => {
               value={passwordValue}
               onChange={handlePasswordChange}
             />
+          </Box> */}
+          <TextBoxWithLabel
+            label="ユーザーＩＤ"
+            width="250px" // Uncomment to set a custom width
+            labelWidth="100px"
+            value={inputValue}
+            onChange={handleInputChange}
+            disabled={false}
+          />
+          <PasswordBoxWithLabel
+            label="パスワード"
+            width="250px" // Uncomment to set a custom width
+            labelWidth="100px"
+          />
+          <Box className="login-button">
+            <LoginButton onClick={handleButtonClick} label="ログイン" />
           </Box>
         </Box>
 
         {/* <main><button onClick={handleButtonClick}>{t('User Login')}</button></main> */}
-        <Box className="login-button">
-          <LoginButton onClick={handleButtonClick} label="ログイン" />
-        </Box>
       </Box>
     </Box>
   );

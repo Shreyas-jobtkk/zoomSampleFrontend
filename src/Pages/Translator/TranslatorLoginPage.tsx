@@ -6,6 +6,8 @@ import TextInput from "../../components/LV1/TextInput/TextInput";
 import PasswordInput from "../../components/LV1/PasswordInput/PasswordInput";
 import LoginButton from "../../components/LV1/Button/LoginButton/LoginButton";
 import { Box } from "@mui/material";
+import TextBoxWithLabel from "../../components/LV1/TextBox/TextBoxWithLabel";
+import PasswordBoxWithLabel from "../../components/LV1/TextBox/PasswordBoxWithLabel";
 
 // let homePage = "https://zoomsamplebackend.onrender.com"
 // let homePage = "http://localhost:4000"
@@ -64,24 +66,28 @@ function TranslatorLogin() {
       <LoginHeader />
       <Box className="login-layout">
         <Box className="login-container">
-          <Box className="login-id">
-            <TextWithBorder text="ユーザーＩＤ" />
-            <TextInput value={inputValue} onChange={handleInputChange} />
-          </Box>
-
-          <Box className="login-id">
-            <TextWithBorder text="パスワード" />
-            <PasswordInput
-              value={passwordValue}
-              onChange={handlePasswordChange}
-            />
+          <TextBoxWithLabel
+            label="ユーザーＩＤ"
+            width="250px" // Uncomment to set a custom width
+            labelWidth="100px"
+            value={inputValue}
+            onChange={handleInputChange}
+            disabled={false}
+          />
+          <PasswordBoxWithLabel
+            label="パスワード"
+            width="250px" // Uncomment to set a custom width
+            labelWidth="100px"
+          />
+          <Box className="login-button">
+            <LoginButton onClick={handleButtonClick} label="ログイン" />
           </Box>
         </Box>
 
         {/* <main><button onClick={handleButtonClick}>{t('User Login')}</button></main> */}
-        <Box className="login-button">
+        {/* <Box className="login-button">
           <LoginButton onClick={handleButtonClick} label="ログイン" />
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );

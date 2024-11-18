@@ -9,8 +9,11 @@ import MenuHeader from "../../../components/LV3/Header/MenuHeader";
 import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
 import { Height } from "@mui/icons-material";
+import "./AdminMenu.scss";
+import { useNavigate } from "react-router-dom";
 
 function StoreList() {
+  const navigate = useNavigate();
   // State for selected start and end times
   const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
     dayjs()
@@ -22,213 +25,240 @@ function StoreList() {
     null
   );
 
+  const [selectedData, setSelectedData] = useState<
+    Array<{ No: string | number; [key: string]: string | number }>
+  >([]);
+
   const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(null);
 
   const headers = [
     "No",
-    "開始日時",
-    "終了日時",
+    "登録日時",
+    "更新日時",
     "企業Ｎｏ",
     "企業名",
+    "店舗No",
     "店舗名",
     "フリガナ",
   ];
   const data = [
     {
       No: 1,
-      開始日時: "2024-11-01 09:00",
-      終了日時: "2024-11-01 10:00",
+      登録日時: "2024-11-01 09:00",
+      更新日時: "2024-11-01 10:00",
       企業Ｎｏ: "1001",
       企業名: "Company A",
+      店舗No: "3001",
       店舗名: "第一支店",
       フリガナ: "ダイイイチシテン",
     },
     {
       No: 2,
-      開始日時: "2024-11-01 10:30",
-      終了日時: "2024-11-01 11:30",
+      登録日時: "2024-11-01 10:30",
+      更新日時: "2024-11-01 11:30",
       企業Ｎｏ: "1002",
       企業名: "Company B",
+      店舗No: "3001",
       店舗名: "第二支店",
       フリガナ: "ダイニシテン",
     },
     {
       No: 3,
-      開始日時: "2024-11-01 12:00",
-      終了日時: "2024-11-01 13:00",
+      登録日時: "2024-11-01 12:00",
+      更新日時: "2024-11-01 13:00",
       企業Ｎｏ: "1003",
       企業名: "Company C",
+      店舗No: "3001",
       店舗名: "第三支店",
       フリガナ: "ダイサンシテン",
     },
     {
       No: 4,
-      開始日時: "2024-11-01 13:30",
-      終了日時: "2024-11-01 14:30",
+      登録日時: "2024-11-01 13:30",
+      更新日時: "2024-11-01 14:30",
       企業Ｎｏ: "1004",
       企業名: "Company D",
+      店舗No: "3001",
       店舗名: "第四支店",
       フリガナ: "ダイシシテン",
     },
     {
       No: 5,
-      開始日時: "2024-11-01 15:00",
-      終了日時: "2024-11-01 16:00",
+      登録日時: "2024-11-01 15:00",
+      更新日時: "2024-11-01 16:00",
       企業Ｎｏ: "1005",
       企業名: "Company E",
+      店舗No: "3001",
       店舗名: "第五支店",
       フリガナ: "ダイゴシテン",
     },
     {
       No: 6,
-      開始日時: "2024-11-01 16:30",
-      終了日時: "2024-11-01 17:30",
+      登録日時: "2024-11-01 16:30",
+      更新日時: "2024-11-01 17:30",
       企業Ｎｏ: "1006",
       企業名: "Company F",
+      店舗No: "3001",
       店舗名: "第六支店",
       フリガナ: "ダイロクシテン",
     },
     {
       No: 7,
-      開始日時: "2024-11-02 09:00",
-      終了日時: "2024-11-02 10:00",
+      登録日時: "2024-11-02 09:00",
+      更新日時: "2024-11-02 10:00",
       企業Ｎｏ: "1007",
       企業名: "Company G",
+      店舗No: "3001",
       店舗名: "第七支店",
       フリガナ: "ダイシチシテン",
     },
     {
       No: 8,
-      開始日時: "2024-11-02 10:30",
-      終了日時: "2024-11-02 11:30",
+      登録日時: "2024-11-02 10:30",
+      更新日時: "2024-11-02 11:30",
       企業Ｎｏ: "1008",
       企業名: "Company H",
+      店舗No: "3001",
       店舗名: "第八支店",
       フリガナ: "ダイハチシテン",
     },
     {
       No: 9,
-      開始日時: "2024-11-02 12:00",
-      終了日時: "2024-11-02 13:00",
+      登録日時: "2024-11-02 12:00",
+      更新日時: "2024-11-02 13:00",
       企業Ｎｏ: "1009",
       企業名: "Company I",
+      店舗No: "3001",
       店舗名: "第九支店",
       フリガナ: "ダイキュウシテン",
     },
     {
       No: 10,
-      開始日時: "2024-11-02 13:30",
-      終了日時: "2024-11-02 14:30",
+      登録日時: "2024-11-02 13:30",
+      更新日時: "2024-11-02 14:30",
       企業Ｎｏ: "1010",
       企業名: "Company J",
+      店舗No: "3001",
       店舗名: "第十支店",
       フリガナ: "ダイジュウシテン",
     },
     {
       No: 11,
-      開始日時: "2024-11-02 15:00",
-      終了日時: "2024-11-02 16:00",
+      登録日時: "2024-11-02 15:00",
+      更新日時: "2024-11-02 16:00",
       企業Ｎｏ: "1011",
       企業名: "Company K",
+      店舗No: "3001",
       店舗名: "第十一支店",
       フリガナ: "ダイジュウイチシテン",
     },
     {
       No: 12,
-      開始日時: "2024-11-02 16:30",
-      終了日時: "2024-11-02 17:30",
+      登録日時: "2024-11-02 16:30",
+      更新日時: "2024-11-02 17:30",
       企業Ｎｏ: "1012",
       企業名: "Company L",
+      店舗No: "3001",
       店舗名: "第十二支店",
       フリガナ: "ダイジュウニシテン",
     },
     {
       No: 13,
-      開始日時: "2024-11-03 09:00",
-      終了日時: "2024-11-03 10:00",
+      登録日時: "2024-11-03 09:00",
+      更新日時: "2024-11-03 10:00",
       企業Ｎｏ: "1013",
       企業名: "Company M",
+      店舗No: "3001",
       店舗名: "第十三支店",
       フリガナ: "ダイジュウサンシテン",
     },
     {
       No: 14,
-      開始日時: "2024-11-03 10:30",
-      終了日時: "2024-11-03 11:30",
+      登録日時: "2024-11-03 10:30",
+      更新日時: "2024-11-03 11:30",
       企業Ｎｏ: "1014",
       企業名: "Company N",
+      店舗No: "3001",
       店舗名: "第十四支店",
       フリガナ: "ダイジュウヨンシテン",
     },
     {
       No: 15,
-      開始日時: "2024-11-03 12:00",
-      終了日時: "2024-11-03 13:00",
+      登録日時: "2024-11-03 12:00",
+      更新日時: "2024-11-03 13:00",
       企業Ｎｏ: "1015",
       企業名: "Company O",
+      店舗No: "3001",
       店舗名: "第十五支店",
       フリガナ: "ダイジュウゴシテン",
     },
     {
       No: 16,
-      開始日時: "2024-11-03 13:30",
-      終了日時: "2024-11-03 14:30",
+      登録日時: "2024-11-03 13:30",
+      更新日時: "2024-11-03 14:30",
       企業Ｎｏ: "1016",
       企業名: "Company P",
+      店舗No: "3001",
       店舗名: "第十六支店",
       フリガナ: "ダイジュウロクシテン",
     },
     {
       No: 17,
-      開始日時: "2024-11-03 15:00",
-      終了日時: "2024-11-03 16:00",
+      登録日時: "2024-11-03 15:00",
+      更新日時: "2024-11-03 16:00",
       企業Ｎｏ: "1017",
       企業名: "Company Q",
+      店舗No: "3001",
       店舗名: "第十七支店",
       フリガナ: "ダイジュウナナシテン",
     },
     {
       No: 18,
-      開始日時: "2024-11-03 16:30",
-      終了日時: "2024-11-03 17:30",
+      登録日時: "2024-11-03 16:30",
+      更新日時: "2024-11-03 17:30",
       企業Ｎｏ: "1018",
       企業名: "Company R",
+      店舗No: "3001",
       店舗名: "第十八支店",
       フリガナ: "ダイジュウハシテン",
     },
     {
       No: 19,
-      開始日時: "2024-11-04 09:00",
-      終了日時: "2024-11-04 10:00",
+      登録日時: "2024-11-04 09:00",
+      更新日時: "2024-11-04 10:00",
       企業Ｎｏ: "1019",
       企業名: "Company S",
+      店舗No: "3001",
       店舗名: "第十九支店",
       フリガナ: "ダイジュウキュウシテン",
     },
     {
       No: 20,
-      開始日時: "2024-11-04 10:30",
-      終了日時: "2024-11-04 11:30",
+      登録日時: "2024-11-04 10:30",
+      更新日時: "2024-11-04 11:30",
       企業Ｎｏ: "1020",
       企業名: "Company T",
+      店舗No: "3001",
       店舗名: "第二十支店",
       フリガナ: "ダイニジュウシテン",
     },
     {
       No: 21,
-      開始日時: "2024-11-04 12:00",
-      終了日時: "2024-11-04 13:00",
+      登録日時: "2024-11-04 12:00",
+      更新日時: "2024-11-04 13:00",
       企業Ｎｏ: "1021",
       企業名: "Company U",
+      店舗No: "3001",
       店舗名: "第二十一支店",
       フリガナ: "ダイニジュウイチシテン",
     },
     {
       No: 22,
-      開始日時: "2024-11-04 13:30",
-      終了日時: "2024-11-04 14:30",
+      登録日時: "2024-11-04 13:30",
+      更新日時: "2024-11-04 14:30",
       企業Ｎｏ: "1022",
       企業名: "Company V",
+      店舗No: "3001",
       店舗名: "第二十二支店",
       フリガナ: "ダイニジュウニシテン",
     },
@@ -294,10 +324,25 @@ function StoreList() {
 
   const [selectedOption, setSelectedOption] = useState<string>("");
 
+  // Handle selection change
   const handleSelectionChange = (
-    selectedData: Array<{ No: string | number; [key: string]: string | number }>
+    newSelectedData: Array<{
+      No: string | number;
+      [key: string]: string | number;
+    }>
   ) => {
-    console.log("Selected Data:", selectedData);
+    // Update the selected data state
+    setSelectedData(newSelectedData);
+
+    // Log the selected data to the console
+    console.log("Selected Data:", newSelectedData);
+  };
+
+  const navigateToInfoPage = () => {
+    navigate("/StoreListInfo");
+  };
+  const navigateToEditPage = () => {
+    navigate("/StoreListInfo");
   };
 
   const borderStyle = "1px solid #ccc";
@@ -305,43 +350,9 @@ function StoreList() {
   return (
     <Box className="admin-menu-nav-page">
       <MenuHeader title="店舗一覧" />
-      <Box className="search-label">検索条件</Box>
-      <Box
-        sx={{
-          border: borderStyle,
-          borderRadius: "8px",
-          padding: "1vh 1vw",
-          display: "flex",
-          flexDirection: "column",
-          margin: "1vh 0",
+      <Box className="search-container">
+        <Box className="search-label">検索条件</Box>
 
-          // transform: 'scaleY(0.8)',
-          // overflowY: 'auto',
-        }}
-      >
-        <Box className="select-range">
-          {/* <Box style={{ display: 'flex', alignItems: 'center', margin: '0 20px' }}> */}
-          <Box>登録日時</Box>
-          <Box>開始日時：</Box>
-          <DatePicker label="" onDateChange={handleStartDateChange} />
-          {/* <Box>{formatFullDateTime(selectedStartDate, selectedStartTime)}</Box> Display full start datetime */}
-          <TimePicker
-            label="Select Start Time"
-            value={selectedStartTime}
-            onChange={handleStartTimeChange} // Use the separate handler for start time
-          />
-
-          <span>~</span>
-
-          <span>終了日時：</span>
-          <DatePicker label="" onDateChange={handleEndDateChange} />
-          {/* <Box>{formatFullDateTime(selectedEndDate, selectedEndTime)}</Box> Display full end datetime */}
-          <TimePicker
-            label="Select End Time"
-            value={selectedEndTime}
-            onChange={handleEndTimeChange} // Use the separate handler for end time
-          />
-        </Box>
         <Box className="store-search-container">
           <Box className="number-detail-column">
             <Box className="margin-bottom">
@@ -417,19 +428,19 @@ function StoreList() {
         onClick={searchConditions}
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={navigateToInfoPage}
+        disabled={selectedData.length !== 1}
         label="閲覧"
-        // margin='0 2vw'
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={navigateToEditPage}
+        disabled={selectedData.length !== 1}
         label="編集"
-        // margin='0 2vw'
       />
       <ButtonAtom
         onClick={searchConditions}
+        disabled={selectedData.length <= 0}
         label="削除"
-        // margin='0 2vw'
       />
     </Box>
   );

@@ -1,0 +1,214 @@
+$border-style: 1px solid #ccc;
+
+.admin-menu-nav-page {
+  height: 100%;
+  /* Adjust as needed */
+  overflow-y: auto;
+  white-space: nowrap; /* Prevents text from wrapping to the next line */
+  overflow: hidden; /* Hides any overflowed content */
+  text-overflow: ellipsis;
+  margin: 0 1vw;
+}
+
+.search-container {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+  margin: 3vh 0;
+}
+
+.search-label {
+  position: relative;
+  bottom: 3vh;
+  left: 1vw;
+  /* padding: 0 4px; */
+  background-color: #f1f2f3;
+  border: $border-style;
+  width: 150px;
+  text-align: center;
+}
+
+.select-range {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+  margin-bottom: 1vw;
+}
+
+.translator-menu-button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  .navigate-buttons {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.companies-search-container,
+.administrator-search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .last-column {
+    .last-row {
+      display: flex;
+      margin-top: 3vh;
+
+      .search-button {
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+.store-search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .last-column {
+    .last-row {
+      display: flex;
+      margin-top: 3vh;
+
+      .search-button {
+        margin-left: auto;
+      }
+    }
+  }
+  .store-number-label {
+    margin-top: 3vh;
+  }
+  .last-column {
+    margin-top: auto;
+    margin-bottom: 1vh;
+  }
+  .name-detail-column {
+    .margin-bottom {
+      margin-bottom: 3vh !important ;
+    }
+  }
+}
+
+.responders-search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .last-column {
+    .last-row {
+      display: flex;
+      margin-top: 3vh;
+
+      .search-button {
+        margin-left: auto;
+      }
+    }
+  }
+
+  // .name-detail-column {
+  //   .margin-bottom {
+  //     margin-bottom: 6vh !important ;
+  //   }
+  // }
+  // .number-detail-column {
+  .margin-bottom {
+    margin-bottom: 3vh !important ;
+  }
+  // }
+  .last-column {
+    margin-left: -6vw;
+    .store-details {
+      display: flex;
+      gap: 1vw;
+    }
+  }
+  .name-detail-column {
+    .margin-bottom {
+      margin-bottom: 40px !important ;
+    }
+  }
+}
+
+.administrator-list-menu-search-container {
+  .first-row {
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+  }
+
+  .last-row {
+    display: flex;
+    align-items: center;
+    margin: 4vh 2vw;
+
+    .name-detail-column {
+      margin-left: 10vw;
+    }
+
+    .search-button {
+      margin-left: auto;
+    }
+  }
+}
+
+.interpreter-evaluation-search-container,
+.meeting-history-search-container,
+.meeting-invitation-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .last-column {
+    .last-row {
+      display: flex;
+      margin-top: 6vh;
+
+      .search-button {
+        margin-left: auto;
+      }
+    }
+  }
+  .person-name-details {
+    margin-top: 5vh;
+  }
+}
+
+.number-detail-column {
+  display: flex;
+  flex-direction: column;
+  margin-right: 1vw;
+
+  .margin-bottom {
+    margin-bottom: 1vh;
+  }
+}
+
+.name-detail-column {
+  display: flex;
+  flex-direction: column;
+
+  .margin-bottom {
+    margin-bottom: 1vh;
+  }
+}
+
+.person-name-details {
+  display: flex;
+  gap: 2vw;
+}
+
+.description-label {
+  position: relative;
+  bottom: 3vh;
+  left: 1vw;
+  background-color: #f1f2f3;
+  border: $border-style;
+  width: 150px;
+  text-align: center;
+}

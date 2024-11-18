@@ -9,6 +9,7 @@ import MenuHeader from "../../../components/LV3/Header/MenuHeader";
 import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
 import { Height } from "@mui/icons-material";
+import "./AdminMenu.scss";
 
 function InterpreterEvaluationList() {
   // State for selected start and end times
