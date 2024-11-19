@@ -283,51 +283,39 @@ function LanguagesSupportList() {
       <MenuHeader title="対応言語一覧" />
       <Box className="search-container">
         <Box className="search-label">検索条件</Box>
-        <Box className="companies-search-container">
-          <Box className="number-detail-column">
-            <TextBoxWithLabel
-              disabled={false}
-              label="言語No"
-              width="12vw" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
-            />
-          </Box>
-          <Box className="name-detail-column">
+        <Box className="language-search-details">
+          <TextBoxWithLabel
+            disabled={false}
+            label="言語No"
+            width="12vw" // Uncomment to set a custom width
+            value={textValue1}
+            onChange={(e: any) => setTextValue1(e.target.value)}
+          />
+
+          <Box>
             <Box>
-              <Box className="person-name-details">
-                <Box>
-                  <TextBoxWithLabel
-                    disabled={false}
-                    label="フリガナ"
-                    width="25vw" // Uncomment to set a custom width
-                    value={textValue2}
-                    onChange={(e: any) => setTextValue2(e.target.value)}
-                    labelWidth="70px"
-                  />
-                  <TextBoxWithLabel
-                    disabled={false}
-                    labelWidth="70px"
-                    label="言語"
-                    width="25vw" // Uncomment to set a custom width
-                    value={textValue3}
-                    onChange={(e: any) => setTextValue3(e.target.value)}
-                  />
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-          <Box className="last-column">
-            <Box className="last-row">
-              <Box className="search-button">
-                <ButtonAtom
-                  onClick={searchConditions}
-                  label="検索"
-                  margin="0 5vw"
+              <Box>
+                <TextBoxWithLabel
+                  disabled={false}
+                  label="フリガナ"
+                  width="50vw" // Uncomment to set a custom width
+                  value={textValue2}
+                  onChange={(e: any) => setTextValue2(e.target.value)}
+                  labelWidth="70px"
+                />
+                <TextBoxWithLabel
+                  disabled={false}
+                  labelWidth="70px"
+                  label="言語"
+                  width="50vw" // Uncomment to set a custom width
+                  value={textValue3}
+                  onChange={(e: any) => setTextValue3(e.target.value)}
                 />
               </Box>
             </Box>
           </Box>
+
+          <ButtonAtom onClick={searchConditions} label="検索" margin="0 5vw" />
         </Box>
       </Box>
       {/* <ButtonAtom

@@ -353,22 +353,20 @@ function StoreList() {
       <Box className="search-container">
         <Box className="search-label">検索条件</Box>
 
-        <Box className="store-search-container">
+        {/* <Box className="store-search-container">
           <Box className="number-detail-column">
-            <Box className="margin-bottom">
-              <ButtonAtom
-                onClick={searchConditions}
-                label="企業検索"
-                width="90px"
-                margin="2px"
-              />
-              <TextBoxWithLabel
-                label="企業No"
-                width="12vw" // Uncomment to set a custom width
-                value={textValue10}
-                onChange={(e: any) => setTextValue10(e.target.value)}
-              />
-            </Box>
+            <ButtonAtom
+              onClick={searchConditions}
+              label="企業検索"
+              width="90px"
+              margin="2px"
+            />
+            <TextBoxWithLabel
+              label="企業No"
+              width="12vw" // Uncomment to set a custom width
+              value={textValue10}
+              onChange={(e: any) => setTextValue10(e.target.value)}
+            />
 
             <Box className="store-number-label">
               <TextBoxWithLabel
@@ -416,6 +414,64 @@ function StoreList() {
               label="検索"
               margin="0 5vw"
             />
+          </Box>
+        </Box> */}
+        <Box>
+          <ButtonAtom
+            onClick={searchConditions}
+            label="企業検索"
+            width="90px"
+            margin="2px"
+          />
+          <Box className="contract-details">
+            <TextBoxWithLabel
+              label="企業No"
+              width="12vw" // Uncomment to set a custom width
+              value={textValue10}
+              onChange={(e: any) => setTextValue10(e.target.value)}
+              // disabled={true}
+            />
+            <TextBoxWithLabel
+              label="企業名"
+              width="60vw" // Uncomment to set a custom width
+              value={textValue3}
+              onChange={(e: any) => setTextValue3(e.target.value)}
+            />
+          </Box>
+        </Box>
+        <Box className="store-search-container">
+          <TextBoxWithLabel
+            disabled={false}
+            label="店舗No"
+            width="12vw" // Uncomment to set a custom width
+            value={textValue1}
+            onChange={(e: any) => setTextValue1(e.target.value)}
+          />
+          <Box>
+            <Box>
+              <Box>
+                <TextBoxWithLabel
+                  disabled={false}
+                  label="フリガナ"
+                  width="60vw" // Uncomment to set a custom width
+                  value={textValue2}
+                  onChange={(e: any) => setTextValue2(e.target.value)}
+                  // labelWidth="70px"
+                />
+                <TextBoxWithLabel
+                  disabled={false}
+                  // labelWidth="70px"
+                  label="店舗名"
+                  width="60vw" // Uncomment to set a custom width
+                  value={textValue3}
+                  onChange={(e: any) => setTextValue3(e.target.value)}
+                />
+              </Box>
+            </Box>
+          </Box>
+
+          <Box>
+            <ButtonAtom onClick={searchConditions} label="検索" />
           </Box>
         </Box>
       </Box>

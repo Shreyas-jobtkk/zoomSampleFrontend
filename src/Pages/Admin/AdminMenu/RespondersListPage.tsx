@@ -508,7 +508,7 @@ function RespondersList() {
       <Box className="search-container">
         <Box className="search-label">検索条件</Box>
 
-        <Box className="responders-search-container">
+        {/* <Box className="responders-search-container">
           <Box className="number-detail-column">
             <Box className="margin-bottom">
               <ButtonAtom
@@ -617,7 +617,7 @@ function RespondersList() {
               </Box>
             </Box>
           </Box>
-        </Box>
+        </Box> */}
       </Box>
       {/* <ButtonAtom
                 onClick={searchConditions}

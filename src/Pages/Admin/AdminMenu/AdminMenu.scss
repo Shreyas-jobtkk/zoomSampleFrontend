@@ -48,160 +48,180 @@ $border-style: 1px solid #ccc;
   }
 }
 
+// .companies-search-container,
+// .administrator-search-container {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: flex-start;
+
+//   .last-column {
+//     .last-row {
+//       display: flex;
+//       margin-top: 3vh;
+
+//       .search-button {
+//         margin-left: auto;
+//       }
+//     }
+//   }
+// }
+
+// .store-search-container {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: flex-start;
+
+//   .last-column {
+//     .last-row {
+//       display: flex;
+//       margin-top: 3vh;
+
+//       .search-button {
+//         margin-left: auto;
+//       }
+//     }
+//   }
+//   .store-number-label {
+//     margin-top: 3vh;
+//   }
+//   .last-column {
+//     margin-top: auto;
+//     margin-bottom: 1vh;
+//   }
+//   .name-detail-column {
+//     .margin-bottom {
+//       margin-bottom: 3vh !important ;
+//     }
+//   }
+// }
+
+// .responders-search-container {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: flex-start;
+
+//   .last-column {
+//     .last-row {
+//       display: flex;
+//       margin-top: 3vh;
+
+//       .search-button {
+//         margin-left: auto;
+//       }
+//     }
+//   }
+
+//   // .name-detail-column {
+//   //   .margin-bottom {
+//   //     margin-bottom: 6vh !important ;
+//   //   }
+//   // }
+//   // .number-detail-column {
+//   .margin-bottom {
+//     margin-bottom: 3vh !important ;
+//   }
+//   // }
+//   .last-column {
+//     margin-left: -6vw;
+//     .store-details {
+//       display: flex;
+//       gap: 1vw;
+//     }
+//   }
+//   .name-detail-column {
+//     .margin-bottom {
+//       margin-bottom: 40px !important ;
+//     }
+//   }
+// }
+
+// .administrator-list-menu-search-container {
+//   .first-row {
+//     display: flex;
+//     align-items: center;
+//     margin: 0 20px;
+//   }
+
+//   .last-row {
+//     display: flex;
+//     align-items: center;
+//     margin: 4vh 2vw;
+
+//     .name-detail-column {
+//       margin-left: 10vw;
+//     }
+
+//     .search-button {
+//       margin-left: auto;
+//     }
+//   }
+// }
+
+// .interpreter-evaluation-search-container,
+// .meeting-history-search-container,
+// .meeting-invitation-container {
+//   // display: flex;
+//   // justify-content: space-between;
+//   // align-items: flex-start;
+
+//   // .last-column {
+//   //   .last-row {
+//   //     display: flex;
+//   //     margin-top: 6vh;
+
+//   //     .search-button {
+//   //       margin-left: auto;
+//   //     }
+//   //   }
+//   // }
+//   // .person-name-details {
+//   //   margin-top: 5vh;
+//   // }
+// }
+
+.contract-details,
+.interpreter-search-details,
+.language-search-details,
 .companies-search-container,
-.administrator-search-container {
+.admin-details {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: flex-start;
-
-  .last-column {
-    .last-row {
-      display: flex;
-      margin-top: 3vh;
-
-      .search-button {
-        margin-left: auto;
-      }
-    }
-  }
+  gap: 2vw;
+  // margin-top: 1vh;
 }
 
 .store-search-container {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: flex-start;
-
-  .last-column {
-    .last-row {
-      display: flex;
-      margin-top: 3vh;
-
-      .search-button {
-        margin-left: auto;
-      }
-    }
-  }
-  .store-number-label {
-    margin-top: 3vh;
-  }
-  .last-column {
-    margin-top: auto;
-    margin-bottom: 1vh;
-  }
-  .name-detail-column {
-    .margin-bottom {
-      margin-bottom: 3vh !important ;
-    }
-  }
-}
-
-.responders-search-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-
-  .last-column {
-    .last-row {
-      display: flex;
-      margin-top: 3vh;
-
-      .search-button {
-        margin-left: auto;
-      }
-    }
-  }
-
-  // .name-detail-column {
-  //   .margin-bottom {
-  //     margin-bottom: 6vh !important ;
-  //   }
-  // }
-  // .number-detail-column {
-  .margin-bottom {
-    margin-bottom: 3vh !important ;
-  }
-  // }
-  .last-column {
-    margin-left: -6vw;
-    .store-details {
-      display: flex;
-      gap: 1vw;
-    }
-  }
-  .name-detail-column {
-    .margin-bottom {
-      margin-bottom: 40px !important ;
-    }
-  }
-}
-
-.administrator-list-menu-search-container {
-  .first-row {
-    display: flex;
-    align-items: center;
-    margin: 0 20px;
-  }
-
-  .last-row {
-    display: flex;
-    align-items: center;
-    margin: 4vh 2vw;
-
-    .name-detail-column {
-      margin-left: 10vw;
-    }
-
-    .search-button {
-      margin-left: auto;
-    }
-  }
-}
-
-.interpreter-evaluation-search-container,
-.meeting-history-search-container,
-.meeting-invitation-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-
-  .last-column {
-    .last-row {
-      display: flex;
-      margin-top: 6vh;
-
-      .search-button {
-        margin-left: auto;
-      }
-    }
-  }
-  .person-name-details {
-    margin-top: 5vh;
-  }
-}
-
-.number-detail-column {
-  display: flex;
-  flex-direction: column;
-  margin-right: 1vw;
-
-  .margin-bottom {
-    margin-bottom: 1vh;
-  }
-}
-
-.name-detail-column {
-  display: flex;
-  flex-direction: column;
-
-  .margin-bottom {
-    margin-bottom: 1vh;
-  }
-}
-
-.person-name-details {
-  display: flex;
   gap: 2vw;
+  margin-top: 2vh;
 }
+
+// .number-detail-column {
+//   display: flex;
+//   flex-direction: column;
+//   margin-right: 1vw;
+
+//   .margin-bottom {
+//     margin-bottom: 1vh;
+//   }
+// }
+
+// .name-detail-column {
+//   display: flex;
+//   flex-direction: column;
+
+//   .margin-bottom {
+//     margin-bottom: 1vh;
+//   }
+// }
+
+// .2 {
+//   display: flex;
+//   gap: 2vw;
+// }
 
 .description-label {
   position: relative;
