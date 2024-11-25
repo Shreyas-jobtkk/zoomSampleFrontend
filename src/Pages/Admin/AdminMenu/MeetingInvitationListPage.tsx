@@ -246,9 +246,6 @@ function MeetingInvitationList() {
 
   return (
     <Box className="admin-menu-nav-page">
-      {/* <Box className="admin-menu-nav-page" style={{ transform: 'scaleY(0.8)',marginTop: '-10vh' }}></Box> */}
-      {/* <Box className="screen-title">画面ID:DSP10001</Box> */}
-      {/* <h3 className="menu-title">通訳評価一覧</h3> */}
       <MenuHeader title="ミーティング招待一覧" />
       <Box className="search-container">
         <Box className="search-label">検索条件</Box>
@@ -304,48 +301,52 @@ function MeetingInvitationList() {
             />
           </Box>
         </Box>
-        <ButtonAtom
-          onClick={searchConditions}
-          label="通訳者検索"
-          width="100px"
-          margin="2px"
-        />
-        <Box className="interpreter-search-details">
-          <TextBoxWithLabel
-            label="通訳者No"
-            width="12vw" // Uncomment to set a custom width
-            value={textValue1}
-            onChange={(e: any) => setTextValue1(e.target.value)}
+        <Box>
+          <ButtonAtom
+            onClick={searchConditions}
+            label="通訳者"
+            width="100px"
+            margin="2px"
           />
-
-          <TextBoxWithLabel
-            label="通訳者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
-            labelWidth="120px"
-            width="12vw" // Uncomment to set a custom width
-            value={textValue5}
-            onChange={(e: any) => setTextValue5(e.target.value)}
-          />
-
-          <Box>
+          <Box className="interpreter-details">
             <TextBoxWithLabel
-              label="名"
-              labelWidth="40px"
+              label="通訳者No"
               width="12vw" // Uncomment to set a custom width
-              value={textValue7}
-              onChange={(e: any) => setTextValue7(e.target.value)}
+              value={textValue1}
+              onChange={(e: any) => setTextValue1(e.target.value)}
             />
+
+            <TextBoxWithLabel
+              label="通訳者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+              labelWidth="120px"
+              width="12vw" // Uncomment to set a custom width
+              value={textValue5}
+              onChange={(e: any) => setTextValue5(e.target.value)}
+            />
+
+            <Box>
+              <TextBoxWithLabel
+                label="名"
+                labelWidth="40px"
+                width="12vw" // Uncomment to set a custom width
+                value={textValue7}
+                onChange={(e: any) => setTextValue7(e.target.value)}
+              />
+            </Box>
+
+            <span>承諾/拒否：</span>
+            <SelectOption
+              label=""
+              options={options}
+              width={150}
+              value={selectedOption}
+              onChange={setSelectedOption}
+            />
+
+            <Box className="search-button">
+              <ButtonAtom onClick={searchConditions} label="検索" />
+            </Box>
           </Box>
-
-          <span>承諾/拒否：</span>
-          <SelectOption
-            label=""
-            options={options}
-            width={150}
-            value={selectedOption}
-            onChange={setSelectedOption}
-          />
-
-          <ButtonAtom onClick={searchConditions} label="検索" margin="0 5vw" />
         </Box>
       </Box>
       <DataTable // Customize header height

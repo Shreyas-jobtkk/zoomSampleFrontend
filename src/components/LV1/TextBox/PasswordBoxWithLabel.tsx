@@ -18,7 +18,7 @@ interface PasswordBoxWithLabelProps {
 const PasswordBoxWithLabel: React.FC<PasswordBoxWithLabelProps> = ({
   label,
   width = "150px",
-  height = "35px",
+  height = "30px",
   fontSize,
   labelWidth = "85px",
   ...props

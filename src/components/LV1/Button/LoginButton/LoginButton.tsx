@@ -18,10 +18,10 @@ const LoginButton: React.FC<LoginButtonProps> = ({
   label,
   disabled = false,
   backgroundColor = "lightgray", // Default background color
-  width = "120px", // Default width
+  width = "100px", // Default width
   padding = "5px 20px", // Default padding
   margin = "0", // Default margin
-  height = "40px",
+  height = "30px",
   textAlign = "center",
 }) => {
   return (

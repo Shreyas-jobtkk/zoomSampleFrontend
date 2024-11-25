@@ -15,7 +15,7 @@ interface TextBoxWithLabelProps {
 const TextBoxWithLabel: React.FC<TextBoxWithLabelProps> = ({
   label,
   width = "150px",
-  height = "35px", // Default height for Box in vh
+  height = "30px", // Default height for Box in vh
   fontSize, // Default font size in em for label and TextField
   labelWidth = "85px", // Default label width
   disabled = true, // Default disabled state is false
@@ -45,10 +45,10 @@ const TextBoxWithLabel: React.FC<TextBoxWithLabelProps> = ({
         variant="outlined"
         sx={{
           width, // Apply width for TextField
-          height: "100%", // Make TextField take the full height of the Box
+          height: "30px", // Make TextField take the full height of the Box
           "& .MuiOutlinedInput-root": {
             fontSize, // Apply font size to the input text in em
-            height: "100%", // Make the input field take the full height
+            height: "30px", // Make the input field take the full height
           },
         }}
         disabled={disabled} // Disable editing based on the disabled prop

@@ -202,7 +202,7 @@ const DataTable: React.FC<DataTableProps> = ({
             value={page + 1}
             onChange={handlePageInputChange}
             width="100px"
-            height="35px"
+            height="30px"
           />
           <Box mx={1}>/ {totalPages}</Box>
           <IconButton

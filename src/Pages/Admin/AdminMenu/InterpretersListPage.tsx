@@ -273,8 +273,7 @@ function CompaniesList() {
       <MenuHeader title="通訳者一覧" />
       <Box className="search-container">
         <Box className="search-label">検索条件</Box>
-
-        <Box className="contract-details">
+        <Box className="interpreter-details move-top">
           <TextBoxWithLabel
             label="通訳者No"
             width="12vw" // Uncomment to set a custom width
@@ -284,49 +283,41 @@ function CompaniesList() {
           />
 
           <Box>
-            <Box>
-              <Box>
-                <TextBoxWithLabel
-                  label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
-                  width="18vw" // Uncomment to set a custom width
-                  value={textValue2}
-                  onChange={(e: any) => setTextValue2(e.target.value)}
-                  labelWidth="130px"
-                  disabled={false}
-                />
-                <TextBoxWithLabel
-                  labelWidth="130px"
-                  label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
-                  width="18vw" // Uncomment to set a custom width
-                  value={textValue3}
-                  onChange={(e: any) => setTextValue3(e.target.value)}
-                  disabled={false}
-                />
-              </Box>
-            </Box>
+            <TextBoxWithLabel
+              label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+              width="18vw" // Uncomment to set a custom width
+              value={textValue2}
+              onChange={(e: any) => setTextValue2(e.target.value)}
+              labelWidth="130px"
+              disabled={false}
+            />
+            <TextBoxWithLabel
+              labelWidth="130px"
+              label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+              width="18vw" // Uncomment to set a custom width
+              value={textValue3}
+              onChange={(e: any) => setTextValue3(e.target.value)}
+              disabled={false}
+            />
           </Box>
 
           <Box>
-            <Box>
-              <Box>
-                <TextBoxWithLabel
-                  label="メイ"
-                  labelWidth="40px"
-                  width="12vw" // Uncomment to set a custom width
-                  value={textValue4}
-                  onChange={(e: any) => setTextValue4(e.target.value)}
-                  disabled={false}
-                />
-                <TextBoxWithLabel
-                  label="名"
-                  labelWidth="40px"
-                  width="12vw" // Uncomment to set a custom width
-                  value={textValue5}
-                  onChange={(e: any) => setTextValue5(e.target.value)}
-                  disabled={false}
-                />
-              </Box>
-            </Box>
+            <TextBoxWithLabel
+              label="メイ"
+              labelWidth="40px"
+              width="12vw" // Uncomment to set a custom width
+              value={textValue4}
+              onChange={(e: any) => setTextValue4(e.target.value)}
+              disabled={false}
+            />
+            <TextBoxWithLabel
+              label="名"
+              labelWidth="40px"
+              width="12vw" // Uncomment to set a custom width
+              value={textValue5}
+              onChange={(e: any) => setTextValue5(e.target.value)}
+              disabled={false}
+            />
           </Box>
 
           <span>通訳言語：</span>
@@ -338,12 +329,8 @@ function CompaniesList() {
             onChange={setSelectedOption}
           />
 
-          <Box>
-            <ButtonAtom
-              onClick={searchConditions}
-              label="検索"
-              // margin="0 5vw"
-            />
+          <Box className="search-button">
+            <ButtonAtom onClick={searchConditions} label="検索" />
           </Box>
         </Box>
       </Box>

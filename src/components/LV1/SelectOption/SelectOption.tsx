@@ -26,7 +26,7 @@ const SelectOption: React.FC<SelectOptionProps> = ({
   label,
   options,
   width = 150,
-  height = "35px",
+  height = "30px",
   onChange,
   value,
 }) => {

@@ -256,7 +256,7 @@ function CompaniesList() {
       <MenuHeader title="企業一覧" />
       <Box className="search-container">
         <Box className="search-label">検索条件</Box>
-        <Box className="companies-search-container">
+        <Box className="companies-details move-top">
           <TextBoxWithLabel
             disabled={false}
             label="企業No"
@@ -265,28 +265,23 @@ function CompaniesList() {
             onChange={(e: any) => setTextValue1(e.target.value)}
           />
           <Box>
-            <Box className="person-name-details">
-              <Box>
-                <TextBoxWithLabel
-                  disabled={false}
-                  label="フリガナ"
-                  width="60vw" // Uncomment to set a custom width
-                  value={textValue2}
-                  onChange={(e: any) => setTextValue2(e.target.value)}
-                  labelWidth="70px"
-                />
-                <TextBoxWithLabel
-                  disabled={false}
-                  labelWidth="70px"
-                  label="企業名"
-                  width="60vw" // Uncomment to set a custom width
-                  value={textValue3}
-                  onChange={(e: any) => setTextValue3(e.target.value)}
-                />
-              </Box>
-            </Box>
+            <TextBoxWithLabel
+              disabled={false}
+              label="フリガナ"
+              width="60vw" // Uncomment to set a custom width
+              value={textValue2}
+              onChange={(e: any) => setTextValue2(e.target.value)}
+              labelWidth="70px"
+            />
+            <TextBoxWithLabel
+              disabled={false}
+              labelWidth="70px"
+              label="企業名"
+              width="60vw" // Uncomment to set a custom width
+              value={textValue3}
+              onChange={(e: any) => setTextValue3(e.target.value)}
+            />
           </Box>
-
           <Box className="search-button">
             <ButtonAtom onClick={searchConditions} label="検索" />
           </Box>

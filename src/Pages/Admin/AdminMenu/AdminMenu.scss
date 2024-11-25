@@ -17,6 +17,11 @@ $border-style: 1px solid #ccc;
   display: flex;
   flex-direction: column;
   margin: 3vh 0;
+  // transform: scaleY(0.7);
+  // // scale: 0.7;
+  // margin-top: -20px;
+  // margin-bottom: -20px;
+  // font-size: 1;
 }
 
 .search-label {
@@ -33,8 +38,8 @@ $border-style: 1px solid #ccc;
 .select-range {
   display: flex;
   align-items: center;
-  gap: 2vw;
-  margin-bottom: 1vw;
+  gap: 16px;
+  margin-top: -20px;
 }
 
 .translator-menu-button-container {
@@ -48,155 +53,52 @@ $border-style: 1px solid #ccc;
   }
 }
 
-// .companies-search-container,
-// .administrator-search-container {
+// .companies-details {
 //   display: flex;
-//   justify-content: space-between;
 //   align-items: flex-start;
-
-//   .last-column {
-//     .last-row {
-//       display: flex;
-//       margin-top: 3vh;
-
-//       .search-button {
-//         margin-left: auto;
-//       }
-//     }
-//   }
+//   gap: 2vw;
+//   margin-top: -2vh;
 // }
 
-// .store-search-container {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: flex-start;
+.move-top {
+  margin-top: -2vh;
+}
 
-//   .last-column {
-//     .last-row {
-//       display: flex;
-//       margin-top: 3vh;
+.margin-top {
+  margin-top: 1vh;
+}
 
-//       .search-button {
-//         margin-left: auto;
-//       }
-//     }
-//   }
-//   .store-number-label {
-//     margin-top: 3vh;
-//   }
-//   .last-column {
-//     margin-top: auto;
-//     margin-bottom: 1vh;
-//   }
-//   .name-detail-column {
-//     .margin-bottom {
-//       margin-bottom: 3vh !important ;
-//     }
-//   }
-// }
-
-// .responders-search-container {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: flex-start;
-
-//   .last-column {
-//     .last-row {
-//       display: flex;
-//       margin-top: 3vh;
-
-//       .search-button {
-//         margin-left: auto;
-//       }
-//     }
-//   }
-
-//   // .name-detail-column {
-//   //   .margin-bottom {
-//   //     margin-bottom: 6vh !important ;
-//   //   }
-//   // }
-//   // .number-detail-column {
-//   .margin-bottom {
-//     margin-bottom: 3vh !important ;
-//   }
-//   // }
-//   .last-column {
-//     margin-left: -6vw;
-//     .store-details {
-//       display: flex;
-//       gap: 1vw;
-//     }
-//   }
-//   .name-detail-column {
-//     .margin-bottom {
-//       margin-bottom: 40px !important ;
-//     }
-//   }
-// }
-
-// .administrator-list-menu-search-container {
-//   .first-row {
-//     display: flex;
-//     align-items: center;
-//     margin: 0 20px;
-//   }
-
-//   .last-row {
-//     display: flex;
-//     align-items: center;
-//     margin: 4vh 2vw;
-
-//     .name-detail-column {
-//       margin-left: 10vw;
-//     }
-
-//     .search-button {
-//       margin-left: auto;
-//     }
-//   }
-// }
-
-// .interpreter-evaluation-search-container,
-// .meeting-history-search-container,
-// .meeting-invitation-container {
-//   // display: flex;
-//   // justify-content: space-between;
-//   // align-items: flex-start;
-
-//   // .last-column {
-//   //   .last-row {
-//   //     display: flex;
-//   //     margin-top: 6vh;
-
-//   //     .search-button {
-//   //       margin-left: auto;
-//   //     }
-//   //   }
-//   // }
-//   // .person-name-details {
-//   //   margin-top: 5vh;
-//   // }
-// }
+.search-button {
+  margin-left: auto;
+  margin-top: auto;
+}
 
 .contract-details,
-.interpreter-search-details,
+.interpreter-details,
 .language-search-details,
-.companies-search-container,
-.admin-details {
+.companies-details,
+.admin-details,
+// .store-details,
+.responders-search-container {
   display: flex;
-  // justify-content: space-between;
   align-items: flex-start;
   gap: 2vw;
   // margin-top: 1vh;
 }
 
-.store-search-container {
+.store-details {
   display: flex;
   // justify-content: space-between;
   align-items: flex-start;
   gap: 2vw;
-  margin-top: 2vh;
+  // margin-top: 2vh;
+}
+
+.company-store-details {
+  display: flex;
+  // justify-content: space-between;
+  align-items: flex-start;
+  gap: 2vw;
 }
 
 // .number-detail-column {

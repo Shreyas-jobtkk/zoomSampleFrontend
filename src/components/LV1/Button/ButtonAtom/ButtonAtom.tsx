@@ -16,9 +16,9 @@ const ButtonAtom: React.FC<ButtonAtomProps> = ({
   label,
   disabled = false,
   width = "70px", // Default width
-  padding = "5px 20px", // Default padding
-  margin = "5px", // Default margin
-  height = "35px", // Default height
+  padding, // Default padding
+  margin = "0 5px", // Default margin
+  height = "30px", // Default height
 }) => {
   return (
     <Button
@@ -34,7 +34,6 @@ const ButtonAtom: React.FC<ButtonAtomProps> = ({
         height,
         textAlign: "center", // Align text to the left
         justifyContent: "center", // Align content to the start (left)
-        fontSize: "14px", // Set a base font size
         whiteSpace: "nowrap", // Prevent text from wrapping to the next line
         overflow: "hidden", // Hide overflow text if it exceeds button width
         textOverflow: "ellipsis", // Optionally, show ellipsis when text overflows

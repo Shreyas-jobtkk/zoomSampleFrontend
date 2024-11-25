@@ -311,46 +311,45 @@ function AdministratorList() {
           />
 
           <Box>
-            <Box>
-              <TextBoxWithLabel
-                disabled={false}
-                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
-                labelWidth="120px"
-                width="15vw" // Uncomment to set a custom width
-                value={textValue2}
-                onChange={(e: any) => setTextValue2(e.target.value)}
-              />
-              <TextBoxWithLabel
-                disabled={false}
-                label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
-                labelWidth="120px"
-                width="15vw" // Uncomment to set a custom width
-                value={textValue3}
-                onChange={(e: any) => setTextValue3(e.target.value)}
-              />
-            </Box>
+            <TextBoxWithLabel
+              disabled={false}
+              label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+              labelWidth="120px"
+              width="22vw" // Uncomment to set a custom width
+              value={textValue2}
+              onChange={(e: any) => setTextValue2(e.target.value)}
+            />
+            <TextBoxWithLabel
+              disabled={false}
+              label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+              labelWidth="120px"
+              width="22vw" // Uncomment to set a custom width
+              value={textValue3}
+              onChange={(e: any) => setTextValue3(e.target.value)}
+            />
           </Box>
+
           <Box>
-            <Box>
-              <TextBoxWithLabel
-                disabled={false}
-                label="メイ"
-                labelWidth="40px"
-                width="15vw" // Uncomment to set a custom width
-                value={textValue4}
-                onChange={(e: any) => setTextValue4(e.target.value)}
-              />
-              <TextBoxWithLabel
-                disabled={false}
-                label="名"
-                labelWidth="40px"
-                width="15vw" // Uncomment to set a custom width
-                value={textValue5}
-                onChange={(e: any) => setTextValue5(e.target.value)}
-              />
-            </Box>
+            <TextBoxWithLabel
+              disabled={false}
+              label="メイ"
+              labelWidth="40px"
+              width="22vw" // Uncomment to set a custom width
+              value={textValue4}
+              onChange={(e: any) => setTextValue4(e.target.value)}
+            />
+            <TextBoxWithLabel
+              disabled={false}
+              label="名"
+              labelWidth="40px"
+              width="22vw" // Uncomment to set a custom width
+              value={textValue5}
+              onChange={(e: any) => setTextValue5(e.target.value)}
+            />
           </Box>
-          <ButtonAtom onClick={searchConditions} label="検索" margin="0 5vw" />
+          <Box className="search-button">
+            <ButtonAtom onClick={searchConditions} label="検索" />
+          </Box>
         </Box>
       </Box>
       <DataTable // Customize header height
