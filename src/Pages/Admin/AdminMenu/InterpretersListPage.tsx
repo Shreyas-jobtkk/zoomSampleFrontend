@@ -9,8 +9,10 @@ import MenuHeader from "../../../components/LV3/Header/MenuHeader";
 import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
 import "./AdminMenu.scss";
+import { useNavigate } from "react-router-dom";
 
-function CompaniesList() {
+function InterpretersList() {
+  const navigate = useNavigate();
   // State for selected start and end times
   const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
     dayjs()
@@ -261,12 +263,30 @@ function CompaniesList() {
   const [textValue5, setTextValue5] = useState<string>("");
 
   const handleSelectionChange = (
-    selectedData: Array<{ No: string | number; [key: string]: string | number }>
+    newSelectedData: Array<{
+      No: string | number;
+      [key: string]: string | number;
+    }>
   ) => {
-    console.log("Selected Data:", selectedData);
+    // Update the selected data state
+    setSelectedData(newSelectedData);
+
+    // Log the selected data to the console
+    console.log("Selected Data:", newSelectedData);
+  };
+
+  const navigateToInfoPage = () => {
+    navigate("/InterpretersListInfo");
+  };
+  const navigateToEditPage = () => {
+    navigate("/InterpretersListInfo");
   };
 
   const borderStyle = "1px solid #ccc";
+
+  const [selectedData, setSelectedData] = useState<
+    Array<{ No: string | number; [key: string]: string | number }>
+  >([]);
 
   return (
     <Box className="admin-menu-nav-page">
@@ -348,25 +368,22 @@ function CompaniesList() {
         onClick={searchConditions}
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={navigateToInfoPage}
+        disabled={selectedData.length !== 1}
         label="閲覧"
-
-        // margin='0 2vw'
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={navigateToEditPage}
+        disabled={selectedData.length !== 1}
         label="編集"
-
-        // margin='0 2vw'
       />
       <ButtonAtom
         onClick={searchConditions}
+        disabled={selectedData.length <= 0}
         label="削除"
-
-        // margin='0 2vw'
       />
     </Box>
   );
 }
 
-export default CompaniesList;
+export default InterpretersList;

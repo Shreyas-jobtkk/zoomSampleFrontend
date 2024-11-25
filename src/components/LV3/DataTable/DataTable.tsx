@@ -66,15 +66,16 @@ const DataTable: React.FC<DataTableProps> = ({
 
   useEffect(() => {
     if (onSelectionChange) {
-      onSelectionChange(data.filter((row) => selected.includes(row.No)));
+      const selectedData = data.filter((row) => selected.includes(row.No));
+      // Trigger onSelectionChange only if there's a change in the selected rows
+      onSelectionChange(selectedData);
     }
-  }, [selected, onSelectionChange, data]);
+  }, [selected]); // Dependency on selected, onSelectionChange, and data
 
   const handlePageInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const pageNumber = Math.max(-1, parseInt(event.target.value, 10) - 1);
-    console.log(44, event.target.value, pageNumber);
     setPage(pageNumber);
   };
 
@@ -244,6 +245,7 @@ const DataTable: React.FC<DataTableProps> = ({
                 top: 0,
                 backgroundColor: "lightgray",
                 zIndex: 10,
+                boxShadow: "0 -20px",
               }}
             >
               <TableRow>
