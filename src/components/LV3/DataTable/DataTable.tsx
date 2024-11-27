@@ -124,27 +124,24 @@ const DataTable: React.FC<DataTableProps> = ({
   const isAllSelected = () => selected.length === data.length;
 
   const handleColumnResize = (index: number, event: React.MouseEvent) => {
-    const startX = event.clientX;
-    const startWidth = columnWidths[index];
-
-    const onMouseMove = (moveEvent: MouseEvent) => {
-      const newWidth = startWidth + moveEvent.clientX - startX;
-      if (newWidth > 50) {
-        setColumnWidths((prevWidths) => {
-          const newWidths = [...prevWidths];
-          newWidths[index] = newWidth;
-          return newWidths;
-        });
-      }
-    };
-
-    const onMouseUp = () => {
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-    };
-
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
+    // const startX = event.clientX;
+    // const startWidth = columnWidths[index];
+    // const onMouseMove = (moveEvent: MouseEvent) => {
+    //   const newWidth = startWidth + moveEvent.clientX - startX;
+    //   if (newWidth > 50) {
+    //     setColumnWidths((prevWidths) => {
+    //       const newWidths = [...prevWidths];
+    //       newWidths[index] = newWidth;
+    //       return newWidths;
+    //     });
+    //   }
+    // };
+    // const onMouseUp = () => {
+    //   window.removeEventListener("mousemove", onMouseMove);
+    //   window.removeEventListener("mouseup", onMouseUp);
+    // };
+    // window.addEventListener("mousemove", onMouseMove);
+    // window.addEventListener("mouseup", onMouseUp);
   };
 
   const handleSort = (header: string) => {
@@ -319,6 +316,9 @@ const DataTable: React.FC<DataTableProps> = ({
                         padding: "0 8px",
                         width: columnWidths[cellIndex],
                         textAlign: cellIndex === 0 ? "right" : "left",
+                        minWidth: "1vw",
+                        maxWidth: "1vw",
+                        overflow: "auto",
                       }}
                     >
                       {row[header]}
