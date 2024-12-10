@@ -21,8 +21,8 @@ const TextInput: React.FC<TextInputProps> = ({
   borderWidth = "1px",
   padding = "10px",
   borderRadius,
-  width = "200px",
-  height = "50px",
+  width = "100px",
+  height = "30px",
   backgroundColor = "white",
   placeholder,
 }) => {

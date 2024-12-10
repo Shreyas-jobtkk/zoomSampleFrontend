@@ -1,10 +1,11 @@
 import React from "react";
 import {
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
+  Box,
+  Typography,
 } from "@mui/material";
 
 interface Option {
@@ -17,16 +18,17 @@ interface SelectOptionProps {
   options: Option[];
   width?: number;
   height?: number;
+  labelWidth?: string | number;
   onChange: (value: string) => void;
   value: string;
-  labelText?: string;
 }
 
 const SelectOption: React.FC<SelectOptionProps> = ({
   label,
   options,
   width = 150,
-  height = "30px",
+  height = 30,
+  labelWidth = 100,
   onChange,
   value,
 }) => {
@@ -35,24 +37,43 @@ const SelectOption: React.FC<SelectOptionProps> = ({
   };
 
   return (
-    <FormControl variant="outlined" sx={{ minWidth: width }}>
-      <InputLabel id="select-option-label">{label}</InputLabel>
-      <Select
-        labelId="select-option-label"
-        value={value}
-        onChange={handleChange}
-        label={label}
-        slotProps={{
-          root: { sx: { height } },
+    <Box display="flex" alignItems="center">
+      {/* Label */}
+      <Typography
+        variant="body1"
+        sx={{
+          width: labelWidth,
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
         }}
       >
-        {options.map((option, index) => (
-          <MenuItem key={index} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+        {label}
+      </Typography>
+
+      {/* Select Dropdown */}
+      <FormControl
+        variant="outlined"
+        sx={{
+          minWidth: width,
+          // ml: 1, // Optional: Adds some margin between label and Select
+        }}
+      >
+        <Select
+          value={value}
+          onChange={handleChange}
+          sx={{
+            height,
+          }}
+        >
+          {options.map((option, index) => (
+            <MenuItem key={index} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 };
 

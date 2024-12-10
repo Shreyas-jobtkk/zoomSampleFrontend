@@ -1,0 +1,72 @@
+.store-list-navigate {
+  padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.store-list-navigate-content {
+  height: calc(92vh - 30px);
+  overflow: auto;
+}
+
+.time-details-delete-flag {
+  display: flex;
+  justify-content: space-between;
+  margin: 1vh 0;
+}
+
+.time-details {
+  padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.delete-flag {
+}
+
+.company-info {
+  width: 600px !important;
+  padding: 1vh 1vw;
+  margin: 2vh 0;
+  border: 1px solid #ccc; // Replace with your borderStyle
+}
+
+.basic-info {
+  padding: 1vh 1vw;
+  margin: 3vh 0 !important;
+  border: 1px solid #ccc; // Replace with your borderStyle
+}
+
+.address-container {
+  display: flex;
+  flex-direction: row;
+  width: 500px;
+}
+
+.address-label {
+  width: 50px;
+}
+
+.address-details {
+  width: 400px;
+}
+
+.contact-details {
+  width: 500px;
+}
+
+.store-details {
+  display: flex;
+  flex-direction: row;
+}
+
+.pin-code-label,
+.tel-label,
+.fax-label {
+  width: 67px;
+  display: inline-block;
+  text-align: left;
+}

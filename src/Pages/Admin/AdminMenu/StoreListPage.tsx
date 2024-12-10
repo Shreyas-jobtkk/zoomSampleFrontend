@@ -1,7 +1,7 @@
 import DatePicker from "../../../components/LV1/DatePicker/DatePicker";
 import TimePicker from "../../../components/LV1/TimePicker/TimePicker"; // Adjust the import path as needed
 import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { Box, TextField, Typography } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
@@ -11,6 +11,8 @@ import DataTable from "../../../components/LV3/DataTable/DataTable";
 import { Height } from "@mui/icons-material";
 import "./AdminMenu.scss";
 import { useNavigate } from "react-router-dom";
+// import { fetchCompaniesAll } from "../../../api/apiService/company/company";
+import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
 
 function StoreList() {
   const navigate = useNavigate();
@@ -24,10 +26,6 @@ function StoreList() {
   const [selectedStartDate, setSelectedStartDate] = useState<Dayjs | null>(
     null
   );
-
-  const [selectedData, setSelectedData] = useState<
-    Array<{ No: string | number; [key: string]: string | number }>
-  >([]);
 
   const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(null);
 
@@ -269,6 +267,19 @@ function StoreList() {
 
   const searchConditions = () => {};
 
+  useEffect(() => {
+    fetchCompaniesListData();
+  }, []);
+
+  const fetchCompaniesListData = async () => {
+    try {
+      const response = await CompanyApiService.fetchCompaniesAll();
+      console.log(145, response);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
+    }
+  };
+
   // Handle start date change
   const handleStartDateChange = (date: Dayjs | null) => {
     setSelectedStartDate(date);
@@ -324,6 +335,10 @@ function StoreList() {
 
   const [selectedOption, setSelectedOption] = useState<string>("");
 
+  const [selectedData, setSelectedData] = useState<
+    Array<{ No: string | number; [key: string]: string | number }>
+  >([]);
+
   // Handle selection change
   const handleSelectionChange = (
     newSelectedData: Array<{
@@ -333,9 +348,8 @@ function StoreList() {
   ) => {
     // Update the selected data state
     setSelectedData(newSelectedData);
-
-    // Log the selected data to the console
-    console.log("Selected Data:", newSelectedData);
+    // // Log the selected data to the console
+    console.log("Selected Data:", selectedData, newSelectedData);
   };
 
   const navigateToInfoPage = () => {
@@ -343,6 +357,10 @@ function StoreList() {
   };
   const navigateToEditPage = () => {
     navigate("/StoreListInfo");
+  };
+
+  const navigateToStoreCreate = () => {
+    navigate("/StoreCreate");
   };
 
   const borderStyle = "1px solid #ccc";
@@ -414,7 +432,7 @@ function StoreList() {
         maxHeight="calc(82vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
-        onClick={searchConditions}
+        onClick={navigateToStoreCreate}
       />
       <ButtonAtom
         onClick={navigateToInfoPage}

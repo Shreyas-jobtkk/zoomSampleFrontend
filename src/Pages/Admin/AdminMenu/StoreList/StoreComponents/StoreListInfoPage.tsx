@@ -1,13 +1,13 @@
-import MenuHeader from "../../../../components/LV3/Header/MenuHeader";
-import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
+import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
+import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState } from "react";
 import { Box, TextField, Typography } from "@mui/material";
-import PasswordInput from "../../../../components/LV1/PasswordInput/PasswordInput";
-import PasswordBoxWithLabel from "../../../../components/LV1/TextBox/PasswordBoxWithLabel";
-import ButtonAtom from "../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import "./CompanyList.scss";
+import PasswordInput from "../../../../../components/LV1/PasswordInput/PasswordInput";
+import PasswordBoxWithLabel from "../../../../../components/LV1/TextBox/PasswordBoxWithLabel";
+import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
+import "../StoreStyles/StoreList.scss";
 
-function CompanyListInfo() {
+function StoreListInfo() {
   const [textValue1, setTextValue1] = useState<string>("");
   const [textValue2, setTextValue2] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -19,7 +19,7 @@ function CompanyListInfo() {
   const borderStyle = "1px solid #ccc";
   return (
     <Box className="company-list-navigate">
-      <MenuHeader title="企業情報" />
+      <MenuHeader title="店舗情報" />
       <Box className="company-list-navigate-content">
         <Box className="time-details-delete-flag">
           <Box className="time-details">
@@ -91,4 +91,4 @@ function CompanyListInfo() {
   );
 }
 
-export default CompanyListInfo;
+export default StoreListInfo;

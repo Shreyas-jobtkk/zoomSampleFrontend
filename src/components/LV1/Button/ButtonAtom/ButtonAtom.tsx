@@ -2,13 +2,14 @@ import React from "react";
 import { Button } from "@mui/material";
 
 interface ButtonAtomProps {
-  onClick: () => void; // Function to call when button is clicked
+  onClick?: () => void; // Function to call when button is clicked
   label: string; // Text to display on the button
   disabled?: boolean; // Optional: Disable the button
   width?: string; // Optional: Button width
   padding?: string; // Optional: Button padding
   margin?: string; // Optional: Button margin
   height?: string; // Optional: Button height
+  type?: "button" | "submit";
 }
 
 const ButtonAtom: React.FC<ButtonAtomProps> = ({

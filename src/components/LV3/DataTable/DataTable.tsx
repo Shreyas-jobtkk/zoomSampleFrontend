@@ -72,6 +72,12 @@ const DataTable: React.FC<DataTableProps> = ({
     }
   }, [selected]); // Dependency on selected, onSelectionChange, and data
 
+  // useEffect(() => {
+  //   console.log(144, "data changed");
+  //   setSelected([]);
+  //   setAllSelected(false);
+  // }, [data]);
+
   const handlePageInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -124,24 +130,24 @@ const DataTable: React.FC<DataTableProps> = ({
   const isAllSelected = () => selected.length === data.length;
 
   const handleColumnResize = (index: number, event: React.MouseEvent) => {
-    // const startX = event.clientX;
-    // const startWidth = columnWidths[index];
-    // const onMouseMove = (moveEvent: MouseEvent) => {
-    //   const newWidth = startWidth + moveEvent.clientX - startX;
-    //   if (newWidth > 50) {
-    //     setColumnWidths((prevWidths) => {
-    //       const newWidths = [...prevWidths];
-    //       newWidths[index] = newWidth;
-    //       return newWidths;
-    //     });
-    //   }
-    // };
-    // const onMouseUp = () => {
-    //   window.removeEventListener("mousemove", onMouseMove);
-    //   window.removeEventListener("mouseup", onMouseUp);
-    // };
-    // window.addEventListener("mousemove", onMouseMove);
-    // window.addEventListener("mouseup", onMouseUp);
+    const startX = event.clientX;
+    const startWidth = columnWidths[index];
+    const onMouseMove = (moveEvent: MouseEvent) => {
+      const newWidth = startWidth + moveEvent.clientX - startX;
+      if (newWidth > 50) {
+        setColumnWidths((prevWidths) => {
+          const newWidths = [...prevWidths];
+          newWidths[index] = newWidth;
+          return newWidths;
+        });
+      }
+    };
+    const onMouseUp = () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
   };
 
   const handleSort = (header: string) => {

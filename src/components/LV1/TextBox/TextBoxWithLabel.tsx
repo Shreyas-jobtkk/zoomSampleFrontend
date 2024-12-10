@@ -49,6 +49,9 @@ const TextBoxWithLabel: React.FC<TextBoxWithLabelProps> = ({
           "& .MuiOutlinedInput-root": {
             fontSize, // Apply font size to the input text in em
             height: "30px", // Make the input field take the full height
+            "& input": {
+              padding: "4px", // Remove padding for the actual input text
+            },
           },
         }}
         disabled={disabled} // Disable editing based on the disabled prop
