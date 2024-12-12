@@ -8,31 +8,31 @@ export const createStore = async (
   company_no: string,
   store_name: string,
   store_name_furigana: string,
-  zip1: string,
-  zip2: string,
+  zip1: number | string,
+  zip2: number | string,
   pref: string,
   city: string,
   street: string,
   building_name: string,
-  tel1: string,
-  tel2: string,
-  tel3: string,
-  fax1: string,
-  fax2: string,
-  fax3: string,
-  note: string,
-  company_delete: boolean,
-  store_delete: boolean
+  tel1: number | string,
+  tel2: number | string,
+  tel3: number | string,
+  fax1: number | string,
+  fax2: number | string,
+  fax3: number | string,
+  note: string
 ) => {
+  console.log(1112);
   try {
     // Concatenate zip1 and zip2
-    const zip = `${zip1}-${zip2}`;
+
+    // const zip = `${zip1}-${zip2}`;
 
     const response = await api.post(STORE_ENDPOINT, {
       company_no,
       store_name,
       store_name_furigana,
-      zip,
+      zip: `${zip1}-${zip2}`,
       pref,
       city,
       street,
@@ -40,12 +40,12 @@ export const createStore = async (
       tel: `${tel1}-${tel2}-${tel3}`,
       fax: `${fax1}-${fax2}-${fax3}`,
       note,
-      company_delete,
-      store_delete,
     });
+    console.log(1113);
     alert("Store saved successfully");
     return response.data; // Return the created store data
   } catch (error: unknown) {
+    console.log(1114);
     if (error instanceof Error) {
       throw new Error("Failed to save store: " + error.message);
     } else {

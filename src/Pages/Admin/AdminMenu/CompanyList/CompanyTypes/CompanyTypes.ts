@@ -1,7 +1,17 @@
 // types.ts
 
 export type CompanyCreateFormValues = {
-  companyName: string;
-  companyNote: string;
-  companyNameFurigana: string;
+  company_name: string;
+  company_note: string;
+  company_name_furigana: string;
 };
+
+export interface CompanyInfoFormValues {
+  company_no: string;
+  company_name: string;
+  company_name_furigana: string;
+  company_note: string;
+  updated_at: Date | string;
+  created_at: Date | string;
+  company_deleted: Boolean;
+}

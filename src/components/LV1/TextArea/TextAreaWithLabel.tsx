@@ -5,11 +5,13 @@ import Typography from "@mui/material/Typography";
 
 type TextAreaFieldProps = {
   label: string;
+  name?: string;
   disabled?: boolean;
   error?: string;
   rows?: number; // Number of rows for the textarea
   margin?: string | number; // Optional margin prop
   value?: string; // Controlled value for the textarea
+  register?: any;
   onChange?: (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void; // onChange handler
@@ -19,6 +21,7 @@ type TextAreaFieldProps = {
 
 const TextAreaField: React.FC<TextAreaFieldProps> = ({
   label,
+  name,
   disabled,
   error,
   rows = 4, // Default number of rows
@@ -27,6 +30,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
   onChange, // onChange handler
   labelWidth = "120px", // Default label width
   maxLength, // Optional maxLength
+  register,
 }) => {
   return (
     <Box
@@ -47,6 +51,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
       <TextField
         fullWidth
         error={!!error}
+        {...register(name)}
         helperText={error}
         multiline
         disabled={disabled}

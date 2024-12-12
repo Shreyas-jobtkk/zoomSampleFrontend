@@ -13,21 +13,13 @@ import ValidationButton from "../../../../../components/LV1/ValidationButton/Val
 // import { updateCompany } from "../../../../api/apiService/company/actions/company-update";
 // import { fetchCompany } from "../../../../api/apiService/company/actions/company-fetch";
 import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
-import { CompanyCreateFormValues } from "../CompanyTypes/CompanyTypes";
+import {
+  CompanyCreateFormValues,
+  CompanyInfoFormValues,
+} from "../CompanyTypes/CompanyTypes";
 import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
 
-interface Company {
-  company_no: number;
-  company_name: string;
-  company_name_furigana: string;
-  note: string;
-  updated_at: Date;
-  created_at: Date;
-  company_deleted: Boolean;
-}
-
 function CompanyInfoEdit() {
-  // const [companyDetails, setCompanyDetails] = useState<Company | null>(null);
   const { state } = useLocation();
   const selectedCompanyNo = state?.selectedCompanyNo;
 
@@ -35,51 +27,64 @@ function CompanyInfoEdit() {
     register,
     setValue,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = useForm<CompanyCreateFormValues>();
 
-  // const [textValue2, setTextValue2] = useState<string>("");
-  const [companyDetails, setCompanyDetails] = useState<Company | null>(null);
-  const [companyNo, setCompanyNo] = useState<any>("");
-  const [companyName, setCompanyName] = useState<any>("");
-  const [companyNameFurigana, setCompanyNameFurigana] = useState<any>("");
-  const [companyNote, setCompanyNote] = useState<any>("");
+  const [formData, setFormData] = useState<CompanyInfoFormValues>({
+    company_no: "",
+    company_name: "",
+    company_name_furigana: "",
+    company_note: "11",
+    updated_at: "",
+    created_at: "",
+    company_deleted: false,
+  });
 
-  useEffect(() => {
-    if (companyDetails) {
-      setCompanyNo(companyDetails.company_no || "");
-      setCompanyName(companyDetails.company_name || "");
-      setCompanyNameFurigana(companyDetails.company_name_furigana || "");
-      setCompanyNote(companyDetails.note || "");
-      setValue("companyName", companyDetails.company_name);
-      setValue(
-        "companyNameFurigana",
-        companyDetails.company_name_furigana || ""
-      );
-      setValue("companyNote", companyDetails.note || "");
-    }
-  }, [companyDetails]);
+  // const handleChange = (event: any) => {
+  //   // const { name, value, type } = e.target;
+  //   const name = event.target.name;
+  //   const value = event.target.value;
+  //   setFormData((prev) => ({
+  //     ...prev,
+  //     [name as string]: value,
+  //   }));
+  // };
+
+  // const [companyDetails, setCompanyDetails] =
+  //   useState<CompanyInfoFormValues | null>(null);
 
   const navigate = useNavigate();
-
   console.log("Selected Company No:", selectedCompanyNo);
 
   useEffect(() => {
     const fetchCompany = async () => {
-      if (!selectedCompanyNo) return; // Early return if no selectedCompanyNo
+      if (!selectedCompanyNo) return;
       try {
         const companyDetails = await CompanyApiService.fetchCompany(
           selectedCompanyNo
         );
-        setCompanyDetails(companyDetails);
-        console.log(133, companyDetails); // For debugging purposes
+        setFormData(companyDetails);
+        Object.keys(companyDetails).forEach((key) =>
+          setValue(key as keyof CompanyCreateFormValues, companyDetails[key])
+        );
       } catch (error) {
         console.error("Error fetching company:", error);
       }
     };
 
     fetchCompany();
-  }, [selectedCompanyNo]);
+  }, [selectedCompanyNo, setValue]);
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setValue(name as keyof CompanyCreateFormValues, value);
+  };
 
   // Handle close button action
   const handleClose = () => {
@@ -90,10 +95,10 @@ function CompanyInfoEdit() {
   const handleEdit = async () => {
     console.log(123);
     CompanyApiService.updateCompany(
-      selectedCompanyNo,
-      companyName,
-      companyNameFurigana,
-      companyNote
+      formData.company_no,
+      formData.company_name,
+      formData.company_name_furigana,
+      formData.company_note
     );
   };
 
@@ -111,13 +116,13 @@ function CompanyInfoEdit() {
               labelWidth="125px"
               label="登録日時"
               width="30vw"
-              value={convertToJST(companyDetails?.created_at ?? "")}
+              value={convertToJST(formData.created_at ?? "")}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
               width="30vw"
-              value={convertToJST(companyDetails?.updated_at ?? "")}
+              value={convertToJST(formData.updated_at ?? "")}
             />
           </Box>
           <Box className="delete-flag">
@@ -126,7 +131,7 @@ function CompanyInfoEdit() {
               label="削除フラグ"
               width="10vw"
               // value={textValue1}
-              value={deleteStatus(companyDetails?.company_deleted ?? false)} // Defaults to false if `companyDetails?.company_deleted` is undefined
+              value={deleteStatus(formData.company_deleted ?? false)} // Defaults to false if `companyDetails?.company_deleted` is undefined
               // onChange={(e) => setTextValue1(e.target.value)} // update for specific field
             />
           </Box>
@@ -138,49 +143,60 @@ function CompanyInfoEdit() {
             labelWidth="125px"
             label="企業No"
             width="30vw"
-            value={companyNo}
-            onChange={(e: any) => setCompanyNo(e.target.value)}
+            value={formData.company_no}
+            // onChange={(e: any) => setCompanyNo(e.target.value)}
           />
           <Box className="name-row">
             <Box>
               <ValidationInputField
-                labelWidth="125px"
-                name="companyName"
                 label="企業名"
+                name="company_name" // This name is for the company name
+                labelWidth="125px"
                 width="30vw"
-                value={companyName}
                 maxLength={64}
                 register={register}
-                error={errors.companyName?.message}
-                onChange={(e: any) => setCompanyName(e.target.value)}
-                disabled={false} // Optionally disable this field as it's a read-only field
+                // error={errors.company_name?.message} // Separate error for "name"
+                value={formData.company_name}
+                // required={true}
+                onChange={handleChange}
               />
+
               <ValidationInputField
-                labelWidth="125px"
-                name="companyNameFurigana"
-                register={register}
-                error={errors.companyNameFurigana?.message}
                 label="フリガナ"
+                name="company_name_furigana" // Name for the phonetic spelling
+                labelWidth="125px"
                 width="30vw"
-                value={companyNameFurigana}
-                maxLength={10}
-                onChange={(e: any) => setCompanyNameFurigana(e.target.value)}
-                disabled={false}
+                register={register}
+                maxLength={128}
+                // required={false}
+                // error={errors.company_name_furigana?.message} // Separate error for "furigana"
+                // required={true}
+                value={formData.company_name_furigana}
+                onChange={handleChange}
               />
             </Box>
           </Box>
         </Box>
 
-        <TextAreaWithLabel
+        {/* <TextAreaWithLabel
           label="備考"
-          value={companyNote}
-          onChange={(e: any) => setCompanyNote(e.target.value)}
+          value={company_note}
+          onChange={(e: any) => setcompany_note(e.target.value)}
           margin="1vh 0 1vh 40vw"
           maxLength={2}
+        /> */}
+        <TextAreaWithLabel
+          label="備考"
+          value={formData.company_note}
+          register={register}
+          onChange={handleChange}
+          margin="1vh 0 1vh 40vw"
+          maxLength={2}
+          name="company_note"
         />
         <ButtonAtom onClick={handleClose} label="閉じる" width="100px" />
         <ValidationButton label="編集" width="100px" type="submit" />
-        <Box>{companyNo} </Box>
+        {/* <Box>{companyNo} </Box> */}
       </Box>
     </Box>
   );

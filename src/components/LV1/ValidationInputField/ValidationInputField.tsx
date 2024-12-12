@@ -30,10 +30,9 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
   name,
   type = "text",
   register,
-  error,
+  // error,
   rules = {},
-  maxLength,
-  required = true, // Default required is false
+  required = true, // Default required is true
   labelWidth = "85px", // Default label width
   width = "200px", // Default input width
   inputHeight = "30px", // Default input height
@@ -54,9 +53,8 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
     ...(required
       ? {
           validate: {
-            noWhitespace: (value: string) =>
-              value.trim().length > 0 || `${label} is required`,
-            // Add other validation conditions as needed
+            // checkForWhitespace: (value: string) => value.trim().length > 0,
+            checkForWhitespace: (value: string) => value.trim().length > 0,
           },
         }
       : {}),
@@ -70,7 +68,6 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
       sx={{
         width: `calc(${labelWidth} + ${width})`, // Ensure the width is the sum of label and input field width
         height: inputHeight, // Ensure input height matches
-        // marginBottom: "20px",
       }}
     >
       {/* Label */}
@@ -83,7 +80,8 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
         }}
       >
         {label}
-        {String(required)}
+
+        {/* Display current length if maxLength is set */}
       </Typography>
 
       {/* Input Field */}
@@ -92,8 +90,20 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
         type={type === "password" && !showPassword ? "password" : "text"}
         {...register(name, dynamicRules)}
         fullWidth
-        error={!!error}
-        // helperText={error}
+        error={
+          (!!required &&
+            (!value ||
+              (typeof value === "string" && value.trim().length === 0))) ||
+          disabled
+        }
+        // Show error only if there's an error and no default value
+        // helperText={!value ? error : undefined} // Show helper text only if there's no default value
+        // helperText={
+        //   !!required &&
+        //   (!value || (typeof value === "string" && value.trim().length === 0))
+        //     ? `${label} is required and cannot be empty or contain only spaces`
+        //     : undefined
+        // }
         disabled={disabled} // Disable editing based on the disabled prop
         value={value} // Set controlled value
         onChange={onChange} // Handle onChange for controlled input
@@ -108,9 +118,6 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
           },
         }}
         slotProps={{
-          htmlInput: {
-            maxLength, // Prevent exceeding maxLength
-          },
           input: {
             endAdornment:
               type === "password" ? (

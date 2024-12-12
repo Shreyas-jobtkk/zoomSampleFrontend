@@ -19,7 +19,7 @@ interface SelectOptionProps {
   width?: number;
   height?: number;
   labelWidth?: string | number;
-  onChange: (value: string) => void;
+  onChange: (value: string) => void; // onChange expects a string value
   value: string;
 }
 
@@ -32,8 +32,8 @@ const SelectOption: React.FC<SelectOptionProps> = ({
   onChange,
   value,
 }) => {
-  const handleChange = (event: SelectChangeEvent) => {
-    onChange(event.target.value as string);
+  const handleChange = (event: SelectChangeEvent<string>) => {
+    onChange(event.target.value); // Pass the value to onChange as string
   };
 
   return (
@@ -56,7 +56,6 @@ const SelectOption: React.FC<SelectOptionProps> = ({
         variant="outlined"
         sx={{
           minWidth: width,
-          // ml: 1, // Optional: Adds some margin between label and Select
         }}
       >
         <Select

@@ -1,14 +1,11 @@
 import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
 import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
-import { Box, TextField, Typography } from "@mui/material";
-import PasswordInput from "../../../../../components/LV1/PasswordInput/PasswordInput";
-import PasswordBoxWithLabel from "../../../../../components/LV1/TextBox/PasswordBoxWithLabel";
+import { Box, TextField, Typography, SelectChangeEvent } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import "../StoreStyles/StoreList.scss";
 // import ValidationTextArea from "../../../../components/LV1/ValidationTextArea/ValidationTextArea";
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
-
 // import { fetchCompaniesAll } from "../../../../api/apiService/company/company";
 import SelectableModal from "../../../../../components/LV1/SelectableModal/SelectableModal";
 import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
@@ -16,33 +13,19 @@ import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
 import SelectOption from "../../../../../components/LV1/SelectOption/SelectOption";
 import JapanPrefectures from "../JapanPrefectures/JapanPrefectures";
 import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
-
-interface StoreFormData {
-  company_no: string;
-  store_name: string;
-  store_name_furigana: string;
-  zip1: string;
-  zip2: string;
-  pref: string;
-  city: string;
-  street: string;
-  building_name: string;
-  tel1: string;
-  tel2: string;
-  tel3: string;
-  fax1: string;
-  fax2: string;
-  fax3: string;
-  note: string;
-  company_delete: boolean;
-  store_delete: boolean;
-}
+import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
+import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
+// import { StoreCreateFormValues } from "../../../../../CompanyTypes/CompanyTypes";
+import { useForm } from "react-hook-form";
+import { StoreCreateFormValues } from "../StoreComponents/StoreTypes/StoreTypes";
 
 function StoreListInfo() {
   const [selectedCompanyNo, setSelectedCompanyNo] = useState<string>("");
   const [selectedCompanyName, setSelectedCompanyName] = useState<string>("");
-  const [formData, setFormData] = useState<StoreFormData>({
-    company_no: selectedCompanyNo,
+  const [selectedCompanyDelete, setSelectedCompanyDelete] =
+    useState<boolean>(false);
+  const [formData, setFormData] = useState<StoreCreateFormValues>({
+    company_no: "",
     store_name: "",
     store_name_furigana: "",
     zip1: "",
@@ -58,8 +41,6 @@ function StoreListInfo() {
     fax2: "",
     fax3: "",
     note: "",
-    company_delete: false,
-    store_delete: false,
   });
 
   const [textValue1, setTextValue1] = useState<string>("");
@@ -68,56 +49,53 @@ function StoreListInfo() {
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(e.target.value);
   };
-  const searchConditions = () => async (e: React.FormEvent) => {
-    e.preventDefault();
+  const [selectedOption, setSelectedOption] = useState<string>("");
 
-    // Concatenate the zip codes when submitting
-    const fullZip = formData.zip1 + formData.zip2; // Concatenate the two zip values
-
-    // Concatenate the tel and fax numbers when submitting
-    const fullTel = formData.tel1 + formData.tel2 + formData.tel3;
-    const fullFax = formData.fax1 + formData.fax2 + formData.fax3;
-
-    // Create the new form data with the full concatenated zip, tel, and fax
-    const updatedFormData = {
-      ...formData,
-      zip: fullZip,
-      tel: fullTel,
-      fax: fullFax,
-    };
-
+  const createStore = () => {
+    console.log(111, formData);
     try {
-      const response = await fetch("/stores", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedFormData), // Send the updated form data with full zip, tel, and fax
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create store.");
-      }
-
-      const result = await response.json();
-      setResponseMessage(`Store created: ${result.store_name}`);
+      StoreApiService.createStore(
+        formData.company_no,
+        formData.store_name,
+        formData.store_name_furigana,
+        formData.zip1,
+        formData.zip2,
+        formData.pref,
+        formData.city,
+        formData.street,
+        formData.building_name,
+        formData.tel1,
+        formData.tel2,
+        formData.tel3,
+        formData.fax1,
+        formData.fax2,
+        formData.fax3,
+        formData.note
+      );
+      // alert("saved");
     } catch (error) {
-      console.error(error);
-      setResponseMessage("An error occurred. Please try again.");
+      alert("error");
+      console.error("Error saving company:", error);
     }
   };
-  const [selectedOption, setSelectedOption] = useState<string>("");
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    // formState: { errors, isValid },
+  } = useForm<StoreCreateFormValues>();
 
   useEffect(() => {
     fetchCompaniesListData();
   }, []);
 
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  // const [selectedValue, setSelectedValue] = useState<string | null>(null);
 
-  const handleOptionSelect = (value: string) => {
-    fetchCompaniesListData();
-    setSelectedValue(value);
-  };
+  // const handleOptionSelect = (value: string) => {
+  //   fetchCompaniesListData();
+  //   setSelectedValue(value);
+  // };
 
   const fetchCompaniesListData = async () => {
     try {
@@ -147,60 +125,48 @@ function StoreListInfo() {
   };
 
   const [selectedCompany, setSelectedCompany] = useState<any>(null);
-  const options = JapanPrefectures;
+  // const options = JapanPrefectures;
 
   const handleCompanySelect = (company: any) => {
     setSelectedCompany(company);
     setSelectedCompanyNo(company.company_no);
     setSelectedCompanyName(company.company_name);
+    // setFormData((prevData) => ({
+    //   ...prevData,
+    //   company_no: company.company_no,
+    //   company_name: company.company_name,
+    // }));
+    setValue("company_no", company.company_no);
+    // setFormData(company);
   };
 
   const [companyData, setCompanyData] = useState<any[]>([]);
-
-  const [value, setValue] = useState("");
-
-  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
   const [note, setNote] = useState<string>("");
-
   const [responseMessage, setResponseMessage] = useState<string | null>(null);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value, type, checked } = e.target as HTMLInputElement; // Type assertion here
+    const { name, value } = event.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("/stores", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create store.");
-      }
-
-      const result = await response.json();
-      setResponseMessage(`Store created: ${result.store_name}`);
-    } catch (error) {
-      console.error(error);
-      setResponseMessage("An error occurred. Please try again.");
-    }
+  const handleSelectChange = (value: string) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      pref: value,
+    }));
   };
 
   return (
-    <Box className="store-list-navigate">
+    <Box
+      className="store-list-navigate"
+      onSubmit={handleSubmit(createStore)}
+      component="form"
+    >
       <MenuHeader title="店舗情報" />
       <Box className="store-list-navigate-content">
         <Box className="time-details-delete-flag">
@@ -241,13 +207,18 @@ function StoreListInfo() {
               valueKey="company_no" // We use company_no for unique identification
               displayKey="company_name" // We display company_name in the list
             />
-            {/* <ButtonAtom onClick={selectCompany} label="企業検索" width="100px" /> */}
-            <TextBoxWithLabel
+
+            <ValidationInputField
+              name="company_no" // Name for the phonetic spelling
               labelWidth="125px"
               label="企業No"
               width="300px"
+              register={register}
+              maxLength={128}
+              // error={errors.company_no?.message} // Separate error for "furigana"
               value={selectedCompanyNo}
               onChange={(e: any) => setSelectedCompanyNo(e.target.value)}
+              disabled={true}
             />
             <TextBoxWithLabel
               labelWidth="125px"
@@ -270,23 +241,27 @@ function StoreListInfo() {
             />
             <Box className="name-row">
               <Box>
-                <TextBoxWithLabel
-                  labelWidth="125px"
+                <ValidationInputField
                   label="フリガナ"
-                  width="300px" // Uncomment to set a custom width
+                  name="store_name_furigana" // Name for the phonetic spelling
+                  labelWidth="125px"
+                  width="300px"
+                  register={register}
+                  maxLength={128}
+                  // error={errors.store_name_furigana?.message} // Separate error for "furigana"
                   value={formData.store_name_furigana}
                   onChange={handleChange}
-                  disabled={false}
-                  name="store_name_furigana"
                 />
-                <TextBoxWithLabel
+                <ValidationInputField
+                  name="store_name" // Name for the phonetic spelling
                   labelWidth="125px"
                   label="店舗名"
-                  width="300px" // Uncomment to set a custom width
+                  width="300px"
+                  register={register}
+                  maxLength={128}
+                  // error={errors.store_name?.message} // Separate error for "furigana"
                   value={formData.store_name}
                   onChange={handleChange}
-                  disabled={false}
-                  name="store_name"
                 />
               </Box>
             </Box>
@@ -309,43 +284,46 @@ function StoreListInfo() {
                     <Typography component="span">-</Typography>
                     <NumberInput
                       value={formData.zip2}
+                      name="zip2"
                       onChange={handleChange}
                       maxLength={4}
                       margin="0 8px"
-                      name="zip2"
                     />
                   </Box>
-                  -
+
                   <SelectOption
                     label="都道府県"
-                    options={options}
+                    options={JapanPrefectures}
                     width={150}
-                    value={selectedOption}
-                    onChange={setSelectedOption}
+                    value={formData.pref}
+                    onChange={handleSelectChange}
                     labelWidth="75px"
                   />
                   <TextBoxWithLabel
                     labelWidth="75px"
                     label="市区町村"
                     width="300px" // Uncomment to set a custom width
-                    value={textValue1}
-                    onChange={(e: any) => setTextValue1(e.target.value)}
+                    onChange={handleChange}
+                    value={formData.city}
+                    name="city"
                     disabled={false}
                   />
                   <TextBoxWithLabel
                     labelWidth="75px"
                     label="番地"
                     width="300px" // Uncomment to set a custom width
-                    value={textValue1}
-                    onChange={(e: any) => setTextValue1(e.target.value)}
+                    onChange={handleChange}
+                    value={formData.street}
+                    name="street"
                     disabled={false}
                   />
                   <TextBoxWithLabel
                     labelWidth="75px"
                     label="建物名等"
                     width="300px" // Uncomment to set a custom width
-                    value={textValue1}
-                    onChange={(e: any) => setTextValue1(e.target.value)}
+                    onChange={handleChange}
+                    value={formData.building_name}
+                    name="building_name"
                     disabled={false}
                   />
                 </Box>
@@ -358,22 +336,25 @@ function StoreListInfo() {
                   </Typography>
 
                   <NumberInput
-                    value={value}
-                    onChange={handleInput}
+                    onChange={handleChange}
+                    value={formData.tel1}
+                    name="tel1"
                     maxLength={4}
                     margin="0 8px"
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
-                    value={value}
-                    onChange={handleInput}
+                    onChange={handleChange}
+                    value={formData.tel2}
+                    name="tel2"
                     maxLength={4}
                     margin="0 8px"
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
-                    value={value}
-                    onChange={handleInput}
+                    onChange={handleChange}
+                    value={formData.tel3}
+                    name="tel3"
                     maxLength={4}
                     margin="0 8px"
                   />
@@ -384,22 +365,25 @@ function StoreListInfo() {
                   </Typography>
 
                   <NumberInput
-                    value={value}
-                    onChange={handleInput}
+                    onChange={handleChange}
+                    value={formData.fax1}
+                    name="fax1"
                     maxLength={4}
                     margin="0 8px"
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
-                    value={value}
-                    onChange={handleInput}
+                    onChange={handleChange}
+                    value={formData.fax2}
+                    name="fax2"
                     maxLength={4}
                     margin="0 8px"
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
-                    value={value}
-                    onChange={handleInput}
+                    onChange={handleChange}
+                    value={formData.fax3}
+                    name="fax3"
                     maxLength={4}
                     margin="0 8px"
                   />
@@ -409,15 +393,23 @@ function StoreListInfo() {
           </Box>
         </Box>
         <TextAreaWithLabel
-          value={note}
-          onChange={(e: any) => setNote(e.target.value)}
+          value={formData.note}
+          onChange={handleChange}
           label="備考"
           margin="0 0 0 40vw"
           labelWidth="25px"
           maxLength={5}
+          register={register}
+          name="note"
         />
-        <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
-        <ButtonAtom onClick={searchConditions} label="編集" width="100px" />
+        <ButtonAtom onClick={createStore} label="閉じる" width="100px" />
+        {/* <ButtonAtom onClick={createStore} label="編集" width="100px" /> */}
+        <ValidationButton
+          label="保存"
+          width="100px"
+          // onClick={saveCompanyInfo}
+          type="submit"
+        />
       </Box>
     </Box>
   );

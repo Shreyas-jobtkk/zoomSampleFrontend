@@ -13,26 +13,38 @@ import { CompanyApiService } from "../../../../../api/apiService/company/company
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
 
 const CompanyCreate = () => {
+  const [formData, setFormData] = useState<CompanyCreateFormValues>({
+    company_name: "",
+    company_note: "",
+    company_name_furigana: "",
+  });
+
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<CompanyCreateFormValues>();
-  // const onSubmit = (data: CompanyCreateFormValues) => {
-  //   console.log("Form Data Submitted:", data);
-  // };
-  // const [deleteFlag, setDeleteFlag] = useState<string>("");
   const searchConditions = () => {};
-  const [companyName, setCompanyName] = useState<string>("");
-  const [companyNameFurigana, setCompanyNameFurigana] = useState<string>("");
-  const [note, setNote] = useState<string>("");
   const saveCompanyInfo = async (data: CompanyCreateFormValues) => {
     if (!isValid) {
       return;
     }
     console.log("Form Data Submitted:", data);
     try {
-      CompanyApiService.createCompany(companyName, companyNameFurigana, note);
+      CompanyApiService.createCompany(
+        formData.company_name,
+        formData.company_name_furigana,
+        formData.company_note
+      );
       alert("saved");
     } catch (error) {
       alert("error");
@@ -87,40 +99,49 @@ const CompanyCreate = () => {
             <Box>
               <ValidationInputField
                 label="企業名"
-                name="companyName" // This name is for the company name
+                name="company_name" // This name is for the company name
                 labelWidth="125px"
                 width="30vw"
                 maxLength={64}
                 register={register}
-                error={errors.companyName?.message} // Separate error for "name"
-                value={companyName}
+                // error={errors.company_name?.message} // Separate error for "name"
+                value={formData.company_name}
                 // required={true}
-                onChange={(e: any) => setCompanyName(e.target.value)}
+                onChange={handleChange}
               />
 
               <ValidationInputField
                 label="フリガナ"
-                name="companyNameFurigana" // Name for the phonetic spelling
+                name="company_name_furigana" // Name for the phonetic spelling
                 labelWidth="125px"
                 width="30vw"
                 register={register}
                 maxLength={128}
                 // required={false}
-                error={errors.companyNameFurigana?.message} // Separate error for "furigana"
+                // error={errors.company_name_furigana?.message} // Separate error for "furigana"
                 // required={true}
-                value={companyNameFurigana}
-                onChange={(e: any) => setCompanyNameFurigana(e.target.value)}
+                value={formData.company_name_furigana}
+                onChange={handleChange}
               />
             </Box>
           </Box>
         </Box>
 
-        <TextAreaWithLabel
+        {/* <TextAreaWithLabel
           label="備考"
           value={note}
           onChange={(e: any) => setNote(e.target.value)}
           margin="1vh 0 1vh 40vw"
           maxLength={2}
+        /> */}
+        <TextAreaWithLabel
+          label="備考"
+          value={formData.company_note}
+          register={register}
+          onChange={handleChange}
+          margin="1vh 0 1vh 40vw"
+          maxLength={2}
+          name="company_note"
         />
 
         <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />

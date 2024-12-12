@@ -3,7 +3,7 @@ import { COMPANY_ENDPOINT } from "../company-api-definitions";
 import api from "../../../index";
 
 export const updateCompany = async (
-  id: number,
+  id: string,
   companyName: string,
   companyNameFurigana: string,
   note: string
@@ -12,7 +12,7 @@ export const updateCompany = async (
     const response = await api.put(`/${COMPANY_ENDPOINT}/${id}`, {
       company_name: companyName,
       company_name_furigana: companyNameFurigana,
-      note: note,
+      company_note: note,
     });
     alert("Updated successfully");
     return response.data;

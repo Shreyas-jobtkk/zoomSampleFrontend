@@ -30,6 +30,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
   placeholder,
   maxLength, // Access the maxLength prop
   margin, // Access the marginLeft prop
+  name,
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -44,6 +45,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
     <TextField
       variant="outlined"
       value={value}
+      name={name}
       onChange={handleChange}
       placeholder={placeholder}
       slotProps={{
