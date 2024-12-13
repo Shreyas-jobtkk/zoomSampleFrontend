@@ -17,7 +17,7 @@ import ValidationInputField from "../../../../../components/LV1/ValidationInputF
 import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
 // import { StoreCreateFormValues } from "../../../../../CompanyTypes/CompanyTypes";
 import { useForm } from "react-hook-form";
-import { StoreCreateFormValues } from "../StoreComponents/StoreTypes/StoreTypes";
+import { StoreCreateFormValues } from "../../../../../types/StoreTypes/StoreTypes";
 
 function StoreListInfo() {
   const [selectedCompanyNo, setSelectedCompanyNo] = useState<string>("");
@@ -26,6 +26,7 @@ function StoreListInfo() {
     useState<boolean>(false);
   const [formData, setFormData] = useState<StoreCreateFormValues>({
     company_no: "",
+    company_name: "",
     store_name: "",
     store_name_furigana: "",
     zip1: "",
@@ -40,7 +41,7 @@ function StoreListInfo() {
     fax1: "",
     fax2: "",
     fax3: "",
-    note: "",
+    store_note: "",
   });
 
   const [textValue1, setTextValue1] = useState<string>("");
@@ -52,7 +53,7 @@ function StoreListInfo() {
   const [selectedOption, setSelectedOption] = useState<string>("");
 
   const createStore = () => {
-    console.log(111, formData);
+    console.log(113, formData);
     try {
       StoreApiService.createStore(
         formData.company_no,
@@ -70,7 +71,7 @@ function StoreListInfo() {
         formData.fax1,
         formData.fax2,
         formData.fax3,
-        formData.note
+        formData.store_note
       );
       // alert("saved");
     } catch (error) {
@@ -83,7 +84,7 @@ function StoreListInfo() {
     register,
     handleSubmit,
     setValue,
-    // formState: { errors, isValid },
+    formState: { errors, isValid },
   } = useForm<StoreCreateFormValues>();
 
   useEffect(() => {
@@ -128,20 +129,21 @@ function StoreListInfo() {
   // const options = JapanPrefectures;
 
   const handleCompanySelect = (company: any) => {
+    console.log(147, isValid);
     setSelectedCompany(company);
     setSelectedCompanyNo(company.company_no);
     setSelectedCompanyName(company.company_name);
-    // setFormData((prevData) => ({
-    //   ...prevData,
-    //   company_no: company.company_no,
-    //   company_name: company.company_name,
-    // }));
+    setFormData((prevData) => ({
+      ...prevData,
+      company_no: company.company_no,
+      company_name: company.company_name,
+    }));
     setValue("company_no", company.company_no);
-    // setFormData(company);
+    setValue("company_name", company.company_name);
   };
 
   const [companyData, setCompanyData] = useState<any[]>([]);
-  const [note, setNote] = useState<string>("");
+  const [store_note, setNote] = useState<string>("");
   const [responseMessage, setResponseMessage] = useState<string | null>(null);
 
   const handleChange = (
@@ -218,15 +220,29 @@ function StoreListInfo() {
               // error={errors.company_no?.message} // Separate error for "furigana"
               value={selectedCompanyNo}
               onChange={(e: any) => setSelectedCompanyNo(e.target.value)}
-              disabled={true}
+              // disabled={true}
+              type="none"
             />
-            <TextBoxWithLabel
+            <ValidationInputField
+              name="company_name" // Name for the phonetic spelling
+              labelWidth="125px"
+              label="企業名"
+              width="300px"
+              register={register}
+              maxLength={128}
+              // error={errors.company_no?.message} // Separate error for "furigana"
+              value={selectedCompanyName}
+              onChange={(e: any) => setSelectedCompanyName(e.target.value)}
+              // disabled={true}
+              type="none"
+            />
+            {/* <TextBoxWithLabel
               labelWidth="125px"
               label="企業名"
               width="300px" // Uncomment to set a custom width
               value={selectedCompanyName}
               onChange={(e: any) => setSelectedCompanyName(e.target.value)}
-            />
+            /> */}
           </Box>
         </Box>
         <Box className="basic-info">
@@ -393,14 +409,14 @@ function StoreListInfo() {
           </Box>
         </Box>
         <TextAreaWithLabel
-          value={formData.note}
+          value={formData.store_note}
           onChange={handleChange}
           label="備考"
           margin="0 0 0 40vw"
           labelWidth="25px"
           maxLength={5}
           register={register}
-          name="note"
+          name="store_note"
         />
         <ButtonAtom onClick={createStore} label="閉じる" width="100px" />
         {/* <ButtonAtom onClick={createStore} label="編集" width="100px" /> */}

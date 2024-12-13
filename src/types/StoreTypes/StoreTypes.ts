@@ -2,6 +2,7 @@
 
 export type StoreCreateFormValues = {
   company_no: string;
+  company_name: string;
   store_name: string;
   store_name_furigana: string;
   zip1: string | number;
@@ -16,15 +17,24 @@ export type StoreCreateFormValues = {
   fax1: string | number;
   fax2: string | number;
   fax3: string | number;
-  note: string;
+  store_note: string;
 };
 
-export interface CompanyInfoFormValues {
+export interface StoreInfo {
   company_no: string;
   company_name: string;
-  company_name_furigana: string;
-  company_note: string;
+  store_no: string;
+  store_name: string;
+  store_name_furigana: string;
+  zip: string | number;
+  pref: string;
+  city: string;
+  street: string;
+  building_name: string;
+  tel: string | number;
+  fax: string | number;
+  store_note: string;
   updated_at: Date | string;
   created_at: Date | string;
-  company_deleted: Boolean;
+  store_delete: Boolean;
 }

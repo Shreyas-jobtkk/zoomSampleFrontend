@@ -15,8 +15,8 @@ import ValidationButton from "../../../../../components/LV1/ValidationButton/Val
 import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
 import {
   CompanyCreateFormValues,
-  CompanyInfoFormValues,
-} from "../CompanyTypes/CompanyTypes";
+  CompanyInfo,
+} from "../../../../../types/CompanyTypes/CompanyTypes";
 import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
 
 function CompanyInfoEdit() {
@@ -30,7 +30,7 @@ function CompanyInfoEdit() {
     formState: { isValid },
   } = useForm<CompanyCreateFormValues>();
 
-  const [formData, setFormData] = useState<CompanyInfoFormValues>({
+  const [formData, setFormData] = useState<CompanyInfo>({
     company_no: "",
     company_name: "",
     company_name_furigana: "",
@@ -51,7 +51,7 @@ function CompanyInfoEdit() {
   // };
 
   // const [companyDetails, setCompanyDetails] =
-  //   useState<CompanyInfoFormValues | null>(null);
+  //   useState<CompanyInfo | null>(null);
 
   const navigate = useNavigate();
   console.log("Selected Company No:", selectedCompanyNo);

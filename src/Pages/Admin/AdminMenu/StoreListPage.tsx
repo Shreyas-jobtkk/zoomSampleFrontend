@@ -11,8 +11,11 @@ import DataTable from "../../../components/LV3/DataTable/DataTable";
 import { Height } from "@mui/icons-material";
 import "./AdminMenu.scss";
 import { useNavigate } from "react-router-dom";
+import { convertToJST, deleteStatus } from "../../../utils/utils";
 // import { fetchCompaniesAll } from "../../../api/apiService/company/company";
 import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
+import { StoreApiService } from "../../../api/apiService/store/store-api-service";
+import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
 
 function StoreList() {
   const navigate = useNavigate();
@@ -33,12 +36,15 @@ function StoreList() {
     "No",
     "登録日時",
     "更新日時",
-    "企業Ｎｏ",
+    "企業No",
     "企業名",
     "店舗No",
     "店舗名",
     "フリガナ",
+    "削除",
   ];
+
+  const [tableData, setTableData] = useState<any[]>([]);
   const data = [
     {
       No: 1,
@@ -262,13 +268,11 @@ function StoreList() {
     },
   ];
 
-  const columnWidths = [5, 20, 20, 8, 10, 10, 10, 10, 10, 10];
-  const columnAlignments: ("left" | "center" | "right")[] = ["right"];
-
   const searchConditions = () => {};
 
   useEffect(() => {
     fetchCompaniesListData();
+    fetchStoreListData();
   }, []);
 
   const fetchCompaniesListData = async () => {
@@ -280,46 +284,31 @@ function StoreList() {
     }
   };
 
-  // Handle start date change
-  const handleStartDateChange = (date: Dayjs | null) => {
-    setSelectedStartDate(date);
-    console.log(
-      "Selected Start Date:",
-      date ? date.format("YYYY-MM-DD") : "None"
-    ); // Log the selected start date
-  };
-
-  // Handle end date change
-  const handleEndDateChange = (date: Dayjs | null) => {
-    setSelectedEndDate(date);
-    console.log(
-      "Selected End Date:",
-      date ? date.format("YYYY-MM-DD") : "None"
-    ); // Log the selected end date
-  };
-
-  // Handle start time change
-  const handleStartTimeChange = (newValue: Dayjs | null) => {
-    setSelectedStartTime(newValue);
-    console.log(
-      "Selected Start Time:",
-      newValue ? newValue.format("HH:mm:ss") : "None"
-    ); // Log the selected start time
-  };
-
-  // Handle end time change
-  const handleEndTimeChange = (newValue: Dayjs | null) => {
-    setSelectedEndTime(newValue);
-    console.log(
-      "Selected End Time:",
-      newValue ? newValue.format("HH:mm:ss") : "None"
-    ); // Log the selected end time
-  };
-
-  // Format the full datetime strings for display
-  const formatFullDateTime = (date: Dayjs | null, time: Dayjs | null) => {
-    if (!date || !time) return "None";
-    return `${date.format("YYYY-MM-DD")} ${time.format("HH:mm:ss")}`;
+  const fetchStoreListData = async () => {
+    try {
+      const response = await StoreApiService.fetchStoreAll();
+      console.log(245, response);
+      const sortedData = response
+        .sort(
+          (a: StoreInfo, b: StoreInfo) =>
+            Number(a.store_no) - Number(b.store_no)
+        )
+        .map((item: StoreInfo, index: number) => ({
+          No: index + 1,
+          登録日時: convertToJST(item.created_at),
+          更新日時: convertToJST(item.updated_at),
+          企業No: item.company_no,
+          企業名: item.company_name,
+          店舗No: item.store_no,
+          店舗名: item.store_name,
+          フリガナ: item.store_name_furigana,
+          削除: deleteStatus(item.store_delete),
+        }));
+      console.log(141, sortedData);
+      setTableData(sortedData);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
+    }
   };
 
   const [textValue1, setTextValue1] = useState<string>("");
@@ -428,7 +417,7 @@ function StoreList() {
       </Box>
       <DataTable // Customize header height
         headers={headers}
-        data={data}
+        data={tableData}
         maxHeight="calc(82vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"

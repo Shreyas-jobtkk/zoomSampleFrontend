@@ -13,14 +13,11 @@ type ValidationInputFieldProps = {
   type?: string;
   register: any;
   error?: string;
-  rules?: object;
   maxLength?: number; // Optional dynamic maxLength
-  required?: boolean; // Optional required state
   labelWidth?: string | number; // Optional label width
   width?: string | number; // Optional input width
   inputHeight?: string | number; // Optional input height
   fontSize?: string; // Optional font size for label and TextField
-  disabled?: boolean; // Optional disabled state
   value?: string; // Controlled value for the input
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Controlled onChange handler
 };
@@ -30,14 +27,10 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
   name,
   type = "text",
   register,
-  // error,
-  rules = {},
-  required = true, // Default required is true
   labelWidth = "85px", // Default label width
   width = "200px", // Default input width
   inputHeight = "30px", // Default input height
   fontSize, // Font size for label and TextField
-  disabled = false, // Default disabled state is false
   value, // Controlled value
   onChange, // Controlled onChange
 }) => {
@@ -47,19 +40,18 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
     setShowPassword((prev) => !prev);
   };
 
-  const dynamicRules = {
-    // ...(required && { required: `${label} is required` }), // Add required validation only if required is true
-
-    ...(required
-      ? {
-          validate: {
-            // checkForWhitespace: (value: string) => value.trim().length > 0,
-            checkForWhitespace: (value: string) => value.trim().length > 0,
-          },
-        }
-      : {}),
-    ...rules, // Allow custom rules to override default rules
+  const rules = {
+    required: true, // Ensures the field is not empty
+    validate: {
+      notWhitespace: (value: any) => {
+        // Ensure value is a string before applying trim
+        return String(value).trim() !== "";
+      },
+    },
   };
+
+  const isError =
+    !value || (typeof value === "string" && value.trim().length === 0);
 
   return (
     <Box
@@ -80,31 +72,24 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
         }}
       >
         {label}
-
-        {/* Display current length if maxLength is set */}
       </Typography>
 
       {/* Input Field */}
       <TextField
         variant="outlined"
         type={type === "password" && !showPassword ? "password" : "text"}
-        {...register(name, dynamicRules)}
+        {...register(name, rules)}
         fullWidth
-        error={
-          (!!required &&
-            (!value ||
-              (typeof value === "string" && value.trim().length === 0))) ||
-          disabled
-        }
-        // Show error only if there's an error and no default value
-        // helperText={!value ? error : undefined} // Show helper text only if there's no default value
-        // helperText={
-        //   !!required &&
-        //   (!value || (typeof value === "string" && value.trim().length === 0))
-        //     ? `${label} is required and cannot be empty or contain only spaces`
-        //     : undefined
-        // }
-        disabled={disabled} // Disable editing based on the disabled prop
+        // required={true}
+        onKeyDown={(event) => {
+          if (type === "none") {
+            event.preventDefault(); // Prevent any key input
+            // pointerEvents: "none",
+            const target = event.target as HTMLElement;
+            target.style.pointerEvents = "none";
+          }
+        }}
+        error={isError}
         value={value} // Set controlled value
         onChange={onChange} // Handle onChange for controlled input
         sx={{
@@ -112,6 +97,7 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
           "& .MuiOutlinedInput-root": {
             height: inputHeight, // Match input height
             fontSize, // Apply font size to the input text
+            pointerEvents: type === "none" ? "none" : undefined,
             "& input": {
               padding: "4px", // Adjust padding
             },

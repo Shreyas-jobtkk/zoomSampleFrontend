@@ -6,20 +6,9 @@ import DataTable from "../../../components/LV3/DataTable/DataTable";
 import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
-// import { fetchCompaniesAll } from "../../../api/apiService/company/actions/company-fetch-all";
 import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
-
+import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
 import "./AdminMenu.scss";
-
-interface Company {
-  company_no: number;
-  company_name: string;
-  company_name_furigana: string;
-  note: string;
-  updated_at: Date;
-  created_at: Date;
-  company_deleted: Boolean;
-}
 
 function CompaniesList() {
   const navigate = useNavigate();
@@ -47,8 +36,11 @@ function CompaniesList() {
       console.log(144, response);
       // const response = await axios.get(`${homePage}/company`);
       const sortedData = response
-        .sort((a: Company, b: Company) => a.company_no - b.company_no)
-        .map((item: Company, index: number) => ({
+        .sort(
+          (a: CompanyInfo, b: CompanyInfo) =>
+            Number(a.company_no) - Number(b.company_no)
+        )
+        .map((item: CompanyInfo, index: number) => ({
           No: index + 1,
           登録日時: convertToJST(item.created_at),
           更新日時: convertToJST(item.updated_at),

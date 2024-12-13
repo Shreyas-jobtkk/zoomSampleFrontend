@@ -20,9 +20,9 @@ export const createStore = async (
   fax1: number | string,
   fax2: number | string,
   fax3: number | string,
-  note: string
+  store_note: string
 ) => {
-  console.log(1112);
+  console.log(1112, "working");
   try {
     // Concatenate zip1 and zip2
 
@@ -39,7 +39,7 @@ export const createStore = async (
       building_name,
       tel: `${tel1}-${tel2}-${tel3}`,
       fax: `${fax1}-${fax2}-${fax3}`,
-      note,
+      store_note,
     });
     console.log(1113);
     alert("Store saved successfully");

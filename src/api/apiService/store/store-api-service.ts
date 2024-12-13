@@ -6,10 +6,11 @@
 // import { fetchCompaniesAll } from "../company/actions/company-fetch-all";
 
 import { createStore } from "../store/actions/store-create";
+import { fetchStoreAll } from "../store/actions/store-fetch-all";
 
 export const StoreApiService = {
   createStore,
-  // createCompany,
+  fetchStoreAll,
   // updateCompany,
   // deleteCompanies,
   // fetchCompaniesAll,

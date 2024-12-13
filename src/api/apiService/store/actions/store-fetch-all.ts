@@ -2,7 +2,7 @@
 import { STORE_ENDPOINT } from "../store-api-definitions";
 import api from "../../../index";
 
-export const fetchCompaniesAll = async () => {
+export const fetchStoreAll = async () => {
   try {
     const response = await api.get(STORE_ENDPOINT);
     return response.data;

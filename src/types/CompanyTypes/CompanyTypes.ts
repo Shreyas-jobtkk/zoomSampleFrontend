@@ -6,7 +6,7 @@ export type CompanyCreateFormValues = {
   company_name_furigana: string;
 };
 
-export interface CompanyInfoFormValues {
+export interface CompanyInfo {
   company_no: string;
   company_name: string;
   company_name_furigana: string;
