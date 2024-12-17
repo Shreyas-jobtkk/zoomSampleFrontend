@@ -24,10 +24,6 @@ export const createStore = async (
 ) => {
   console.log(1112, "working");
   try {
-    // Concatenate zip1 and zip2
-
-    // const zip = `${zip1}-${zip2}`;
-
     const response = await api.post(STORE_ENDPOINT, {
       company_no,
       store_name,

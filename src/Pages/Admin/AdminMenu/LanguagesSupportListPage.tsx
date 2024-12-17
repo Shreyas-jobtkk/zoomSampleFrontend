@@ -1,16 +1,18 @@
-import DatePicker from "../../../components/LV1/DatePicker/DatePicker";
-import TimePicker from "../../../components/LV1/TimePicker/TimePicker"; // Adjust the import path as needed
 import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
-import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
-import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
+import { useNavigate } from "react-router-dom";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
 import "./AdminMenu.scss";
+import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
+import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";
+import { convertToJST, deleteStatus } from "../../../utils/utils";
+import { useState, useEffect } from "react";
 
 function LanguagesSupportList() {
+  const navigate = useNavigate();
   // State for selected start and end times
   const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
     dayjs()
@@ -22,205 +24,84 @@ function LanguagesSupportList() {
     null
   );
   const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(null);
+
+  const [selectedData, setSelectedData] = useState<
+    Array<{ No: string | number; [key: string]: string | number }>
+  >([]);
   const headers = [
     "No",
     "登録日時",
     "更新日時",
-    "言語Ｎｏ",
+    "言語No",
     "言語",
     "フリガナ",
+    "削除",
   ];
-  const data = [
-    {
-      No: 1,
-      登録日時: "2024-11-01 09:00",
-      更新日時: "2024-11-01 10:00",
-      言語Ｎｏ: "1001",
-      言語: "English",
-      フリガナ: "英語",
-    },
-    {
-      No: 2,
-      登録日時: "2024-11-01 10:00",
-      更新日時: "2024-11-01 11:00",
-      言語Ｎｏ: "1002",
-      言語: "日本語",
-      フリガナ: "日本語",
-    },
-    {
-      No: 3,
-      登録日時: "2024-11-01 11:00",
-      更新日時: "2024-11-01 12:00",
-      言語Ｎｏ: "1003",
-      言語: "中文",
-      フリガナ: "中国語",
-    },
-    {
-      No: 4,
-      登録日時: "2024-11-01 12:00",
-      更新日時: "2024-11-01 13:00",
-      言語Ｎｏ: "1004",
-      言語: "한국어",
-      フリガナ: "韓国語",
-    },
-    {
-      No: 5,
-      登録日時: "2024-11-01 13:00",
-      更新日時: "2024-11-01 14:00",
-      言語Ｎｏ: "1005",
-      言語: "Français",
-      フリガナ: "フランス語",
-    },
-    {
-      No: 6,
-      登録日時: "2024-11-01 14:00",
-      更新日時: "2024-11-01 15:00",
-      言語Ｎｏ: "1006",
-      言語: "Español",
-      フリガナ: "スペイン語",
-    },
-    {
-      No: 7,
-      登録日時: "2024-11-01 15:00",
-      更新日時: "2024-11-01 16:00",
-      言語Ｎｏ: "1007",
-      言語: "Deutsch",
-      フリガナ: "ドイツ語",
-    },
-    {
-      No: 8,
-      登録日時: "2024-11-01 16:00",
-      更新日時: "2024-11-01 17:00",
-      言語Ｎｏ: "1008",
-      言語: "Italiano",
-      フリガナ: "イタリア語",
-    },
-    {
-      No: 9,
-      登録日時: "2024-11-01 17:00",
-      更新日時: "2024-11-01 18:00",
-      言語Ｎｏ: "1009",
-      言語: "Português",
-      フリガナ: "ポルトガル語",
-    },
-    {
-      No: 10,
-      登録日時: "2024-11-01 18:00",
-      更新日時: "2024-11-01 19:00",
-      言語Ｎｏ: "1010",
-      言語: "Русский",
-      フリガナ: "ロシア語",
-    },
-    {
-      No: 11,
-      登録日時: "2024-11-01 19:00",
-      更新日時: "2024-11-01 20:00",
-      言語Ｎｏ: "1011",
-      言語: "हिन्दी",
-      フリガナ: "ヒンディー語",
-    },
-    {
-      No: 12,
-      登録日時: "2024-11-01 20:00",
-      更新日時: "2024-11-01 21:00",
-      言語Ｎｏ: "1012",
-      言語: "العربية",
-      フリガナ: "アラビア語",
-    },
-    {
-      No: 13,
-      登録日時: "2024-11-01 21:00",
-      更新日時: "2024-11-01 22:00",
-      言語Ｎｏ: "1013",
-      言語: "বাংলা",
-      フリガナ: "ベンガル語",
-    },
-    {
-      No: 14,
-      登録日時: "2024-11-01 22:00",
-      更新日時: "2024-11-01 23:00",
-      言語Ｎｏ: "1014",
-      言語: "اردو",
-      フリガナ: "ウルドゥー語",
-    },
-    {
-      No: 15,
-      登録日時: "2024-11-02 08:00",
-      更新日時: "2024-11-02 09:00",
-      言語Ｎｏ: "1015",
-      言語: "Svenska",
-      フリガナ: "スウェーデン語",
-    },
-    {
-      No: 16,
-      登録日時: "2024-11-02 09:00",
-      更新日時: "2024-11-02 10:00",
-      言語Ｎｏ: "1016",
-      言語: "Ελληνικά",
-      フリガナ: "ギリシャ語",
-    },
-    {
-      No: 17,
-      登録日時: "2024-11-02 10:00",
-      更新日時: "2024-11-02 11:00",
-      言語Ｎｏ: "1017",
-      言語: "Türkçe",
-      フリガナ: "トルコ語",
-    },
-    {
-      No: 18,
-      登録日時: "2024-11-02 11:00",
-      更新日時: "2024-11-02 12:00",
-      言語Ｎｏ: "1018",
-      言語: "Nederlands",
-      フリガナ: "オランダ語",
-    },
-    {
-      No: 19,
-      登録日時: "2024-11-02 12:00",
-      更新日時: "2024-11-02 13:00",
-      言語Ｎｏ: "1019",
-      言語: "ภาษาไทย",
-      フリガナ: "タイ語",
-    },
-    {
-      No: 20,
-      登録日時: "2024-11-02 13:00",
-      更新日時: "2024-11-02 14:00",
-      言語Ｎｏ: "1020",
-      言語: "Tiếng Việt",
-      フリガナ: "ベトナム語",
-    },
-    {
-      No: 21,
-      登録日時: "2024-11-02 14:00",
-      更新日時: "2024-11-02 15:00",
-      言語Ｎｏ: "1021",
-      言語: "Bahasa Melayu",
-      フリガナ: "マレー語",
-    },
-    {
-      No: 22,
-      登録日時: "2024-11-02 15:00",
-      更新日時: "2024-11-02 16:00",
-      言語Ｎｏ: "1022",
-      言語: "Filipino",
-      フリガナ: "フィリピン語",
-    },
-    {
-      No: 23,
-      登録日時: "2024-11-02 16:00",
-      更新日時: "2024-11-02 17:00",
-      言語Ｎｏ: "1023",
-      言語: "فارسی",
-      フリガナ: "ペルシャ語",
-    },
-  ];
+  const [selectedLanguageNoArray, setSelectedLanguageNoArray] = useState<any[]>(
+    []
+  );
 
-  const columnWidths = [5, 20, 20, 8, 10, 10, 10, 10, 10, 10];
-  const columnAlignments: ("left" | "center" | "right")[] = ["right"];
+  const [tableData, setTableData] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchLanguagesListData();
+  }, []);
+
+  const fetchLanguagesListData = async () => {
+    try {
+      const response = await LanguageApiService.fetchLanguagesAll();
+      console.log(144, response);
+      // const response = await axios.get(`${homePage}/company`);
+      const sortedData = response
+        .sort(
+          (a: LanguageInfo, b: LanguageInfo) =>
+            Number(a.languages_support_no) - Number(b.languages_support_no)
+        )
+        .map((item: LanguageInfo, index: number) => ({
+          No: index + 1,
+          登録日時: convertToJST(item.created_at),
+          更新日時: convertToJST(item.updated_at),
+          言語No: item.languages_support_no,
+          言語: item.language_name,
+          フリガナ: item.language_name_furigana,
+          削除: deleteStatus(item.language_deleted),
+        }));
+      console.log(141, sortedData);
+      setTableData(sortedData);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
+    }
+  };
 
   const searchConditions = () => {};
+
+  const navigateToEditPage = () => {
+    navigate("/LanguagesEdit", {
+      state: { selectedLanguageNo: selectedLanguageNoArray[0] },
+    });
+  };
+
+  const navigateToInfoPage = () => {
+    navigate("/LanguagesInfo", {
+      state: { selectedLanguageNo: selectedLanguageNoArray[0] },
+    });
+  };
+
+  const handleDeleteLanguages = async () => {
+    try {
+      await LanguageApiService.deleteLanguages(selectedLanguageNoArray);
+      // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred while deleting the company.");
+      }
+    }
+    await fetchLanguagesListData();
+  };
+
+  const navigateToLanguageCreate = () => navigate("/LanguagesCreate");
 
   // Handle start date change
   const handleStartDateChange = (date: Dayjs | null) => {
@@ -271,9 +152,17 @@ function LanguagesSupportList() {
   const [textValue5, setTextValue5] = useState<string>("");
 
   const handleSelectionChange = (
-    selectedData: Array<{ No: string | number; [key: string]: string | number }>
+    newSelectedData: Array<{
+      No: string | number;
+      [key: string]: string | number;
+    }>
   ) => {
-    console.log("Selected Data:", selectedData);
+    setSelectedData(newSelectedData);
+    console.log("Selected Data:", newSelectedData);
+
+    const selectedCompanyNo = newSelectedData.map((item) => item["言語No"]);
+    setSelectedLanguageNoArray(selectedCompanyNo);
+    // setSelectedLanguageNoArray(selectedCompanyNo);
   };
 
   const borderStyle = "1px solid #ccc";
@@ -325,28 +214,28 @@ function LanguagesSupportList() {
             /> */}
       <DataTable // Customize header height
         headers={headers}
-        data={data}
+        data={tableData}
         maxHeight="calc(87vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
-        onClick={searchConditions}
+        onClick={navigateToLanguageCreate}
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={navigateToInfoPage}
         label="閲覧"
-
+        disabled={selectedData.length !== 1}
         // margin='0 2vw'
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={navigateToEditPage}
         label="編集"
-
+        disabled={selectedData.length !== 1}
         // margin='0 2vw'
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={handleDeleteLanguages}
         label="削除"
-
+        disabled={selectedData.length === 0}
         // margin='0 2vw'
       />
     </Box>

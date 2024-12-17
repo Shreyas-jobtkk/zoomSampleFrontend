@@ -111,8 +111,6 @@ function CompaniesList() {
       }
     }
     await fetchCompaniesListData();
-    // setSelectedData([]);
-    // console.log(189, selectedData);
   };
 
   return (

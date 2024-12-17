@@ -51,7 +51,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
       <TextField
         fullWidth
         error={!!error}
-        {...register(name)}
+        {...(register && name ? register(name) : {})}
         helperText={error}
         multiline
         disabled={disabled}

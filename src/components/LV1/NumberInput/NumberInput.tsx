@@ -3,7 +3,7 @@ import { TextField } from "@mui/material";
 
 interface NumberInputProps {
   value: string | number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Make onChange optional
   borderColor?: string;
   borderWidth?: string;
   padding?: string;
@@ -12,9 +12,10 @@ interface NumberInputProps {
   backgroundColor?: string;
   placeholder?: string;
   height?: string;
-  maxLength?: number; // Add maxLength prop
-  margin?: string; // Add marginLeft as an optional prop
+  maxLength?: number;
+  margin?: string;
   name?: string;
+  disabled?: boolean; // Add disabled as an optional prop
 }
 
 const NumberInput: React.FC<NumberInputProps> = ({
@@ -28,9 +29,10 @@ const NumberInput: React.FC<NumberInputProps> = ({
   height = "30px",
   backgroundColor = "white",
   placeholder,
-  maxLength, // Access the maxLength prop
-  margin, // Access the marginLeft prop
+  maxLength,
+  margin,
   name,
+  disabled = false, // Default disabled to false
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -38,7 +40,10 @@ const NumberInput: React.FC<NumberInputProps> = ({
     if (maxLength && newValue.length > maxLength) {
       return;
     }
-    onChange(e);
+    // Call onChange if provided
+    if (onChange) {
+      onChange(e);
+    }
   };
 
   return (
@@ -48,10 +53,11 @@ const NumberInput: React.FC<NumberInputProps> = ({
       name={name}
       onChange={handleChange}
       placeholder={placeholder}
+      disabled={disabled} // Pass the disabled prop to the TextField
       slotProps={{
         htmlInput: {
-          maxLength, // Set maxLength on the input element (applies to the string version)
-          type: "number", // Restricts input to numbers
+          maxLength,
+          type: "number",
           style: {
             borderColor,
             borderWidth,
@@ -60,15 +66,14 @@ const NumberInput: React.FC<NumberInputProps> = ({
             backgroundColor,
             width,
             height,
-            appearance: "none", // Hide default arrows
-            MozAppearance: "textfield", // Firefox
-            WebkitAppearance: "none", // Chrome/Safari
+            appearance: "none",
+            MozAppearance: "textfield",
+            WebkitAppearance: "none",
           },
         },
       }}
       sx={{
-        margin, // Apply marginLeft if provided
-        // Additional CSS to hide the spinner arrows in WebKit browsers
+        margin,
         "& input[type='number']::-webkit-outer-spin-button": {
           WebkitAppearance: "none",
           margin: 0,

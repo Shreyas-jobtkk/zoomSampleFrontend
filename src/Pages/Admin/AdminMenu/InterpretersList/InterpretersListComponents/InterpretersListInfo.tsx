@@ -1,11 +1,11 @@
-import MenuHeader from "../../../../components/LV3/Header/MenuHeader";
-import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
+import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
+import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState } from "react";
 import { Box, TextField, Typography } from "@mui/material";
-import PasswordInput from "../../../../components/LV1/PasswordInput/PasswordInput";
-import PasswordBoxWithLabel from "../../../../components/LV1/TextBox/PasswordBoxWithLabel";
-import ButtonAtom from "../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import "./InterpretersList.scss";
+import PasswordInput from "../../../../../components/LV1/PasswordInput/PasswordInput";
+import PasswordBoxWithLabel from "../../../../../components/LV1/TextBox/PasswordBoxWithLabel";
+import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
+import "../InterpretersListStyles/InterpretersList.scss";
 
 function InterpretersListInfo() {
   const [textValue1, setTextValue1] = useState<string>("");
@@ -17,9 +17,9 @@ function InterpretersListInfo() {
 
   const borderStyle = "1px solid #ccc";
   return (
-    <Box className="administrator-list-navigate">
+    <Box className="interpreters-list-navigate">
       <MenuHeader title="管理者情報" />
-      <Box className="administrator-list-navigate-content">
+      <Box className="interpreters-list-navigate-content">
         <Box className="time-details">
           <TextBoxWithLabel
             labelWidth="125px"

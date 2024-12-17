@@ -4,6 +4,7 @@ import AdministratorListRoutes from "./routes/AdministratorListRoutes.js";
 import CompanyListRoutes from "./routes/CompanyListRoutes.js";
 import StoreListRoutes from "./routes/StoreListRoutes.js";
 import InterpretersListRoutes from "./routes/InterpretersListRoutes.js";
+import LanguagesListRoutes from "./routes/LanguagesListRoutes.js";
 
 const AppRoutes2: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const AppRoutes2: React.FC = () => {
       <CompanyListRoutes />
       <StoreListRoutes />
       <InterpretersListRoutes />
+      <LanguagesListRoutes />
       <NavRoutes />
     </div>
   );

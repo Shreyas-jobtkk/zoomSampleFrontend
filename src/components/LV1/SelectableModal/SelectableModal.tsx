@@ -22,6 +22,7 @@ interface SelectableModalProps<T> {
   label: string;
   valueKey: keyof T; // Key for unique identification (e.g., company_no)
   displayKey: keyof T; // Key for display text (e.g., company_name)
+  disabled?: boolean;
 }
 
 const style = {
@@ -46,6 +47,7 @@ const SelectableModal = <T,>({
   label,
   valueKey,
   displayKey,
+  disabled = false,
 }: SelectableModalProps<T>) => {
   const [open, setOpen] = useState(false);
 
@@ -64,8 +66,7 @@ const SelectableModal = <T,>({
 
   return (
     <div>
-      <ButtonAtom onClick={handleOpen} label={label} />
-
+      <ButtonAtom onClick={handleOpen} label={label} disabled={disabled} />
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

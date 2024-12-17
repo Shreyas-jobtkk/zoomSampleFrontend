@@ -6,7 +6,7 @@ export const deleteCompanies = async (ids: number[]) => {
   console.log(139, ids);
 
   try {
-    const response = await api.delete(`/company`, {
+    const response = await api.delete(`/${COMPANY_ENDPOINT}`, {
       data: { ids }, // Pass the array in the request body
     });
     alert("Companies deleted successfully.");

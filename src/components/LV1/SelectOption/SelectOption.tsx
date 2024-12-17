@@ -19,8 +19,9 @@ interface SelectOptionProps {
   width?: number;
   height?: number;
   labelWidth?: string | number;
-  onChange: (value: string) => void; // onChange expects a string value
+  onChange?: (value: string) => void; // onChange is now optional
   value: string;
+  disabled?: boolean;
 }
 
 const SelectOption: React.FC<SelectOptionProps> = ({
@@ -31,9 +32,12 @@ const SelectOption: React.FC<SelectOptionProps> = ({
   labelWidth = 100,
   onChange,
   value,
+  disabled = false,
 }) => {
   const handleChange = (event: SelectChangeEvent<string>) => {
-    onChange(event.target.value); // Pass the value to onChange as string
+    if (onChange) {
+      onChange(event.target.value); // Only call onChange if it's provided
+    }
   };
 
   return (
@@ -64,6 +68,7 @@ const SelectOption: React.FC<SelectOptionProps> = ({
           sx={{
             height,
           }}
+          disabled={disabled}
         >
           {options.map((option, index) => (
             <MenuItem key={index} value={option.value}>

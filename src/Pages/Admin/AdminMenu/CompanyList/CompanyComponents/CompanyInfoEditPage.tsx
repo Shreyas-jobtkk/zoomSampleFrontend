@@ -34,24 +34,11 @@ function CompanyInfoEdit() {
     company_no: "",
     company_name: "",
     company_name_furigana: "",
-    company_note: "11",
+    company_note: "",
     updated_at: "",
     created_at: "",
     company_deleted: false,
   });
-
-  // const handleChange = (event: any) => {
-  //   // const { name, value, type } = e.target;
-  //   const name = event.target.name;
-  //   const value = event.target.value;
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [name as string]: value,
-  //   }));
-  // };
-
-  // const [companyDetails, setCompanyDetails] =
-  //   useState<CompanyInfo | null>(null);
 
   const navigate = useNavigate();
   console.log("Selected Company No:", selectedCompanyNo);

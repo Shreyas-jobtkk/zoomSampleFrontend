@@ -1,11 +1,14 @@
 import { Route, Routes } from "react-router-dom";
-import InterpretersListInfo from "../Pages/Admin/AdminMenu/InterpretersList/InterpretersListInfo";
-// import AdministratorListEdit from "../Pages/Admin/AdminMenu/AdministratorList/AdministratorListEditPage";
+import InterpretersListInfo from "../Pages/Admin/AdminMenu/InterpretersList/InterpretersListComponents/InterpretersListInfo";
+import InterpretersListCreate from "../Pages/Admin/AdminMenu/InterpretersList/InterpretersListComponents/InterpretersListCreate";
 
 const InterpretersListRoutes = () => (
   <Routes>
     <Route path="/InterpretersListInfo" element={<InterpretersListInfo />} />
-    {/* <Route path="/InterpretersListEdit" element={<InterpretersListEdit />} /> */}
+    <Route
+      path="/InterpretersListCreate"
+      element={<InterpretersListCreate />}
+    />
   </Routes>
 );
 

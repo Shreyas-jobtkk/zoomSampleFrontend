@@ -5,47 +5,40 @@ import { Box } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import "../CompanyStyles/CompanyList.scss";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { homePage } from "../../../../../components/constants";
 import { convertToJST, deleteStatus } from "../../../../../utils/utils";
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
-
-interface Company {
-  company_no: number;
-  company_name: string;
-  company_name_furigana: string;
-  note: string;
-  updated_at: Date;
-  created_at: Date;
-  company_deleted: Boolean;
-}
+import { CompanyInfo } from "../../../../../types/CompanyTypes/CompanyTypes";
+import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
 
 function CompanyListInfo() {
-  const [companyDetails, setCompanyDetails] = useState<Company | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { state } = useLocation();
+  const navigate = useNavigate();
   const selectedCompanyNo = state?.selectedCompanyNo;
 
-  const [value, setValue] = useState("");
-
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.target.value);
-  };
-
-  const navigate = useNavigate();
-
   console.log("Selected Company No:", selectedCompanyNo);
+
+  const [formData, setFormData] = useState<CompanyInfo>({
+    company_no: "",
+    company_name: "",
+    company_name_furigana: "",
+    company_note: "",
+    updated_at: "",
+    created_at: "",
+    company_deleted: false,
+  });
 
   useEffect(() => {
     const fetchCompany = async () => {
       if (!selectedCompanyNo) return; // Early return if no selectedCompanyNo
       try {
-        const response = await axios.get(
-          `${homePage}/company/${selectedCompanyNo}`
+        const companyDetails = await CompanyApiService.fetchCompany(
+          selectedCompanyNo
         );
-        setCompanyDetails(response.data);
-        console.log(133, response.data); // For debugging purposes
+        setFormData(companyDetails);
+        // setCompanyDetails(companyDetails);
+        console.log(133, companyDetails);
       } catch (error: any) {
         setError(
           error.response?.data?.error ||
@@ -65,13 +58,6 @@ function CompanyListInfo() {
     navigate(-1); // Navigate back to the previous page
   };
 
-  // Handle edit button action
-  const handleEdit = () => {
-    if (!companyDetails) return; // Ensure there's company data to edit
-    // You can add logic here to navigate to an edit page or open an edit form
-    navigate(`/edit-company/${companyDetails.company_no}`);
-  };
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
@@ -86,20 +72,13 @@ function CompanyListInfo() {
               labelWidth="125px"
               label="登録日時"
               width="30vw"
-              value={convertToJST(companyDetails?.created_at ?? "")}
+              value={convertToJST(formData.created_at ?? "")}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
               width="30vw"
-              value={convertToJST(companyDetails?.updated_at ?? "")}
-              // value={
-              //   companyDetails?.updated_at
-              //     ? convertToJST(
-              //         new Date(companyDetails.updated_at).toISOString()
-              //       )
-              //     : ""
-              // }
+              value={convertToJST(formData.updated_at ?? "")}
             />
           </Box>
           <Box className="delete-flag">
@@ -107,7 +86,7 @@ function CompanyListInfo() {
               labelWidth="100px"
               label="削除フラグ"
               width="10vw"
-              value={deleteStatus(companyDetails?.company_deleted ?? false)} // Defaults to false if `companyDetails?.company_deleted` is undefined
+              value={deleteStatus(formData.company_deleted ?? false)} // Defaults to false if `formData.company_deleted` is undefined
               // onChange={(e) => setTextValue1(e.target.value)} // update for specific field
             />
           </Box>
@@ -119,7 +98,7 @@ function CompanyListInfo() {
             labelWidth="125px"
             label="企業No"
             width="30vw"
-            value={companyDetails?.company_no}
+            value={formData.company_no}
             // Optionally disable this field as it's a read-only field
             disabled={true}
           />
@@ -129,14 +108,14 @@ function CompanyListInfo() {
                 labelWidth="125px"
                 label="企業名"
                 width="30vw"
-                value={companyDetails?.company_name}
+                value={formData.company_name}
                 // disabled={true} // Optionally disable this field as it's a read-only field
               />
               <TextBoxWithLabel
                 labelWidth="125px"
                 label="フリガナ"
                 width="30vw"
-                value={companyDetails?.company_name_furigana}
+                value={formData.company_name_furigana}
                 // disabled={true} // Optionally disable this field as it's a read-only field
               />
             </Box>
@@ -145,15 +124,13 @@ function CompanyListInfo() {
 
         <TextAreaWithLabel
           label="備考"
-          value={companyDetails?.note}
-          // onChange={handleChange} // onChange expects ChangeEventHandler<HTMLTextAreaElement>
-
+          value={formData.company_note}
           margin="1vh 0 1vh 40vw"
           disabled={true}
         />
 
         <ButtonAtom onClick={handleClose} label="閉じる" width="100px" />
-        <ButtonAtom onClick={handleEdit} label="編集" width="100px" />
+        {/* <ButtonAtom onClick={handleEdit} label="編集" width="100px" /> */}
       </Box>
     </Box>
   );

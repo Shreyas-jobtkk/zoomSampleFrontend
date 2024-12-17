@@ -17,15 +17,21 @@ import ValidationInputField from "../../../../../components/LV1/ValidationInputF
 import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
 // import { StoreCreateFormValues } from "../../../../../CompanyTypes/CompanyTypes";
 import { useForm } from "react-hook-form";
-import { StoreCreateFormValues } from "../../../../../types/StoreTypes/StoreTypes";
+import { useLocation, useNavigate } from "react-router-dom";
+import { StoreInfoFormValues } from "../../../../../types/StoreTypes/StoreTypes";
+import { convertToJST } from "../../../../../utils/utils";
 
 function StoreListInfo() {
+  const { state } = useLocation();
+  const selectedStoreNo = state?.selectedStoreNo;
+  //   console.log(115, selectedStoreNo);
   const [selectedCompanyNo, setSelectedCompanyNo] = useState<string>("");
   const [selectedCompanyName, setSelectedCompanyName] = useState<string>("");
-  const [formData, setFormData] = useState<StoreCreateFormValues>({
+  const [formData, setFormData] = useState<StoreInfoFormValues>({
     company_no: "",
     company_name: "",
     store_name: "",
+    store_no: "",
     store_name_furigana: "",
     zip1: "",
     zip2: "",
@@ -40,7 +46,59 @@ function StoreListInfo() {
     fax2: "",
     fax3: "",
     store_note: "",
+    updated_at: "",
+    created_at: "",
+    store_delete: false,
   });
+
+  useEffect(() => {
+    const fetchStore = async () => {
+      if (!selectedStoreNo) return;
+      console.log(148, selectedStoreNo);
+      try {
+        const storeDetails = await StoreApiService.fetchStore(selectedStoreNo);
+        // console.log(148, storeDetails);
+
+        const [zip1, zip2] = storeDetails.zip.split("-");
+        const [tel1, tel2, tel3] = storeDetails.tel.split("-");
+        const [fax1, fax2, fax3] = storeDetails.fax.split("-");
+        // Update the formData state with the values
+        setFormData({
+          company_no: storeDetails.company_no,
+          company_name: storeDetails.company_name,
+          store_name: storeDetails.store_name,
+          store_no: storeDetails.store_no,
+          store_name_furigana: storeDetails.store_name_furigana,
+          zip1,
+          zip2,
+          pref: storeDetails.pref,
+          city: storeDetails.city,
+          street: storeDetails.street,
+          building_name: storeDetails.building_name,
+          tel1,
+          tel2,
+          tel3,
+          fax1,
+          fax2,
+          fax3,
+          store_note: storeDetails.store_note,
+          updated_at: storeDetails.updated_at,
+          created_at: storeDetails.created_at,
+          store_delete: storeDetails.store_delete,
+        });
+        setValue("company_no", storeDetails.company_no);
+        setValue("company_name", storeDetails.company_name);
+        setValue("store_name", storeDetails.store_name);
+        setValue("store_name_furigana", storeDetails.store_name_furigana);
+      } catch (error) {
+        console.error("Error fetching company:", error);
+      }
+    };
+
+    fetchStore();
+    // }, [selectedCompanyNo, setValue]);
+  }, [selectedStoreNo]);
+
   const [textValue1, setTextValue1] = useState<string>("");
   const [textValue2, setTextValue2] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState("");
@@ -49,44 +107,39 @@ function StoreListInfo() {
   };
   const [selectedOption, setSelectedOption] = useState<string>("");
 
-  const createStore = () => {
-    console.log(113, formData);
-    try {
-      StoreApiService.createStore(
-        formData.company_no,
-        formData.store_name,
-        formData.store_name_furigana,
-        formData.zip1,
-        formData.zip2,
-        formData.pref,
-        formData.city,
-        formData.street,
-        formData.building_name,
-        formData.tel1,
-        formData.tel2,
-        formData.tel3,
-        formData.fax1,
-        formData.fax2,
-        formData.fax3,
-        formData.store_note
-      );
-      // alert("saved");
-    } catch (error) {
-      alert("error");
-      console.error("Error saving company:", error);
-    }
-  };
-
   const {
     register,
     handleSubmit,
     setValue,
-    // formState: { errors, isValid },
-  } = useForm<StoreCreateFormValues>();
+    formState: { errors, isValid },
+  } = useForm<StoreInfoFormValues>();
 
   useEffect(() => {
     fetchCompaniesListData();
   }, []);
+
+  const editStore = () => {
+    console.log(1123, formData);
+    StoreApiService.updateStore(
+      formData.company_no,
+      formData.store_name,
+      formData.store_name_furigana,
+      formData.zip1,
+      formData.zip2,
+      formData.pref,
+      formData.city,
+      formData.store_name,
+      formData.building_name,
+      formData.tel1,
+      formData.tel2,
+      formData.tel3,
+      formData.fax1,
+      formData.fax2,
+      formData.fax3,
+      formData.store_note,
+      formData.store_no
+    );
+  };
 
   const fetchCompaniesListData = async () => {
     try {
@@ -118,45 +171,45 @@ function StoreListInfo() {
   const [selectedCompany, setSelectedCompany] = useState<any>(null);
   // const options = JapanPrefectures;
 
-  const updateFormData = (field: string, value: any) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [field]: value,
-    }));
-  };
+  const [companyData, setCompanyData] = useState<any[]>([]);
+  const [store_note, setNote] = useState<string>("");
+  const [responseMessage, setResponseMessage] = useState<string | null>(null);
 
   const handleCompanySelect = (company: any) => {
-    console.log(147, company);
-    const { company_no, company_name } = company;
-
+    console.log(147, isValid);
     setSelectedCompany(company);
-    setSelectedCompanyNo(company_no);
-    setSelectedCompanyName(company_name);
-
-    updateFormData("company_no", company_no);
-    updateFormData("company_name", company_name);
-
-    setValue("company_no", company_no);
-    setValue("company_name", company_name);
+    setSelectedCompanyNo(company.company_no);
+    setSelectedCompanyName(company.company_name);
+    setFormData((prevData) => ({
+      ...prevData,
+      company_no: company.company_no,
+      company_name: company.company_name,
+    }));
+    // setValue("company_no", company.company_no);
+    // setValue("company_name", company.company_name);
   };
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    updateFormData(name, value);
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSelectChange = (value: string) => {
-    updateFormData("pref", value);
+    setFormData((prevData) => ({
+      ...prevData,
+      pref: value,
+    }));
   };
-
-  const [companyData, setCompanyData] = useState<any[]>([]);
 
   return (
     <Box
       className="store-list-navigate"
-      onSubmit={handleSubmit(createStore)}
+      onSubmit={handleSubmit(editStore)}
       component="form"
     >
       <MenuHeader title="店舗情報" />
@@ -167,15 +220,15 @@ function StoreListInfo() {
               labelWidth="125px"
               label="登録日時"
               width="300px" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
+              value={convertToJST(formData.created_at ?? "")}
+              //  onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
               width="300px" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
+              value={convertToJST(formData.updated_at ?? "")}
+              //  onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
           <Box className="delete-flag">
@@ -183,8 +236,8 @@ function StoreListInfo() {
               labelWidth="100px"
               label="削除フラグ"
               width="10vw" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
+              value={formData.store_delete}
+              //  onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
         </Box>
@@ -208,11 +261,12 @@ function StoreListInfo() {
               register={register}
               maxLength={128}
               // error={errors.company_no?.message} // Separate error for "furigana"
-              value={selectedCompanyNo}
+              value={formData.company_no}
               onChange={(e: any) => setSelectedCompanyNo(e.target.value)}
-              // disabled={true}
+              // // disabled={true}
               type="none"
             />
+
             <ValidationInputField
               name="company_name" // Name for the phonetic spelling
               labelWidth="125px"
@@ -221,18 +275,11 @@ function StoreListInfo() {
               register={register}
               maxLength={128}
               // error={errors.company_no?.message} // Separate error for "furigana"
-              value={selectedCompanyName}
+              value={formData.company_name}
               onChange={(e: any) => setSelectedCompanyName(e.target.value)}
-              // disabled={true}
+              // // disabled={true}
               type="none"
             />
-            {/* <TextBoxWithLabel
-              labelWidth="125px"
-              label="企業名"
-              width="300px" // Uncomment to set a custom width
-              value={selectedCompanyName}
-              onChange={(e: any) => setSelectedCompanyName(e.target.value)}
-            /> */}
           </Box>
         </Box>
         <Box className="basic-info">
@@ -242,8 +289,9 @@ function StoreListInfo() {
               labelWidth="125px"
               label="店舗No"
               width="300px" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
+              value={formData.store_no}
+              //   disabled={false}
+              //  onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <Box className="name-row">
               <Box>
@@ -281,6 +329,7 @@ function StoreListInfo() {
                     </Typography>
 
                     <NumberInput
+                      //   // disabled={true}
                       value={formData.zip1}
                       onChange={handleChange}
                       maxLength={4}
@@ -289,6 +338,7 @@ function StoreListInfo() {
                     />
                     <Typography component="span">-</Typography>
                     <NumberInput
+                      //   // disabled={true}
                       value={formData.zip2}
                       name="zip2"
                       onChange={handleChange}
@@ -304,6 +354,7 @@ function StoreListInfo() {
                     value={formData.pref}
                     onChange={handleSelectChange}
                     labelWidth="75px"
+                    // disabled={true}
                   />
                   <TextBoxWithLabel
                     labelWidth="75px"
@@ -342,6 +393,7 @@ function StoreListInfo() {
                   </Typography>
 
                   <NumberInput
+                    // disabled={true}
                     onChange={handleChange}
                     value={formData.tel1}
                     name="tel1"
@@ -350,6 +402,7 @@ function StoreListInfo() {
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
+                    // disabled={true}
                     onChange={handleChange}
                     value={formData.tel2}
                     name="tel2"
@@ -358,6 +411,7 @@ function StoreListInfo() {
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
+                    // disabled={true}
                     onChange={handleChange}
                     value={formData.tel3}
                     name="tel3"
@@ -371,6 +425,7 @@ function StoreListInfo() {
                   </Typography>
 
                   <NumberInput
+                    // disabled={true}
                     onChange={handleChange}
                     value={formData.fax1}
                     name="fax1"
@@ -379,6 +434,7 @@ function StoreListInfo() {
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
+                    // disabled={true}
                     onChange={handleChange}
                     value={formData.fax2}
                     name="fax2"
@@ -387,6 +443,7 @@ function StoreListInfo() {
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
+                    // disabled={true}
                     onChange={handleChange}
                     value={formData.fax3}
                     name="fax3"
@@ -407,13 +464,14 @@ function StoreListInfo() {
           maxLength={5}
           register={register}
           name="store_note"
+          // disabled={true}
         />
-        <ButtonAtom onClick={createStore} label="閉じる" width="100px" />
+        <ButtonAtom label="破棄" width="100px" />
         {/* <ButtonAtom onClick={createStore} label="編集" width="100px" /> */}
         <ValidationButton
-          label="保存"
+          label="編集"
           width="100px"
-          // onClick={saveCompanyInfo}
+          //   onClick={saveCompanyInfo}
           type="submit"
         />
       </Box>

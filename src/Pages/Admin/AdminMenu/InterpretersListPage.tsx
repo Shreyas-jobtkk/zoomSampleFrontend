@@ -278,6 +278,10 @@ function InterpretersList() {
   const navigateToInfoPage = () => {
     navigate("/InterpretersListInfo");
   };
+
+  const navigateToInterpreterCreate = () => {
+    navigate("/InterpretersListCreate");
+  };
   const navigateToEditPage = () => {
     navigate("/InterpretersListInfo");
   };
@@ -365,7 +369,7 @@ function InterpretersList() {
         maxHeight="calc(87vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
-        onClick={searchConditions}
+        onClick={navigateToInterpreterCreate}
       />
       <ButtonAtom
         onClick={navigateToInfoPage}

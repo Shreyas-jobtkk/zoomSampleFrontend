@@ -17,17 +17,21 @@ import ValidationInputField from "../../../../../components/LV1/ValidationInputF
 import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
 // import { StoreCreateFormValues } from "../../../../../CompanyTypes/CompanyTypes";
 import { useForm } from "react-hook-form";
-import { StoreCreateFormValues } from "../../../../../types/StoreTypes/StoreTypes";
+import { useLocation, useNavigate } from "react-router-dom";
+import { StoreInfoFormValues } from "../../../../../types/StoreTypes/StoreTypes";
+import { convertToJST } from "../../../../../utils/utils";
 
 function StoreListInfo() {
+  const { state } = useLocation();
+  const selectedStoreNo = state?.selectedStoreNo;
+  console.log(115, selectedStoreNo);
   const [selectedCompanyNo, setSelectedCompanyNo] = useState<string>("");
   const [selectedCompanyName, setSelectedCompanyName] = useState<string>("");
-  const [selectedCompanyDelete, setSelectedCompanyDelete] =
-    useState<boolean>(false);
-  const [formData, setFormData] = useState<StoreCreateFormValues>({
+  const [formData, setFormData] = useState<StoreInfoFormValues>({
     company_no: "",
     company_name: "",
     store_name: "",
+    store_no: "",
     store_name_furigana: "",
     zip1: "",
     zip2: "",
@@ -42,7 +46,54 @@ function StoreListInfo() {
     fax2: "",
     fax3: "",
     store_note: "",
+    updated_at: "",
+    created_at: "",
+    store_delete: false,
   });
+
+  useEffect(() => {
+    const fetchStore = async () => {
+      if (!selectedStoreNo) return;
+      console.log(148, selectedStoreNo);
+      try {
+        const storeDetails = await StoreApiService.fetchStore(selectedStoreNo);
+        console.log(147, storeDetails);
+
+        const [zip1, zip2] = storeDetails.zip.split("-");
+        const [tel1, tel2, tel3] = storeDetails.tel.split("-");
+        const [fax1, fax2, fax3] = storeDetails.fax.split("-");
+        // Update the formData state with the values
+        setFormData({
+          company_no: storeDetails.company_no,
+          company_name: storeDetails.company_name,
+          store_name: storeDetails.store_name,
+          store_no: storeDetails.store_no,
+          store_name_furigana: storeDetails.store_name_furigana,
+          zip1,
+          zip2,
+          pref: storeDetails.pref,
+          city: storeDetails.city,
+          street: storeDetails.street,
+          building_name: storeDetails.building_name,
+          tel1,
+          tel2,
+          tel3,
+          fax1,
+          fax2,
+          fax3,
+          store_note: storeDetails.store_note,
+          updated_at: storeDetails.updated_at,
+          created_at: storeDetails.created_at,
+          store_delete: storeDetails.store_delete,
+        });
+      } catch (error) {
+        console.error("Error fetching company:", error);
+      }
+    };
+
+    fetchStore();
+    // }, [selectedCompanyNo, setValue]);
+  }, [selectedStoreNo]);
 
   const [textValue1, setTextValue1] = useState<string>("");
   const [textValue2, setTextValue2] = useState<string>("");
@@ -52,40 +103,12 @@ function StoreListInfo() {
   };
   const [selectedOption, setSelectedOption] = useState<string>("");
 
-  const createStore = () => {
-    console.log(113, formData);
-    try {
-      StoreApiService.createStore(
-        formData.company_no,
-        formData.store_name,
-        formData.store_name_furigana,
-        formData.zip1,
-        formData.zip2,
-        formData.pref,
-        formData.city,
-        formData.street,
-        formData.building_name,
-        formData.tel1,
-        formData.tel2,
-        formData.tel3,
-        formData.fax1,
-        formData.fax2,
-        formData.fax3,
-        formData.store_note
-      );
-      // alert("saved");
-    } catch (error) {
-      alert("error");
-      console.error("Error saving company:", error);
-    }
-  };
-
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors, isValid },
-  } = useForm<StoreCreateFormValues>();
+  } = useForm<StoreInfoFormValues>();
 
   useEffect(() => {
     fetchCompaniesListData();
@@ -157,11 +180,7 @@ function StoreListInfo() {
   };
 
   return (
-    <Box
-      className="store-list-navigate"
-      onSubmit={handleSubmit(createStore)}
-      component="form"
-    >
+    <Box className="store-list-navigate">
       <MenuHeader title="店舗情報" />
       <Box className="store-list-navigate-content">
         <Box className="time-details-delete-flag">
@@ -170,15 +189,15 @@ function StoreListInfo() {
               labelWidth="125px"
               label="登録日時"
               width="300px" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
+              value={convertToJST(formData.created_at ?? "")}
+              //  onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
               width="300px" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
+              value={convertToJST(formData.updated_at ?? "")}
+              //  onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
           <Box className="delete-flag">
@@ -186,8 +205,8 @@ function StoreListInfo() {
               labelWidth="100px"
               label="削除フラグ"
               width="10vw" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
+              value={formData.store_delete}
+              //  onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
         </Box>
@@ -201,22 +220,22 @@ function StoreListInfo() {
               label="企業検索"
               valueKey="company_no" // We use company_no for unique identification
               displayKey="company_name" // We display company_name in the list
+              disabled={true}
             />
 
             <TextBoxWithLabel
               label="企業No"
               labelWidth="125px"
               width="300px" // Uncomment to set a custom width
-              value={selectedCompanyNo}
-              onChange={(e: any) => setSelectedCompanyNo(e.target.value)}
+              value={formData.company_no}
             />
 
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
               width="300px" // Uncomment to set a custom width
-              value={selectedCompanyName}
-              onChange={(e: any) => setSelectedCompanyName(e.target.value)}
+              value={formData.company_name}
+              //  onChange={(e: any) => setSelectedCompanyName(e.target.value)}
             />
           </Box>
         </Box>
@@ -227,8 +246,8 @@ function StoreListInfo() {
               labelWidth="125px"
               label="店舗No"
               width="300px" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
+              value={formData.store_no}
+              //  onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <Box className="name-row">
               <Box>
@@ -237,7 +256,7 @@ function StoreListInfo() {
                   label="フリガナ"
                   width="300px" // Uncomment to set a custom width
                   value={formData.store_name_furigana}
-                  onChange={handleChange}
+                  //  onChange={handleChange}
                 />
 
                 <TextBoxWithLabel
@@ -245,7 +264,7 @@ function StoreListInfo() {
                   label="店舗名"
                   width="300px" // Uncomment to set a custom width
                   value={formData.store_name}
-                  onChange={handleChange}
+                  //  onChange={handleChange}
                 />
               </Box>
             </Box>
@@ -259,17 +278,19 @@ function StoreListInfo() {
                     </Typography>
 
                     <NumberInput
+                      disabled={true}
                       value={formData.zip1}
-                      onChange={handleChange}
+                      //  onChange={handleChange}
                       maxLength={4}
                       margin="0 8px"
                       name="zip1"
                     />
                     <Typography component="span">-</Typography>
                     <NumberInput
+                      disabled={true}
                       value={formData.zip2}
                       name="zip2"
-                      onChange={handleChange}
+                      //  onChange={handleChange}
                       maxLength={4}
                       margin="0 8px"
                     />
@@ -282,33 +303,31 @@ function StoreListInfo() {
                     value={formData.pref}
                     onChange={handleSelectChange}
                     labelWidth="75px"
+                    disabled={true}
                   />
                   <TextBoxWithLabel
                     labelWidth="75px"
                     label="市区町村"
                     width="300px" // Uncomment to set a custom width
-                    onChange={handleChange}
+                    //  onChange={handleChange}
                     value={formData.city}
                     name="city"
-                    disabled={false}
                   />
                   <TextBoxWithLabel
                     labelWidth="75px"
                     label="番地"
                     width="300px" // Uncomment to set a custom width
-                    onChange={handleChange}
+                    //  onChange={handleChange}
                     value={formData.street}
                     name="street"
-                    disabled={false}
                   />
                   <TextBoxWithLabel
                     labelWidth="75px"
                     label="建物名等"
                     width="300px" // Uncomment to set a custom width
-                    onChange={handleChange}
+                    //  onChange={handleChange}
                     value={formData.building_name}
                     name="building_name"
-                    disabled={false}
                   />
                 </Box>
                 {/* <Box className="contact-details">TEL</Box> */}
@@ -320,7 +339,8 @@ function StoreListInfo() {
                   </Typography>
 
                   <NumberInput
-                    onChange={handleChange}
+                    disabled={true}
+                    //  onChange={handleChange}
                     value={formData.tel1}
                     name="tel1"
                     maxLength={4}
@@ -328,7 +348,8 @@ function StoreListInfo() {
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
-                    onChange={handleChange}
+                    disabled={true}
+                    //  onChange={handleChange}
                     value={formData.tel2}
                     name="tel2"
                     maxLength={4}
@@ -336,7 +357,8 @@ function StoreListInfo() {
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
-                    onChange={handleChange}
+                    disabled={true}
+                    //  onChange={handleChange}
                     value={formData.tel3}
                     name="tel3"
                     maxLength={4}
@@ -349,7 +371,8 @@ function StoreListInfo() {
                   </Typography>
 
                   <NumberInput
-                    onChange={handleChange}
+                    disabled={true}
+                    //  onChange={handleChange}
                     value={formData.fax1}
                     name="fax1"
                     maxLength={4}
@@ -357,7 +380,8 @@ function StoreListInfo() {
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
-                    onChange={handleChange}
+                    disabled={true}
+                    //  onChange={handleChange}
                     value={formData.fax2}
                     name="fax2"
                     maxLength={4}
@@ -365,7 +389,8 @@ function StoreListInfo() {
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
-                    onChange={handleChange}
+                    disabled={true}
+                    //  onChange={handleChange}
                     value={formData.fax3}
                     name="fax3"
                     maxLength={4}
@@ -378,15 +403,16 @@ function StoreListInfo() {
         </Box>
         <TextAreaWithLabel
           value={formData.store_note}
-          onChange={handleChange}
+          //  onChange={handleChange}
           label="備考"
           margin="0 0 0 40vw"
           labelWidth="25px"
           maxLength={5}
           register={register}
           name="store_note"
+          disabled={true}
         />
-        <ButtonAtom onClick={createStore} label="閉じる" width="100px" />
+        <ButtonAtom label="閉じる" width="100px" />
         {/* <ButtonAtom onClick={createStore} label="編集" width="100px" /> */}
       </Box>
     </Box>

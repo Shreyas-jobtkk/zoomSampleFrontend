@@ -6,13 +6,10 @@ import dayjs, { Dayjs } from "dayjs";
 import { Box, TextField, Typography } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
-import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
-import { Height } from "@mui/icons-material";
 import "./AdminMenu.scss";
 import { useNavigate } from "react-router-dom";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
-// import { fetchCompaniesAll } from "../../../api/apiService/company/company";
 import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
 import { StoreApiService } from "../../../api/apiService/store/store-api-service";
 import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
@@ -20,17 +17,9 @@ import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
 function StoreList() {
   const navigate = useNavigate();
   // State for selected start and end times
-  const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
-    dayjs()
-  );
-  const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(dayjs());
 
-  // State for selected start and end dates
-  const [selectedStartDate, setSelectedStartDate] = useState<Dayjs | null>(
-    null
-  );
-
-  const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(null);
+  // States for data and inputs selectedStoreNo
+  const [selectedStoreNoArray, setSelectedStoreNoArray] = useState<any[]>([]);
 
   const headers = [
     "No",
@@ -45,228 +34,6 @@ function StoreList() {
   ];
 
   const [tableData, setTableData] = useState<any[]>([]);
-  const data = [
-    {
-      No: 1,
-      登録日時: "2024-11-01 09:00",
-      更新日時: "2024-11-01 10:00",
-      企業Ｎｏ: "1001",
-      企業名: "Company A",
-      店舗No: "3001",
-      店舗名: "第一支店",
-      フリガナ: "ダイイイチシテン",
-    },
-    {
-      No: 2,
-      登録日時: "2024-11-01 10:30",
-      更新日時: "2024-11-01 11:30",
-      企業Ｎｏ: "1002",
-      企業名: "Company B",
-      店舗No: "3001",
-      店舗名: "第二支店",
-      フリガナ: "ダイニシテン",
-    },
-    {
-      No: 3,
-      登録日時: "2024-11-01 12:00",
-      更新日時: "2024-11-01 13:00",
-      企業Ｎｏ: "1003",
-      企業名: "Company C",
-      店舗No: "3001",
-      店舗名: "第三支店",
-      フリガナ: "ダイサンシテン",
-    },
-    {
-      No: 4,
-      登録日時: "2024-11-01 13:30",
-      更新日時: "2024-11-01 14:30",
-      企業Ｎｏ: "1004",
-      企業名: "Company D",
-      店舗No: "3001",
-      店舗名: "第四支店",
-      フリガナ: "ダイシシテン",
-    },
-    {
-      No: 5,
-      登録日時: "2024-11-01 15:00",
-      更新日時: "2024-11-01 16:00",
-      企業Ｎｏ: "1005",
-      企業名: "Company E",
-      店舗No: "3001",
-      店舗名: "第五支店",
-      フリガナ: "ダイゴシテン",
-    },
-    {
-      No: 6,
-      登録日時: "2024-11-01 16:30",
-      更新日時: "2024-11-01 17:30",
-      企業Ｎｏ: "1006",
-      企業名: "Company F",
-      店舗No: "3001",
-      店舗名: "第六支店",
-      フリガナ: "ダイロクシテン",
-    },
-    {
-      No: 7,
-      登録日時: "2024-11-02 09:00",
-      更新日時: "2024-11-02 10:00",
-      企業Ｎｏ: "1007",
-      企業名: "Company G",
-      店舗No: "3001",
-      店舗名: "第七支店",
-      フリガナ: "ダイシチシテン",
-    },
-    {
-      No: 8,
-      登録日時: "2024-11-02 10:30",
-      更新日時: "2024-11-02 11:30",
-      企業Ｎｏ: "1008",
-      企業名: "Company H",
-      店舗No: "3001",
-      店舗名: "第八支店",
-      フリガナ: "ダイハチシテン",
-    },
-    {
-      No: 9,
-      登録日時: "2024-11-02 12:00",
-      更新日時: "2024-11-02 13:00",
-      企業Ｎｏ: "1009",
-      企業名: "Company I",
-      店舗No: "3001",
-      店舗名: "第九支店",
-      フリガナ: "ダイキュウシテン",
-    },
-    {
-      No: 10,
-      登録日時: "2024-11-02 13:30",
-      更新日時: "2024-11-02 14:30",
-      企業Ｎｏ: "1010",
-      企業名: "Company J",
-      店舗No: "3001",
-      店舗名: "第十支店",
-      フリガナ: "ダイジュウシテン",
-    },
-    {
-      No: 11,
-      登録日時: "2024-11-02 15:00",
-      更新日時: "2024-11-02 16:00",
-      企業Ｎｏ: "1011",
-      企業名: "Company K",
-      店舗No: "3001",
-      店舗名: "第十一支店",
-      フリガナ: "ダイジュウイチシテン",
-    },
-    {
-      No: 12,
-      登録日時: "2024-11-02 16:30",
-      更新日時: "2024-11-02 17:30",
-      企業Ｎｏ: "1012",
-      企業名: "Company L",
-      店舗No: "3001",
-      店舗名: "第十二支店",
-      フリガナ: "ダイジュウニシテン",
-    },
-    {
-      No: 13,
-      登録日時: "2024-11-03 09:00",
-      更新日時: "2024-11-03 10:00",
-      企業Ｎｏ: "1013",
-      企業名: "Company M",
-      店舗No: "3001",
-      店舗名: "第十三支店",
-      フリガナ: "ダイジュウサンシテン",
-    },
-    {
-      No: 14,
-      登録日時: "2024-11-03 10:30",
-      更新日時: "2024-11-03 11:30",
-      企業Ｎｏ: "1014",
-      企業名: "Company N",
-      店舗No: "3001",
-      店舗名: "第十四支店",
-      フリガナ: "ダイジュウヨンシテン",
-    },
-    {
-      No: 15,
-      登録日時: "2024-11-03 12:00",
-      更新日時: "2024-11-03 13:00",
-      企業Ｎｏ: "1015",
-      企業名: "Company O",
-      店舗No: "3001",
-      店舗名: "第十五支店",
-      フリガナ: "ダイジュウゴシテン",
-    },
-    {
-      No: 16,
-      登録日時: "2024-11-03 13:30",
-      更新日時: "2024-11-03 14:30",
-      企業Ｎｏ: "1016",
-      企業名: "Company P",
-      店舗No: "3001",
-      店舗名: "第十六支店",
-      フリガナ: "ダイジュウロクシテン",
-    },
-    {
-      No: 17,
-      登録日時: "2024-11-03 15:00",
-      更新日時: "2024-11-03 16:00",
-      企業Ｎｏ: "1017",
-      企業名: "Company Q",
-      店舗No: "3001",
-      店舗名: "第十七支店",
-      フリガナ: "ダイジュウナナシテン",
-    },
-    {
-      No: 18,
-      登録日時: "2024-11-03 16:30",
-      更新日時: "2024-11-03 17:30",
-      企業Ｎｏ: "1018",
-      企業名: "Company R",
-      店舗No: "3001",
-      店舗名: "第十八支店",
-      フリガナ: "ダイジュウハシテン",
-    },
-    {
-      No: 19,
-      登録日時: "2024-11-04 09:00",
-      更新日時: "2024-11-04 10:00",
-      企業Ｎｏ: "1019",
-      企業名: "Company S",
-      店舗No: "3001",
-      店舗名: "第十九支店",
-      フリガナ: "ダイジュウキュウシテン",
-    },
-    {
-      No: 20,
-      登録日時: "2024-11-04 10:30",
-      更新日時: "2024-11-04 11:30",
-      企業Ｎｏ: "1020",
-      企業名: "Company T",
-      店舗No: "3001",
-      店舗名: "第二十支店",
-      フリガナ: "ダイニジュウシテン",
-    },
-    {
-      No: 21,
-      登録日時: "2024-11-04 12:00",
-      更新日時: "2024-11-04 13:00",
-      企業Ｎｏ: "1021",
-      企業名: "Company U",
-      店舗No: "3001",
-      店舗名: "第二十一支店",
-      フリガナ: "ダイニジュウイチシテン",
-    },
-    {
-      No: 22,
-      登録日時: "2024-11-04 13:30",
-      更新日時: "2024-11-04 14:30",
-      企業Ｎｏ: "1022",
-      企業名: "Company V",
-      店舗No: "3001",
-      店舗名: "第二十二支店",
-      フリガナ: "ダイニジュウニシテン",
-    },
-  ];
 
   const searchConditions = () => {};
 
@@ -337,22 +104,48 @@ function StoreList() {
   ) => {
     // Update the selected data state
     setSelectedData(newSelectedData);
+    console.log(123, newSelectedData);
     // // Log the selected data to the console
-    console.log("Selected Data:", selectedData, newSelectedData);
+    const selectedStoreNo = newSelectedData.map((item) => item["店舗No"]);
+    setSelectedStoreNoArray(selectedStoreNo);
+    console.log(
+      "Selected Data:",
+      selectedStoreNo,
+      selectedData,
+      newSelectedData
+    );
   };
 
   const navigateToInfoPage = () => {
-    navigate("/StoreListInfo");
+    navigate("/StoreInfo", {
+      state: { selectedStoreNo: selectedStoreNoArray[0] },
+    });
   };
+
   const navigateToEditPage = () => {
-    navigate("/StoreListInfo");
+    navigate("/StoreEdit", {
+      state: { selectedStoreNo: selectedStoreNoArray[0] },
+    });
+  };
+
+  const handleDeleteStores = async () => {
+    console.log(114, selectedStoreNoArray);
+    try {
+      await StoreApiService.deleteStores(selectedStoreNoArray);
+      // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred while deleting the company.");
+      }
+    }
+    await fetchStoreListData();
   };
 
   const navigateToStoreCreate = () => {
     navigate("/StoreCreate");
   };
-
-  const borderStyle = "1px solid #ccc";
 
   return (
     <Box className="admin-menu-nav-page">
@@ -434,7 +227,7 @@ function StoreList() {
         label="編集"
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={handleDeleteStores}
         disabled={selectedData.length <= 0}
         label="削除"
       />
