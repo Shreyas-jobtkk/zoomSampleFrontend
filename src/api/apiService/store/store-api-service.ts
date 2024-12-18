@@ -10,6 +10,7 @@ import { fetchStoreAll } from "../store/actions/store-fetch-all";
 import { deleteStores } from "../store/actions/store-delete";
 import { fetchStore } from "../store/actions/store-fetch";
 import { updateStore } from "../store/actions/store-update";
+import { fetchStoreNamesByCompany } from "../store/actions/store-fetch-all-name-details";
 
 export const StoreApiService = {
   createStore,
@@ -17,6 +18,7 @@ export const StoreApiService = {
   deleteStores,
   fetchStore,
   updateStore,
+  fetchStoreNamesByCompany,
   // updateCompany,
   // deleteCompanies,
   // fetchCompaniesAll,

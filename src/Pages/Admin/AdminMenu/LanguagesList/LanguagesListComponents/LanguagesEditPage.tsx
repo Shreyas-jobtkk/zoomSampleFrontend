@@ -7,10 +7,7 @@ import "../LanguagesListStyles/LanguagesList.scss";
 import { useForm } from "react-hook-form";
 import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
 import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
-import {
-  LanguageCreateFormValues,
-  LanguageInfo,
-} from "../../../../../types/LanguageTypes/LanguageTypes";
+import { LanguageInfo } from "../../../../../types/LanguageTypes/LanguageTypes";
 import { convertToJST, deleteStatus } from "../../../../../utils/utils";
 import { useLocation } from "react-router-dom";
 import { LanguageApiService } from "../../../../../api/apiService/languages/languages-api-service";
@@ -43,6 +40,11 @@ const LanguageCreate = () => {
         setFormData(languageDetails);
         // setCompanyDetails(companyDetails);
         console.log(133, languageDetails);
+        setValue("language_name", languageDetails.language_name);
+        setValue(
+          "language_name_furigana",
+          languageDetails.language_name_furigana
+        );
       } catch (error: any) {
         setError(
           error.response?.data?.error ||
@@ -71,13 +73,15 @@ const LanguageCreate = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isValid },
-  } = useForm<LanguageCreateFormValues>();
+  } = useForm<LanguageInfo>();
   const searchConditions = () => {};
-  const editLanguageInfo = async (data: LanguageCreateFormValues) => {
-    if (!isValid) {
-      return;
-    }
+  const editLanguageInfo = async (data: LanguageInfo) => {
+    console.log(156, isValid);
+    // if (!isValid) {
+    //   return;
+    // }
     console.log("Form Data Submitted:", data);
     try {
       LanguageApiService.updateLanguage(

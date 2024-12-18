@@ -23,6 +23,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: 100 !important;
 }
 
 .store-info,
@@ -41,12 +42,14 @@
   border: 1px solid #ccc; // Replace with your borderStyle
 }
 
-.name-row {
+.name-row,
+.contact-details {
   display: flex;
   flex-direction: row;
   margin: 3vh 0;
   justify-content: space-between;
   gap: 1vw;
+  width: 45vw !important;
 }
 
 .last-name,
@@ -56,25 +59,63 @@
   width: 45vw;
 }
 
-.password-section {
-  padding: 1vh 1vw;
+.contact-details {
   display: flex;
-  flex-direction: column;
+}
+
+.contact-details {
+  // display: flex;
+  // flex-direction: row;
+  margin: 3vh 0;
+  // justify-content: space-between;
+
+  // width: 100vw;
+}
+
+.tel-no,
+.tel-extension {
+  // display: flex;
+  // flex-direction: column;
+  margin-left: 25px;
+}
+
+.password-meeting-info {
+  display: flex;
+  gap: 2vw;
+  // padding: 1vh 1vw;
+  // margin: 3vh 0;
+  // width: 45vw;
+  // border: 1px solid #ccc; // Replace with your borderStyle
+}
+
+.password-info {
+  padding: 1vh 1vw;
   margin: 3vh 0;
   width: 45vw;
   border: 1px solid #ccc; // Replace with your borderStyle
 }
 
-.password-edit {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.password-input {
+  // display: flex;
+  // align-items: center;
+  // justify-content: space-between;
   margin-top: 2vh;
 }
 
 .password-change {
   align-items: center;
   margin-top: 2vh;
+}
+
+.meeting-info {
+  padding: 1vh 1vw;
+  margin: 3vh 0;
+  width: 45vw;
+}
+
+.meeting-credentials {
+  display: flex;
+  gap: 1vw;
 }
 
 .occupy-extreme-right {

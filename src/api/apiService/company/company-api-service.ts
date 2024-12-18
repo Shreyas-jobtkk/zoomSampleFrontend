@@ -4,6 +4,7 @@ import { createCompany } from "../company/actions/company-create";
 import { updateCompany } from "../company/actions/company-update";
 import { deleteCompanies } from "../company/actions/company-delete";
 import { fetchCompaniesAll } from "../company/actions/company-fetch-all";
+import { fetchCompaniesNameDetails } from "../company/actions/company-fetch-all-name-details";
 
 export const CompanyApiService = {
   fetchCompany,
@@ -11,4 +12,5 @@ export const CompanyApiService = {
   updateCompany,
   deleteCompanies,
   fetchCompaniesAll,
+  fetchCompaniesNameDetails,
 };

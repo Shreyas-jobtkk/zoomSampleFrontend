@@ -66,15 +66,11 @@ const CompanyCreate = () => {
               labelWidth="125px"
               label="登録日時"
               width="30vw" // Uncomment to set a custom width
-              // value={deleteFlag}
-              // onChange={(e: any) => setDeleteFlag(e.target.value)}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
               width="30vw" // Uncomment to set a custom width
-              // value={deleteFlag}
-              // onChange={(e: any) => setDeleteFlag(e.target.value)}
             />
           </Box>
           <Box className="delete-flag">
@@ -82,19 +78,12 @@ const CompanyCreate = () => {
               labelWidth="100px"
               label="削除フラグ"
               width="10vw" // Uncomment to set a custom width
-              // value={deleteFlag}
-              // onChange={(e: any) => setDeleteFlag(e.target.value)}
             />
           </Box>
         </Box>
         <Box className="basic-info">
           <Box className="description-label">基本情報</Box>
-          <TextBoxWithLabel
-            labelWidth="125px"
-            label="企業No"
-            width="30vw"
-            // onChange={(e: any) => setDeleteFlag(e.target.value)}
-          />
+          <TextBoxWithLabel labelWidth="125px" label="企業No" width="30vw" />
           <Box className="name-row">
             <Box>
               <ValidationInputField
@@ -117,9 +106,6 @@ const CompanyCreate = () => {
                 width="30vw"
                 register={register}
                 maxLength={128}
-                // required={false}
-                // error={errors.company_name_furigana?.message} // Separate error for "furigana"
-                // required={true}
                 value={formData.company_name_furigana}
                 onChange={handleChange}
               />
