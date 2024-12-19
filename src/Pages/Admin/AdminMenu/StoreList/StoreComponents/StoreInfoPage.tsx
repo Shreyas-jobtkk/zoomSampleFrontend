@@ -107,7 +107,7 @@ function StoreListInfo() {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isValid },
+    formState: { isSubmitted, errors, isValid },
   } = useForm<StoreInfoFormValues>();
 
   useEffect(() => {

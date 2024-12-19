@@ -70,7 +70,7 @@ const LanguageSupportInfo = () => {
   const {
     // register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isSubmitted, errors, isValid },
   } = useForm<LanguageCreateFormValues>();
   const searchConditions = () => {};
   const saveLanguageInfo = async (data: LanguageCreateFormValues) => {

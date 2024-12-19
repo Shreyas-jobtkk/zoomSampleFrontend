@@ -111,7 +111,7 @@ function StoreListInfo() {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isValid },
+    formState: { isSubmitted, errors, isValid },
   } = useForm<StoreInfoFormValues>();
 
   useEffect(() => {
@@ -254,6 +254,7 @@ function StoreListInfo() {
             />
 
             <ValidationInputField
+              isSubmitted={isSubmitted}
               name="company_no" // Name for the phonetic spelling
               labelWidth="125px"
               label="企業No"
@@ -268,6 +269,7 @@ function StoreListInfo() {
             />
 
             <ValidationInputField
+              isSubmitted={isSubmitted}
               name="company_name" // Name for the phonetic spelling
               labelWidth="125px"
               label="企業名"
@@ -296,6 +298,7 @@ function StoreListInfo() {
             <Box className="name-row">
               <Box>
                 <ValidationInputField
+                  isSubmitted={isSubmitted}
                   label="フリガナ"
                   name="store_name_furigana" // Name for the phonetic spelling
                   labelWidth="125px"
@@ -307,6 +310,7 @@ function StoreListInfo() {
                   onChange={handleChange}
                 />
                 <ValidationInputField
+                  isSubmitted={isSubmitted}
                   name="store_name" // Name for the phonetic spelling
                   labelWidth="125px"
                   label="店舗名"

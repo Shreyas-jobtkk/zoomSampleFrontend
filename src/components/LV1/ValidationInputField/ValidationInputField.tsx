@@ -20,6 +20,7 @@ type ValidationInputFieldProps = {
   fontSize?: string; // Optional font size for label and TextField
   value?: string; // Controlled value for the input
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Controlled onChange handler
+  isSubmitted?: boolean;
 };
 
 const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
@@ -33,6 +34,7 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
   fontSize, // Font size for label and TextField
   value, // Controlled value
   onChange, // Controlled onChange
+  isSubmitted,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -51,7 +53,8 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
   };
 
   const isError =
-    !value || (typeof value === "string" && value.trim().length === 0);
+    isSubmitted &&
+    (!value || (typeof value === "string" && value.trim().length === 0));
 
   return (
     <Box

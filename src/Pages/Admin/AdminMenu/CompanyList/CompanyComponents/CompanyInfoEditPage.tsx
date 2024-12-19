@@ -27,7 +27,7 @@ function CompanyInfoEdit() {
     register,
     setValue,
     handleSubmit,
-    formState: { isValid },
+    formState: { isSubmitted, isValid },
   } = useForm<CompanyCreateFormValues>();
 
   const [formData, setFormData] = useState<CompanyInfo>({
@@ -136,6 +136,7 @@ function CompanyInfoEdit() {
           <Box className="name-row">
             <Box>
               <ValidationInputField
+                isSubmitted={isSubmitted}
                 label="企業名"
                 name="company_name" // This name is for the company name
                 labelWidth="125px"
@@ -149,6 +150,7 @@ function CompanyInfoEdit() {
               />
 
               <ValidationInputField
+                isSubmitted={isSubmitted}
                 label="フリガナ"
                 name="company_name_furigana" // Name for the phonetic spelling
                 labelWidth="125px"

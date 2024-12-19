@@ -71,7 +71,7 @@ function InterpretersListInfo() {
     register,
     handleSubmit,
     setValue,
-    // formState: { errors, isValid },
+    formState: { isSubmitted, errors, isValid },
   } = useForm<any>();
 
   useEffect(() => {
@@ -203,6 +203,7 @@ function InterpretersListInfo() {
             />
 
             <ValidationInputField
+              isSubmitted={isSubmitted}
               name="company_no" // Name for the phonetic spelling
               labelWidth="125px"
               label="企業No"
@@ -216,6 +217,7 @@ function InterpretersListInfo() {
               type="none"
             />
             <ValidationInputField
+              isSubmitted={isSubmitted}
               name="company_name" // Name for the phonetic spelling
               labelWidth="125px"
               label="企業名"
@@ -242,6 +244,7 @@ function InterpretersListInfo() {
             />
 
             <ValidationInputField
+              isSubmitted={isSubmitted}
               name="store_no" // Name for the phonetic spelling
               labelWidth="125px"
               label="店舗No"
@@ -255,6 +258,7 @@ function InterpretersListInfo() {
               type="none"
             />
             <ValidationInputField
+              isSubmitted={isSubmitted}
               name="store_name" // Name for the phonetic spelling
               labelWidth="125px"
               label="店舗名"
@@ -288,6 +292,7 @@ function InterpretersListInfo() {
                 onChange={(e: any) => setTextValue1(e.target.value)}
               /> */}
               <ValidationInputField
+                isSubmitted={isSubmitted}
                 label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 name="store_name_furigana" // Name for the phonetic spelling
                 labelWidth="125px"
@@ -300,6 +305,7 @@ function InterpretersListInfo() {
               />
 
               <ValidationInputField
+                isSubmitted={isSubmitted}
                 label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                 name="store_name_furigana" // Name for the phonetic spelling
                 labelWidth="125px"
@@ -320,6 +326,7 @@ function InterpretersListInfo() {
                 onChange={(e: any) => setTextValue1(e.target.value)}
               /> */}
               <ValidationInputField
+                isSubmitted={isSubmitted}
                 label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メイ"
                 name="store_name_furigana" // Name for the phonetic spelling
                 labelWidth="125px"
@@ -338,6 +345,7 @@ function InterpretersListInfo() {
                 onChange={(e: any) => setTextValue1(e.target.value)}
               /> */}
               <ValidationInputField
+                isSubmitted={isSubmitted}
                 label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名"
                 name="store_name_furigana" // Name for the phonetic spelling
                 labelWidth="125px"
@@ -360,6 +368,7 @@ function InterpretersListInfo() {
                 onChange={(e: any) => setTextValue1(e.target.value)}
               /> */}
               <ValidationInputField
+                isSubmitted={isSubmitted}
                 label="メールアドレス"
                 name="store_name_furigana" // Name for the phonetic spelling
                 labelWidth="125px"

@@ -74,7 +74,7 @@ const LanguageCreate = () => {
     register,
     handleSubmit,
     setValue,
-    formState: { errors, isValid },
+    formState: { isSubmitted, errors, isValid },
   } = useForm<LanguageInfo>();
   const searchConditions = () => {};
   const editLanguageInfo = async (data: LanguageInfo) => {
@@ -140,6 +140,7 @@ const LanguageCreate = () => {
           <Box className="name-row">
             <Box>
               <ValidationInputField
+                isSubmitted={isSubmitted}
                 label="和訳"
                 name="language_name" // This name is for the language name
                 labelWidth="125px"
@@ -153,6 +154,7 @@ const LanguageCreate = () => {
               />
 
               <ValidationInputField
+                isSubmitted={isSubmitted}
                 label="言語名"
                 name="language_name_furigana" // Name for the phonetic spelling
                 labelWidth="125px"

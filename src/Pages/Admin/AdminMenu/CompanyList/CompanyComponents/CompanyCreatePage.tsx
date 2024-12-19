@@ -31,7 +31,7 @@ const CompanyCreate = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { isSubmitted, errors, isValid },
   } = useForm<CompanyCreateFormValues>();
   const searchConditions = () => {};
   const saveCompanyInfo = async (data: CompanyCreateFormValues) => {
@@ -87,6 +87,7 @@ const CompanyCreate = () => {
           <Box className="name-row">
             <Box>
               <ValidationInputField
+                isSubmitted={isSubmitted}
                 label="企業名"
                 name="company_name" // This name is for the company name
                 labelWidth="125px"
@@ -100,6 +101,7 @@ const CompanyCreate = () => {
               />
 
               <ValidationInputField
+                isSubmitted={isSubmitted}
                 label="フリガナ"
                 name="company_name_furigana" // Name for the phonetic spelling
                 labelWidth="125px"
