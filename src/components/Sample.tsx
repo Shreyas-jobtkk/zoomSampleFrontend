@@ -12,8 +12,8 @@ function Sample() {
 
   const authEndpoint = "http://localhost:4000"; // http://localhost:4000
   const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
-  meetingNumber = import.meta.env.VITE_meetingNumber;
-  passWord = import.meta.env.VITE_passWord;
+  meetingNumber = import.meta.env.VITE_MEETING_NUMBER;
+  passWord = import.meta.env.VITE_MEETING_PASSWORD;
   const role = 1;
   const userName = "Shreyas";
   // const userEmail = "";
@@ -37,7 +37,6 @@ function Sample() {
       const res = await req.json();
       const signature = res.signature as string;
       startMeeting(signature);
-      console.log(132, signature);
     } catch (e) {
       console.log(e);
     }

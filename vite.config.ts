@@ -10,5 +10,4 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ["js-big-decimal"],
   },
-  // No need to manually define VITE_KEY; Vite exposes it automatically if it starts with VITE_
 });
