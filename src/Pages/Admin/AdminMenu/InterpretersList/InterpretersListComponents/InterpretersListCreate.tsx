@@ -2,8 +2,6 @@ import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
 import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box, TextField, Typography } from "@mui/material";
-import PasswordInput from "../../../../../components/LV1/PasswordInput/PasswordInput";
-import PasswordBoxWithLabel from "../../../../../components/LV1/TextBox/PasswordBoxWithLabel";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import "../InterpretersListStyles/InterpretersList.scss";
 import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
@@ -13,8 +11,10 @@ import { useForm } from "react-hook-form";
 import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
 import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
 import { LanguageApiService } from "../../../../../api/apiService/languages/languages-api-service";
-import SelectMultipleOptions from "../../../../../components/LV1/SelectOption/validateMultipleOptions";
+import ValidateSelectMultipleOptions from "../../../../../components/LV1/SelectOption/validateMultipleOptions";
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
+import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
+import { UserCreateFormValues } from "../../../../../types/UserTypes/UserTypes";
 
 function InterpretersListInfo() {
   const [textValue1, setTextValue1] = useState<string>("");
@@ -29,14 +29,7 @@ function InterpretersListInfo() {
   const [companyData, setCompanyData] = useState<any[]>([]);
   const [storeData, setStoreData] = useState<any[]>([]);
   const [languagesSupport, setLanguagesSupport] = useState<any[]>([]);
-
-  const options = [
-    { label: "Option 1", value: 1 },
-    { label: "Option 2", value: 2 },
-    { label: "Option 3", value: 3 },
-    { label: "Option 4", value: 4 },
-  ];
-
+  const [isStoresExist, setIsStoresExist] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
     []
   );
@@ -47,25 +40,24 @@ function InterpretersListInfo() {
     setSelectedOptions(value); // Update the state with selected options
   };
 
-  // const [formData, setFormData] = useState<StoreCreateFormValues>({
-  //   company_no: "",
-  //   company_name: "",
-  //   store_name: "",
-  //   store_name_furigana: "",
-  //   zip1: "",
-  //   zip2: "",
-  //   pref: "",
-  //   city: "",
-  //   street: "",
-  //   building_name: "",
-  //   tel1: "",
-  //   tel2: "",
-  //   tel3: "",
-  //   fax1: "",
-  //   fax2: "",
-  //   fax3: "",
-  //   store_note: "",
-  // });
+  const [formData, setFormData] = useState<UserCreateFormValues>({
+    company_no: "",
+    company_name: "",
+    store_no: "",
+    store_name: "",
+    user_name_last: "",
+    user_name_last_furigana: "",
+    user_name_first: "",
+    user_name_first_furigana: "",
+    mail_address: "",
+    tel1: "",
+    tel2: "",
+    tel3: "",
+    tel_extension: "",
+    translate_languages: [],
+    password_expire: "",
+    user_password: "",
+  });
 
   const {
     register,
@@ -112,20 +104,22 @@ function InterpretersListInfo() {
   const fetchStoreNames = async () => {
     try {
       const response = await StoreApiService.fetchStoreNamesByCompany(
-        selectedCompanyNo
+        formData.company_no
       );
       console.log(247, response);
       setStoreData(response);
+      setIsStoresExist(true);
 
       // const response = await axios.get(`${homePage}/company`);
     } catch (error) {
+      setIsStoresExist(false);
       alert("no stores exist");
       // console.error("Error fetching companies:", error);
     }
   };
 
-  const [selectedCompany, setSelectedCompany] = useState<any>(null);
-  const [selectedCompanyNo, setSelectedCompanyNo] = useState<string>("");
+  // const [selectedCompany, setSelectedCompany] = useState<any>(null);
+  // const [selectedCompanyNo, setSelectedCompanyNo] = useState<string>("");
   const [selectedCompanyName, setSelectedCompanyName] = useState<string>("");
   const [selectedStore, setSelectedStore] = useState<any>(null);
   const [selectedStoreNo, setSelectedStoreNo] = useState<string>("");
@@ -136,43 +130,50 @@ function InterpretersListInfo() {
     if (!isCompanyNoEmpty) {
       fetchStoreNames();
     }
-  }, [selectedCompanyNo]);
+  }, [formData.company_no]);
+
+  const updateFormData = (field: string, value: any) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: value,
+    }));
+  };
 
   const handleCompanySelect = (company: any) => {
     const { company_no, company_name } = company;
 
-    setSelectedCompany(company);
-    setSelectedCompanyNo(company_no);
-    setSelectedCompanyName(company_name);
-
-    console.log(147, typeof company_no);
-
     // Set isCompanyNoEmpty to true if company_no is an empty string or undefined
     setCompanyNoIsEmpty(!company_no || company_no === "");
+
+    updateFormData("company_no", company_no);
+    updateFormData("company_name", company_name);
 
     setValue("company_no", company_no);
     setValue("company_name", company_name);
   };
 
   const handleStoreSelect = (store: any) => {
-    console.log(147, store);
     const { store_no, store_name } = store;
 
-    setSelectedStore(store);
-    setSelectedStoreNo(store_no);
-    setSelectedStoreName(store_name);
+    updateFormData("store_no", store_no);
+    updateFormData("store_name", store_name);
 
-    // updateFormData("company_no", company_no);
-    // updateFormData("company_name", company_name);
-
-    setValue("company_no", store_no);
-    setValue("company_name", store_name);
+    setValue("store_no", store_no);
+    setValue("store_name", store_name);
   };
+
+  const createInterpreter = () => {};
 
   const borderStyle = "1px solid #ccc";
   return (
-    <Box className="interpreters-list-navigate">
+    <Box
+      className="interpreters-list-navigate"
+      onSubmit={handleSubmit(createInterpreter)}
+      component="form"
+    >
       <MenuHeader title="管理者情報" />
+      <p> {String(isStoresExist)} </p>
+      <p> {String(isCompanyNoEmpty)} </p>
       <Box className="interpreters-list-navigate-content">
         <Box className="time-details">
           <TextBoxWithLabel
@@ -211,9 +212,8 @@ function InterpretersListInfo() {
               register={register}
               maxLength={128}
               // error={errors.company_no?.message} // Separate error for "furigana"
-              value={selectedCompanyNo}
-              onChange={(e: any) => setSelectedCompanyNo(e.target.value)}
-              // disabled={true}
+              value={formData.company_no}
+              // onChange={(e: any) => setSelectedCompanyNo(e.target.value)}
               type="none"
             />
             <ValidationInputField
@@ -225,8 +225,7 @@ function InterpretersListInfo() {
               register={register}
               maxLength={128}
               // error={errors.company_no?.message} // Separate error for "furigana"
-              value={selectedCompanyName}
-              onChange={(e: any) => setSelectedCompanyName(e.target.value)}
+              value={formData.company_name}
               // disabled={true}
               type="none"
             />
@@ -240,7 +239,7 @@ function InterpretersListInfo() {
               label="店舗検索"
               valueKey="store_no" // We use company_no for unique identification
               displayKey="store_name" // We display company_name in the list
-              disabled={isCompanyNoEmpty}
+              disabled={!(!isCompanyNoEmpty && isStoresExist)}
             />
 
             <ValidationInputField
@@ -252,8 +251,7 @@ function InterpretersListInfo() {
               register={register}
               maxLength={128}
               // error={errors.company_no?.message} // Separate error for "furigana"
-              value={selectedStoreNo}
-              onChange={(e: any) => setSelectedStoreNo(e.target.value)}
+              value={formData.store_no}
               // disabled={true}
               type="none"
             />
@@ -265,9 +263,8 @@ function InterpretersListInfo() {
               width="30vw"
               register={register}
               maxLength={128}
-              // error={errors.company_no?.message} // Separate error for "furigana"
-              value={selectedStoreName}
-              onChange={(e: any) => setSelectedStoreName(e.target.value)}
+              // error={errors.store_no?.message} // Separate error for "furigana"
+              value={formData.store_name}
               // disabled={true}
               type="none"
             />
@@ -375,7 +372,6 @@ function InterpretersListInfo() {
                 width="30vw"
                 register={register}
                 maxLength={128}
-                // error={errors.store_name_furigana?.message} // Separate error for "furigana"
                 value={""}
                 onChange={handleChange}
               />
@@ -425,7 +421,8 @@ function InterpretersListInfo() {
               </Box>
             </Box>
           </Box>
-          <SelectMultipleOptions
+          <ValidateSelectMultipleOptions
+            isSubmitted={isSubmitted}
             label="通訳言語"
             labelWidth="125px"
             options={languagesSupport}
@@ -446,16 +443,36 @@ function InterpretersListInfo() {
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <Box className="password-input">
-              <PasswordBoxWithLabel
+              {/* <PasswordBoxWithLabel
                 label="パスワード"
                 width="15vw"
                 labelWidth="125px"
+              /> */}
+              <ValidationInputField
+                isSubmitted={isSubmitted}
+                name="password" // Name for the phonetic spelling
+                labelWidth="125px"
+                label="パスワード"
+                width="15vw"
+                register={register}
+                maxLength={128}
+                type="password"
+                value={""}
+                onChange={handleChange}
               />
-              <PasswordBoxWithLabel
+              <ValidationInputField
+                isSubmitted={isSubmitted}
+                name="password_reenter" // Name for the phonetic spelling
+                labelWidth="125px"
                 label="（再入力）"
                 width="15vw"
-                labelWidth="125px"
+                register={register}
+                maxLength={128}
+                type="password"
+                value={""}
+                onChange={handleChange}
               />
+
               {/* <ButtonAtom
               onClick={searchConditions}
               label="パスワード変更"
@@ -465,19 +482,41 @@ function InterpretersListInfo() {
           </Box>
           <Box className="meeting-info">
             <Box className="meeting-credentials">
-              <TextBoxWithLabel
+              {/* <TextBoxWithLabel
                 labelWidth="125px"
                 label="ミーティングID"
                 width="15vw"
                 value={textValue1}
                 onChange={(e: any) => setTextValue1(e.target.value)}
+              /> */}
+              <ValidationInputField
+                isSubmitted={isSubmitted}
+                name="password_reenter" // Name for the phonetic spelling
+                labelWidth="125px"
+                label="ミーティングID"
+                width="15vw"
+                register={register}
+                maxLength={128}
+                value={""}
+                onChange={handleChange}
               />
-              <TextBoxWithLabel
+              {/* <TextBoxWithLabel
                 labelWidth="125px"
                 label="パスコード"
                 width="15vw"
                 value={textValue1}
                 onChange={(e: any) => setTextValue1(e.target.value)}
+              /> */}
+              <ValidationInputField
+                isSubmitted={isSubmitted}
+                name="password_reenter" // Name for the phonetic spelling
+                labelWidth="125px"
+                label="パスコード"
+                width="15vw"
+                register={register}
+                maxLength={128}
+                value={""}
+                onChange={handleChange}
               />
             </Box>
             <TextAreaWithLabel
@@ -492,7 +531,7 @@ function InterpretersListInfo() {
           </Box>
         </Box>
         <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
-        <ButtonAtom onClick={searchConditions} label="編集" width="100px" />
+        <ValidationButton label="保存" width="100px" type="submit" />
       </Box>
     </Box>
   );

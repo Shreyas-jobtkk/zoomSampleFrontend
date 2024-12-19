@@ -1,8 +1,10 @@
 // types.ts
 
 export type UserCreateFormValues = {
-  store_no: string;
+  company_no: string;
   company_name: string;
+  store_no: string;
+  store_name: string;
   user_name_last: string;
   user_name_last_furigana: string;
   user_name_first: string;
@@ -12,10 +14,9 @@ export type UserCreateFormValues = {
   tel2: string | number;
   tel3: string | number;
   tel_extension: string | number;
-  fax1: string | number;
-  fax2: string | number;
-  fax3: string | number;
-  store_note: string;
+  translate_languages: number[];
+  password_expire: Date | string;
+  user_password: string;
 };
 
 export interface UserInfo {

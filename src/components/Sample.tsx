@@ -11,9 +11,9 @@ function Sample() {
   let passWord = "";
 
   const authEndpoint = "http://localhost:4000"; // http://localhost:4000
-  const sdkKey = "aaaaaaaaaaaaaaaaaaa";
-  meetingNumber = "111111111111111";
-  passWord = "22222222";
+  const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
+  meetingNumber = import.meta.env.VITE_meetingNumber;
+  passWord = import.meta.env.VITE_passWord;
   const role = 1;
   const userName = "Shreyas";
   // const userEmail = "";
@@ -24,6 +24,7 @@ function Sample() {
   const getSignature = async () => {
     // await fetchData()
     // alert(meetingNumber)
+    console.log(155, import.meta.env.VITE_ZOOM_MEETING_SDK_KEY);
     try {
       const req = await fetch(authEndpoint, {
         method: "POST",
@@ -45,9 +46,6 @@ function Sample() {
   function startMeeting(signature: string) {
     // await fetchData()
     document.getElementById("zmmtg-root")!.style.display = "block";
-    // const zoomAppLink = `zoommtg://zoom.us/join?confno=${meetingNumber}&pwd=${passWord}`;
-
-    // window.location.href = zoomAppLink;
 
     ZoomMtg.init({
       leaveUrl: leaveUrl,
@@ -62,8 +60,6 @@ function Sample() {
           meetingNumber: meetingNumber,
           passWord: passWord,
           userName: userName,
-          // userEmail: userEmail,
-          // tk: registrantToken,
           zak: zakToken,
           success: (success: unknown) => {
             console.log(success);
@@ -82,25 +78,12 @@ function Sample() {
             console.log(error);
           },
         });
-        // alert(444)
       },
       error: (error: unknown) => {
         console.log(error);
       },
     });
   }
-
-  // function startMeeting(signature: string) {
-  //     const zoomJoinURL = `https://zoom.us/j/unknownunknown`;
-
-  //     const newWindow = window.open(zoomJoinURL, '_blank');
-
-  //     // Check if the new window was blocked or couldn't be opened
-  //     if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-  //         // Fallback to opening the URL in the same window
-  //         window.location.href = zoomJoinURL;
-  //     }
-  // }
 
   return (
     <Container className="App" maxWidth="sm">

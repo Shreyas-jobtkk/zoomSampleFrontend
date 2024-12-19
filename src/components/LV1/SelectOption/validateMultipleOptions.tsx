@@ -24,6 +24,7 @@ interface SelectMultipleOptionsProps {
   disabled?: boolean;
   register: any;
   name: string;
+  isSubmitted?: boolean;
 }
 
 const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({
@@ -37,6 +38,7 @@ const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({
   register,
   disabled = false,
   name,
+  isSubmitted,
 }) => {
   const handleChange = (event: SelectChangeEvent<(string | number)[]>) => {
     const newValue = event.target.value as (string | number)[]; // Explicitly type as array
@@ -55,7 +57,7 @@ const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({
     },
   };
 
-  const isError = value.length === 0;
+  const isError = isSubmitted && value.length === 0;
 
   return (
     <Box display="flex" alignItems="center">

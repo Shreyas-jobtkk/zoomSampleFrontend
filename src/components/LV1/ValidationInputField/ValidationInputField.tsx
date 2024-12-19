@@ -100,7 +100,7 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
           "& .MuiOutlinedInput-root": {
             height: inputHeight, // Match input height
             fontSize, // Apply font size to the input text
-            pointerEvents: type === "none" ? "none" : undefined,
+            pointerEvents: type === "none" ? "none" : "auto",
             "& input": {
               padding: "4px", // Adjust padding
             },

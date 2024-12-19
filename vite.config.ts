@@ -1,10 +1,14 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import dotenv from "dotenv";
 
-// https://vitejs.dev/config/
+// Load environment variables from a `.env` file
+dotenv.config();
+
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    exclude: ['js-big-decimal']
-  }
-})
+    exclude: ["js-big-decimal"],
+  },
+  // No need to manually define VITE_KEY; Vite exposes it automatically if it starts with VITE_
+});
