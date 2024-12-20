@@ -3,6 +3,7 @@ import { ZoomMtg } from "@zoom/meetingsdk";
 import { Box, Typography, Button, Container } from "@mui/material";
 import { showOverlayMessage } from "./OverlayMessage"; // Import the function
 import { showInputFieldOverlay } from "./showInputFieldOverlay"; // Import the function
+import { showInputFieldOverlayWithEmojiPicker } from "./Reactions"; // Import the function
 
 ZoomMtg.preLoadWasm();
 ZoomMtg.prepareWebSDK();
@@ -67,6 +68,7 @@ const Sample: React.FC = () => {
 
             // Show input field overlay after meeting success
             showInputFieldOverlay();
+            showInputFieldOverlayWithEmojiPicker();
 
             ZoomMtg.inMeetingServiceListener("onUserLeave", function () {});
 

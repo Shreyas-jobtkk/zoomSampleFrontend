@@ -1,7 +1,7 @@
 const messageQueue: { message: string; topOffset: number }[] = [];
 const activeOverlays: HTMLElement[] = [];
 const baseTopOffset = 200; // Initial top offset
-const verticalSpacing = 50; // Spacing between messages
+const verticalSpacing = 100; // Spacing between messages
 
 export const showOverlayMessage = (message: string) => {
   const calculateBottomOffset = (topOffset: number): number => {
