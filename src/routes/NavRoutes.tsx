@@ -10,7 +10,7 @@ import AdminLogin from "../Pages/Admin/AdminLoginPage"; // Adjust the import pat
 import AdminMenu from "../Pages/Admin/AdminMenuPage"; // Adjust the import path as needed
 // import CompaniesList from '../Pages/Admin/AdminMenu/CompaniesListPage';
 
-import Sample from "../components/Sample"; // Adjust the import path as needed
+import Sample from "../Pages/Sample/Sample"; // Adjust the import path as needed
 
 import ResponderLogin from "../Pages/Responder/ResponderLoginPage"; // Adjust the import path as needed
 import ResponderMenu from "../Pages/Responder/ResponderMenuPage";
