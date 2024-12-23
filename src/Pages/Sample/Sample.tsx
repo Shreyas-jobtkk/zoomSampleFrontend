@@ -1,9 +1,12 @@
 import * as React from "react";
 import { ZoomMtg } from "@zoom/meetingsdk";
 import { Box, Typography, Button, Container } from "@mui/material";
-import { showOverlayMessage } from "./OverlayMessage"; // Import the function
-import { showInputFieldOverlay } from "./showInputFieldOverlay"; // Import the function
-import { showInputFieldOverlayWithEmojiPicker } from "./Reactions"; // Import the function
+// import { showOverlayMessage } from "./OverlayMessage"; // Import the function
+import {
+  showInputFieldOverlay,
+  hideInputFieldOverlay,
+} from "./showInputFieldOverlay"; // Import the function
+import { showEmojiPicker, hideEmojiPicker } from "./showEmojiPicker"; // Import the function
 
 ZoomMtg.preLoadWasm();
 ZoomMtg.prepareWebSDK();
@@ -41,6 +44,47 @@ const Sample: React.FC = () => {
     }
   };
 
+  const showInputField = () => {
+    const submitButton = document.createElement("button");
+    submitButton.innerHTML = "&#10148;"; // HTML entity for check mark
+    submitButton.style.padding = "10px 20px";
+    submitButton.style.fontSize = "16px";
+    submitButton.style.marginLeft = "10px";
+    submitButton.style.cursor = "pointer";
+    submitButton.style.borderRadius = "5px";
+    submitButton.style.backgroundColor = "#4CAF50";
+    submitButton.style.color = "#fff";
+    submitButton.style.border = "none";
+
+    // Set position to absolute for left property to work
+    submitButton.style.position = "absolute";
+    submitButton.style.left = "50px";
+
+    let visible = false;
+
+    submitButton.onclick = () => {
+      if (!visible) {
+        showInputFieldOverlay(); // Show the input field overlay
+        showEmojiPicker(); // Show the emoji picker
+        visible = true;
+      } else {
+        hideInputFieldOverlay(); // Hide the input field overlay.
+        hideEmojiPicker();
+        visible = false; // Set visible to false when hiding
+      }
+    };
+
+    // else {
+    //   submitButton.onclick = () => {
+    //     hideInputFieldOverlay(); // Hide the input field overlay
+    //     // hideEmojiPicker();        // Hide the emoji picker
+    //   };
+    // }
+
+    // Append the button to the body or another container
+    document.body.appendChild(submitButton);
+  };
+
   const startMeeting = (signature: string) => {
     document.getElementById("zmmtg-root")!.style.display = "block";
 
@@ -64,14 +108,15 @@ const Sample: React.FC = () => {
             // alert("success");
 
             // Show message overlay after joining the meeting
-            showOverlayMessage("Welcome to the Zoom meeting!");
+            // showOverlayMessage("Welcome to the Zoom meeting!");
+
+            showInputField();
 
             // Show input field overlay after meeting success
-            showInputFieldOverlay();
-            showInputFieldOverlayWithEmojiPicker();
+            // showInputFieldOverlay();
+            // showEmojiPicker();
 
             ZoomMtg.inMeetingServiceListener("onUserLeave", function () {});
-
             ZoomMtg.inMeetingServiceListener("onUserJoin", function () {});
           },
 
