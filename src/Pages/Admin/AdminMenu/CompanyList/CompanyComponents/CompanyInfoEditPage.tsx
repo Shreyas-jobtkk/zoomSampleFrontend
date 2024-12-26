@@ -80,6 +80,9 @@ function CompanyInfoEdit() {
 
   // Handle edit button action
   const handleEdit = async () => {
+    if (!isValid) {
+      return;
+    }
     console.log(123);
     CompanyApiService.updateCompany(
       formData.company_no,

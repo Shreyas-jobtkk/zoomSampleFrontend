@@ -53,8 +53,8 @@ const Sample: React.FC = () => {
   const authEndpoint = "http://localhost:4000";
   const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
 
-  const role = 0;
-  const userName = "participant";
+  const role = 1;
+  const userName = "host";
   // const zakToken = "";
   const leaveUrl = "http://localhost:5173";
 
@@ -128,6 +128,10 @@ const Sample: React.FC = () => {
 
     ZoomMtg.init({
       leaveUrl: leaveUrl,
+      loginWindow: {
+        width: "100", // Set your desired width as a string
+        height: "380", // Set your desired height as a string
+      },
       patchJsMedia: true,
       leaveOnPageUnload: true,
       isSupportChat: false,
@@ -139,6 +143,7 @@ const Sample: React.FC = () => {
           meetingNumber: meetingNumber,
           passWord: password,
           userName: userName,
+
           // zak: zakToken,
           success: (success: unknown) => {
             console.log(success);

@@ -31,7 +31,7 @@ const CompanyCreate = () => {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitted, errors, isValid },
+    formState: { isSubmitted, isValid },
   } = useForm<CompanyCreateFormValues>();
   const searchConditions = () => {};
   const saveCompanyInfo = async (data: CompanyCreateFormValues) => {

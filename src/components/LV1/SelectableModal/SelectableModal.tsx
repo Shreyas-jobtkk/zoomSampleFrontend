@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Modal,
   Backdrop,
@@ -12,7 +12,6 @@ import {
   ListItemText,
 } from "@mui/material";
 import ButtonAtom from "../Button/ButtonAtom/ButtonAtom";
-import { Height } from "@mui/icons-material";
 
 // Define the props interface
 interface SelectableModalProps<T> {

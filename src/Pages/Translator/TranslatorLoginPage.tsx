@@ -1,9 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import LoginHeader from "../../Header/LoginHeader";
-import TextWithBorder from "../../components/LV1/TextWithBorder/TextWithBorder";
-import TextInput from "../../components/LV1/TextInput/TextInput";
-import PasswordInput from "../../components/LV1/PasswordInput/PasswordInput";
 import LoginButton from "../../components/LV1/Button/LoginButton/LoginButton";
 import { Box } from "@mui/material";
 import TextBoxWithLabel from "../../components/LV1/TextBox/TextBoxWithLabel";
@@ -15,12 +12,6 @@ import PasswordBoxWithLabel from "../../components/LV1/TextBox/PasswordBoxWithLa
 import { homePage } from "../../components/constants";
 
 function TranslatorLogin() {
-  const [passwordValue, setPasswordValue] = useState("");
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.target.value);
-  };
-
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
 

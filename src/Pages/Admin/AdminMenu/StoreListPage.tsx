@@ -1,9 +1,6 @@
-import DatePicker from "../../../components/LV1/DatePicker/DatePicker";
-import TimePicker from "../../../components/LV1/TimePicker/TimePicker"; // Adjust the import path as needed
 import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
-import dayjs, { Dayjs } from "dayjs";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
@@ -81,15 +78,7 @@ function StoreList() {
   const [textValue1, setTextValue1] = useState<string>("");
   const [textValue2, setTextValue2] = useState<string>("");
   const [textValue3, setTextValue3] = useState<string>("");
-  const [textValue4, setTextValue4] = useState<string>("");
-  const [textValue6, setTextValue6] = useState<string>("");
-  const [textValue7, setTextValue7] = useState<string>("");
-  const [textValue8, setTextValue8] = useState<string>("");
-  const [textValue9, setTextValue9] = useState<string>("");
-  const [textValue5, setTextValue5] = useState<string>("");
   const [textValue10, setTextValue10] = useState<string>("");
-
-  const [selectedOption, setSelectedOption] = useState<string>("");
 
   const [selectedData, setSelectedData] = useState<
     Array<{ No: string | number; [key: string]: string | number }>

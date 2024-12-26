@@ -1,7 +1,7 @@
 import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
 import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import "../InterpretersListStyles/InterpretersList.scss";
 import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
@@ -18,12 +18,8 @@ import { UserCreateFormValues } from "../../../../../types/UserTypes/UserTypes";
 
 function InterpretersListInfo() {
   const [textValue1, setTextValue1] = useState<string>("");
-  const [passwordValue, setPasswordValue] = useState("");
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.target.value);
-  };
-  const searchConditions = () => {};
 
+  const searchConditions = () => {};
   const handleChange = () => {};
 
   const [companyData, setCompanyData] = useState<any[]>([]);
@@ -63,7 +59,7 @@ function InterpretersListInfo() {
     register,
     handleSubmit,
     setValue,
-    formState: { isSubmitted, errors, isValid },
+    formState: { isSubmitted },
   } = useForm<any>();
 
   useEffect(() => {
@@ -118,12 +114,6 @@ function InterpretersListInfo() {
     }
   };
 
-  // const [selectedCompany, setSelectedCompany] = useState<any>(null);
-  // const [selectedCompanyNo, setSelectedCompanyNo] = useState<string>("");
-  const [selectedCompanyName, setSelectedCompanyName] = useState<string>("");
-  const [selectedStore, setSelectedStore] = useState<any>(null);
-  const [selectedStoreNo, setSelectedStoreNo] = useState<string>("");
-  const [selectedStoreName, setSelectedStoreName] = useState<string>("");
   const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
 
   useEffect(() => {
@@ -164,7 +154,6 @@ function InterpretersListInfo() {
 
   const createInterpreter = () => {};
 
-  const borderStyle = "1px solid #ccc";
   return (
     <Box
       className="interpreters-list-navigate"

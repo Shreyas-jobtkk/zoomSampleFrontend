@@ -1,7 +1,7 @@
 import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
 import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
-import { Box, TextField, Typography, SelectChangeEvent } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import "../StoreStyles/StoreList.scss";
 // import ValidationTextArea from "../../../../components/LV1/ValidationTextArea/ValidationTextArea";
@@ -42,12 +42,6 @@ function StoreListInfo() {
     store_note: "",
   });
   const [textValue1, setTextValue1] = useState<string>("");
-  const [textValue2, setTextValue2] = useState<string>("");
-  const [passwordValue, setPasswordValue] = useState("");
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.target.value);
-  };
-  const [selectedOption, setSelectedOption] = useState<string>("");
 
   const createStore = () => {
     console.log(113, formData);
@@ -81,7 +75,7 @@ function StoreListInfo() {
     register,
     handleSubmit,
     setValue,
-    formState: { isSubmitted, errors, isValid },
+    formState: { isSubmitted },
   } = useForm<StoreCreateFormValues>();
 
   useEffect(() => {
@@ -115,7 +109,7 @@ function StoreListInfo() {
     }
   };
 
-  const [selectedCompany, setSelectedCompany] = useState<any>(null);
+  // const [selectedCompany, setSelectedCompany] = useState<any>(null);
   // const options = JapanPrefectures;
 
   const updateFormData = (field: string, value: any) => {
@@ -129,7 +123,7 @@ function StoreListInfo() {
     console.log(147, company);
     const { company_no, company_name } = company;
 
-    setSelectedCompany(company);
+    // setSelectedCompany(company);
     setSelectedCompanyNo(company_no);
     setSelectedCompanyName(company_name);
 

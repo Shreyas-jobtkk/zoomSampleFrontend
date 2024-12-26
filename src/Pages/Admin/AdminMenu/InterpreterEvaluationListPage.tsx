@@ -3,12 +3,12 @@ import TimePicker from "../../../components/LV1/TimePicker/TimePicker"; // Adjus
 import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
 import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
-import { Height } from "@mui/icons-material";
+// import { Height } from "@mui/icons-material";
 import "./AdminMenu.scss";
 
 function InterpreterEvaluationList() {
@@ -19,10 +19,10 @@ function InterpreterEvaluationList() {
   const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(dayjs());
 
   // State for selected start and end dates
-  const [selectedStartDate, setSelectedStartDate] = useState<Dayjs | null>(
-    null
-  );
-  const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(null);
+  // const [selectedStartDate, setSelectedStartDate] = useState<Dayjs | null>(
+  //   null
+  // );
+  // const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(null);
   const headers = [
     "No",
     "開始日時",
@@ -182,14 +182,11 @@ function InterpreterEvaluationList() {
     },
   ];
 
-  const columnWidths = [5, 20, 20, 8, 10, 10, 10, 10, 10, 10];
-  const columnAlignments: ("left" | "center" | "right")[] = ["right"];
-
   const searchConditions = () => {};
 
   // Handle start date change
   const handleStartDateChange = (date: Dayjs | null) => {
-    setSelectedStartDate(date);
+    // setSelectedStartDate(date);
     console.log(
       "Selected Start Date:",
       date ? date.format("YYYY-MM-DD") : "None"
@@ -198,7 +195,7 @@ function InterpreterEvaluationList() {
 
   // Handle end date change
   const handleEndDateChange = (date: Dayjs | null) => {
-    setSelectedEndDate(date);
+    // setSelectedEndDate(date);
     console.log(
       "Selected End Date:",
       date ? date.format("YYYY-MM-DD") : "None"
@@ -223,19 +220,12 @@ function InterpreterEvaluationList() {
     ); // Log the selected end time
   };
 
-  // Format the full datetime strings for display
-  const formatFullDateTime = (date: Dayjs | null, time: Dayjs | null) => {
-    if (!date || !time) return "None";
-    return `${date.format("YYYY-MM-DD")} ${time.format("HH:mm:ss")}`;
-  };
-
   const [textValue1, setTextValue1] = useState<string>("");
-  const [textValue2, setTextValue2] = useState<string>("");
+
   const [textValue3, setTextValue3] = useState<string>("");
-  const [textValue4, setTextValue4] = useState<string>("");
-  const [textValue6, setTextValue6] = useState<string>("");
+
   const [textValue7, setTextValue7] = useState<string>("");
-  const [textValue8, setTextValue8] = useState<string>("");
+
   const [textValue9, setTextValue9] = useState<string>("");
   const [textValue5, setTextValue5] = useState<string>("");
   const [textValue10, setTextValue10] = useState<string>("");
@@ -254,8 +244,6 @@ function InterpreterEvaluationList() {
   ) => {
     console.log("Selected Data:", selectedData);
   };
-
-  const borderStyle = "1px solid #ccc";
 
   return (
     <Box className="admin-menu-nav-page">

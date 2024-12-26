@@ -24,8 +24,6 @@ const LanguageCreate = () => {
     language_deleted: false,
   });
 
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const { state } = useLocation();
 
   const selectedLanguageNo = state?.selectedLanguageNo;
@@ -46,13 +44,7 @@ const LanguageCreate = () => {
           languageDetails.language_name_furigana
         );
       } catch (error: any) {
-        setError(
-          error.response?.data?.error ||
-            error.message ||
-            "Failed to fetch language."
-        );
       } finally {
-        setLoading(false);
       }
     };
 
@@ -74,7 +66,7 @@ const LanguageCreate = () => {
     register,
     handleSubmit,
     setValue,
-    formState: { isSubmitted, errors, isValid },
+    formState: { isSubmitted, isValid },
   } = useForm<LanguageInfo>();
   const searchConditions = () => {};
   const editLanguageInfo = async (data: LanguageInfo) => {

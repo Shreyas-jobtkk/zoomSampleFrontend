@@ -11,6 +11,7 @@ import AdminMenu from "../Pages/Admin/AdminMenuPage"; // Adjust the import path 
 // import CompaniesList from '../Pages/Admin/AdminMenu/CompaniesListPage';
 
 import Sample from "../Pages/Sample/Sample"; // Adjust the import path as needed
+import Sample2 from "../Pages/zoomApiMeetings/Sample"; // Adjust the import path as needed
 
 import ResponderLogin from "../Pages/Responder/ResponderLoginPage"; // Adjust the import path as needed
 import ResponderMenu from "../Pages/Responder/ResponderMenuPage";
@@ -21,6 +22,7 @@ const NavRoutes = () => (
     <Route path="/UserMenu" element={<UserMenu />} />
     <Route path="/TranslatorLogin" element={<TranslatorLogin />} />
     <Route path="/Sample" element={<Sample />} />
+    <Route path="/Sample2" element={<Sample2 />} />
     <Route path="/TranslatorMenu" element={<TranslatorMenu />} />
     <Route path="/AdminLogin" element={<AdminLogin />} />
     <Route path="/AdminMenu" element={<AdminMenu />} />

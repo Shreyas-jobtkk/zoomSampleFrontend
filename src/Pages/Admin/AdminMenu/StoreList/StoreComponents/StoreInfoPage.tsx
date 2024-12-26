@@ -1,7 +1,7 @@
 import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
 import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
-import { Box, TextField, Typography, SelectChangeEvent } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import "../StoreStyles/StoreList.scss";
 // import ValidationTextArea from "../../../../components/LV1/ValidationTextArea/ValidationTextArea";
@@ -13,11 +13,9 @@ import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
 import SelectOption from "../../../../../components/LV1/SelectOption/SelectOption";
 import JapanPrefectures from "../JapanPrefectures/JapanPrefectures";
 import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
-import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
-import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
 // import { StoreCreateFormValues } from "../../../../../CompanyTypes/CompanyTypes";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { StoreInfoFormValues } from "../../../../../types/StoreTypes/StoreTypes";
 import { convertToJST } from "../../../../../utils/utils";
 
@@ -25,8 +23,6 @@ function StoreListInfo() {
   const { state } = useLocation();
   const selectedStoreNo = state?.selectedStoreNo;
   console.log(115, selectedStoreNo);
-  const [selectedCompanyNo, setSelectedCompanyNo] = useState<string>("");
-  const [selectedCompanyName, setSelectedCompanyName] = useState<string>("");
   const [formData, setFormData] = useState<StoreInfoFormValues>({
     company_no: "",
     company_name: "",
@@ -95,19 +91,11 @@ function StoreListInfo() {
     // }, [selectedCompanyNo, setValue]);
   }, [selectedStoreNo]);
 
-  const [textValue1, setTextValue1] = useState<string>("");
-  const [textValue2, setTextValue2] = useState<string>("");
-  const [passwordValue, setPasswordValue] = useState("");
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.target.value);
-  };
-  const [selectedOption, setSelectedOption] = useState<string>("");
-
   const {
     register,
-    handleSubmit,
+
     setValue,
-    formState: { isSubmitted, errors, isValid },
+    formState: { isValid },
   } = useForm<StoreInfoFormValues>();
 
   useEffect(() => {
@@ -141,14 +129,9 @@ function StoreListInfo() {
     }
   };
 
-  const [selectedCompany, setSelectedCompany] = useState<any>(null);
-  // const options = JapanPrefectures;
-
   const handleCompanySelect = (company: any) => {
     console.log(147, isValid);
-    setSelectedCompany(company);
-    setSelectedCompanyNo(company.company_no);
-    setSelectedCompanyName(company.company_name);
+
     setFormData((prevData) => ({
       ...prevData,
       company_no: company.company_no,
@@ -159,18 +142,6 @@ function StoreListInfo() {
   };
 
   const [companyData, setCompanyData] = useState<any[]>([]);
-  const [store_note, setNote] = useState<string>("");
-  const [responseMessage, setResponseMessage] = useState<string | null>(null);
-
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   const handleSelectChange = (value: string) => {
     setFormData((prevData) => ({

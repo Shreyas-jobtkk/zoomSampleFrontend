@@ -22,6 +22,9 @@ const App: React.FC = () => {
           <li>
             <Link to="/Sample">サンプル</Link>
           </li>
+          <li>
+            <Link to="/Sample2">サンプル2</Link>
+          </li>
         </ul>
       </nav>
       <div></div>

@@ -31,34 +31,6 @@ function TranslatorLogin() {
   const terminal_id = message.terminal_id;
 
   const [status, setStatus] = useState("inactive"); // State to hold the selected status
-  // const [status, setStatus] = useState(message.status || '') // State to hold the selected status
-
-  // Handler for changing the status
-  const handleChange = async (event: any) => {
-    const newStatus = event.target.value; // Get the new status from the event
-    setStatus(newStatus);
-
-    console.log(467, terminal_id);
-    // const terminal_id = message.terminal_id
-    const personStatus = event.target.value;
-    const data = { terminal_id, personStatus };
-
-    try {
-      // alert(event.target.value)
-      const response = await fetch(`${homePage}/api/terminalActivity`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-      console.log("Success:", result);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   // Send API request when user is active or inactive
   const sendActivityStatus = async (status: any) => {

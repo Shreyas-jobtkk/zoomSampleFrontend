@@ -1,5 +1,4 @@
 // store-api-service.ts
-import axios from "axios";
 import { STORE_ENDPOINT } from "../store-api-definitions"; // Define the correct endpoint here
 import api from "../../../index"; // Assuming you're using a central API file to configure axios
 

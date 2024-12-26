@@ -1,21 +1,16 @@
 import MenuHeader from "../../../../components/LV3/Header/MenuHeader";
 import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState } from "react";
-import { Box, TextField, Typography } from "@mui/material";
-import PasswordInput from "../../../../components/LV1/PasswordInput/PasswordInput";
+import { Box } from "@mui/material";
 import PasswordBoxWithLabel from "../../../../components/LV1/TextBox/PasswordBoxWithLabel";
 import ButtonAtom from "../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import "./AdministratorList.scss";
 
 function AdministratorListEdit() {
   const [textValue1, setTextValue1] = useState<string>("");
-  const [passwordValue, setPasswordValue] = useState("");
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.target.value);
-  };
+
   const searchConditions = () => {};
 
-  const borderStyle = "1px solid #ccc";
   return (
     <Box className="administrator-list-navigate">
       <MenuHeader title="管理者情報" />

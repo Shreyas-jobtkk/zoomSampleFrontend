@@ -1,7 +1,7 @@
 import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
 import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
-import { Box, TextField, Typography, SelectChangeEvent } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import "../StoreStyles/StoreList.scss";
 // import ValidationTextArea from "../../../../components/LV1/ValidationTextArea/ValidationTextArea";
@@ -17,7 +17,7 @@ import ValidationInputField from "../../../../../components/LV1/ValidationInputF
 import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
 // import { StoreCreateFormValues } from "../../../../../CompanyTypes/CompanyTypes";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { StoreInfoFormValues } from "../../../../../types/StoreTypes/StoreTypes";
 import { convertToJST } from "../../../../../utils/utils";
 
@@ -25,8 +25,8 @@ function StoreListInfo() {
   const { state } = useLocation();
   const selectedStoreNo = state?.selectedStoreNo;
   //   console.log(115, selectedStoreNo);
-  const [selectedCompanyNo, setSelectedCompanyNo] = useState<string>("");
-  const [selectedCompanyName, setSelectedCompanyName] = useState<string>("");
+  // const [selectedCompanyNo, setSelectedCompanyNo] = useState<string>("");
+  // const [selectedCompanyName, setSelectedCompanyName] = useState<string>("");
   const [formData, setFormData] = useState<StoreInfoFormValues>({
     company_no: "",
     company_name: "",
@@ -99,19 +99,11 @@ function StoreListInfo() {
     // }, [selectedCompanyNo, setValue]);
   }, [selectedStoreNo]);
 
-  const [textValue1, setTextValue1] = useState<string>("");
-  const [textValue2, setTextValue2] = useState<string>("");
-  const [passwordValue, setPasswordValue] = useState("");
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.target.value);
-  };
-  const [selectedOption, setSelectedOption] = useState<string>("");
-
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { isSubmitted, errors, isValid },
+    formState: { isSubmitted, isValid },
   } = useForm<StoreInfoFormValues>();
 
   useEffect(() => {
@@ -168,18 +160,15 @@ function StoreListInfo() {
     }
   };
 
-  const [selectedCompany, setSelectedCompany] = useState<any>(null);
+  // const [selectedCompany, setSelectedCompany] = useState<any>(null);
   // const options = JapanPrefectures;
 
   const [companyData, setCompanyData] = useState<any[]>([]);
-  const [store_note, setNote] = useState<string>("");
-  const [responseMessage, setResponseMessage] = useState<string | null>(null);
-
   const handleCompanySelect = (company: any) => {
     console.log(147, isValid);
-    setSelectedCompany(company);
-    setSelectedCompanyNo(company.company_no);
-    setSelectedCompanyName(company.company_name);
+    // setSelectedCompany(company);
+    // setSelectedCompanyNo(company.company_no);
+    // setSelectedCompanyName(company.company_name);
     setFormData((prevData) => ({
       ...prevData,
       company_no: company.company_no,
@@ -263,7 +252,7 @@ function StoreListInfo() {
               maxLength={128}
               // error={errors.company_no?.message} // Separate error for "furigana"
               value={formData.company_no}
-              onChange={(e: any) => setSelectedCompanyNo(e.target.value)}
+              // onChange={(e: any) => setSelectedCompanyNo(e.target.value)}
               // // disabled={true}
               type="none"
             />
@@ -278,7 +267,7 @@ function StoreListInfo() {
               maxLength={128}
               // error={errors.company_no?.message} // Separate error for "furigana"
               value={formData.company_name}
-              onChange={(e: any) => setSelectedCompanyName(e.target.value)}
+              // onChange={(e: any) => setSelectedCompanyName(e.target.value)}
               // // disabled={true}
               type="none"
             />

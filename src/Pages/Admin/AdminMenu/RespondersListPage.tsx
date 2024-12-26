@@ -1,28 +1,12 @@
-import DatePicker from "../../../components/LV1/DatePicker/DatePicker";
-import TimePicker from "../../../components/LV1/TimePicker/TimePicker"; // Adjust the import path as needed
 import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
-import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
-import { Height } from "@mui/icons-material";
 import "./AdminMenu.scss";
 
 function RespondersList() {
-  // State for selected start and end times
-  const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
-    dayjs()
-  );
-  const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(dayjs());
-
-  // State for selected start and end dates
-  const [selectedStartDate, setSelectedStartDate] = useState<Dayjs | null>(
-    null
-  );
-  const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(null);
   const headers = [
     "No",
     "登録日時",
@@ -428,72 +412,16 @@ function RespondersList() {
     },
   ];
 
-  const columnWidths = [5, 20, 20, 8, 10, 10, 10, 10, 10, 10];
-  const columnAlignments: ("left" | "center" | "right")[] = ["right"];
-
   const searchConditions = () => {};
 
-  // Handle start date change
-  const handleStartDateChange = (date: Dayjs | null) => {
-    setSelectedStartDate(date);
-    console.log(
-      "Selected Start Date:",
-      date ? date.format("YYYY-MM-DD") : "None"
-    ); // Log the selected start date
-  };
-
-  // Handle end date change
-  const handleEndDateChange = (date: Dayjs | null) => {
-    setSelectedEndDate(date);
-    console.log(
-      "Selected End Date:",
-      date ? date.format("YYYY-MM-DD") : "None"
-    ); // Log the selected end date
-  };
-
-  // Handle start time change
-  const handleStartTimeChange = (newValue: Dayjs | null) => {
-    setSelectedStartTime(newValue);
-    console.log(
-      "Selected Start Time:",
-      newValue ? newValue.format("HH:mm:ss") : "None"
-    ); // Log the selected start time
-  };
-
-  // Handle end time change
-  const handleEndTimeChange = (newValue: Dayjs | null) => {
-    setSelectedEndTime(newValue);
-    console.log(
-      "Selected End Time:",
-      newValue ? newValue.format("HH:mm:ss") : "None"
-    ); // Log the selected end time
-  };
-
-  // Format the full datetime strings for display
-  const formatFullDateTime = (date: Dayjs | null, time: Dayjs | null) => {
-    if (!date || !time) return "None";
-    return `${date.format("YYYY-MM-DD")} ${time.format("HH:mm:ss")}`;
-  };
-
   const [textValue1, setTextValue1] = useState<string>("");
-  const [textValue2, setTextValue2] = useState<string>("");
   const [textValue3, setTextValue3] = useState<string>("");
   const [textValue4, setTextValue4] = useState<string>("");
   const [textValue6, setTextValue6] = useState<string>("");
   const [textValue7, setTextValue7] = useState<string>("");
-  const [textValue8, setTextValue8] = useState<string>("");
   const [textValue9, setTextValue9] = useState<string>("");
   const [textValue5, setTextValue5] = useState<string>("");
   const [textValue10, setTextValue10] = useState<string>("");
-
-  const [selectedOption, setSelectedOption] = useState<string>("");
-
-  const options = [
-    { label: "None", value: "" },
-    { label: "Option 1", value: "option1" },
-    { label: "Option 2", value: "option2" },
-    { label: "Option 3", value: "option3" },
-  ];
 
   const handleSelectionChange = (
     selectedData: Array<{ No: string | number; [key: string]: string | number }>
@@ -501,7 +429,6 @@ function RespondersList() {
     console.log("Selected Data:", selectedData);
   };
 
-  const borderStyle = "1px solid #ccc";
   return (
     <Box className="admin-menu-nav-page">
       <MenuHeader title="応対者一覧" />

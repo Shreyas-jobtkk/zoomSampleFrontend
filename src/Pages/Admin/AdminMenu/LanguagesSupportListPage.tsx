@@ -1,5 +1,4 @@
 import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
-import dayjs, { Dayjs } from "dayjs";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
@@ -13,17 +12,6 @@ import { useState, useEffect } from "react";
 
 function LanguagesSupportList() {
   const navigate = useNavigate();
-  // State for selected start and end times
-  const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
-    dayjs()
-  );
-  const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(dayjs());
-
-  // State for selected start and end dates
-  const [selectedStartDate, setSelectedStartDate] = useState<Dayjs | null>(
-    null
-  );
-  const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(null);
 
   const [selectedData, setSelectedData] = useState<
     Array<{ No: string | number; [key: string]: string | number }>
@@ -102,54 +90,9 @@ function LanguagesSupportList() {
   };
 
   const navigateToLanguageCreate = () => navigate("/LanguagesCreate");
-
-  // Handle start date change
-  const handleStartDateChange = (date: Dayjs | null) => {
-    setSelectedStartDate(date);
-    console.log(
-      "Selected Start Date:",
-      date ? date.format("YYYY-MM-DD") : "None"
-    ); // Log the selected start date
-  };
-
-  // Handle end date change
-  const handleEndDateChange = (date: Dayjs | null) => {
-    setSelectedEndDate(date);
-    console.log(
-      "Selected End Date:",
-      date ? date.format("YYYY-MM-DD") : "None"
-    ); // Log the selected end date
-  };
-
-  // Handle start time change
-  const handleStartTimeChange = (newValue: Dayjs | null) => {
-    setSelectedStartTime(newValue);
-    console.log(
-      "Selected Start Time:",
-      newValue ? newValue.format("HH:mm:ss") : "None"
-    ); // Log the selected start time
-  };
-
-  // Handle end time change
-  const handleEndTimeChange = (newValue: Dayjs | null) => {
-    setSelectedEndTime(newValue);
-    console.log(
-      "Selected End Time:",
-      newValue ? newValue.format("HH:mm:ss") : "None"
-    ); // Log the selected end time
-  };
-
-  // Format the full datetime strings for display
-  const formatFullDateTime = (date: Dayjs | null, time: Dayjs | null) => {
-    if (!date || !time) return "None";
-    return `${date.format("YYYY-MM-DD")} ${time.format("HH:mm:ss")}`;
-  };
-
   const [textValue1, setTextValue1] = useState<string>("");
   const [textValue2, setTextValue2] = useState<string>("");
   const [textValue3, setTextValue3] = useState<string>("");
-  const [textValue4, setTextValue4] = useState<string>("");
-  const [textValue5, setTextValue5] = useState<string>("");
 
   const handleSelectionChange = (
     newSelectedData: Array<{
@@ -164,8 +107,6 @@ function LanguagesSupportList() {
     setSelectedLanguageNoArray(selectedCompanyNo);
     // setSelectedLanguageNoArray(selectedCompanyNo);
   };
-
-  const borderStyle = "1px solid #ccc";
 
   return (
     <Box className="admin-menu-nav-page">

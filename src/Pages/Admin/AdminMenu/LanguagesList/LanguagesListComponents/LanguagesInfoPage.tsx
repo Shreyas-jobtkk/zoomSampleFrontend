@@ -4,12 +4,7 @@ import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import "../LanguagesListStyles/LanguagesList.scss";
-import { useForm } from "react-hook-form";
-import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
-import {
-  LanguageCreateFormValues,
-  LanguageInfo,
-} from "../../../../../types/LanguageTypes/LanguageTypes";
+import { LanguageInfo } from "../../../../../types/LanguageTypes/LanguageTypes";
 import { useLocation } from "react-router-dom";
 import { LanguageApiService } from "../../../../../api/apiService/languages/languages-api-service";
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
@@ -67,29 +62,8 @@ const LanguageSupportInfo = () => {
       [name]: value,
     }));
   };
-  const {
-    // register,
-    handleSubmit,
-    formState: { isSubmitted, errors, isValid },
-  } = useForm<LanguageCreateFormValues>();
+
   const searchConditions = () => {};
-  const saveLanguageInfo = async (data: LanguageCreateFormValues) => {
-    if (!isValid) {
-      return;
-    }
-    console.log("Form Data Submitted:", data);
-    try {
-      LanguageApiService.createLanguage(
-        formData.language_name,
-        formData.language_name_furigana,
-        formData.language_note
-      );
-      alert("saved");
-    } catch (error) {
-      alert("error");
-      console.error("Error saving company:", error);
-    }
-  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;

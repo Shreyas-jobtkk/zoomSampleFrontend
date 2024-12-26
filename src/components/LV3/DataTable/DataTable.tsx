@@ -7,16 +7,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-  TablePagination,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
   Checkbox,
   Box,
-  TextField,
   IconButton,
-  Button,
 } from "@mui/material";
 import {
   FirstPage,
@@ -55,7 +48,7 @@ const DataTable: React.FC<DataTableProps> = ({
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
   const [selected, setSelected] = useState<Array<string | number>>([]);
-  const [allSelected, setAllSelected] = useState(false);
+  // const [allSelected, setAllSelected] = useState(false);
   const [columnWidths, setColumnWidths] = useState<number[]>(
     new Array(headers.length).fill(150)
   );
@@ -71,12 +64,6 @@ const DataTable: React.FC<DataTableProps> = ({
       onSelectionChange(selectedData);
     }
   }, [selected]); // Dependency on selected, onSelectionChange, and data
-
-  // useEffect(() => {
-  //   console.log(144, "data changed");
-  //   setSelected([]);
-  //   setAllSelected(false);
-  // }, [data]);
 
   const handlePageInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -94,10 +81,10 @@ const DataTable: React.FC<DataTableProps> = ({
     if (event.target.checked) {
       const newSelected = data.map((row) => row.No);
       setSelected(newSelected);
-      setAllSelected(true);
+      // setAllSelected(true);
     } else {
       setSelected([]);
-      setAllSelected(false);
+      // setAllSelected(false);
     }
   };
 

@@ -5,20 +5,17 @@ import LoginButton from "../../components/LV1/Button/LoginButton/LoginButton";
 import LoginHeader from "../../Header/LoginHeader";
 import TextBoxWithLabel from "../../components/LV1/TextBox/TextBoxWithLabel";
 import PasswordBoxWithLabel from "../../components/LV1/TextBox/PasswordBoxWithLabel";
-import TextWithBorder from "../../components/LV1/TextWithBorder/TextWithBorder";
-import TextInput from "../../components/LV1/TextInput/TextInput";
-import PasswordInput from "../../components/LV1/PasswordInput/PasswordInput";
 import { Box } from "@mui/material";
 
 const AdminLogin: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
 
-  const [passwordValue, setPasswordValue] = useState("");
+  // const [passwordValue, setPasswordValue] = useState("");
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordValue(e.target.value);
-  };
+  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPasswordValue(e.target.value);
+  // };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);

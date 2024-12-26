@@ -32,7 +32,7 @@ const LanguageCreate = () => {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitted, errors, isValid },
+    formState: { isSubmitted, isValid },
   } = useForm<LanguageCreateFormValues>();
   const searchConditions = () => {};
   const saveLanguageInfo = async (data: LanguageCreateFormValues) => {
