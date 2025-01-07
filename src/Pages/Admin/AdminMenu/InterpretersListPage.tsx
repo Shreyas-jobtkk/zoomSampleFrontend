@@ -1,5 +1,5 @@
 import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
@@ -7,14 +7,12 @@ import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
 import "./AdminMenu.scss";
 import { useNavigate } from "react-router-dom";
+import { UserApiService } from "../../../api/apiService/user/user-api-service";
+import { UserInfo } from "../../../types/UserTypes/UserTypes";
+import { convertToJST, deleteStatus } from "../../../utils/utils";
 
 function InterpretersList() {
   const navigate = useNavigate();
-  // State for selected start and end times
-  // const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
-  //   dayjs()
-  // );
-  // const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(dayjs());
   const [selectedOption, setSelectedOption] = useState<string>("");
   const options = [
     { label: "None", value: "" },
@@ -22,188 +20,55 @@ function InterpretersList() {
     { label: "Option 2", value: "option2" },
     { label: "Option 3", value: "option3" },
   ];
-  // State for selected start and end dates
-  // const [selectedStartDate, setSelectedStartDate] = useState<Dayjs | null>(
-  //   null
-  // );
-  // const [selectedEndDate, setSelectedEndDate] = useState<Dayjs | null>(null);
+
+  const [selectedInterpreterNoArray, setSelectedInterpreterNoArray] = useState<
+    any[]
+  >([]);
+
+  const [tableData, setTableData] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchUsersListData();
+  }, []);
+
+  const fetchUsersListData = async () => {
+    try {
+      const response = await UserApiService.fetchUsersAll();
+      console.log(144, response);
+      // const response = await axios.get(`${homePage}/company`);
+      const sortedData = response
+        .sort(
+          (a: UserInfo, b: UserInfo) => Number(a.user_no) - Number(b.user_no)
+        )
+        .map((item: UserInfo, index: number) => ({
+          No: index + 1,
+          登録日時: convertToJST(item.created_at),
+          更新日時: convertToJST(item.updated_at),
+          企業No: item.company_no,
+          企業名: item.company_name,
+          店舗No: item.store_no,
+          店舗名: item.store_name,
+          通訳者No: item.user_no,
+          名前: `${item.user_name_last} ${item.user_name_first}`,
+          削除: deleteStatus(item.user_deleted),
+        }));
+      console.log(141, sortedData);
+      setTableData(sortedData);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
+    }
+  };
   const headers = [
     "No",
     "登録日時",
     "更新日時",
+    "企業No",
+    "企業名",
+    "店舗No",
+    "店舗名",
     "通訳者No",
     "名前",
-    "フリガナ",
-  ];
-  const data = [
-    {
-      No: 1,
-      登録日時: "2024-11-01 09:00",
-      更新日時: "2024-11-01 10:00",
-      通訳者No: "1001",
-      名前: "佐藤　一郎",
-      フリガナ: "サトウ　イチロウ",
-    },
-    {
-      No: 2,
-      登録日時: "2024-11-01 09:15",
-      更新日時: "2024-11-01 10:15",
-      通訳者No: "1002",
-      名前: "田中　次郎",
-      フリガナ: "タナカ　ジロウ",
-    },
-    {
-      No: 3,
-      登録日時: "2024-11-01 09:30",
-      更新日時: "2024-11-01 10:30",
-      通訳者No: "1003",
-      名前: "鈴木　三郎",
-      フリガナ: "スズキ　サブロウ",
-    },
-    {
-      No: 4,
-      登録日時: "2024-11-01 09:45",
-      更新日時: "2024-11-01 10:45",
-      通訳者No: "1004",
-      名前: "高橋　四郎",
-      フリガナ: "タカハシ　シロウ",
-    },
-    {
-      No: 5,
-      登録日時: "2024-11-01 10:00",
-      更新日時: "2024-11-01 11:00",
-      通訳者No: "1005",
-      名前: "伊藤　五郎",
-      フリガナ: "イトウ　ゴロウ",
-    },
-    {
-      No: 6,
-      登録日時: "2024-11-01 10:15",
-      更新日時: "2024-11-01 11:15",
-      通訳者No: "1006",
-      名前: "渡辺　六郎",
-      フリガナ: "ワタナベ　ロクロウ",
-    },
-    {
-      No: 7,
-      登録日時: "2024-11-01 10:30",
-      更新日時: "2024-11-01 11:30",
-      通訳者No: "1007",
-      名前: "山本　七郎",
-      フリガナ: "ヤマモト　シチロウ",
-    },
-    {
-      No: 8,
-      登録日時: "2024-11-01 10:45",
-      更新日時: "2024-11-01 11:45",
-      通訳者No: "1008",
-      名前: "中村　八郎",
-      フリガナ: "ナカムラ　ハチロウ",
-    },
-    {
-      No: 9,
-      登録日時: "2024-11-01 11:00",
-      更新日時: "2024-11-01 12:00",
-      通訳者No: "1009",
-      名前: "小林　九郎",
-      フリガナ: "コバヤシ　クロウ",
-    },
-    {
-      No: 10,
-      登録日時: "2024-11-01 11:15",
-      更新日時: "2024-11-01 12:15",
-      通訳者No: "1010",
-      名前: "加藤　十郎",
-      フリガナ: "カトウ　ジュウロウ",
-    },
-    {
-      No: 11,
-      登録日時: "2024-11-01 11:30",
-      更新日時: "2024-11-01 12:30",
-      通訳者No: "1011",
-      名前: "佐々木　十一",
-      フリガナ: "ササキ　ジュウイチ",
-    },
-    {
-      No: 12,
-      登録日時: "2024-11-01 11:45",
-      更新日時: "2024-11-01 12:45",
-      通訳者No: "1012",
-      名前: "松本　十二",
-      フリガナ: "マツモト　ジュウニ",
-    },
-    {
-      No: 13,
-      登録日時: "2024-11-01 12:00",
-      更新日時: "2024-11-01 13:00",
-      通訳者No: "1013",
-      名前: "井上　十三",
-      フリガナ: "イノウエ　ジュウサン",
-    },
-    {
-      No: 14,
-      登録日時: "2024-11-01 12:15",
-      更新日時: "2024-11-01 13:15",
-      通訳者No: "1014",
-      名前: "木村　十四",
-      フリガナ: "キムラ　ジュウヨン",
-    },
-    {
-      No: 15,
-      登録日時: "2024-11-01 12:30",
-      更新日時: "2024-11-01 13:30",
-      通訳者No: "1015",
-      名前: "林　十五",
-      フリガナ: "ハヤシ　ジュウゴ",
-    },
-    {
-      No: 16,
-      登録日時: "2024-11-01 12:45",
-      更新日時: "2024-11-01 13:45",
-      通訳者No: "1016",
-      名前: "福田　十六",
-      フリガナ: "フクダ　ジュウロク",
-    },
-    {
-      No: 17,
-      登録日時: "2024-11-01 13:00",
-      更新日時: "2024-11-01 14:00",
-      通訳者No: "1017",
-      名前: "岡田　十七",
-      フリガナ: "オカダ　ジュウシチ",
-    },
-    {
-      No: 18,
-      登録日時: "2024-11-01 13:15",
-      更新日時: "2024-11-01 14:15",
-      通訳者No: "1018",
-      名前: "西村　十八",
-      フリガナ: "ニシムラ　ジュウハチ",
-    },
-    {
-      No: 19,
-      登録日時: "2024-11-01 13:30",
-      更新日時: "2024-11-01 14:30",
-      通訳者No: "1019",
-      名前: "中島　十九",
-      フリガナ: "ナカジマ　ジュウキュウ",
-    },
-    {
-      No: 20,
-      登録日時: "2024-11-01 13:45",
-      更新日時: "2024-11-01 14:45",
-      通訳者No: "1020",
-      名前: "長田　二十",
-      フリガナ: "オサダ　ニジュウ",
-    },
-    {
-      No: 21,
-      登録日時: "2024-11-01 14:00",
-      更新日時: "2024-11-01 15:00",
-      通訳者No: "1021",
-      名前: "吉田　二十一",
-      フリガナ: "ヨシダ　ニジュウイチ",
-    },
+    "削除",
   ];
 
   const searchConditions = () => {};
@@ -225,17 +90,41 @@ function InterpretersList() {
 
     // Log the selected data to the console
     console.log("Selected Data:", newSelectedData);
+
+    const selectedInterpreterNo = newSelectedData.map(
+      (item) => item["通訳者No"]
+    );
+    setSelectedInterpreterNoArray(selectedInterpreterNo);
   };
 
   const navigateToInfoPage = () => {
-    navigate("/InterpretersListInfo");
+    navigate("/InterpretersListInfo", {
+      state: { selectedInterpreterNo: selectedInterpreterNoArray[0] },
+    });
   };
 
   const navigateToInterpreterCreate = () => {
     navigate("/InterpretersListCreate");
   };
   const navigateToEditPage = () => {
-    navigate("/InterpretersListInfo");
+    navigate("/InterpretersListUpdate", {
+      state: { selectedInterpreterNo: selectedInterpreterNoArray[0] },
+    });
+  };
+
+  const handleDeleteInterpreters = async () => {
+    console.log(114, selectedInterpreterNoArray);
+    try {
+      await UserApiService.deleteUsers(selectedInterpreterNoArray);
+      // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred while deleting the company.");
+      }
+    }
+    // await fetchCompaniesListData();
   };
 
   const [selectedData, setSelectedData] = useState<
@@ -315,7 +204,7 @@ function InterpretersList() {
             /> */}
       <DataTable // Customize header height
         headers={headers}
-        data={data}
+        data={tableData}
         maxHeight="calc(87vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
@@ -332,7 +221,7 @@ function InterpretersList() {
         label="編集"
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={handleDeleteInterpreters}
         disabled={selectedData.length <= 0}
         label="削除"
       />

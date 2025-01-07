@@ -24,9 +24,6 @@ import { convertToJST } from "../../../../../utils/utils";
 function StoreListInfo() {
   const { state } = useLocation();
   const selectedStoreNo = state?.selectedStoreNo;
-  //   console.log(115, selectedStoreNo);
-  // const [selectedCompanyNo, setSelectedCompanyNo] = useState<string>("");
-  // const [selectedCompanyName, setSelectedCompanyName] = useState<string>("");
   const [formData, setFormData] = useState<StoreInfoFormValues>({
     company_no: "",
     company_name: "",
@@ -52,52 +49,51 @@ function StoreListInfo() {
   });
 
   useEffect(() => {
-    const fetchStore = async () => {
-      if (!selectedStoreNo) return;
-      console.log(148, selectedStoreNo);
-      try {
-        const storeDetails = await StoreApiService.fetchStore(selectedStoreNo);
-        // console.log(148, storeDetails);
-
-        const [zip1, zip2] = storeDetails.zip.split("-");
-        const [tel1, tel2, tel3] = storeDetails.tel.split("-");
-        const [fax1, fax2, fax3] = storeDetails.fax.split("-");
-        // Update the formData state with the values
-        setFormData({
-          company_no: storeDetails.company_no,
-          company_name: storeDetails.company_name,
-          store_name: storeDetails.store_name,
-          store_no: storeDetails.store_no,
-          store_name_furigana: storeDetails.store_name_furigana,
-          zip1,
-          zip2,
-          pref: storeDetails.pref,
-          city: storeDetails.city,
-          street: storeDetails.street,
-          building_name: storeDetails.building_name,
-          tel1,
-          tel2,
-          tel3,
-          fax1,
-          fax2,
-          fax3,
-          store_note: storeDetails.store_note,
-          updated_at: storeDetails.updated_at,
-          created_at: storeDetails.created_at,
-          store_delete: storeDetails.store_delete,
-        });
-        setValue("company_no", storeDetails.company_no);
-        setValue("company_name", storeDetails.company_name);
-        setValue("store_name", storeDetails.store_name);
-        setValue("store_name_furigana", storeDetails.store_name_furigana);
-      } catch (error) {
-        console.error("Error fetching company:", error);
-      }
-    };
-
     fetchStore();
-    // }, [selectedCompanyNo, setValue]);
   }, [selectedStoreNo]);
+
+  const fetchStore = async () => {
+    if (!selectedStoreNo) return;
+    console.log(148, selectedStoreNo);
+    try {
+      const storeDetails = await StoreApiService.fetchStore(selectedStoreNo);
+      const [zip1, zip2] = storeDetails.zip.split("-");
+      const [tel1, tel2, tel3] = storeDetails.tel.split("-");
+      const [fax1, fax2, fax3] = storeDetails.fax.split("-");
+
+      // Update the formData state with the values
+      setFormData({
+        company_no: storeDetails.company_no,
+        company_name: storeDetails.company_name,
+        store_name: storeDetails.store_name,
+        store_no: storeDetails.store_no,
+        store_name_furigana: storeDetails.store_name_furigana,
+        zip1,
+        zip2,
+        pref: storeDetails.pref,
+        city: storeDetails.city,
+        street: storeDetails.street,
+        building_name: storeDetails.building_name,
+        tel1,
+        tel2,
+        tel3,
+        fax1,
+        fax2,
+        fax3,
+        store_note: storeDetails.store_note,
+        updated_at: storeDetails.updated_at,
+        created_at: storeDetails.created_at,
+        store_delete: storeDetails.store_delete,
+      });
+
+      setValue("company_no", storeDetails.company_no);
+      setValue("company_name", storeDetails.company_name);
+      setValue("store_name", storeDetails.store_name);
+      setValue("store_name_furigana", storeDetails.store_name_furigana);
+    } catch (error) {
+      console.error("Error fetching company:", error);
+    }
+  };
 
   const {
     register,
@@ -160,22 +156,15 @@ function StoreListInfo() {
     }
   };
 
-  // const [selectedCompany, setSelectedCompany] = useState<any>(null);
-  // const options = JapanPrefectures;
-
   const [companyData, setCompanyData] = useState<any[]>([]);
   const handleCompanySelect = (company: any) => {
     console.log(147, isValid);
-    // setSelectedCompany(company);
-    // setSelectedCompanyNo(company.company_no);
-    // setSelectedCompanyName(company.company_name);
+
     setFormData((prevData) => ({
       ...prevData,
       company_no: company.company_no,
       company_name: company.company_name,
     }));
-    // setValue("company_no", company.company_no);
-    // setValue("company_name", company.company_name);
   };
 
   const handleChange = (

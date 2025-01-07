@@ -12,6 +12,7 @@ interface PasswordBoxWithLabelProps {
   height?: string;
   fontSize?: string;
   labelWidth?: string;
+  disabled?: boolean;
   [key: string]: any;
 }
 
@@ -21,6 +22,7 @@ const PasswordBoxWithLabel: React.FC<PasswordBoxWithLabelProps> = ({
   height = "30px",
   fontSize,
   labelWidth = "85px",
+  disabled = false,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -60,12 +62,17 @@ const PasswordBoxWithLabel: React.FC<PasswordBoxWithLabelProps> = ({
             height: "100%",
           },
         }}
+        disabled={disabled}
         {...props}
         slotProps={{
           input: {
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={togglePasswordVisibility} edge="end">
+                <IconButton
+                  onClick={togglePasswordVisibility}
+                  edge="end"
+                  sx={{ padding: 0 }}
+                >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>

@@ -32,13 +32,10 @@ const LanguageCreate = () => {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitted, isValid },
+    formState: { isSubmitted },
   } = useForm<LanguageCreateFormValues>();
   const searchConditions = () => {};
   const saveLanguageInfo = async (data: LanguageCreateFormValues) => {
-    if (!isValid) {
-      return;
-    }
     console.log("Form Data Submitted:", data);
     try {
       LanguageApiService.createLanguage(
@@ -71,42 +68,31 @@ const LanguageCreate = () => {
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
-              width="30vw" // Uncomment to set a custom width
-              // value={deleteFlag}
-              // onChange={(e: any) => setDeleteFlag(e.target.value)}
+              width="30vw"
             />
           </Box>
           <Box className="delete-flag">
             <TextBoxWithLabel
               labelWidth="100px"
               label="削除フラグ"
-              width="10vw" // Uncomment to set a custom width
-              // value={deleteFlag}
-              // onChange={(e: any) => setDeleteFlag(e.target.value)}
+              width="10vw"
             />
           </Box>
         </Box>
         <Box className="basic-info">
           <Box className="description-label">基本情報</Box>
-          <TextBoxWithLabel
-            labelWidth="125px"
-            label="言語No"
-            width="30vw"
-            // onChange={(e: any) => setDeleteFlag(e.target.value)}
-          />
+          <TextBoxWithLabel labelWidth="125px" label="言語No" width="30vw" />
           <Box className="name-row">
             <Box>
               <ValidationInputField
                 isSubmitted={isSubmitted}
                 label="和訳"
-                name="language_name" // This name is for the language name
+                name="language_name"
                 labelWidth="125px"
                 width="30vw"
                 maxLength={64}
                 register={register}
-                // error={errors.language_name?.message} // Separate error for "name"
                 value={formData.language_name}
-                // required={true}
                 onChange={handleChange}
               />
 
@@ -118,9 +104,6 @@ const LanguageCreate = () => {
                 width="30vw"
                 register={register}
                 maxLength={128}
-                // required={false}
-                // error={errors.language_name_furigana?.message} // Separate error for "furigana"
-                // required={true}
                 value={formData.language_name_furigana}
                 onChange={handleChange}
               />

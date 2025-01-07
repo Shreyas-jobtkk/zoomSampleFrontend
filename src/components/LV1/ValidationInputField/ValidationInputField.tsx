@@ -49,12 +49,22 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
         // Ensure value is a string before applying trim
         return String(value).trim() !== "";
       },
+      isValidEmail: (value: any) => {
+        if (type === "email") {
+          // Email validation regex
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          return emailRegex.test(value) || "Invalid email address";
+        }
+        return true;
+      },
     },
   };
 
   const isError =
     isSubmitted &&
-    (!value || (typeof value === "string" && value.trim().length === 0));
+    (!value ||
+      (typeof value === "string" && value.trim().length === 0) ||
+      (type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)));
 
   return (
     <Box
@@ -80,7 +90,7 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
       {/* Input Field */}
       <TextField
         variant="outlined"
-        type={type === "password" && !showPassword ? "password" : "text"}
+        type={type === "password" && !showPassword ? "password" : "type"}
         {...register(name, rules)}
         fullWidth
         // required={true}

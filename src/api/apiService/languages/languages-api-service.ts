@@ -5,6 +5,7 @@ import { updateLanguage } from "../languages/actions/languages-update";
 import { deleteLanguages } from "../languages/actions/languages-delete";
 import { fetchLanguagesAll } from "../languages/actions/languages-fetch-all";
 import { fetchLanguageNames } from "../languages/actions/language-fetch-all-name-details";
+import { fetchLanguagesById } from "../languages/actions/languages-fetch-by-id";
 
 export const LanguageApiService = {
   fetchLanguage,
@@ -13,4 +14,5 @@ export const LanguageApiService = {
   deleteLanguages,
   fetchLanguagesAll,
   fetchLanguageNames,
+  fetchLanguagesById,
 };

@@ -48,52 +48,51 @@ function StoreListInfo() {
   });
 
   useEffect(() => {
-    const fetchStore = async () => {
-      if (!selectedStoreNo) return;
-      console.log(148, selectedStoreNo);
-      try {
-        const storeDetails = await StoreApiService.fetchStore(selectedStoreNo);
-        console.log(147, storeDetails);
-
-        const [zip1, zip2] = storeDetails.zip.split("-");
-        const [tel1, tel2, tel3] = storeDetails.tel.split("-");
-        const [fax1, fax2, fax3] = storeDetails.fax.split("-");
-        // Update the formData state with the values
-        setFormData({
-          company_no: storeDetails.company_no,
-          company_name: storeDetails.company_name,
-          store_name: storeDetails.store_name,
-          store_no: storeDetails.store_no,
-          store_name_furigana: storeDetails.store_name_furigana,
-          zip1,
-          zip2,
-          pref: storeDetails.pref,
-          city: storeDetails.city,
-          street: storeDetails.street,
-          building_name: storeDetails.building_name,
-          tel1,
-          tel2,
-          tel3,
-          fax1,
-          fax2,
-          fax3,
-          store_note: storeDetails.store_note,
-          updated_at: storeDetails.updated_at,
-          created_at: storeDetails.created_at,
-          store_delete: storeDetails.store_delete,
-        });
-      } catch (error) {
-        console.error("Error fetching company:", error);
-      }
-    };
-
     fetchStore();
-    // }, [selectedCompanyNo, setValue]);
   }, [selectedStoreNo]);
+
+  const fetchStore = async () => {
+    if (!selectedStoreNo) return;
+    console.log(148, selectedStoreNo);
+    try {
+      const storeDetails = await StoreApiService.fetchStore(selectedStoreNo);
+      console.log(147, storeDetails);
+
+      const [zip1, zip2] = storeDetails.zip.split("-");
+      const [tel1, tel2, tel3] = storeDetails.tel.split("-");
+      const [fax1, fax2, fax3] = storeDetails.fax.split("-");
+
+      // Update the formData state with the values
+      setFormData({
+        company_no: storeDetails.company_no,
+        company_name: storeDetails.company_name,
+        store_name: storeDetails.store_name,
+        store_no: storeDetails.store_no,
+        store_name_furigana: storeDetails.store_name_furigana,
+        zip1,
+        zip2,
+        pref: storeDetails.pref,
+        city: storeDetails.city,
+        street: storeDetails.street,
+        building_name: storeDetails.building_name,
+        tel1,
+        tel2,
+        tel3,
+        fax1,
+        fax2,
+        fax3,
+        store_note: storeDetails.store_note,
+        updated_at: storeDetails.updated_at,
+        created_at: storeDetails.created_at,
+        store_delete: storeDetails.store_delete,
+      });
+    } catch (error) {
+      console.error("Error fetching company:", error);
+    }
+  };
 
   const {
     register,
-
     setValue,
     formState: { isValid },
   } = useForm<StoreInfoFormValues>();
@@ -120,7 +119,6 @@ function StoreListInfo() {
       );
 
       console.log(111, filteredData);
-
       setCompanyData(filteredData);
 
       // const response = await axios.get(`${homePage}/company`);

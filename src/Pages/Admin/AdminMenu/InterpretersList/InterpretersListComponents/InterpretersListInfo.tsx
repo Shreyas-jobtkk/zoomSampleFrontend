@@ -1,72 +1,209 @@
 import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
 import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import PasswordBoxWithLabel from "../../../../../components/LV1/TextBox/PasswordBoxWithLabel";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import "../InterpretersListStyles/InterpretersList.scss";
+import { useLocation } from "react-router-dom";
+import MultipleOptionsSelect from "../../../../../components/LV1/SelectOption/MultipleOptionsSelect";
 import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
+import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
+import { UserInfo } from "../../../../../types/UserTypes/UserTypes";
+import { convertToJST, deleteStatus } from "../../../../../utils/utils";
+import { LanguageApiService } from "../../../../../api/apiService/languages/languages-api-service";
 
 function InterpretersListInfo() {
   const [textValue1, setTextValue1] = useState<string>("");
+  const [options, setOptions] = useState<any>([]);
+  const [optionValue, setOptionValue] = useState<any>([]);
+
+  const { state } = useLocation();
+  const selectedInterpreterNo = state?.selectedInterpreterNo;
+
+  console.log(1557, selectedInterpreterNo);
+
+  const [formData, setFormData] = useState<UserInfo>({
+    user_no: "",
+    company_no: "",
+    company_name: "",
+    store_no: "",
+    store_name: "",
+    user_name_last: "",
+    user_name_last_furigana: "",
+    user_name_first: "",
+    user_name_first_furigana: "",
+    mail_address: "",
+    tel1: "",
+    tel2: "",
+    tel3: "",
+    tel_extension: "",
+    translate_languages: [],
+    password_expire: "",
+    user_password: "",
+    user_password_confirm: "",
+    meeting_id: "",
+    meeting_passcode: "",
+    user_note: "",
+    updated_at: "",
+    created_at: "",
+    user_deleted: false,
+  });
+
+  // Handler for when the selection changes
+  // const handleSelect = (values: string[]) => {
+  //   // setOptionValue(values);
+  //   console.log("Selected values:", values);
+  // };
 
   const searchConditions = () => {};
 
   const handleChange = () => {};
 
+  // const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+
+  const handleLanguageChange = (newSelectedValues: string[]) => {
+    console.log(156, newSelectedValues);
+    // setSelectedLanguages(newSelectedValues); // Update state dynamically
+  };
+
+  useEffect(() => {
+    fetchUserDetails();
+  }, [selectedInterpreterNo]);
+
+  useEffect(() => {
+    if (formData.translate_languages.length > 0) {
+      fetchLanguagesById();
+    }
+    // console.log(167, value);
+  }, [formData.translate_languages]);
+
+  const fetchUserDetails = async () => {
+    if (!selectedInterpreterNo) return; // Early return if no selectedCompanyNo
+    try {
+      const userDetails = await UserApiService.fetchUser(selectedInterpreterNo);
+      const [tel1, tel2, tel3] = userDetails.tel.split("-");
+
+      console.log(166, userDetails);
+
+      setFormData({
+        user_no: userDetails.user_no,
+        company_no: userDetails.company_no,
+        company_name: userDetails.company_name,
+        store_no: userDetails.store_no,
+        store_name: userDetails.store_name,
+        user_name_last: userDetails.user_name_last,
+        user_name_last_furigana: userDetails.user_name_last_furigana,
+        user_name_first: userDetails.user_name_first,
+        user_name_first_furigana: userDetails.user_name_first_furigana,
+        mail_address: userDetails.mail_address,
+        tel1: tel1,
+        tel2: tel2,
+        tel3: tel3,
+        tel_extension: userDetails.tel_extension,
+        translate_languages: userDetails.translate_languages,
+        password_expire: userDetails.password_expire,
+        user_password: userDetails.user_password,
+        user_password_confirm: userDetails.user_password,
+        meeting_id: userDetails.meeting_id,
+        meeting_passcode: userDetails.meeting_passcode,
+        user_note: userDetails.user_note,
+        updated_at: userDetails.updated_at,
+        created_at: userDetails.created_at,
+        user_deleted: userDetails.user_deleted,
+      });
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+  };
+
+  const fetchLanguagesById = async () => {
+    console.log(289, formData);
+
+    const languageDetails = await LanguageApiService.fetchLanguagesById(
+      formData.translate_languages
+    );
+    console.log(189, languageDetails);
+    const transformedOptions = languageDetails.map((language: any) => ({
+      value: language.languages_support_no,
+      label: language.language_name_furigana,
+    }));
+
+    console.log(transformedOptions);
+    console.log(997, typeof formData.translate_languages);
+    console.log(998, formData.translate_languages);
+
+    setOptionValue(formData.translate_languages);
+
+    // Now you can set the options like this:
+    setOptions(transformedOptions);
+  };
+
   return (
     <Box className="interpreters-list-navigate">
-      <MenuHeader title="管理者情報" />
+      <MenuHeader title="通訳者情報" />
       <Box className="interpreters-list-navigate-content">
-        <Box className="time-details">
-          <TextBoxWithLabel
-            labelWidth="125px"
-            label="登録日時"
-            width="30vw"
-            value={textValue1}
-            onChange={(e: any) => setTextValue1(e.target.value)}
-          />
-          <TextBoxWithLabel
-            labelWidth="125px"
-            label="更新日時"
-            width="30vw"
-            value={textValue1}
-            onChange={(e: any) => setTextValue1(e.target.value)}
-          />
+        <Box className="time-details-delete-flag">
+          <Box className="time-details">
+            <TextBoxWithLabel
+              labelWidth="125px"
+              label="登録日時"
+              width="30vw"
+              value={convertToJST(formData.created_at ?? "")}
+              onChange={(e: any) => setTextValue1(e.target.value)}
+            />
+            <TextBoxWithLabel
+              labelWidth="125px"
+              label="更新日時"
+              width="30vw"
+              value={convertToJST(formData.updated_at ?? "")}
+              onChange={(e: any) => setTextValue1(e.target.value)}
+            />
+          </Box>
+          <Box className="delete-flag">
+            <TextBoxWithLabel
+              labelWidth="100px"
+              label="削除フラグ"
+              width="10vw" // Uncomment to set a custom width
+              value={deleteStatus(formData.user_deleted ?? false)}
+            />
+          </Box>
         </Box>
         <Box className="company-store-info">
           <Box className="company-info">
             <Box className="description-label">企業情報</Box>
+            <ButtonAtom label="企業検索" disabled={true} />
             <TextBoxWithLabel
               labelWidth="125px"
               label="企業No"
               width="30vw"
-              value={textValue1}
+              value={formData.company_no}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="企業名"
               width="30vw"
-              value={textValue1}
+              value={formData.company_name}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
           <Box className="store-info">
             <Box className="description-label">店舗情報</Box>
+            <ButtonAtom label="店舗検索" disabled={true} />
             <TextBoxWithLabel
               labelWidth="125px"
               label="店舗No"
               width="30vw"
-              value={textValue1}
+              value={formData.store_no}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="店舗名"
               width="30vw"
-              value={textValue1}
+              value={formData.store_name}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
@@ -77,7 +214,7 @@ function InterpretersListInfo() {
             labelWidth="125px"
             label="No"
             width="30vw"
-            value={textValue1}
+            value={formData.user_no}
             onChange={(e: any) => setTextValue1(e.target.value)}
           />
           <Box className="name-row">
@@ -86,14 +223,14 @@ function InterpretersListInfo() {
                 labelWidth="125px"
                 label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 width="30vw"
-                value={textValue1}
+                value={formData.user_name_last_furigana}
                 onChange={(e: any) => setTextValue1(e.target.value)}
               />
               <TextBoxWithLabel
                 labelWidth="125px"
                 label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                 width="30vw"
-                value={textValue1}
+                value={formData.user_name_last}
                 onChange={(e: any) => setTextValue1(e.target.value)}
               />
             </Box>
@@ -102,14 +239,14 @@ function InterpretersListInfo() {
                 labelWidth="125px"
                 label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メイ"
                 width="30vw"
-                value={textValue1}
+                value={formData.user_name_first_furigana}
                 onChange={(e: any) => setTextValue1(e.target.value)}
               />
               <TextBoxWithLabel
                 labelWidth="125px"
                 label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名"
                 width="30vw"
-                value={textValue1}
+                value={formData.user_name_first}
                 onChange={(e: any) => setTextValue1(e.target.value)}
               />
             </Box>
@@ -120,7 +257,7 @@ function InterpretersListInfo() {
                 labelWidth="125px"
                 label="メールアドレス"
                 width="30vw"
-                value={textValue1}
+                value={formData.mail_address}
                 onChange={(e: any) => setTextValue1(e.target.value)}
               />
             </Box>
@@ -131,24 +268,27 @@ function InterpretersListInfo() {
                 </Typography>
 
                 <NumberInput
+                  disabled={true}
                   onChange={handleChange}
-                  value={""}
+                  value={formData.tel1}
                   name="tel1"
                   maxLength={4}
                   margin="0 8px"
                 />
                 <Typography component="span">-</Typography>
                 <NumberInput
+                  disabled={true}
                   onChange={handleChange}
-                  value={""}
+                  value={formData.tel2}
                   name="tel2"
                   maxLength={4}
                   margin="0 8px"
                 />
                 <Typography component="span">-</Typography>
                 <NumberInput
+                  disabled={true}
                   onChange={handleChange}
-                  value={""}
+                  value={formData.tel3}
                   name="tel3"
                   maxLength={4}
                   margin="0 8px"
@@ -160,8 +300,9 @@ function InterpretersListInfo() {
                 </Typography>
 
                 <NumberInput
+                  disabled={true}
                   onChange={handleChange}
-                  value={""}
+                  value={formData.tel_extension}
                   name="tel1"
                   maxLength={4}
                   margin="0 8px"
@@ -169,6 +310,12 @@ function InterpretersListInfo() {
               </Box>
             </Box>
           </Box>
+          <MultipleOptionsSelect
+            label="通訳言語"
+            options={options}
+            value={optionValue} // Pass dynamic value
+            disabled={true}
+          />
         </Box>
         <Box className="password-meeting-info">
           <Box className="password-info">
@@ -177,7 +324,7 @@ function InterpretersListInfo() {
               labelWidth="125px"
               label="有効期限"
               width="15vw"
-              value={textValue1}
+              value={convertToJST(formData.password_expire ?? "")}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <Box className="password-input">
@@ -185,11 +332,15 @@ function InterpretersListInfo() {
                 label="パスワード"
                 width="15vw"
                 labelWidth="125px"
+                value={formData.user_password}
+                disabled={true}
               />
               <PasswordBoxWithLabel
                 label="（再入力）"
                 width="15vw"
                 labelWidth="125px"
+                value={formData.user_password_confirm}
+                disabled={true}
               />
               {/* <ButtonAtom
               onClick={searchConditions}
@@ -204,20 +355,20 @@ function InterpretersListInfo() {
                 labelWidth="125px"
                 label="ミーティングID"
                 width="15vw"
-                value={textValue1}
+                value={formData.meeting_id}
                 onChange={(e: any) => setTextValue1(e.target.value)}
               />
               <TextBoxWithLabel
                 labelWidth="125px"
                 label="パスコード"
                 width="15vw"
-                value={textValue1}
+                value={formData.meeting_passcode}
                 onChange={(e: any) => setTextValue1(e.target.value)}
               />
             </Box>
             <TextAreaWithLabel
               label="備考"
-              value={""}
+              value={formData.user_note}
               margin="2vh 1vw 0 1vw"
               disabled={true}
             />

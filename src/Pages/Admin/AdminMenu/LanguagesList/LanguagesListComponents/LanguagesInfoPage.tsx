@@ -24,30 +24,29 @@ const LanguageSupportInfo = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const { state } = useLocation();
-
   const selectedLanguageNo = state?.selectedLanguageNo;
 
-  useEffect(() => {
-    const fetchCompany = async () => {
-      if (!selectedLanguageNo) return; // Early return if no selectedLanguageNo
-      try {
-        const languageDetails = await LanguageApiService.fetchLanguage(
-          selectedLanguageNo
-        );
-        setFormData(languageDetails);
-        // setCompanyDetails(companyDetails);
-        console.log(133, languageDetails);
-      } catch (error: any) {
-        setError(
-          error.response?.data?.error ||
-            error.message ||
-            "Failed to fetch language."
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchCompany = async () => {
+    if (!selectedLanguageNo) return; // Early return if no selectedLanguageNo
+    try {
+      const languageDetails = await LanguageApiService.fetchLanguage(
+        selectedLanguageNo
+      );
+      setFormData(languageDetails);
+      // setCompanyDetails(companyDetails);
+      console.log(133, languageDetails);
+    } catch (error: any) {
+      setError(
+        error.response?.data?.error ||
+          error.message ||
+          "Failed to fetch language."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchCompany();
   }, [selectedLanguageNo]);
 
@@ -79,7 +78,6 @@ const LanguageSupportInfo = () => {
               label="登録日時"
               width="30vw"
               value={convertToJST(formData.created_at ?? "")}
-              // register={// register}
               onChange={handleChange}
             />
             <TextBoxWithLabel
@@ -87,7 +85,6 @@ const LanguageSupportInfo = () => {
               label="更新日時"
               width="30vw" // Uncomment to set a custom width
               value={convertToJST(formData.updated_at ?? "")}
-              // register={// register}
               onChange={handleChange}
             />
           </Box>
@@ -97,7 +94,6 @@ const LanguageSupportInfo = () => {
               label="削除フラグ"
               width="10vw"
               value={deleteStatus(formData.language_deleted ?? false)}
-              // register={// register}
               onChange={handleChange}
             />
           </Box>
@@ -109,9 +105,7 @@ const LanguageSupportInfo = () => {
             label="言語No"
             width="30vw"
             value={formData.languages_support_no}
-            // register={// register}
             onChange={handleChange}
-            // onChange={(e: any) => setDeleteFlag(e.target.value)}
           />
           <Box className="name-row">
             <Box>
@@ -120,9 +114,7 @@ const LanguageSupportInfo = () => {
                 label="和訳"
                 width="30vw"
                 value={formData.language_name_furigana}
-                // register={// register}
                 onChange={handleChange}
-                // onChange={(e: any) => setDeleteFlag(e.target.value)}
               />
 
               <TextBoxWithLabel
@@ -130,7 +122,6 @@ const LanguageSupportInfo = () => {
                 label="言語名"
                 width="30vw"
                 value={formData.language_name}
-                // register={// register}
                 onChange={handleChange}
               />
             </Box>
@@ -147,7 +138,6 @@ const LanguageSupportInfo = () => {
         />
 
         <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
-        {/* <ValidationButton label="保存" type="submit" /> */}
         <ButtonAtom onClick={searchConditions} label="保存" width="100px" />
       </Box>
     </Box>

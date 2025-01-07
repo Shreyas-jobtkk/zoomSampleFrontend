@@ -29,27 +29,27 @@ function CompanyListInfo() {
     company_deleted: false,
   });
 
-  useEffect(() => {
-    const fetchCompany = async () => {
-      if (!selectedCompanyNo) return; // Early return if no selectedCompanyNo
-      try {
-        const companyDetails = await CompanyApiService.fetchCompany(
-          selectedCompanyNo
-        );
-        setFormData(companyDetails);
-        // setCompanyDetails(companyDetails);
-        console.log(133, companyDetails);
-      } catch (error: any) {
-        setError(
-          error.response?.data?.error ||
-            error.message ||
-            "Failed to fetch company."
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchCompany = async () => {
+    if (!selectedCompanyNo) return; // Early return if no selectedCompanyNo
+    try {
+      const companyDetails = await CompanyApiService.fetchCompany(
+        selectedCompanyNo
+      );
+      setFormData(companyDetails);
+      // setCompanyDetails(companyDetails);
+      console.log(133, companyDetails);
+    } catch (error: any) {
+      setError(
+        error.response?.data?.error ||
+          error.message ||
+          "Failed to fetch company."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchCompany();
   }, [selectedCompanyNo]);
 

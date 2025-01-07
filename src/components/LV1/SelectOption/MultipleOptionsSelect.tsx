@@ -1,49 +1,50 @@
 import React from "react";
 import {
-  FormControl,
-  MenuItem,
   Select,
-  SelectChangeEvent,
-  Box,
+  MenuItem,
+  FormControl,
   Typography,
+  Box,
+  SelectChangeEvent,
 } from "@mui/material";
 
+// Define the types for the options
 interface Option {
+  value: string;
   label: string;
-  value: string | number;
 }
 
-interface SelectMultipleOptionsProps {
+// Define the props for the component
+interface MultipleOptionsSelectProps {
   label: string;
   options: Option[];
+  value: string[]; // Controlled value passed from parent
+  onChange?: (selectedValues: string[]) => void; // Optional callback for handling changes
+  labelWidth?: string | number;
   width?: number;
   height?: number;
-  labelWidth?: string | number;
-  onChange?: (value: (string | number)[]) => void; // onChange now accepts an array
-  value: (string | number)[]; // value is now an array
   disabled?: boolean;
 }
 
-const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({
+const MultipleOptionsSelect: React.FC<MultipleOptionsSelectProps> = ({
   label,
   options,
+  value,
+  onChange,
+  labelWidth = 100,
   width = 150,
   height = 30,
-  labelWidth = 100,
-  onChange,
-  value,
   disabled = false,
 }) => {
-  const handleChange = (event: SelectChangeEvent<(string | number)[]>) => {
-    const newValue = event.target.value as (string | number)[]; // Explicitly type as array
+  const handleChange = (event: SelectChangeEvent<string[]>) => {
+    const newValues = event.target.value as string[];
     if (onChange) {
-      onChange(newValue); // Pass the new array of selected values
+      onChange(newValues); // Notify parent of the change if onChange is provided
     }
   };
 
   return (
     <Box display="flex" alignItems="center">
-      {/* Label */}
       <Typography
         variant="body1"
         sx={{
@@ -55,8 +56,6 @@ const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({
       >
         {label}
       </Typography>
-
-      {/* Select Dropdown */}
       <FormControl
         variant="outlined"
         sx={{
@@ -64,13 +63,21 @@ const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({
         }}
       >
         <Select
-          multiple // Enable multiple selection
+          multiple
           value={value}
           onChange={handleChange}
           sx={{
             height,
           }}
           disabled={disabled}
+          renderValue={
+            (selected) =>
+              selected
+                .map(
+                  (val) => options.find((option) => option.value === val)?.label
+                )
+                .join(", ") // Map values to their corresponding labels
+          }
         >
           {options.map((option, index) => (
             <MenuItem key={index} value={option.value}>
@@ -83,4 +90,4 @@ const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({
   );
 };
 
-export default SelectMultipleOptions;
+export default MultipleOptionsSelect;

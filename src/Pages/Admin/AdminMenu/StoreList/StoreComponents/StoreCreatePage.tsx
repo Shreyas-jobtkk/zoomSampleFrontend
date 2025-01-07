@@ -15,13 +15,10 @@ import JapanPrefectures from "../JapanPrefectures/JapanPrefectures";
 import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
 import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
 import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
-// import { StoreCreateFormValues } from "../../../../../CompanyTypes/CompanyTypes";
 import { useForm } from "react-hook-form";
 import { StoreCreateFormValues } from "../../../../../types/StoreTypes/StoreTypes";
 
 function StoreListInfo() {
-  const [selectedCompanyNo, setSelectedCompanyNo] = useState<string>("");
-  const [selectedCompanyName, setSelectedCompanyName] = useState<string>("");
   const [formData, setFormData] = useState<StoreCreateFormValues>({
     company_no: "",
     company_name: "",
@@ -109,9 +106,6 @@ function StoreListInfo() {
     }
   };
 
-  // const [selectedCompany, setSelectedCompany] = useState<any>(null);
-  // const options = JapanPrefectures;
-
   const updateFormData = (field: string, value: any) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -122,10 +116,6 @@ function StoreListInfo() {
   const handleCompanySelect = (company: any) => {
     console.log(147, company);
     const { company_no, company_name } = company;
-
-    // setSelectedCompany(company);
-    setSelectedCompanyNo(company_no);
-    setSelectedCompanyName(company_name);
 
     updateFormData("company_no", company_no);
     updateFormData("company_name", company_name);
@@ -203,8 +193,8 @@ function StoreListInfo() {
               register={register}
               maxLength={128}
               // error={errors.company_no?.message} // Separate error for "furigana"
-              value={selectedCompanyNo}
-              onChange={(e: any) => setSelectedCompanyNo(e.target.value)}
+              value={formData.company_no}
+              // onChange={(e: any) => setSelectedCompanyNo(e.target.value)}
               // disabled={true}
               type="none"
             />
@@ -217,8 +207,8 @@ function StoreListInfo() {
               register={register}
               maxLength={128}
               // error={errors.company_no?.message} // Separate error for "furigana"
-              value={selectedCompanyName}
-              onChange={(e: any) => setSelectedCompanyName(e.target.value)}
+              value={formData.company_name}
+              // onChange={(e: any) => setSelectedCompanyName(e.target.value)}
               // disabled={true}
               type="none"
             />
@@ -407,13 +397,7 @@ function StoreListInfo() {
           name="store_note"
         />
         <ButtonAtom onClick={createStore} label="閉じる" width="100px" />
-        {/* <ButtonAtom onClick={createStore} label="編集" width="100px" /> */}
-        <ValidationButton
-          label="保存"
-          width="100px"
-          // onClick={saveCompanyInfo}
-          type="submit"
-        />
+        <ValidationButton label="保存" width="100px" type="submit" />
       </Box>
     </Box>
   );

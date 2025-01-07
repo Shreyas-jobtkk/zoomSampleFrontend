@@ -14,28 +14,40 @@ export type UserCreateFormValues = {
   tel2: string | number;
   tel3: string | number;
   tel_extension: string | number;
-  translate_languages: number[];
+  translate_languages: any;
   password_expire: Date | string;
   user_password: string;
+  user_password_confirm: string;
+  meeting_id: string;
+  meeting_passcode: string;
+  user_note: string;
 };
 
 export interface UserInfo {
+  user_no: string;
   company_no: string;
   company_name: string;
   store_no: string;
   store_name: string;
-  store_name_furigana: string;
-  zip: string | number;
-  pref: string;
-  city: string;
-  street: string;
-  building_name: string;
-  tel: string | number;
-  fax: string | number;
-  store_note: string;
+  user_name_last: string;
+  user_name_last_furigana: string;
+  user_name_first: string;
+  user_name_first_furigana: string;
+  mail_address: string;
+  tel1: string | number;
+  tel2: string | number;
+  tel3: string | number;
+  tel_extension: string | number;
+  translate_languages: any;
+  password_expire: Date | string;
+  user_password: string;
+  user_password_confirm: string;
+  meeting_id: string;
+  meeting_passcode: string;
+  user_note: string;
   updated_at: Date | string;
   created_at: Date | string;
-  store_delete: Boolean;
+  user_deleted: Boolean;
 }
 
 export type UserInfoFormValues = {

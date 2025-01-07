@@ -27,7 +27,7 @@ function CompanyInfoEdit() {
     register,
     setValue,
     handleSubmit,
-    formState: { isSubmitted, isValid },
+    formState: { isSubmitted },
   } = useForm<CompanyCreateFormValues>();
 
   const [formData, setFormData] = useState<CompanyInfo>({
@@ -80,9 +80,6 @@ function CompanyInfoEdit() {
 
   // Handle edit button action
   const handleEdit = async () => {
-    if (!isValid) {
-      return;
-    }
     console.log(123);
     CompanyApiService.updateCompany(
       formData.company_no,

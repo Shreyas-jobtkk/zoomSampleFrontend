@@ -28,30 +28,27 @@ const LanguageCreate = () => {
 
   const selectedLanguageNo = state?.selectedLanguageNo;
 
-  useEffect(() => {
-    const fetchCompany = async () => {
-      if (!selectedLanguageNo) return; // Early return if no selectedLanguageNo
-      try {
-        const languageDetails = await LanguageApiService.fetchLanguage(
-          selectedLanguageNo
-        );
-        setFormData(languageDetails);
-        // setCompanyDetails(companyDetails);
-        console.log(133, languageDetails);
-        setValue("language_name", languageDetails.language_name);
-        setValue(
-          "language_name_furigana",
-          languageDetails.language_name_furigana
-        );
-      } catch (error: any) {
-      } finally {
-      }
-    };
+  const fetchCompany = async () => {
+    if (!selectedLanguageNo) return; // Early return if no selectedLanguageNo
+    try {
+      const languageDetails = await LanguageApiService.fetchLanguage(
+        selectedLanguageNo
+      );
+      setFormData(languageDetails);
+      console.log(133, languageDetails);
+      setValue("language_name", languageDetails.language_name);
+      setValue(
+        "language_name_furigana",
+        languageDetails.language_name_furigana
+      );
+    } catch (error: any) {
+    } finally {
+    }
+  };
 
+  useEffect(() => {
     fetchCompany();
   }, [selectedLanguageNo]);
-
-  console.log(144, formData);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -62,18 +59,17 @@ const LanguageCreate = () => {
       [name]: value,
     }));
   };
+
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { isSubmitted, isValid },
+    formState: { isSubmitted },
   } = useForm<LanguageInfo>();
+
   const searchConditions = () => {};
+
   const editLanguageInfo = async (data: LanguageInfo) => {
-    console.log(156, isValid);
-    // if (!isValid) {
-    //   return;
-    // }
     console.log("Form Data Submitted:", data);
     try {
       LanguageApiService.updateLanguage(
@@ -139,9 +135,7 @@ const LanguageCreate = () => {
                 width="30vw"
                 maxLength={64}
                 register={register}
-                // error={errors.language_name?.message} // Separate error for "name"
                 value={formData.language_name}
-                // required={true}
                 onChange={handleChange}
               />
 
@@ -153,9 +147,6 @@ const LanguageCreate = () => {
                 width="30vw"
                 register={register}
                 maxLength={128}
-                // required={false}
-                // error={errors.language_name_furigana?.message} // Separate error for "furigana"
-                // required={true}
                 value={formData.language_name_furigana}
                 onChange={handleChange}
               />
