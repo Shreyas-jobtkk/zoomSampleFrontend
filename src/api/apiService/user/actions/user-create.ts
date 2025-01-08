@@ -16,10 +16,10 @@ export const createUser = async (
   telExtension: string | number, // Telephone extension
   userType: string, // user_type is fixed in backend as "interpreter"
   note: string,
-  languages: number[], // Ensure this is an array of integers
+  languages: number[] | null, // Ensure this is an array of integers
   passwordExpire: string | Date,
-  meetingId: string,
-  meetingPasscode: string
+  meetingId: string | null,
+  meetingPasscode: string | null
 ) => {
   try {
     // Combine the tel1, tel2, and tel3 into a single string

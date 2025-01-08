@@ -8,8 +8,10 @@ import DataTable from "../../../components/LV3/DataTable/DataTable";
 import "./AdminMenu.scss";
 import { useNavigate } from "react-router-dom";
 import { UserApiService } from "../../../api/apiService/user/user-api-service";
-import { UserInfo } from "../../../types/UserTypes/UserTypes";
+import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";
+import { InterpreterInfo } from "../../../types/UserTypes/UserTypes";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
+import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
 
 function InterpretersList() {
   const navigate = useNavigate();
@@ -22,7 +24,7 @@ function InterpretersList() {
   ];
 
   const [selectedInterpreterNoArray, setSelectedInterpreterNoArray] = useState<
-    any[]
+    number[]
   >([]);
 
   const [tableData, setTableData] = useState<any[]>([]);
@@ -33,14 +35,26 @@ function InterpretersList() {
 
   const fetchUsersListData = async () => {
     try {
-      const response = await UserApiService.fetchUsersAll();
-      console.log(144, response);
+      const response = await UserApiService.fetchInterpretersAll();
+      const getLanguageDetails: LanguageInfo[] =
+        await LanguageApiService.fetchLanguageNames();
+      console.log(144, getLanguageDetails);
+
+      // Function to get language_name_furigana based on selected numbers
+      const getLanguageNames = (numbers: number[]): string => {
+        return getLanguageDetails
+          .filter((lang) => numbers.includes(lang.languages_support_no))
+          .map((lang) => lang.language_name_furigana)
+          .join(" , "); // Join the results with a comma and space
+      };
+
       // const response = await axios.get(`${homePage}/company`);
       const sortedData = response
         .sort(
-          (a: UserInfo, b: UserInfo) => Number(a.user_no) - Number(b.user_no)
+          (a: InterpreterInfo, b: InterpreterInfo) =>
+            Number(a.user_no) - Number(b.user_no)
         )
-        .map((item: UserInfo, index: number) => ({
+        .map((item: InterpreterInfo, index: number) => ({
           No: index + 1,
           登録日時: convertToJST(item.created_at),
           更新日時: convertToJST(item.updated_at),
@@ -50,6 +64,7 @@ function InterpretersList() {
           店舗名: item.store_name,
           通訳者No: item.user_no,
           名前: `${item.user_name_last} ${item.user_name_first}`,
+          通訳言語: getLanguageNames(item.translate_languages),
           削除: deleteStatus(item.user_deleted),
         }));
       console.log(141, sortedData);
@@ -68,6 +83,7 @@ function InterpretersList() {
     "店舗名",
     "通訳者No",
     "名前",
+    "通訳言語",
     "削除",
   ];
 
@@ -88,12 +104,20 @@ function InterpretersList() {
     // Update the selected data state
     setSelectedData(newSelectedData);
 
+    // Validate input
+    if (!Array.isArray(newSelectedData)) {
+      console.error("newSelectedData must be an array");
+      return;
+    }
+
     // Log the selected data to the console
     console.log("Selected Data:", newSelectedData);
 
-    const selectedInterpreterNo = newSelectedData.map(
-      (item) => item["通訳者No"]
-    );
+    // Extract and convert "通訳者No" to number
+    const selectedInterpreterNo = newSelectedData
+      .map((item) => Number(item["通訳者No"]))
+      .filter((value) => !isNaN(value)); // Filter out invalid numbers
+
     setSelectedInterpreterNoArray(selectedInterpreterNo);
   };
 
@@ -124,7 +148,7 @@ function InterpretersList() {
         alert("An unknown error occurred while deleting the company.");
       }
     }
-    // await fetchCompaniesListData();
+    await fetchUsersListData();
   };
 
   const [selectedData, setSelectedData] = useState<
@@ -136,64 +160,114 @@ function InterpretersList() {
       <MenuHeader title="通訳者一覧" />
       <Box className="search-container">
         <Box className="search-label">検索条件</Box>
-        <Box className="interpreter-details move-top">
-          <TextBoxWithLabel
-            label="通訳者No"
-            width="12vw" // Uncomment to set a custom width
-            value={textValue1}
-            onChange={(e: any) => setTextValue1(e.target.value)}
-            disabled={false}
-          />
-
-          <Box>
-            <TextBoxWithLabel
-              label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
-              width="18vw" // Uncomment to set a custom width
-              value={textValue2}
-              onChange={(e: any) => setTextValue2(e.target.value)}
-              labelWidth="130px"
-              disabled={false}
-            />
-            <TextBoxWithLabel
-              labelWidth="130px"
-              label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
-              width="18vw" // Uncomment to set a custom width
-              value={textValue3}
-              onChange={(e: any) => setTextValue3(e.target.value)}
-              disabled={false}
-            />
+        <Box className="move-top">
+          <Box style={{ display: "flex", gap: "100px", marginBottom: "20px" }}>
+            <Box>
+              {/* <Box>企業検索</Box> */}
+              <ButtonAtom onClick={searchConditions} label="企業検索" />
+              <Box style={{ display: "flex", gap: "20px" }}>
+                <TextBoxWithLabel
+                  label="企業No"
+                  width="15vw" // Uncomment to set a custom width
+                  value={textValue1}
+                  onChange={(e: any) => setTextValue1(e.target.value)}
+                  disabled={false}
+                />
+                <TextBoxWithLabel
+                  label="企業名"
+                  width="15vw" // Uncomment to set a custom width
+                  value={textValue1}
+                  onChange={(e: any) => setTextValue1(e.target.value)}
+                  disabled={false}
+                />
+              </Box>
+            </Box>
+            <Box>
+              <ButtonAtom onClick={searchConditions} label="店舗検索" />
+              <Box style={{ display: "flex", gap: "20px" }}>
+                <TextBoxWithLabel
+                  label="店舗No"
+                  width="15vw" // Uncomment to set a custom width
+                  value={textValue1}
+                  onChange={(e: any) => setTextValue1(e.target.value)}
+                  disabled={false}
+                />
+                <TextBoxWithLabel
+                  label="店舗名"
+                  width="15vw" // Uncomment to set a custom width
+                  value={textValue1}
+                  onChange={(e: any) => setTextValue1(e.target.value)}
+                  disabled={false}
+                />
+              </Box>
+            </Box>
           </Box>
-
-          <Box>
+          <Box className="interpreter-details">
             <TextBoxWithLabel
-              label="メイ"
-              labelWidth="40px"
-              width="12vw" // Uncomment to set a custom width
-              value={textValue4}
-              onChange={(e: any) => setTextValue4(e.target.value)}
+              label="通訳者No"
+              width="6vw" // Uncomment to set a custom width
+              value={textValue1}
+              onChange={(e: any) => setTextValue1(e.target.value)}
               disabled={false}
             />
             <TextBoxWithLabel
-              label="名"
-              labelWidth="40px"
-              width="12vw" // Uncomment to set a custom width
-              value={textValue5}
-              onChange={(e: any) => setTextValue5(e.target.value)}
+              label="~"
+              width="6vw" // Uncomment to set a custom width
+              value={textValue1}
+              onChange={(e: any) => setTextValue1(e.target.value)}
               disabled={false}
+              labelWidth="25px"
             />
-          </Box>
 
-          <span>通訳言語：</span>
-          <SelectOption
-            label=""
-            options={options}
-            width={150}
-            value={selectedOption}
-            onChange={setSelectedOption}
-          />
+            <Box>
+              <TextBoxWithLabel
+                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                width="18vw" // Uncomment to set a custom width
+                value={textValue2}
+                onChange={(e: any) => setTextValue2(e.target.value)}
+                labelWidth="130px"
+                disabled={false}
+              />
+              <TextBoxWithLabel
+                labelWidth="130px"
+                label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+                width="18vw" // Uncomment to set a custom width
+                value={textValue3}
+                onChange={(e: any) => setTextValue3(e.target.value)}
+                disabled={false}
+              />
+            </Box>
 
-          <Box className="search-button">
-            <ButtonAtom onClick={searchConditions} label="検索" />
+            <Box>
+              <TextBoxWithLabel
+                label="メイ"
+                labelWidth="40px"
+                width="12vw" // Uncomment to set a custom width
+                value={textValue4}
+                onChange={(e: any) => setTextValue4(e.target.value)}
+                disabled={false}
+              />
+              <TextBoxWithLabel
+                label="名"
+                labelWidth="40px"
+                width="12vw" // Uncomment to set a custom width
+                value={textValue5}
+                onChange={(e: any) => setTextValue5(e.target.value)}
+                disabled={false}
+              />
+            </Box>
+
+            <SelectOption
+              label="通訳言語："
+              options={options}
+              width={150}
+              value={selectedOption}
+              onChange={setSelectedOption}
+            />
+
+            <Box className="search-button">
+              <ButtonAtom onClick={searchConditions} label="検索" />
+            </Box>
           </Box>
         </Box>
       </Box>

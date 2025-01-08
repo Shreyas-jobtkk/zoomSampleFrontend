@@ -4,29 +4,21 @@ import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import PasswordBoxWithLabel from "../../../../../components/LV1/TextBox/PasswordBoxWithLabel";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import "../InterpretersListStyles/InterpretersList.scss";
+import "../ContractorListStyles/ContractorList.scss";
 import { useLocation } from "react-router-dom";
-import MultipleOptionsSelect from "../../../../../components/LV1/SelectOption/MultipleOptionsSelect";
 import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
 import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
-import { InterpreterInfo } from "../../../../../types/UserTypes/UserTypes";
-import { LanguageInfo } from "../../../../../types/LanguageTypes/LanguageTypes";
+import { UserInfo } from "../../../../../types/UserTypes/UserTypes";
 import { convertToJST, deleteStatus } from "../../../../../utils/utils";
-import { LanguageApiService } from "../../../../../api/apiService/languages/languages-api-service";
 
-function InterpretersListInfo() {
-  const [languagesSupport, setLanguagesSupport] = useState<
-    { label: string; value: string | number }[]
-  >([]);
-  const [optionValue, setOptionValue] = useState<Array<string>>([]);
-
+function ContractorListInfo() {
   const { state } = useLocation();
   const selectedInterpreterNo = state?.selectedInterpreterNo;
 
   console.log(1557, selectedInterpreterNo);
 
-  const [formData, setFormData] = useState<InterpreterInfo>({
+  const [formData, setFormData] = useState<UserInfo>({
     user_no: "",
     company_no: "",
     company_name: "",
@@ -41,12 +33,9 @@ function InterpretersListInfo() {
     tel2: "",
     tel3: "",
     tel_extension: "",
-    translate_languages: [],
     password_expire: "",
     user_password: "",
     user_password_confirm: "",
-    meeting_id: "",
-    meeting_passcode: "",
     user_note: "",
     updated_at: "",
     created_at: "",
@@ -58,12 +47,6 @@ function InterpretersListInfo() {
   useEffect(() => {
     fetchUserDetails();
   }, [selectedInterpreterNo]);
-
-  useEffect(() => {
-    if (formData.translate_languages.length > 0) {
-      fetchLanguagesById();
-    }
-  }, [formData.translate_languages]);
 
   const fetchUserDetails = async () => {
     if (!selectedInterpreterNo) return; // Early return if no selectedCompanyNo
@@ -88,12 +71,9 @@ function InterpretersListInfo() {
         tel2: tel2,
         tel3: tel3,
         tel_extension: userDetails.tel_extension,
-        translate_languages: userDetails.translate_languages,
         password_expire: userDetails.password_expire,
         user_password: userDetails.user_password,
         user_password_confirm: userDetails.user_password,
-        meeting_id: userDetails.meeting_id,
-        meeting_passcode: userDetails.meeting_passcode,
         user_note: userDetails.user_note,
         updated_at: userDetails.updated_at,
         created_at: userDetails.created_at,
@@ -102,30 +82,6 @@ function InterpretersListInfo() {
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
-  };
-
-  const fetchLanguagesById = async () => {
-    console.log(289, formData);
-
-    const languageDetails = await LanguageApiService.fetchLanguagesById(
-      formData.translate_languages
-    );
-    console.log(189, languageDetails);
-    const transformedOptions = languageDetails.map(
-      (language: LanguageInfo) => ({
-        value: language.languages_support_no,
-        label: language.language_name_furigana,
-      })
-    );
-
-    console.log(transformedOptions);
-    console.log(997, typeof formData.translate_languages);
-    console.log(998, formData.translate_languages);
-
-    setOptionValue(formData.translate_languages);
-
-    // Now you can set the options like this:
-    setLanguagesSupport(transformedOptions);
   };
 
   return (
@@ -282,12 +238,6 @@ function InterpretersListInfo() {
               </Box>
             </Box>
           </Box>
-          <MultipleOptionsSelect
-            label="通訳言語"
-            options={languagesSupport}
-            value={optionValue} // Pass dynamic value
-            disabled={true}
-          />
         </Box>
         <Box className="password-meeting-info">
           <Box className="password-info">
@@ -316,20 +266,6 @@ function InterpretersListInfo() {
             </Box>
           </Box>
           <Box className="meeting-info">
-            <Box className="meeting-credentials">
-              <TextBoxWithLabel
-                labelWidth="125px"
-                label="ミーティングID"
-                width="15vw"
-                value={formData.meeting_id}
-              />
-              <TextBoxWithLabel
-                labelWidth="125px"
-                label="パスコード"
-                width="15vw"
-                value={formData.meeting_passcode}
-              />
-            </Box>
             <TextAreaWithLabel
               label="備考"
               value={formData.user_note}
@@ -345,4 +281,4 @@ function InterpretersListInfo() {
   );
 }
 
-export default InterpretersListInfo;
+export default ContractorListInfo;

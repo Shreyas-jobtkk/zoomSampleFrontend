@@ -2,9 +2,10 @@
 import { USER_ENDPOINT } from "../user-api-definitions";
 import api from "../../../index";
 
-export const fetchUsersAll = async () => {
+export const fetchAdministratorAll = async () => {
+  console.log(1567);
   try {
-    const response = await api.get(USER_ENDPOINT);
+    const response = await api.get(`${USER_ENDPOINT}/administrator`);
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {

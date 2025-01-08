@@ -8,7 +8,7 @@ import LanguagesSupportList from "../Pages/Admin/AdminMenu/LanguagesSupportListP
 import LogList from "../Pages/Admin/AdminMenu/LogListPage";
 import MeetingHistoryList from "../Pages/Admin/AdminMenu/MeetingHistoryListPage";
 import MeetingInvitationList from "../Pages/Admin/AdminMenu/MeetingInvitationListPage";
-import RespondersListPage from "../Pages/Admin/AdminMenu/RespondersListPage";
+import ContractorListPage from "../Pages/Admin/AdminMenu/ContractorListPage";
 import StoreListPage from "../Pages/Admin/AdminMenu/StoreListPage";
 
 const AppMenuRoutes = () => (
@@ -24,7 +24,7 @@ const AppMenuRoutes = () => (
     <Route path="/LogList" element={<LogList />} />
     <Route path="/MeetingHistoryList" element={<MeetingHistoryList />} />
     <Route path="/MeetingInvitationList" element={<MeetingInvitationList />} />
-    <Route path="/RespondersList" element={<RespondersListPage />} />
+    <Route path="/ContractorList" element={<ContractorListPage />} />
     <Route path="/StoreList" element={<StoreListPage />} />
   </Routes>
 );

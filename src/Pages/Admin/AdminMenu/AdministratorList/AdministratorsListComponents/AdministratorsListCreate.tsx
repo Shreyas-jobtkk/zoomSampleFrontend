@@ -3,24 +3,21 @@ import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithL
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import "../InterpretersListStyles/InterpretersList.scss";
+import "../AdministratorsListStyles/AdministratorsList.scss";
 import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
 import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
 import SelectableModal from "../../../../../components/LV1/SelectableModal/SelectableModal";
 import { useForm } from "react-hook-form";
 import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
 import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
-import { LanguageApiService } from "../../../../../api/apiService/languages/languages-api-service";
-import ValidateSelectMultipleOptions from "../../../../../components/LV1/SelectOption/validateMultipleOptions";
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
 import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
-import { InterpreterCreateFormValues } from "../../../../../types/UserTypes/UserTypes";
+import { UserCreateFormValues } from "../../../../../types/UserTypes/UserTypes";
 import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
 import { CompanyInfo } from "../../../../../types/CompanyTypes/CompanyTypes";
 import { StoreInfo } from "../../../../../types/StoreTypes/StoreTypes";
-import { LanguageInfo } from "../../../../../types/LanguageTypes/LanguageTypes";
 
-function InterpretersListInfo() {
+function ContractorListInfo() {
   const [textValue1, setTextValue1] = useState<string>("");
 
   const searchConditions = () => {};
@@ -33,26 +30,10 @@ function InterpretersListInfo() {
 
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
   const [storeData, setStoreData] = useState<StoreInfo[]>([]);
-  const [languagesSupport, setLanguagesSupport] = useState<
-    { label: string; value: string | number }[]
-  >([]);
+
   const [isStoresExist, setIsStoresExist] = useState<boolean>(false);
-  const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
-    []
-  );
 
-  // Handler for onChange to update the selected options
-  const handleSelectChange = (value: (string | number)[]) => {
-    console.log(655, value);
-    setSelectedOptions(value); // Update the state with selected options
-
-    setFormData((prevData) => ({
-      ...prevData,
-      translate_languages: value, // Convert array to a string if needed
-    }));
-  };
-
-  const [formData, setFormData] = useState<InterpreterCreateFormValues>({
+  const [formData, setFormData] = useState<UserCreateFormValues>({
     company_no: "",
     company_name: "",
     store_no: "",
@@ -66,12 +47,9 @@ function InterpretersListInfo() {
     tel2: "",
     tel3: "",
     tel_extension: "",
-    translate_languages: "",
     password_expire: "",
     user_password: "",
     user_password_confirm: "",
-    meeting_id: "",
-    meeting_passcode: "",
     user_note: "",
   });
 
@@ -80,31 +58,11 @@ function InterpretersListInfo() {
     handleSubmit,
     setValue,
     formState: { isSubmitted },
-  } = useForm<InterpreterCreateFormValues>();
+  } = useForm<UserCreateFormValues>();
 
   useEffect(() => {
     fetchCompaniesNames();
-    fetchLanguageNames();
   }, []);
-
-  const fetchLanguageNames = async () => {
-    try {
-      let response = await LanguageApiService.fetchLanguageNames();
-
-      console.log(177, response);
-
-      response = response.map((item: LanguageInfo) => ({
-        label: item.language_name_furigana, // Map 'language_name' to 'label'
-        value: item.languages_support_no, // Map 'languages_support_no' to 'value'
-      }));
-
-      setLanguagesSupport(response);
-
-      // const response = await axios.get(`${homePage}/company`);
-    } catch (error) {
-      console.error("Error fetching companies:", error);
-    }
-  };
 
   const fetchCompaniesNames = async () => {
     // console.log(244, await LanguageApiService.fetchLanguageNames());
@@ -192,12 +150,12 @@ function InterpretersListInfo() {
         formData.tel2,
         formData.tel3,
         formData.tel_extension,
-        "interpreter",
+        "administrator",
         formData.user_note,
-        formData.translate_languages,
+        null,
         formData.password_expire,
-        formData.meeting_id,
-        formData.meeting_passcode
+        null,
+        null
       );
       alert("saved");
     } catch (error) {
@@ -424,7 +382,7 @@ function InterpretersListInfo() {
               </Box>
             </Box>
           </Box>
-          <ValidateSelectMultipleOptions
+          {/* <ValidateSelectMultipleOptions
             isSubmitted={isSubmitted}
             label="通訳言語"
             labelWidth="125px"
@@ -433,7 +391,7 @@ function InterpretersListInfo() {
             onChange={handleSelectChange}
             register={register}
             name="translate_languages"
-          />
+          /> */}
         </Box>
         <Box className="password-meeting-info">
           <Box className="password-info">
@@ -473,30 +431,6 @@ function InterpretersListInfo() {
             </Box>
           </Box>
           <Box className="meeting-info">
-            <Box className="meeting-credentials">
-              <ValidationInputField
-                isSubmitted={isSubmitted}
-                name="meeting_id" // Name for the phonetic spelling
-                labelWidth="125px"
-                label="ミーティングID"
-                width="15vw"
-                register={register}
-                maxLength={128}
-                value={formData.meeting_id}
-                onChange={handleChange}
-              />
-              <ValidationInputField
-                isSubmitted={isSubmitted}
-                name="meeting_passcode" // Name for the phonetic spelling
-                labelWidth="125px"
-                label="パスコード"
-                width="15vw"
-                register={register}
-                maxLength={128}
-                value={formData.meeting_passcode}
-                onChange={handleChange}
-              />
-            </Box>
             <TextAreaWithLabel
               label="備考"
               value={formData.user_note}
@@ -517,4 +451,4 @@ function InterpretersListInfo() {
   );
 }
 
-export default InterpretersListInfo;
+export default ContractorListInfo;

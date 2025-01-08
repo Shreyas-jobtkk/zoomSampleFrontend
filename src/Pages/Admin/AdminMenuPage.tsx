@@ -14,8 +14,8 @@ function AdminMenu() {
     navigate("/StoreList");
   };
 
-  const navigateToRespondersList = () => {
-    navigate("/RespondersList");
+  const navigateToContractorList = () => {
+    navigate("/ContractorList");
   };
 
   const navigateToInterpretersList = () => {
@@ -85,7 +85,7 @@ function AdminMenu() {
         />
 
         <ButtonAtom
-          onClick={navigateToRespondersList}
+          onClick={navigateToContractorList}
           label="応対者一覧"
           width="40vw"
           padding="5vh 5vw 5vh 2vw"

@@ -15,9 +15,9 @@ export const updateUser = async (
   tel3: string | number, // Telephone part 3
   telExtension: string | number, // Telephone extension
   note: string,
-  languages: number[], // Ensure this is an array of integers
-  meetingId: string,
-  meetingPasscode: string,
+  languages: number[] | null, // Ensure this is an array of integers
+  meetingId: string | null,
+  meetingPasscode: string | null,
   storeNo: string
 ) => {
   try {

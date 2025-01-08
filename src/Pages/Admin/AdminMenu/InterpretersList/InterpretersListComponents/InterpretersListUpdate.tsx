@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom";
 import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
 import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
-import { UserInfo } from "../../../../../types/UserTypes/UserTypes";
+import { InterpreterInfo } from "../../../../../types/UserTypes/UserTypes";
 import { convertToJST, deleteStatus } from "../../../../../utils/utils";
 import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
 import { useForm } from "react-hook-form";
@@ -37,7 +37,7 @@ function InterpretersListUpdate() {
 
   console.log(1557, selectedInterpreterNo);
 
-  const [formData, setFormData] = useState<UserInfo>({
+  const [formData, setFormData] = useState<InterpreterInfo>({
     user_no: "",
     company_no: "",
     company_name: "",
@@ -128,7 +128,7 @@ function InterpretersListUpdate() {
     handleSubmit,
     setValue,
     formState: { isSubmitted },
-  } = useForm<UserInfo>();
+  } = useForm<InterpreterInfo>();
 
   const searchConditions = () => {};
 

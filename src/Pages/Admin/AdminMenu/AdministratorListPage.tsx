@@ -1,220 +1,70 @@
 import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
-import { useNavigate } from "react-router-dom";
 import "./AdminMenu.scss";
+import { useNavigate } from "react-router-dom";
+import { UserApiService } from "../../../api/apiService/user/user-api-service";
+import { UserInfo } from "../../../types/UserTypes/UserTypes";
+import { convertToJST, deleteStatus } from "../../../utils/utils";
 
-function AdministratorList() {
+function AdministratorsList() {
   const navigate = useNavigate();
-  // State for selected start and end times
 
+  const [selectedInterpreterNoArray, setSelectedInterpreterNoArray] = useState<
+    number[]
+  >([]);
+
+  const [tableData, setTableData] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchUsersListData();
+  }, []);
+
+  const fetchUsersListData = async () => {
+    try {
+      const response = await UserApiService.fetchAdministratorAll();
+
+      // const response = await axios.get(`${homePage}/company`);
+      const sortedData = response
+        .sort(
+          (a: UserInfo, b: UserInfo) => Number(a.user_no) - Number(b.user_no)
+        )
+        .map((item: UserInfo, index: number) => ({
+          No: index + 1,
+          登録日時: convertToJST(item.created_at),
+          更新日時: convertToJST(item.updated_at),
+          企業No: item.company_no,
+          企業名: item.company_name,
+          店舗No: item.store_no,
+          店舗名: item.store_name,
+          通訳者No: item.user_no,
+          名前: `${item.user_name_last} ${item.user_name_first}`,
+
+          削除: deleteStatus(item.user_deleted),
+        }));
+      console.log(141, sortedData);
+      setTableData(sortedData);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
+    }
+  };
   const headers = [
     "No",
     "登録日時",
     "更新日時",
-    "管理者Ｎｏ",
-    "管理者名（姓)",
-    "管理者名（名)",
-    "フリガナ（姓)",
-    "フリガナ（名)",
+    "企業No",
+    "企業名",
+    "店舗No",
+    "店舗名",
+    "通訳者No",
+    "名前",
+    "削除",
   ];
-  const data = [
-    {
-      No: 1,
-      登録日時: "2024-11-01 09:00",
-      更新日時: "2024-11-01 10:00",
-      管理者Ｎｏ: "1001",
-      "管理者名（姓)": "山田",
-      "管理者名（名)": "太郎",
-      "フリガナ（姓)": "ヤマダ",
-      "フリガナ（名)": "タロウ",
-    },
-    {
-      No: 2,
-      登録日時: "2024-11-01 10:30",
-      更新日時: "2024-11-01 11:30",
-      管理者Ｎｏ: "1002",
-      "管理者名（姓)": "鈴木",
-      "管理者名（名)": "花子",
-      "フリガナ（姓)": "スズキ",
-      "フリガナ（名)": "ハナコ",
-    },
-    {
-      No: 3,
-      登録日時: "2024-11-01 12:00",
-      更新日時: "2024-11-01 13:00",
-      管理者Ｎｏ: "1003",
-      "管理者名（姓)": "佐藤",
-      "管理者名（名)": "健一",
-      "フリガナ（姓)": "サトウ",
-      "フリガナ（名)": "ケンイチ",
-    },
-    {
-      No: 4,
-      登録日時: "2024-11-01 13:30",
-      更新日時: "2024-11-01 14:30",
-      管理者Ｎｏ: "1004",
-      "管理者名（姓)": "高橋",
-      "管理者名（名)": "美咲",
-      "フリガナ（姓)": "タカハシ",
-      "フリガナ（名)": "ミサキ",
-    },
-    {
-      No: 5,
-      登録日時: "2024-11-01 15:00",
-      更新日時: "2024-11-01 16:00",
-      管理者Ｎｏ: "1005",
-      "管理者名（姓)": "伊藤",
-      "管理者名（名)": "真一",
-      "フリガナ（姓)": "イトウ",
-      "フリガナ（名)": "シンイチ",
-    },
-    {
-      No: 6,
-      登録日時: "2024-11-02 09:00",
-      更新日時: "2024-11-02 10:00",
-      管理者Ｎｏ: "1006",
-      "管理者名（姓)": "渡辺",
-      "管理者名（名)": "優子",
-      "フリガナ（姓)": "ワタナベ",
-      "フリガナ（名)": "ユウコ",
-    },
-    {
-      No: 7,
-      登録日時: "2024-11-02 10:30",
-      更新日時: "2024-11-02 11:30",
-      管理者Ｎｏ: "1007",
-      "管理者名（姓)": "中村",
-      "管理者名（名)": "直人",
-      "フリガナ（姓)": "ナカムラ",
-      "フリガナ（名)": "ナオト",
-    },
-    {
-      No: 8,
-      登録日時: "2024-11-02 12:00",
-      更新日時: "2024-11-02 13:00",
-      管理者Ｎｏ: "1008",
-      "管理者名（姓)": "小林",
-      "管理者名（名)": "里奈",
-      "フリガナ（姓)": "コバヤシ",
-      "フリガナ（名)": "リナ",
-    },
-    {
-      No: 9,
-      登録日時: "2024-11-02 13:30",
-      更新日時: "2024-11-02 14:30",
-      管理者Ｎｏ: "1009",
-      "管理者名（姓)": "加藤",
-      "管理者名（名)": "智子",
-      "フリガナ（姓)": "カトウ",
-      "フリガナ（名)": "トモコ",
-    },
-    {
-      No: 10,
-      登録日時: "2024-11-02 15:00",
-      更新日時: "2024-11-02 16:00",
-      管理者Ｎｏ: "1010",
-      "管理者名（姓)": "吉田",
-      "管理者名（名)": "光",
-      "フリガナ（姓)": "ヨシダ",
-      "フリガナ（名)": "ヒカル",
-    },
-    {
-      No: 11,
-      登録日時: "2024-11-03 09:00",
-      更新日時: "2024-11-03 10:00",
-      管理者Ｎｏ: "1011",
-      "管理者名（姓)": "山本",
-      "管理者名（名)": "信",
-      "フリガナ（姓)": "ヤマモト",
-      "フリガナ（名)": "シン",
-    },
-    {
-      No: 12,
-      登録日時: "2024-11-03 10:30",
-      更新日時: "2024-11-03 11:30",
-      管理者Ｎｏ: "1012",
-      "管理者名（姓)": "松本",
-      "管理者名（名)": "翔太",
-      "フリガナ（姓)": "マツモト",
-      "フリガナ（名)": "ショウタ",
-    },
-    {
-      No: 13,
-      登録日時: "2024-11-03 12:00",
-      更新日時: "2024-11-03 13:00",
-      管理者Ｎｏ: "1013",
-      "管理者名（姓)": "井上",
-      "管理者名（名)": "佳代",
-      "フリガナ（姓)": "イノウエ",
-      "フリガナ（名)": "カヨ",
-    },
-    {
-      No: 14,
-      登録日時: "2024-11-03 13:30",
-      更新日時: "2024-11-03 14:30",
-      管理者Ｎｏ: "1014",
-      "管理者名（姓)": "木村",
-      "管理者名（名)": "拓海",
-      "フリガナ（姓)": "キムラ",
-      "フリガナ（名)": "タクミ",
-    },
-    {
-      No: 15,
-      登録日時: "2024-11-03 15:00",
-      更新日時: "2024-11-03 16:00",
-      管理者Ｎｏ: "1015",
-      "管理者名（姓)": "林",
-      "管理者名（名)": "美樹",
-      "フリガナ（姓)": "ハヤシ",
-      "フリガナ（名)": "ミキ",
-    },
-    {
-      No: 16,
-      登録日時: "2024-11-04 09:00",
-      更新日時: "2024-11-04 10:00",
-      管理者Ｎｏ: "1016",
-      "管理者名（姓)": "清水",
-      "管理者名（名)": "祐樹",
-      "フリガナ（姓)": "シミズ",
-      "フリガナ（名)": "ユウキ",
-    },
-    {
-      No: 17,
-      登録日時: "2024-11-04 10:30",
-      更新日時: "2024-11-04 11:30",
-      管理者Ｎｏ: "1017",
-      "管理者名（姓)": "山崎",
-      "管理者名（名)": "優奈",
-      "フリガナ（姓)": "ヤマザキ",
-      "フリガナ（名)": "ユナ",
-    },
-    {
-      No: 18,
-      登録日時: "2024-11-04 12:00",
-      更新日時: "2024-11-04 13:00",
-      管理者Ｎｏ: "1018",
-      "管理者名（姓)": "森",
-      "管理者名（名)": "恵",
-      "フリガナ（姓)": "モリ",
-      "フリガナ（名)": "メグミ",
-    },
-  ];
-
-  const [selectedData, setSelectedData] = useState<
-    Array<{ No: string | number; [key: string]: string | number }>
-  >([]);
 
   const searchConditions = () => {};
-  const navigateToInfoPage = () => {
-    navigate("/AdministratorListInfo");
-  };
-  const navigateToEditPage = () => {
-    navigate("/AdministratorListEdit");
-  };
 
   const [textValue1, setTextValue1] = useState<string>("");
   const [textValue2, setTextValue2] = useState<string>("");
@@ -222,7 +72,6 @@ function AdministratorList() {
   const [textValue4, setTextValue4] = useState<string>("");
   const [textValue5, setTextValue5] = useState<string>("");
 
-  // Handle selection change
   const handleSelectionChange = (
     newSelectedData: Array<{
       No: string | number;
@@ -232,74 +81,173 @@ function AdministratorList() {
     // Update the selected data state
     setSelectedData(newSelectedData);
 
+    // Validate input
+    if (!Array.isArray(newSelectedData)) {
+      console.error("newSelectedData must be an array");
+      return;
+    }
+
     // Log the selected data to the console
     console.log("Selected Data:", newSelectedData);
+
+    // Extract and convert "通訳者No" to number
+    const selectedInterpreterNo = newSelectedData
+      .map((item) => Number(item["通訳者No"]))
+      .filter((value) => !isNaN(value)); // Filter out invalid numbers
+
+    setSelectedInterpreterNoArray(selectedInterpreterNo);
   };
+
+  const navigateToInfoPage = () => {
+    navigate("/AdministratorListInfo", {
+      state: { selectedInterpreterNo: selectedInterpreterNoArray[0] },
+    });
+  };
+
+  const navigateToInterpreterCreate = () => {
+    navigate("/AdministratorsListCreate");
+  };
+  const navigateToEditPage = () => {
+    navigate("/AdministratorsListUpdate", {
+      state: { selectedInterpreterNo: selectedInterpreterNoArray[0] },
+    });
+  };
+
+  const handleDeleteAdministrators = async () => {
+    console.log(114, selectedInterpreterNoArray);
+    try {
+      await UserApiService.deleteUsers(selectedInterpreterNoArray);
+      // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred while deleting the company.");
+      }
+    }
+    await fetchUsersListData();
+  };
+
+  const [selectedData, setSelectedData] = useState<
+    Array<{ No: string | number; [key: string]: string | number }>
+  >([]);
 
   return (
     <Box className="admin-menu-nav-page">
-      <MenuHeader title="管理者一覧" />
-
+      <MenuHeader title="通訳者一覧" />
       <Box className="search-container">
         <Box className="search-label">検索条件</Box>
-        <Box className="admin-details">
-          <TextBoxWithLabel
-            disabled={false}
-            label="管理者No"
-            width="18vw" // Uncomment to set a custom width
-            value={textValue1}
-            onChange={(e: any) => setTextValue1(e.target.value)}
-          />
-
-          <Box>
-            <TextBoxWithLabel
-              disabled={false}
-              label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
-              labelWidth="120px"
-              width="22vw" // Uncomment to set a custom width
-              value={textValue2}
-              onChange={(e: any) => setTextValue2(e.target.value)}
-            />
-            <TextBoxWithLabel
-              disabled={false}
-              label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
-              labelWidth="120px"
-              width="22vw" // Uncomment to set a custom width
-              value={textValue3}
-              onChange={(e: any) => setTextValue3(e.target.value)}
-            />
+        <Box className="move-top">
+          <Box style={{ display: "flex", gap: "100px", marginBottom: "20px" }}>
+            <Box>
+              {/* <Box>企業検索</Box> */}
+              <ButtonAtom onClick={searchConditions} label="企業検索" />
+              <Box style={{ display: "flex", gap: "20px" }}>
+                <TextBoxWithLabel
+                  label="企業No"
+                  width="15vw" // Uncomment to set a custom width
+                  value={textValue1}
+                  onChange={(e: any) => setTextValue1(e.target.value)}
+                  disabled={false}
+                />
+                <TextBoxWithLabel
+                  label="企業名"
+                  width="15vw" // Uncomment to set a custom width
+                  value={textValue1}
+                  onChange={(e: any) => setTextValue1(e.target.value)}
+                  disabled={false}
+                />
+              </Box>
+            </Box>
+            <Box>
+              <ButtonAtom onClick={searchConditions} label="店舗検索" />
+              <Box style={{ display: "flex", gap: "20px" }}>
+                <TextBoxWithLabel
+                  label="店舗No"
+                  width="15vw" // Uncomment to set a custom width
+                  value={textValue1}
+                  onChange={(e: any) => setTextValue1(e.target.value)}
+                  disabled={false}
+                />
+                <TextBoxWithLabel
+                  label="店舗名"
+                  width="15vw" // Uncomment to set a custom width
+                  value={textValue1}
+                  onChange={(e: any) => setTextValue1(e.target.value)}
+                  disabled={false}
+                />
+              </Box>
+            </Box>
           </Box>
+          <Box className="interpreter-details">
+            <TextBoxWithLabel
+              label="通訳者No"
+              width="6vw" // Uncomment to set a custom width
+              value={textValue1}
+              onChange={(e: any) => setTextValue1(e.target.value)}
+              disabled={false}
+            />
+            <TextBoxWithLabel
+              label="~"
+              width="6vw" // Uncomment to set a custom width
+              value={textValue1}
+              onChange={(e: any) => setTextValue1(e.target.value)}
+              disabled={false}
+              labelWidth="25px"
+            />
 
-          <Box>
-            <TextBoxWithLabel
-              disabled={false}
-              label="メイ"
-              labelWidth="40px"
-              width="22vw" // Uncomment to set a custom width
-              value={textValue4}
-              onChange={(e: any) => setTextValue4(e.target.value)}
-            />
-            <TextBoxWithLabel
-              disabled={false}
-              label="名"
-              labelWidth="40px"
-              width="22vw" // Uncomment to set a custom width
-              value={textValue5}
-              onChange={(e: any) => setTextValue5(e.target.value)}
-            />
-          </Box>
-          <Box className="search-button">
-            <ButtonAtom onClick={searchConditions} label="検索" />
+            <Box>
+              <TextBoxWithLabel
+                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                width="18vw" // Uncomment to set a custom width
+                value={textValue2}
+                onChange={(e: any) => setTextValue2(e.target.value)}
+                labelWidth="130px"
+                disabled={false}
+              />
+              <TextBoxWithLabel
+                labelWidth="130px"
+                label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+                width="18vw" // Uncomment to set a custom width
+                value={textValue3}
+                onChange={(e: any) => setTextValue3(e.target.value)}
+                disabled={false}
+              />
+            </Box>
+
+            <Box>
+              <TextBoxWithLabel
+                label="メイ"
+                labelWidth="40px"
+                width="12vw" // Uncomment to set a custom width
+                value={textValue4}
+                onChange={(e: any) => setTextValue4(e.target.value)}
+                disabled={false}
+              />
+              <TextBoxWithLabel
+                label="名"
+                labelWidth="40px"
+                width="12vw" // Uncomment to set a custom width
+                value={textValue5}
+                onChange={(e: any) => setTextValue5(e.target.value)}
+                disabled={false}
+              />
+            </Box>
+
+            <Box className="search-button">
+              <ButtonAtom onClick={searchConditions} label="検索" />
+            </Box>
           </Box>
         </Box>
       </Box>
+
       <DataTable // Customize header height
         headers={headers}
-        data={data}
+        data={tableData}
         maxHeight="calc(87vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
-        onClick={searchConditions}
+        onClick={navigateToInterpreterCreate}
       />
       <ButtonAtom
         onClick={navigateToInfoPage}
@@ -312,7 +260,7 @@ function AdministratorList() {
         label="編集"
       />
       <ButtonAtom
-        onClick={searchConditions}
+        onClick={handleDeleteAdministrators}
         disabled={selectedData.length <= 0}
         label="削除"
       />
@@ -320,4 +268,4 @@ function AdministratorList() {
   );
 }
 
-export default AdministratorList;
+export default AdministratorsList;

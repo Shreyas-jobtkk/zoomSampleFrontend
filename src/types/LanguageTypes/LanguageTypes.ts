@@ -7,7 +7,7 @@ export type LanguageCreateFormValues = {
 };
 
 export interface LanguageInfo {
-  languages_support_no: string;
+  languages_support_no: number;
   language_name: string;
   language_name_furigana: string;
   language_note: string;
