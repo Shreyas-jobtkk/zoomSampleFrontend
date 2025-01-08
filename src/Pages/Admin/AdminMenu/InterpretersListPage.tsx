@@ -41,7 +41,7 @@ function InterpretersList() {
       console.log(144, getLanguageDetails);
 
       // Function to get language_name_furigana based on selected numbers
-      const getLanguageNames = (numbers: number[]): string => {
+      const getLanguageNames = (numbers: any[]): string => {
         return getLanguageDetails
           .filter((lang) => numbers.includes(lang.languages_support_no))
           .map((lang) => lang.language_name_furigana)

@@ -3,7 +3,7 @@ import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
 export const updateLanguage = async (
-  id: string,
+  id: string | number,
   languageName: string,
   languageNameFurigana: string,
   note: string
