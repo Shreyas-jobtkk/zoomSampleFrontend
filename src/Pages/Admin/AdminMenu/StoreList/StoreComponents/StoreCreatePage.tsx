@@ -17,6 +17,7 @@ import ValidationInputField from "../../../../../components/LV1/ValidationInputF
 import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
 import { useForm } from "react-hook-form";
 import { StoreCreateFormValues } from "../../../../../types/StoreTypes/StoreTypes";
+import { CompanyInfo } from "../../../../../types/CompanyTypes/CompanyTypes";
 
 function StoreListInfo() {
   const [formData, setFormData] = useState<StoreCreateFormValues>({
@@ -81,26 +82,9 @@ function StoreListInfo() {
 
   const fetchCompaniesListData = async () => {
     try {
-      const response = await CompanyApiService.fetchCompaniesAll();
+      const response = await CompanyApiService.fetchCompaniesNameDetails();
       console.log(144, response);
-      const filteredData = response.map(
-        ({
-          company_no,
-          company_name,
-        }: {
-          company_no: number;
-          company_name: string;
-        }) => ({
-          company_no,
-          company_name,
-        })
-      );
-
-      console.log(111, filteredData);
-
-      setCompanyData(filteredData);
-
-      // const response = await axios.get(`${homePage}/company`);
+      setCompanyData(response);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
@@ -113,8 +97,7 @@ function StoreListInfo() {
     }));
   };
 
-  const handleCompanySelect = (company: any) => {
-    console.log(147, company);
+  const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
 
     updateFormData("company_no", company_no);
@@ -135,7 +118,7 @@ function StoreListInfo() {
     updateFormData("pref", value);
   };
 
-  const [companyData, setCompanyData] = useState<any[]>([]);
+  const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
 
   return (
     <Box

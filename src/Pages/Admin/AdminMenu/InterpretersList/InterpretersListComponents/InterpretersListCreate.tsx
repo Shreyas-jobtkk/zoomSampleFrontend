@@ -16,6 +16,9 @@ import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWi
 import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
 import { UserCreateFormValues } from "../../../../../types/UserTypes/UserTypes";
 import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
+import { CompanyInfo } from "../../../../../types/CompanyTypes/CompanyTypes";
+import { StoreInfo } from "../../../../../types/StoreTypes/StoreTypes";
+import { LanguageInfo } from "../../../../../types/LanguageTypes/LanguageTypes";
 
 function InterpretersListInfo() {
   const [textValue1, setTextValue1] = useState<string>("");
@@ -28,9 +31,11 @@ function InterpretersListInfo() {
     updateFormData(name, value);
   };
 
-  const [companyData, setCompanyData] = useState<any[]>([]);
-  const [storeData, setStoreData] = useState<any[]>([]);
-  const [languagesSupport, setLanguagesSupport] = useState<any[]>([]);
+  const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
+  const [storeData, setStoreData] = useState<StoreInfo[]>([]);
+  const [languagesSupport, setLanguagesSupport] = useState<
+    { label: string; value: string | number }[]
+  >([]);
   const [isStoresExist, setIsStoresExist] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
     []
@@ -75,7 +80,7 @@ function InterpretersListInfo() {
     handleSubmit,
     setValue,
     formState: { isSubmitted },
-  } = useForm<any>();
+  } = useForm<UserCreateFormValues>();
 
   useEffect(() => {
     fetchCompaniesNames();
@@ -84,11 +89,11 @@ function InterpretersListInfo() {
 
   const fetchLanguageNames = async () => {
     try {
-      let response = await LanguageApiService.fetchLanguagesAll();
+      let response = await LanguageApiService.fetchLanguageNames();
 
       console.log(177, response);
 
-      response = response.map((item: any) => ({
+      response = response.map((item: LanguageInfo) => ({
         label: item.language_name_furigana, // Map 'language_name' to 'label'
         value: item.languages_support_no, // Map 'languages_support_no' to 'value'
       }));
@@ -145,7 +150,7 @@ function InterpretersListInfo() {
     }));
   };
 
-  const handleCompanySelect = (company: any) => {
+  const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
 
     // Set isCompanyNoEmpty to true if company_no is an empty string or undefined
@@ -161,7 +166,7 @@ function InterpretersListInfo() {
     updateFormData("store_name", "");
   };
 
-  const handleStoreSelect = (store: any) => {
+  const handleStoreSelect = (store: StoreInfo) => {
     const { store_no, store_name } = store;
 
     updateFormData("store_no", store_no);

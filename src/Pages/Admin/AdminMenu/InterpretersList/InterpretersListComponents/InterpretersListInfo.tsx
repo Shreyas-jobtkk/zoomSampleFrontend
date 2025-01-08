@@ -11,13 +11,15 @@ import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
 import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
 import { UserInfo } from "../../../../../types/UserTypes/UserTypes";
+import { LanguageInfo } from "../../../../../types/LanguageTypes/LanguageTypes";
 import { convertToJST, deleteStatus } from "../../../../../utils/utils";
 import { LanguageApiService } from "../../../../../api/apiService/languages/languages-api-service";
 
 function InterpretersListInfo() {
-  const [textValue1, setTextValue1] = useState<string>("");
-  const [options, setOptions] = useState<any>([]);
-  const [optionValue, setOptionValue] = useState<any>([]);
+  const [languagesSupport, setLanguagesSupport] = useState<
+    { label: string; value: string | number }[]
+  >([]);
+  const [optionValue, setOptionValue] = useState<Array<string>>([]);
 
   const { state } = useLocation();
   const selectedInterpreterNo = state?.selectedInterpreterNo;
@@ -51,22 +53,7 @@ function InterpretersListInfo() {
     user_deleted: false,
   });
 
-  // Handler for when the selection changes
-  // const handleSelect = (values: string[]) => {
-  //   // setOptionValue(values);
-  //   console.log("Selected values:", values);
-  // };
-
   const searchConditions = () => {};
-
-  const handleChange = () => {};
-
-  // const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
-
-  const handleLanguageChange = (newSelectedValues: string[]) => {
-    console.log(156, newSelectedValues);
-    // setSelectedLanguages(newSelectedValues); // Update state dynamically
-  };
 
   useEffect(() => {
     fetchUserDetails();
@@ -76,7 +63,6 @@ function InterpretersListInfo() {
     if (formData.translate_languages.length > 0) {
       fetchLanguagesById();
     }
-    // console.log(167, value);
   }, [formData.translate_languages]);
 
   const fetchUserDetails = async () => {
@@ -125,10 +111,12 @@ function InterpretersListInfo() {
       formData.translate_languages
     );
     console.log(189, languageDetails);
-    const transformedOptions = languageDetails.map((language: any) => ({
-      value: language.languages_support_no,
-      label: language.language_name_furigana,
-    }));
+    const transformedOptions = languageDetails.map(
+      (language: LanguageInfo) => ({
+        value: language.languages_support_no,
+        label: language.language_name_furigana,
+      })
+    );
 
     console.log(transformedOptions);
     console.log(997, typeof formData.translate_languages);
@@ -137,7 +125,7 @@ function InterpretersListInfo() {
     setOptionValue(formData.translate_languages);
 
     // Now you can set the options like this:
-    setOptions(transformedOptions);
+    setLanguagesSupport(transformedOptions);
   };
 
   return (
@@ -151,14 +139,12 @@ function InterpretersListInfo() {
               label="登録日時"
               width="30vw"
               value={convertToJST(formData.created_at ?? "")}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
               width="30vw"
               value={convertToJST(formData.updated_at ?? "")}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
           <Box className="delete-flag">
@@ -179,14 +165,12 @@ function InterpretersListInfo() {
               label="企業No"
               width="30vw"
               value={formData.company_no}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="企業名"
               width="30vw"
               value={formData.company_name}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
           <Box className="store-info">
@@ -197,14 +181,12 @@ function InterpretersListInfo() {
               label="店舗No"
               width="30vw"
               value={formData.store_no}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="店舗名"
               width="30vw"
               value={formData.store_name}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
         </Box>
@@ -215,7 +197,6 @@ function InterpretersListInfo() {
             label="No"
             width="30vw"
             value={formData.user_no}
-            onChange={(e: any) => setTextValue1(e.target.value)}
           />
           <Box className="name-row">
             <Box className="last-name">
@@ -224,14 +205,12 @@ function InterpretersListInfo() {
                 label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 width="30vw"
                 value={formData.user_name_last_furigana}
-                onChange={(e: any) => setTextValue1(e.target.value)}
               />
               <TextBoxWithLabel
                 labelWidth="125px"
                 label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                 width="30vw"
                 value={formData.user_name_last}
-                onChange={(e: any) => setTextValue1(e.target.value)}
               />
             </Box>
             <Box className="first-name">
@@ -240,14 +219,12 @@ function InterpretersListInfo() {
                 label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メイ"
                 width="30vw"
                 value={formData.user_name_first_furigana}
-                onChange={(e: any) => setTextValue1(e.target.value)}
               />
               <TextBoxWithLabel
                 labelWidth="125px"
                 label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名"
                 width="30vw"
                 value={formData.user_name_first}
-                onChange={(e: any) => setTextValue1(e.target.value)}
               />
             </Box>
           </Box>
@@ -258,7 +235,6 @@ function InterpretersListInfo() {
                 label="メールアドレス"
                 width="30vw"
                 value={formData.mail_address}
-                onChange={(e: any) => setTextValue1(e.target.value)}
               />
             </Box>
             <Box className="tel-no">
@@ -269,7 +245,6 @@ function InterpretersListInfo() {
 
                 <NumberInput
                   disabled={true}
-                  onChange={handleChange}
                   value={formData.tel1}
                   name="tel1"
                   maxLength={4}
@@ -278,7 +253,6 @@ function InterpretersListInfo() {
                 <Typography component="span">-</Typography>
                 <NumberInput
                   disabled={true}
-                  onChange={handleChange}
                   value={formData.tel2}
                   name="tel2"
                   maxLength={4}
@@ -287,7 +261,6 @@ function InterpretersListInfo() {
                 <Typography component="span">-</Typography>
                 <NumberInput
                   disabled={true}
-                  onChange={handleChange}
                   value={formData.tel3}
                   name="tel3"
                   maxLength={4}
@@ -301,7 +274,6 @@ function InterpretersListInfo() {
 
                 <NumberInput
                   disabled={true}
-                  onChange={handleChange}
                   value={formData.tel_extension}
                   name="tel1"
                   maxLength={4}
@@ -312,7 +284,7 @@ function InterpretersListInfo() {
           </Box>
           <MultipleOptionsSelect
             label="通訳言語"
-            options={options}
+            options={languagesSupport}
             value={optionValue} // Pass dynamic value
             disabled={true}
           />
@@ -325,7 +297,6 @@ function InterpretersListInfo() {
               label="有効期限"
               width="15vw"
               value={convertToJST(formData.password_expire ?? "")}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <Box className="password-input">
               <PasswordBoxWithLabel
@@ -342,11 +313,6 @@ function InterpretersListInfo() {
                 value={formData.user_password_confirm}
                 disabled={true}
               />
-              {/* <ButtonAtom
-              onClick={searchConditions}
-              label="パスワード変更"
-              width="150px"
-            /> */}
             </Box>
           </Box>
           <Box className="meeting-info">
@@ -356,14 +322,12 @@ function InterpretersListInfo() {
                 label="ミーティングID"
                 width="15vw"
                 value={formData.meeting_id}
-                onChange={(e: any) => setTextValue1(e.target.value)}
               />
               <TextBoxWithLabel
                 labelWidth="125px"
                 label="パスコード"
                 width="15vw"
                 value={formData.meeting_passcode}
-                onChange={(e: any) => setTextValue1(e.target.value)}
               />
             </Box>
             <TextAreaWithLabel

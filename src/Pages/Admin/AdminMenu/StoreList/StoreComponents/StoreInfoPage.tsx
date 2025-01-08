@@ -4,17 +4,11 @@ import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import "../StoreStyles/StoreList.scss";
-// import ValidationTextArea from "../../../../components/LV1/ValidationTextArea/ValidationTextArea";
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
-// import { fetchCompaniesAll } from "../../../../api/apiService/company/company";
-import SelectableModal from "../../../../../components/LV1/SelectableModal/SelectableModal";
-import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
 import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
 import SelectOption from "../../../../../components/LV1/SelectOption/SelectOption";
 import JapanPrefectures from "../JapanPrefectures/JapanPrefectures";
 import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
-// import { StoreCreateFormValues } from "../../../../../CompanyTypes/CompanyTypes";
-import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import { StoreInfoFormValues } from "../../../../../types/StoreTypes/StoreTypes";
 import { convertToJST } from "../../../../../utils/utils";
@@ -22,7 +16,6 @@ import { convertToJST } from "../../../../../utils/utils";
 function StoreListInfo() {
   const { state } = useLocation();
   const selectedStoreNo = state?.selectedStoreNo;
-  console.log(115, selectedStoreNo);
   const [formData, setFormData] = useState<StoreInfoFormValues>({
     company_no: "",
     company_name: "",
@@ -91,63 +84,6 @@ function StoreListInfo() {
     }
   };
 
-  const {
-    register,
-    setValue,
-    formState: { isValid },
-  } = useForm<StoreInfoFormValues>();
-
-  useEffect(() => {
-    fetchCompaniesListData();
-  }, []);
-
-  const fetchCompaniesListData = async () => {
-    try {
-      const response = await CompanyApiService.fetchCompaniesAll();
-      console.log(144, response);
-      const filteredData = response.map(
-        ({
-          company_no,
-          company_name,
-        }: {
-          company_no: number;
-          company_name: string;
-        }) => ({
-          company_no,
-          company_name,
-        })
-      );
-
-      console.log(111, filteredData);
-      setCompanyData(filteredData);
-
-      // const response = await axios.get(`${homePage}/company`);
-    } catch (error) {
-      console.error("Error fetching companies:", error);
-    }
-  };
-
-  const handleCompanySelect = (company: any) => {
-    console.log(147, isValid);
-
-    setFormData((prevData) => ({
-      ...prevData,
-      company_no: company.company_no,
-      company_name: company.company_name,
-    }));
-    setValue("company_no", company.company_no);
-    setValue("company_name", company.company_name);
-  };
-
-  const [companyData, setCompanyData] = useState<any[]>([]);
-
-  const handleSelectChange = (value: string) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      pref: value,
-    }));
-  };
-
   return (
     <Box className="store-list-navigate">
       <MenuHeader title="店舗情報" />
@@ -182,15 +118,7 @@ function StoreListInfo() {
         <Box className="company-info">
           <Box className="description-label">企業情報</Box>
           <Box className="move-top">
-            <SelectableModal
-              title="企業検索"
-              options={companyData}
-              onOptionSelect={handleCompanySelect}
-              label="企業検索"
-              valueKey="company_no" // We use company_no for unique identification
-              displayKey="company_name" // We display company_name in the list
-              disabled={true}
-            />
+            <ButtonAtom label="企業検索" disabled={true} />
 
             <TextBoxWithLabel
               label="企業No"
@@ -270,7 +198,7 @@ function StoreListInfo() {
                     options={JapanPrefectures}
                     width={150}
                     value={formData.pref}
-                    onChange={handleSelectChange}
+                    // onChange={handleSelectChange}
                     labelWidth="75px"
                     disabled={true}
                   />
@@ -377,7 +305,6 @@ function StoreListInfo() {
           margin="0 0 0 40vw"
           labelWidth="25px"
           maxLength={5}
-          register={register}
           name="store_note"
           disabled={true}
         />

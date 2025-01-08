@@ -18,23 +18,22 @@ import SelectableModal from "../../../../../components/LV1/SelectableModal/Selec
 import { LanguageApiService } from "../../../../../api/apiService/languages/languages-api-service";
 import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
 import ValidateSelectMultipleOptions from "../../../../../components/LV1/SelectOption/validateMultipleOptions";
+import { CompanyInfo } from "../../../../../types/CompanyTypes/CompanyTypes";
+import { StoreInfo } from "../../../../../types/StoreTypes/StoreTypes";
+import { LanguageInfo } from "../../../../../types/LanguageTypes/LanguageTypes";
 
 function InterpretersListUpdate() {
-  const [textValue1, setTextValue1] = useState<string>("");
-  const [options, setOptions] = useState<any>([]);
-  const [optionValue, setOptionValue] = useState<any>([]);
-  const [languagesSupport, setLanguagesSupport] = useState<any[]>([]);
-  const [storeData, setStoreData] = useState<any[]>([]);
+  const [optionValue, setOptionValue] = useState<Array<number | string>>([]);
+  const [languagesSupport, setLanguagesSupport] = useState<
+    { label: string; value: string | number }[]
+  >([]);
   const [isStoresExist, setIsStoresExist] = useState<boolean>(true);
 
   const { state } = useLocation();
   const selectedInterpreterNo = state?.selectedInterpreterNo;
 
-  const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
-    []
-  );
-
-  const [companyData, setCompanyData] = useState<any[]>([]);
+  const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
+  const [storeData, setStoreData] = useState<StoreInfo[]>([]);
 
   console.log(1557, selectedInterpreterNo);
 
@@ -99,7 +98,7 @@ function InterpretersListUpdate() {
     }));
   };
 
-  const handleCompanySelect = (company: any) => {
+  const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
 
     updateFormData("company_no", company_no);
@@ -114,7 +113,7 @@ function InterpretersListUpdate() {
     fetchStoreNames();
   };
 
-  const handleStoreSelect = (store: any) => {
+  const handleStoreSelect = (store: StoreInfo) => {
     const { store_no, store_name } = store;
 
     updateFormData("store_no", store_no);
@@ -129,7 +128,7 @@ function InterpretersListUpdate() {
     handleSubmit,
     setValue,
     formState: { isSubmitted },
-  } = useForm<any>();
+  } = useForm<UserInfo>();
 
   const searchConditions = () => {};
 
@@ -165,7 +164,7 @@ function InterpretersListUpdate() {
 
       console.log(177, response);
 
-      response = response.map((item: any) => ({
+      response = response.map((item: LanguageInfo) => ({
         label: item.language_name_furigana, // Map 'language_name' to 'label'
         value: item.languages_support_no, // Map 'languages_support_no' to 'value'
       }));
@@ -211,7 +210,7 @@ function InterpretersListUpdate() {
 
       console.log(166, userDetails);
 
-      const formData = {
+      const apiFormData = {
         user_no,
         company_no,
         company_name,
@@ -238,28 +237,25 @@ function InterpretersListUpdate() {
         user_deleted,
       };
 
-      setFormData(formData);
+      setFormData(apiFormData);
 
-      const fieldsToSet = {
-        company_no,
-        company_name,
-        store_no,
-        store_name,
-        user_name_last,
-        user_name_last_furigana,
-        user_name_first,
-        user_name_first_furigana,
-        mail_address,
-        translate_languages,
-        user_password,
-        user_password_confirm: user_password,
-        meeting_id,
-        meeting_passcode,
-      };
-
-      Object.entries(fieldsToSet).forEach(([key, value]) =>
-        setValue(key, value)
+      setValue("company_no", apiFormData.company_no);
+      setValue("company_name", apiFormData.company_name);
+      setValue("store_no", apiFormData.store_no);
+      setValue("store_name", apiFormData.store_name);
+      setValue("user_name_last", apiFormData.user_name_last);
+      setValue("user_name_last_furigana", apiFormData.user_name_last_furigana);
+      setValue("user_name_first", apiFormData.user_name_first);
+      setValue(
+        "user_name_first_furigana",
+        apiFormData.user_name_first_furigana
       );
+      setValue("mail_address", apiFormData.mail_address);
+      setValue("translate_languages", apiFormData.translate_languages);
+      setValue("user_password", apiFormData.user_password);
+      setValue("user_password_confirm", apiFormData.user_password);
+      setValue("meeting_id", apiFormData.meeting_id);
+      setValue("meeting_passcode", apiFormData.meeting_passcode);
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
@@ -272,19 +268,18 @@ function InterpretersListUpdate() {
       formData.translate_languages
     );
     console.log(189, languageDetails);
-    const transformedOptions = languageDetails.map((language: any) => ({
-      value: language.languages_support_no,
-      label: language.language_name_furigana,
-    }));
+    const transformedOptions = languageDetails.map(
+      (language: LanguageInfo) => ({
+        value: language.languages_support_no,
+        label: language.language_name_furigana,
+      })
+    );
 
     console.log(transformedOptions);
     console.log(997, typeof formData.translate_languages);
     console.log(998, formData.translate_languages);
 
     setOptionValue(formData.translate_languages);
-
-    // Now you can set the options like this:
-    setOptions(transformedOptions);
   };
 
   const handleSelectChange = (value: (string | number)[]) => {
@@ -357,14 +352,12 @@ function InterpretersListUpdate() {
               label="登録日時"
               width="30vw"
               value={convertToJST(formData.created_at ?? "")}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
               width="30vw"
               value={convertToJST(formData.updated_at ?? "")}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
           <Box className="delete-flag">
@@ -452,7 +445,6 @@ function InterpretersListUpdate() {
             label="No"
             width="30vw"
             value={formData.user_no}
-            onChange={(e: any) => setTextValue1(e.target.value)}
           />
           <Box className="name-row">
             <Box className="last-name">
@@ -565,12 +557,6 @@ function InterpretersListUpdate() {
               </Box>
             </Box>
           </Box>
-          {/* <MultipleOptionsSelect
-            label="通訳言語"
-            options={options}
-            value={optionValue} // Pass dynamic value
-            disabled={true}
-          /> */}
           <ValidateSelectMultipleOptions
             isSubmitted={isSubmitted}
             label="通訳言語"
@@ -590,7 +576,6 @@ function InterpretersListUpdate() {
               label="有効期限"
               width="15vw"
               value={convertToJST(formData.password_expire ?? "")}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <Box className="password-input">
               <ValidationInputField

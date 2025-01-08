@@ -10,7 +10,7 @@ import {
 
 // Define the types for the options
 interface Option {
-  value: string;
+  value: string | number;
   label: string;
 }
 

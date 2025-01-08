@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import { StoreInfoFormValues } from "../../../../../types/StoreTypes/StoreTypes";
 import { convertToJST } from "../../../../../utils/utils";
+import { CompanyInfo } from "../../../../../types/CompanyTypes/CompanyTypes";
 
 function StoreListInfo() {
   const { state } = useLocation();
@@ -131,33 +132,16 @@ function StoreListInfo() {
 
   const fetchCompaniesListData = async () => {
     try {
-      const response = await CompanyApiService.fetchCompaniesAll();
+      const response = await CompanyApiService.fetchCompaniesNameDetails();
       console.log(144, response);
-      const filteredData = response.map(
-        ({
-          company_no,
-          company_name,
-        }: {
-          company_no: number;
-          company_name: string;
-        }) => ({
-          company_no,
-          company_name,
-        })
-      );
-
-      console.log(111, filteredData);
-
-      setCompanyData(filteredData);
-
-      // const response = await axios.get(`${homePage}/company`);
+      setCompanyData(response);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
-  const [companyData, setCompanyData] = useState<any[]>([]);
-  const handleCompanySelect = (company: any) => {
+  const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
+  const handleCompanySelect = (company: CompanyInfo) => {
     console.log(147, isValid);
 
     setFormData((prevData) => ({
