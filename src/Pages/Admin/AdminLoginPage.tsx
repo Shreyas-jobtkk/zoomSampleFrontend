@@ -1,97 +1,113 @@
-import React, { useState } from "react";
+// components/Login.tsx
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { homePage } from "../../components/constants";
-import LoginButton from "../../components/LV1/Button/LoginButton/LoginButton";
 import LoginHeader from "../../Header/LoginHeader";
-import TextBoxWithLabel from "../../components/LV1/TextBox/TextBoxWithLabel";
-import PasswordBoxWithLabel from "../../components/LV1/TextBox/PasswordBoxWithLabel";
+import ValidationButton from "../../components/LV1/ValidationButton/ValidationButton";
 import { Box } from "@mui/material";
+import { UserApiService } from "../../api/apiService/user/user-api-service";
+import ValidationInputField from "../../components/LV1/ValidationInputField/ValidationInputField";
+import { useForm } from "react-hook-form";
+import { UserAuth } from "../../types/UserTypes/UserTypes";
 
-const AdminLogin: React.FC = () => {
-  const [inputValue, setInputValue] = useState("");
+const InterpreterLogin: React.FC = () => {
+  const [formData, setFormData] = useState<UserAuth>({
+    mail_address: "",
+    user_password: "",
+  });
+
+  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
-  // const [passwordValue, setPasswordValue] = useState("");
-
-  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setPasswordValue(e.target.value);
-  // };
-
+  // Handle input changes for mail_address and user_password
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handleButtonClick = () => {
-    console.log(45);
-    // setLoading(true); // Set loading to true when fetching starts
-    fetch(`${homePage}/api/users`)
-      .then((response) => response.json())
-      .then((data) => {
-        // setUsers(data);
-        console.log(45);
-        console.log("Fetched users:", data); // Log the fetched users
-        // setLoading(false); // Set loading to false after data is fetched
-        const userData = data.find(
-          (person: any) => person.name_of_institution === inputValue
-        );
+  // Fetch users list and check credentials
+  const contractorAuth = async (
+    mail_address: string,
+    user_password: string
+  ) => {
+    try {
+      console.log(455);
+      const response = await UserApiService.administratorAuth(
+        mail_address,
+        user_password
+      );
 
-        if (userData) {
-          // Perform some action here if found
-          navigate("/AdminMenu", {
-            state: {
-              message: userData,
-            },
-          });
-        } else {
-          // Handle the case where no match is found
-          console.log("No match found");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching users:", error);
-        // setLoading(false); // Set loading to false if there's an error
-      });
+      if (response.success) {
+        // Successful login
+        console.log("Login successful", response.mail);
+        navigate("/AdminMenu", {
+          state: {
+            message: response.mail,
+          },
+        });
+      } else {
+        // Handle authentication errors
+        setError("invalid credentialsss.");
+      }
+    } catch (error) {
+      // alert("server");
+      setError("An error occurred during login. Please try again.");
+      console.error("Login error:", error);
+    }
   };
+
+  // Handle form submission
+  const checkAuth = () => {
+    const { mail_address, user_password } = formData;
+    contractorAuth(mail_address, user_password);
+  };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitted },
+  } = useForm<UserAuth>();
 
   return (
     <Box>
       <LoginHeader />
       <Box className="login-layout">
-        <Box className="login-container">
-          {/* <Box className="login-id">
-            <TextWithBorder text="ユーザーＩＤ" />
-            <TextInput value={inputValue} onChange={handleInputChange} />
-          </Box> */}
-          <TextBoxWithLabel
+        <Box
+          className="login-container"
+          onSubmit={handleSubmit(checkAuth)}
+          component="form"
+        >
+          <ValidationInputField
+            isSubmitted={isSubmitted}
             label="ユーザーＩＤ"
             width="250px" // Uncomment to set a custom width
             labelWidth="100px"
-            value={inputValue}
-            onChange={handleInputChange}
-            disabled={false}
+            name="mail_address"
+            value={formData.mail_address}
+            onChange={handleInputChange} // Update mail_address state on change
+            register={register}
           />
-          <PasswordBoxWithLabel
+          <ValidationInputField
+            isSubmitted={isSubmitted}
             label="パスワード"
             width="250px" // Uncomment to set a custom width
             labelWidth="100px"
+            name="user_password"
+            value={formData.user_password} // Use state value for user_password
+            onChange={handleInputChange} // Update user_password state on change
+            register={register}
+            type="password"
           />
+          {error && <Box color="red">{error}</Box>}{" "}
           <Box className="login-button">
-            <LoginButton onClick={handleButtonClick} label="ログイン" />
+            <ValidationButton label="ログイン" type="submit" />
           </Box>
-
-          {/* <Box className="login-id">
-            <TextWithBorder text="パスワード" />
-            <PasswordInput
-              value={passwordValue}
-              onChange={handlePasswordChange}
-            />
-          </Box> */}
         </Box>
-
-        {/* <main><button onClick={handleButtonClick}>{t('User Login')}</button></main> */}
       </Box>
     </Box>
   );
 };
 
-export default AdminLogin;
+export default InterpreterLogin;

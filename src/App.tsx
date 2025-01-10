@@ -14,7 +14,7 @@ const App: React.FC = () => {
             <Link to="/ResponderLogin">通訳希望者</Link>
           </li>
           <li>
-            <Link to="/TranslatorLogin">通訳者</Link>
+            <Link to="/InterpreterLogin">通訳者</Link>
           </li>
           <li>
             <Link to="/AdminLogin">管理者</Link>

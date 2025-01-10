@@ -1,4 +1,4 @@
-// import TranslatorHomePage from '../components/TranslatorHomePage'
+// import InterpreterHomePage from '../components/InterpreterHomePage'
 import { Route, Routes } from "react-router-dom";
 import AdministratorList from "../Pages/Admin/AdminMenu/AdministratorListPage";
 import CompaniesList from "../Pages/Admin/AdminMenu/CompaniesListPage";

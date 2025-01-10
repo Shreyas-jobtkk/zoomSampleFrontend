@@ -60,6 +60,9 @@ const PasswordBoxWithLabel: React.FC<PasswordBoxWithLabelProps> = ({
           "& .MuiOutlinedInput-root": {
             fontSize,
             height: "100%",
+            "& input": {
+              padding: "4px", // Remove padding for the actual input text
+            },
           },
         }}
         disabled={disabled}

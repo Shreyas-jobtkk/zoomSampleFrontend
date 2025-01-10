@@ -44,6 +44,11 @@ export interface UserInfo {
   user_deleted: Boolean;
 }
 
+export interface UserAuth {
+  mail_address: string;
+  user_password: string;
+}
+
 export interface InterpreterCreateFormValues extends UserCreateFormValues {
   translate_languages: any;
   meeting_id: string;

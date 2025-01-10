@@ -3,9 +3,19 @@ import { fetchUser } from "../user/actions/user-fetch";
 import { createUser } from "../user/actions/user-create";
 import { updateUser } from "../user/actions/user-update";
 import { deleteUsers } from "../user/actions/user-delete";
-import { fetchInterpretersAll } from "./actions/interpreter-fetch-all";
-import { fetchContractorAll } from "./actions/contractor-fetch-all";
-import { fetchAdministratorAll } from "./actions/administrator-fetch-all";
+import {
+  fetchInterpretersAll,
+  interpreterAuth,
+} from "./actions/interpreter-fetch-all";
+import {
+  fetchContractorAll,
+  contractorAuth,
+  // fetchContractorsLoginInfo,
+} from "./actions/contractor-fetch-all";
+import {
+  fetchAdministratorAll,
+  administratorAuth,
+} from "./actions/administrator-fetch-all";
 
 export const UserApiService = {
   fetchUser,
@@ -15,4 +25,7 @@ export const UserApiService = {
   fetchInterpretersAll,
   fetchContractorAll,
   fetchAdministratorAll,
+  contractorAuth,
+  interpreterAuth,
+  administratorAuth,
 };

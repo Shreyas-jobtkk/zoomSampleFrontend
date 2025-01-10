@@ -33,8 +33,6 @@ function CompaniesList() {
   const fetchCompaniesListData = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesAll();
-      console.log(144, response);
-      // const response = await axios.get(`${homePage}/company`);
       const sortedData = response
         .sort(
           (a: CompanyInfo, b: CompanyInfo) =>

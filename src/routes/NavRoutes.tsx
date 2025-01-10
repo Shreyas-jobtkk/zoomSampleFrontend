@@ -1,10 +1,10 @@
-// import TranslatorHomePage from '../components/TranslatorHomePage'
+// import InterpreterHomePage from '../components/InterpreterHomePage'
 import { Route, Routes } from "react-router-dom";
 import UserMenu from "../Pages/User/UserMenuPage"; // Adjust the import path as needed
 // import UserLogin from '../Pages/User/UserLoginPage'; // Adjust the import path as needed
 
-import TranslatorLogin from "../Pages/Translator/TranslatorLoginPage"; // Adjust the import path as needed
-import TranslatorMenu from "../Pages/Translator/TranslatorMenuPage"; // Adjust the import path as needed
+import InterpreterLogin from "../Pages/Interpreter/InterpreterLoginPage"; // Adjust the import path as needed
+import InterpreterMenu from "../Pages/Interpreter/InterpreterMenuPage"; // Adjust the import path as needed
 
 import AdminLogin from "../Pages/Admin/AdminLoginPage"; // Adjust the import path as needed
 import AdminMenu from "../Pages/Admin/AdminMenuPage"; // Adjust the import path as needed
@@ -20,10 +20,10 @@ const NavRoutes = () => (
   <Routes>
     <Route path="/ResponderLogin" element={<ResponderLogin />} />
     <Route path="/UserMenu" element={<UserMenu />} />
-    <Route path="/TranslatorLogin" element={<TranslatorLogin />} />
+    <Route path="/InterpreterLogin" element={<InterpreterLogin />} />
     <Route path="/Sample" element={<Sample />} />
     <Route path="/Sample2" element={<Sample2 />} />
-    <Route path="/TranslatorMenu" element={<TranslatorMenu />} />
+    <Route path="/InterpreterMenu" element={<InterpreterMenu />} />
     <Route path="/AdminLogin" element={<AdminLogin />} />
     <Route path="/AdminMenu" element={<AdminMenu />} />
     <Route path="/ResponderMenu" element={<ResponderMenu />} />
