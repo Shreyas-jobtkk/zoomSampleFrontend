@@ -23,14 +23,17 @@ import SelectOption from "../../LV1/SelectOption/SelectOption";
 import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom";
 import NumberInput from "../../LV1/NumberInput/NumberInput";
 
+export interface DataTableRow {
+  No: number;
+  [key: string]: string | number;
+}
+
 interface DataTableProps {
   headers: string[];
-  data: Array<{ No: string | number; [key: string]: string | number }>;
+  data: DataTableRow[];
   rowsPerPageOptions?: number[];
   initialRowsPerPage?: number;
-  onSelectionChange?: (
-    selectedData: Array<{ No: string | number; [key: string]: string | number }>
-  ) => void;
+  onSelectionChange?: (selectedData: DataTableRow[]) => void;
   maxHeight?: string;
   onClick?: () => void;
   operationButton?: string;

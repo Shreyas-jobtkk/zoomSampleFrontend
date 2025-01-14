@@ -63,6 +63,18 @@ const SelectableModal = <T,>({
     ...options.map((option) => String(option[valueKey]).length)
   );
 
+  // Sort options based on the valueKey in ascending order
+  const sortedOptions = [...options].sort((a, b) => {
+    const valueA = String(a[valueKey]);
+    const valueB = String(b[valueKey]);
+
+    // Convert to numbers if possible, else compare as strings
+    if (!isNaN(Number(valueA)) && !isNaN(Number(valueB))) {
+      return Number(valueA) - Number(valueB);
+    }
+    return valueA.localeCompare(valueB);
+  });
+
   return (
     <div>
       <ButtonAtom onClick={handleOpen} label={label} disabled={disabled} />
@@ -87,7 +99,7 @@ const SelectableModal = <T,>({
               {title}
             </Typography>
             <List>
-              {options.map((option, index) => (
+              {sortedOptions.map((option, index) => (
                 <ListItem key={index} disablePadding>
                   <ListItemButton onClick={() => handleOptionClick(option)}>
                     {/* Pad the company number for alignment */}

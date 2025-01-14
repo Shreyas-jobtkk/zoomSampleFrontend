@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
+import { DataTableRow } from "../../../components/LV3/DataTable/DataTable";
 import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
@@ -14,16 +15,16 @@ function CompaniesList() {
   const navigate = useNavigate();
 
   // States for data and inputs selectedCompanyNo
-  const [selectedCompanyNoArray, setSelectedCompanyNoArray] = useState<any[]>(
-    []
-  );
-  const [tableData, setTableData] = useState<any[]>([]);
-  const [selectedData, setSelectedData] = useState<
-    Array<{ No: string | number; [key: string]: string | number }>
+  const [selectedCompanyNoArray, setSelectedCompanyNoArray] = useState<
+    number[]
   >([]);
-  const [textValue1, setTextValue1] = useState<string>("");
-  const [textValue2, setTextValue2] = useState<string>("");
-  const [textValue3, setTextValue3] = useState<string>("");
+  const [tableData, setTableData] = useState<DataTableRow[]>([]);
+  const [searchData, setSearchData] = useState<DataTableRow[]>([]);
+  const [selectedData, setSelectedData] = useState<DataTableRow[]>([]);
+  const [companyNoRangeMin, setCompanyNoRangeMin] = useState<string>("");
+  const [companyNoRangeMax, setCompanyNoRangeMax] = useState<string>("");
+  const [companyNameFurigana, setCompanyNameFurigana] = useState<string>("");
+  const [companyName, setCompanyName] = useState<string>("");
 
   // Fetch companies on component mount
   useEffect(() => {
@@ -33,54 +34,93 @@ function CompaniesList() {
   const fetchCompaniesListData = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesAll();
-      const sortedData = response
+      const sortedData: DataTableRow[] = response
         .sort(
           (a: CompanyInfo, b: CompanyInfo) =>
             Number(a.company_no) - Number(b.company_no)
         )
         .map((item: CompanyInfo, index: number) => ({
-          No: index + 1,
+          No: index + 1, // `No` field is always included
           登録日時: convertToJST(item.created_at),
           更新日時: convertToJST(item.updated_at),
-          企業Ｎｏ: item.company_no,
+          企業No: item.company_no,
           企業名: item.company_name,
           フリガナ: item.company_name_furigana,
           削除: deleteStatus(item.company_deleted),
         }));
-      console.log(141, sortedData);
       setTableData(sortedData);
+      setSearchData(sortedData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
+  };
+
+  // Filter table data based on search input and range conditions
+  const filterTableData = () => {
+    const isInvalidRange =
+      Number(companyNoRangeMin) > Number(companyNoRangeMax);
+    const isNotEmpty = companyNoRangeMin !== "" && companyNoRangeMax !== "";
+
+    if (isInvalidRange && isNotEmpty) {
+      return alert("min is more than max");
+    }
+
+    const filtered = tableData.filter((item) => {
+      // Convert "企業No" (company number) to a number for range comparison
+      const companyNo = Number(item["企業No"]);
+
+      // Range filtering logic:
+      // Check if the company number falls within the specified range.
+      // If a range boundary (min or max) is not provided, ignore that condition.
+      const isInRange =
+        (!companyNoRangeMin || companyNo >= Number(companyNoRangeMin)) &&
+        (!companyNoRangeMax || companyNo <= Number(companyNoRangeMax));
+
+      console.log(1445, item);
+
+      // Search input filtering logic:
+      // Check if the item matches the specified search terms for "企業名" (company name)
+      // and "フリガナ" (company name pronunciation in Kana).
+      // Convert values to strings to safely use the `includes` method.
+      const matchesFilters =
+        (!companyName || String(item["企業名"]).includes(companyName)) &&
+        (!companyNameFurigana ||
+          String(item["フリガナ"]).includes(companyNameFurigana));
+
+      console.log(21445, matchesFilters);
+
+      // An item is included in the results only if it satisfies both range and search conditions
+      return isInRange && matchesFilters;
+    });
+
+    // Update the filtered data state to reflect the search results
+    setSearchData(filtered);
   };
 
   const headers = [
     "No",
     "登録日時",
     "更新日時",
-    "企業Ｎｏ",
+    "企業No",
     "企業名",
     "フリガナ",
     "削除",
   ];
 
   const searchConditions = () => {
+    filterTableData();
     console.log("Search conditions triggered");
-    // Implement search logic here
   };
 
   const navigateToCompanyCreate = () => navigate("/CompanyCreate");
 
-  const handleSelectionChange = (
-    newSelectedData: Array<{
-      No: string | number;
-      [key: string]: string | number;
-    }>
-  ) => {
+  const handleSelectionChange = (newSelectedData: DataTableRow[]) => {
     setSelectedData(newSelectedData);
     console.log("Selected Data:", newSelectedData);
 
-    const selectedCompanyNo = newSelectedData.map((item) => item["企業Ｎｏ"]);
+    const selectedCompanyNo = newSelectedData.map((item) =>
+      Number(item["企業No"])
+    );
     setSelectedCompanyNoArray(selectedCompanyNo);
   };
 
@@ -97,10 +137,8 @@ function CompaniesList() {
   };
 
   const handleDeleteCompanies = async () => {
-    // console.log(114, selectedCompanyNoArray);
     try {
       await CompanyApiService.deleteCompanies(selectedCompanyNoArray);
-      // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
     } catch (error: unknown) {
       if (error instanceof Error) {
         alert(error.message);
@@ -121,24 +159,46 @@ function CompaniesList() {
             disabled={false}
             label="企業No"
             width="12vw"
-            value={textValue1}
-            onChange={(e: any) => setTextValue1(e.target.value)}
+            value={companyNoRangeMin}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setCompanyNoRangeMin(e.target.value);
+              // handleFilterChange("企業No", e.target.value);
+            }}
+            type="number"
+          />
+          <TextBoxWithLabel
+            disabled={false}
+            label="~"
+            width="12vw"
+            value={companyNoRangeMax}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setCompanyNoRangeMax(e.target.value);
+              // handleFilterChange("企業No", e.target.value);
+            }}
+            type="number"
+            labelWidth="3vw"
           />
           <Box>
             <TextBoxWithLabel
               disabled={false}
               label="フリガナ"
-              width="60vw"
-              value={textValue2}
-              onChange={(e: any) => setTextValue2(e.target.value)}
+              width="40vw"
+              value={companyNameFurigana}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setCompanyNameFurigana(e.target.value);
+                // handleFilterChange("フリガナ", e.target.value);
+              }}
               labelWidth="70px"
             />
             <TextBoxWithLabel
               disabled={false}
               label="企業名"
-              width="60vw"
-              value={textValue3}
-              onChange={(e: any) => setTextValue3(e.target.value)}
+              width="40vw"
+              value={companyName}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setCompanyName(e.target.value);
+                // handleFilterChange("企業名", e.target.value);
+              }}
               labelWidth="70px"
             />
           </Box>
@@ -149,7 +209,7 @@ function CompaniesList() {
       </Box>
       <DataTable
         headers={headers}
-        data={tableData}
+        data={searchData}
         maxHeight="calc(87vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"

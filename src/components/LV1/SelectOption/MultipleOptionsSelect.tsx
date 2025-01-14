@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Select,
   MenuItem,
@@ -18,8 +18,8 @@ interface Option {
 interface MultipleOptionsSelectProps {
   label: string;
   options: Option[];
-  value: string[]; // Controlled value passed from parent
-  onChange?: (selectedValues: string[]) => void; // Optional callback for handling changes
+  value: (string | number)[]; // value is now an array
+  onChange?: (value: (string | number)[]) => void; // Optional callback for handling changes
   labelWidth?: string | number;
   width?: number;
   height?: number;
@@ -36,11 +36,20 @@ const MultipleOptionsSelect: React.FC<MultipleOptionsSelectProps> = ({
   height = 30,
   disabled = false,
 }) => {
-  const handleChange = (event: SelectChangeEvent<string[]>) => {
-    const newValues = event.target.value as string[];
+  const handleChange = (event: SelectChangeEvent<(string | number)[]>) => {
+    let newValue = event.target.value as (string | number)[]; // Explicitly type as array
+    newValue = newValue.filter((value) => value !== ""); // Filter out empty strings
+    console.log(245, newValue);
     if (onChange) {
-      onChange(newValues); // Notify parent of the change if onChange is provided
+      onChange(newValue); // Pass the new array of selected values
     }
+  };
+
+  const [open, setOpen] = useState(false); // State to manage dropdown open/close
+
+  const handleOkClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setOpen(false); // Close the dropdown when "OK" is clicked
   };
 
   return (
@@ -65,18 +74,26 @@ const MultipleOptionsSelect: React.FC<MultipleOptionsSelectProps> = ({
         <Select
           multiple
           value={value}
+          open={open}
           onChange={handleChange}
           sx={{
             height,
           }}
+          onClose={() => setOpen(false)} // Handle dropdown close
+          onOpen={() => setOpen(true)} // Handle dropdown open
           disabled={disabled}
           renderValue={
             (selected) =>
               selected
-                .map(
-                  (val) => options.find((option) => option.value === val)?.label
-                )
-                .join(", ") // Map values to their corresponding labels
+                .map((val) => {
+                  if (val !== "") {
+                    return options.find((option) => option.value === val)
+                      ?.label;
+                  }
+                  return null; // Return null if val is an empty string
+                })
+                .filter(Boolean) // Remove any null values from the array
+                .join(", ") // Join the remaining labels with a comma
           }
         >
           {options.map((option, index) => (
@@ -84,6 +101,18 @@ const MultipleOptionsSelect: React.FC<MultipleOptionsSelectProps> = ({
               {option.label}
             </MenuItem>
           ))}
+          <MenuItem
+            onClick={handleOkClick}
+            sx={{
+              justifyContent: "right",
+              fontWeight: "bold",
+              color: "primary.main",
+              "&.Mui-selected": { backgroundColor: "transparent" },
+            }}
+            value=""
+          >
+            OK
+          </MenuItem>
         </Select>
       </FormControl>
     </Box>

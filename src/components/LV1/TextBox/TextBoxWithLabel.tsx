@@ -10,6 +10,7 @@ interface TextBoxWithLabelProps {
   labelWidth?: string; // Optional label width prop
   disabled?: boolean; // Optional disabled prop to disable editing
   [key: string]: any; // Allow other props to be passed
+  type?: string;
 }
 
 const TextBoxWithLabel: React.FC<TextBoxWithLabelProps> = ({
@@ -19,6 +20,7 @@ const TextBoxWithLabel: React.FC<TextBoxWithLabelProps> = ({
   fontSize, // Default font size in em for label and TextField
   labelWidth = "85px", // Default label width
   disabled = true, // Default disabled state is false
+  type = "text",
   ...props
 }) => {
   return (
@@ -43,6 +45,11 @@ const TextBoxWithLabel: React.FC<TextBoxWithLabelProps> = ({
       </label>
       <TextField
         variant="outlined"
+        slotProps={{
+          htmlInput: {
+            type: type,
+          },
+        }}
         sx={{
           width, // Apply width for TextField
           height: "30px", // Make TextField take the full height of the Box

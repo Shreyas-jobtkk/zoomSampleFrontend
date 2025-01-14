@@ -4,19 +4,24 @@ import { Box } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../components/LV3/Header/MenuHeader";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
+import { DataTableRow } from "../../../components/LV3/DataTable/DataTable";
 import "./AdminMenu.scss";
 import { useNavigate } from "react-router-dom";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
 import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
 import { StoreApiService } from "../../../api/apiService/store/store-api-service";
 import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
+import SelectableModal from "../../../components/LV1/SelectableModal/SelectableModal";
+import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
 
 function StoreList() {
   const navigate = useNavigate();
-  // State for selected start and end times
 
   // States for data and inputs selectedStoreNo
-  const [selectedStoreNoArray, setSelectedStoreNoArray] = useState<any[]>([]);
+  const [selectedStoreNoArray, setSelectedStoreNoArray] = useState<number[]>(
+    []
+  );
+  const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
 
   const headers = [
     "No",
@@ -30,28 +35,54 @@ function StoreList() {
     "削除",
   ];
 
-  const [tableData, setTableData] = useState<any[]>([]);
+  const [tableData, setTableData] = useState<DataTableRow[]>([]);
+  const [storeNoRangeMin, setStoreNoRangeMin] = useState<string>("");
+  const [storeNoRangeMax, setStoreNoRangeMax] = useState<string>("");
+  const [storeNameFurigana, setStoreNameFurigana] = useState<string>("");
+  const [storeName, setStoreName] = useState<string>("");
+  const [companyName, setCompanyName] = useState<string>("");
+  const [companyNo, setCompanyNo] = useState<string>("");
+  const [searchData, setSearchData] = useState<DataTableRow[]>([]);
 
-  const searchConditions = () => {};
+  const searchConditions = () => {
+    filterTableData();
+  };
 
-  useEffect(() => {
-    fetchCompaniesListData();
-    fetchStoreListData();
-  }, []);
+  const filterTableData = () => {
+    const isInvalidRange = Number(storeNoRangeMin) > Number(storeNoRangeMax);
+    const isNotEmpty = storeNoRangeMin !== "" && storeNoRangeMax !== "";
 
-  const fetchCompaniesListData = async () => {
-    try {
-      const response = await CompanyApiService.fetchCompaniesAll();
-      console.log(145, response);
-    } catch (error) {
-      console.error("Error fetching companies:", error);
+    if (isInvalidRange && isNotEmpty) {
+      return alert("min is more than max");
     }
+
+    const filtered = tableData.filter((item) => {
+      const matchesCompanyNo = companyNo === "" || item["企業No"] === companyNo;
+
+      const storeNo = Number(item["店舗No"]);
+
+      const isInRange =
+        (!storeNoRangeMin || storeNo >= Number(storeNoRangeMin)) &&
+        (!storeNoRangeMax || storeNo <= Number(storeNoRangeMax));
+
+      const matchesFilters =
+        (!storeName || String(item["店舗名"]).includes(storeName)) &&
+        (!storeNameFurigana ||
+          String(item["フリガナ"]).includes(storeNameFurigana));
+
+      console.log(21445, matchesFilters);
+
+      // An item is included in the results only if it satisfies both range and search conditions
+      return isInRange && matchesFilters && matchesCompanyNo;
+    });
+
+    // Update the table data to show filtered results
+    setSearchData(filtered);
   };
 
   const fetchStoreListData = async () => {
     try {
       const response = await StoreApiService.fetchStoreAll();
-      console.log(245, response);
       const sortedData = response
         .sort(
           (a: StoreInfo, b: StoreInfo) =>
@@ -68,34 +99,40 @@ function StoreList() {
           フリガナ: item.store_name_furigana,
           削除: deleteStatus(item.store_delete),
         }));
-      console.log(141, sortedData);
-      setTableData(sortedData);
+
+      setTableData(sortedData); // Initial table data load
+      setSearchData(sortedData);
+    } catch (error) {
+      console.error("Error fetching stores:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCompaniesNames();
+    fetchStoreListData();
+  }, []);
+
+  const fetchCompaniesNames = async () => {
+    try {
+      const response = await CompanyApiService.fetchCompaniesNameDetails();
+      console.log(145, response);
+      setCompanyData(response);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
-  const [textValue1, setTextValue1] = useState<string>("");
-  const [textValue2, setTextValue2] = useState<string>("");
-  const [textValue3, setTextValue3] = useState<string>("");
-  const [textValue10, setTextValue10] = useState<string>("");
-
-  const [selectedData, setSelectedData] = useState<
-    Array<{ No: string | number; [key: string]: string | number }>
-  >([]);
+  const [selectedData, setSelectedData] = useState<DataTableRow[]>([]);
 
   // Handle selection change
-  const handleSelectionChange = (
-    newSelectedData: Array<{
-      No: string | number;
-      [key: string]: string | number;
-    }>
-  ) => {
+  const handleSelectionChange = (newSelectedData: DataTableRow[]) => {
     // Update the selected data state
     setSelectedData(newSelectedData);
     console.log(123, newSelectedData);
     // // Log the selected data to the console
-    const selectedStoreNo = newSelectedData.map((item) => item["店舗No"]);
+    const selectedStoreNo = newSelectedData.map((item) =>
+      Number(item["店舗No"])
+    );
     setSelectedStoreNoArray(selectedStoreNo);
     console.log(
       "Selected Data:",
@@ -136,6 +173,12 @@ function StoreList() {
     navigate("/StoreCreate");
   };
 
+  const handleCompanySelect = (company: CompanyInfo) => {
+    const { company_no, company_name } = company;
+    setCompanyNo(company_no);
+    setCompanyName(company_name);
+  };
+
   return (
     <Box className="admin-menu-nav-page">
       <MenuHeader title="店舗一覧" />
@@ -143,52 +186,73 @@ function StoreList() {
         <Box className="search-label">検索条件</Box>
         <Box className="move-top">
           <Box>
-            <ButtonAtom
-              onClick={searchConditions}
+            <SelectableModal
+              title="企業検索"
+              options={companyData}
+              onOptionSelect={handleCompanySelect}
               label="企業検索"
-              width="90px"
-              margin="2px"
+              valueKey="company_no" // We use company_no for unique identification
+              displayKey="company_name" // We display company_name in the list
             />
             <Box className="companies-details">
-              <TextBoxWithLabel
-                label="企業No"
-                width="12vw" // Uncomment to set a custom width
-                value={textValue10}
-                onChange={(e: any) => setTextValue10(e.target.value)}
-                // disabled={true}
-              />
+              <Box style={{ minWidth: "40vw" }}>
+                <TextBoxWithLabel
+                  label="企業No"
+                  width="12vw" // Uncomment to set a custom width
+                  value={companyNo}
+                />
+              </Box>
               <TextBoxWithLabel
                 label="企業名"
-                width="60vw" // Uncomment to set a custom width
-                value={textValue3}
-                onChange={(e: any) => setTextValue3(e.target.value)}
+                width="40vw" // Uncomment to set a custom width
+                value={companyName}
               />
             </Box>
           </Box>
           <Box className="store-details margin-top">
-            <TextBoxWithLabel
-              disabled={false}
-              label="店舗No"
-              width="12vw" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
-            />
+            <Box sx={{ display: "flex", minWidth: "40vw", gap: "2vw" }}>
+              <TextBoxWithLabel
+                disabled={false}
+                label="店舗No"
+                width="12vw" // Uncomment to set a custom width
+                value={storeNoRangeMin}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setStoreNoRangeMin(e.target.value)
+                }
+                type="number"
+              />
+              <TextBoxWithLabel
+                disabled={false}
+                label="~"
+                width="12vw" // Uncomment to set a custom width
+                value={storeNoRangeMax}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setStoreNoRangeMax(e.target.value)
+                }
+                type="number"
+                labelWidth="3vw"
+              />{" "}
+            </Box>
             <Box>
               <TextBoxWithLabel
                 disabled={false}
                 label="フリガナ"
-                width="60vw" // Uncomment to set a custom width
-                value={textValue2}
-                onChange={(e: any) => setTextValue2(e.target.value)}
+                width="40vw" // Uncomment to set a custom width
+                value={storeNameFurigana}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setStoreNameFurigana(e.target.value)
+                }
                 // labelWidth="70px"
               />
               <TextBoxWithLabel
                 disabled={false}
                 // labelWidth="70px"
                 label="店舗名"
-                width="60vw" // Uncomment to set a custom width
-                value={textValue3}
-                onChange={(e: any) => setTextValue3(e.target.value)}
+                width="40vw" // Uncomment to set a custom width
+                value={storeName}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setStoreName(e.target.value)
+                }
               />
             </Box>
             <Box className="search-button">
@@ -199,7 +263,7 @@ function StoreList() {
       </Box>
       <DataTable // Customize header height
         headers={headers}
-        data={tableData}
+        data={searchData}
         maxHeight="calc(82vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"

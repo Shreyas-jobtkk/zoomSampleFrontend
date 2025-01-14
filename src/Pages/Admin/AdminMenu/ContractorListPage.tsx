@@ -9,6 +9,12 @@ import { useNavigate } from "react-router-dom";
 import { UserApiService } from "../../../api/apiService/user/user-api-service";
 import { UserInfo } from "../../../types/UserTypes/UserTypes";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
+import { DataTableRow } from "../../../components/LV3/DataTable/DataTable";
+import SelectableModal from "../../../components/LV1/SelectableModal/SelectableModal";
+import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
+import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
+import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
+import { StoreApiService } from "../../../api/apiService/store/store-api-service";
 
 function InterpretersList() {
   const navigate = useNavigate();
@@ -17,15 +23,88 @@ function InterpretersList() {
     number[]
   >([]);
 
-  const [tableData, setTableData] = useState<any[]>([]);
+  const [tableData, setTableData] = useState<DataTableRow[]>([]);
+  const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
+  const [storeData, setStoreData] = useState<StoreInfo[]>([]);
+  const [isStoresExist, setIsStoresExist] = useState<boolean>(false);
+  const [companyNo, setCompanyNo] = useState<string>("");
+  const [companyName, setCompanyName] = useState<string>("");
+  const [storeNo, setStoreNo] = useState<string>("");
+  const [storeName, setStoreName] = useState<string>("");
+
+  const [contractorNoRangeMin, setContractorNoRangeMin] = useState<string>("");
+  const [contractorNoRangeMax, setContractorNoRangeMax] = useState<string>("");
+  const [contractorNameLast, setContractorNameLast] = useState<string>("");
+  const [contractorNameFuriganaLast, setContractorNameFuriganaLast] =
+    useState<string>("");
+  const [contractorNameFirst, setContractorNameFirst] = useState<string>("");
+  const [contractorNameFuriganaFirst, setContractorNameFuriganaFirst] =
+    useState<string>("");
+  const [searchData, setSearchData] = useState<DataTableRow[]>([]);
+  const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
+
+  const [selectedData, setSelectedData] = useState<
+    Array<{ No: string | number; [key: string]: string | number }>
+  >([]);
+
+  const headers = [
+    "No",
+    "登録日時",
+    "更新日時",
+    "企業No",
+    "企業名",
+    "店舗No",
+    "店舗名",
+    "通訳者No",
+    "名前",
+    "フリガナ",
+    "削除",
+  ];
 
   useEffect(() => {
+    fetchCompaniesNames();
     fetchUsersListData();
   }, []);
+
+  useEffect(() => {
+    if (!isCompanyNoEmpty) {
+      console.log(155, isCompanyNoEmpty);
+      fetchStoreNames();
+    }
+  }, [companyNo]);
+
+  const fetchCompaniesNames = async () => {
+    try {
+      const response = await CompanyApiService.fetchCompaniesNameDetails();
+      console.log(145, response);
+      setCompanyData(response);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
+    }
+  };
+
+  const fetchStoreNames = async () => {
+    try {
+      const response = await StoreApiService.fetchStoreNamesByCompany(
+        companyNo
+      );
+      console.log(247, response);
+      setStoreData(response);
+      setIsStoresExist(true);
+
+      // const response = await axios.get(`${homePage}/company`);
+    } catch (error) {
+      setIsStoresExist(false);
+      alert("no stores exist");
+      // console.error("Error fetching companies:", error);
+    }
+  };
 
   const fetchUsersListData = async () => {
     try {
       const response = await UserApiService.fetchContractorAll();
+
+      console.log(147, response);
 
       // const response = await axios.get(`${homePage}/company`);
       const sortedData = response
@@ -42,35 +121,68 @@ function InterpretersList() {
           店舗名: item.store_name,
           通訳者No: item.user_no,
           名前: `${item.user_name_last} ${item.user_name_first}`,
-
+          フリガナ: `${item.user_name_last_furigana} ${item.user_name_first_furigana}`,
           削除: deleteStatus(item.user_deleted),
+
+          名前_last: item.user_name_last,
+          名前_first: item.user_name_first,
+          フリガナ_last: item.user_name_last_furigana,
+          フリガナ_first: item.user_name_first_furigana,
         }));
       console.log(141, sortedData);
       setTableData(sortedData);
+      setSearchData(sortedData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
-  const headers = [
-    "No",
-    "登録日時",
-    "更新日時",
-    "企業No",
-    "企業名",
-    "店舗No",
-    "店舗名",
-    "通訳者No",
-    "名前",
-    "削除",
-  ];
 
-  const searchConditions = () => {};
+  const searchConditions = () => {
+    filterTableData();
+  };
 
-  const [textValue1, setTextValue1] = useState<string>("");
-  const [textValue2, setTextValue2] = useState<string>("");
-  const [textValue3, setTextValue3] = useState<string>("");
-  const [textValue4, setTextValue4] = useState<string>("");
-  const [textValue5, setTextValue5] = useState<string>("");
+  const filterTableData = () => {
+    const isInvalidRange =
+      Number(contractorNoRangeMin) > Number(contractorNoRangeMax);
+    const isNotEmpty =
+      contractorNoRangeMin !== "" && contractorNoRangeMax !== "";
+
+    if (isInvalidRange && isNotEmpty) {
+      return alert("min is more than max");
+    }
+
+    const filtered = tableData.filter((item) => {
+      const matchesCompanyNo = companyNo === "" || item["企業No"] === companyNo;
+      const matchesStoreNo = storeNo === "" || item["店舗No"] === storeNo;
+
+      const contractorNo = Number(item["通訳者No"]);
+
+      const isInRange =
+        (!contractorNoRangeMin ||
+          contractorNo >= Number(contractorNoRangeMin)) &&
+        (!contractorNoRangeMax || contractorNo <= Number(contractorNoRangeMax));
+
+      const matchesFilters =
+        (!contractorNameLast ||
+          String(item["名前_last"]).includes(contractorNameLast)) &&
+        (!contractorNameFuriganaLast ||
+          String(item["フリガナ_last"]).includes(contractorNameFuriganaLast)) &&
+        (!contractorNameFirst ||
+          String(item["名前_first"]).includes(contractorNameFirst)) &&
+        (!contractorNameFuriganaFirst ||
+          String(item["フリガナ_first"]).includes(contractorNameFuriganaFirst));
+
+      console.log(21445, matchesFilters);
+      console.log(21446, String(item["フリガナ_last"]));
+      console.log(21447, contractorNameFuriganaLast);
+
+      // An item is included in the results only if it satisfies both range and search conditions
+      return isInRange && matchesFilters && matchesCompanyNo && matchesStoreNo;
+    });
+
+    // Update the table data to show filtered results
+    setSearchData(filtered);
+  };
 
   const handleSelectionChange = (
     newSelectedData: Array<{
@@ -128,9 +240,27 @@ function InterpretersList() {
     await fetchUsersListData();
   };
 
-  const [selectedData, setSelectedData] = useState<
-    Array<{ No: string | number; [key: string]: string | number }>
-  >([]);
+  const handleCompanySelect = (company: CompanyInfo) => {
+    const { company_no, company_name } = company;
+    setCompanyNo(company_no);
+    setCompanyName(company_name);
+
+    setCompanyNoIsEmpty(!company_no || company_no === "");
+  };
+
+  const handleStoreSelect = (store: StoreInfo) => {
+    const { store_no, store_name } = store;
+
+    setStoreName(store_name);
+    setStoreNo(store_no);
+
+    console.log(133, store);
+    // const { store_no, store_name } = store;
+    // updateFormData("store_no", store_no);
+    // updateFormData("store_name", store_name);
+    // setValue("store_no", store_no);
+    // setValue("store_name", store_name);
+  };
 
   return (
     <Box className="admin-menu-nav-page">
@@ -141,40 +271,47 @@ function InterpretersList() {
           <Box style={{ display: "flex", gap: "100px", marginBottom: "20px" }}>
             <Box>
               {/* <Box>企業検索</Box> */}
-              <ButtonAtom onClick={searchConditions} label="企業検索" />
+              <SelectableModal
+                title="企業検索"
+                options={companyData}
+                onOptionSelect={handleCompanySelect}
+                label="企業検索"
+                valueKey="company_no" // We use company_no for unique identification
+                displayKey="company_name" // We display company_name in the list
+              />
               <Box style={{ display: "flex", gap: "20px" }}>
                 <TextBoxWithLabel
                   label="企業No"
                   width="15vw" // Uncomment to set a custom width
-                  value={textValue1}
-                  onChange={(e: any) => setTextValue1(e.target.value)}
-                  disabled={false}
+                  value={companyNo}
                 />
                 <TextBoxWithLabel
                   label="企業名"
                   width="15vw" // Uncomment to set a custom width
-                  value={textValue1}
-                  onChange={(e: any) => setTextValue1(e.target.value)}
-                  disabled={false}
+                  value={companyName}
                 />
               </Box>
             </Box>
             <Box>
-              <ButtonAtom onClick={searchConditions} label="店舗検索" />
+              <SelectableModal
+                title="店舗検索"
+                options={storeData}
+                onOptionSelect={handleStoreSelect}
+                label="店舗検索"
+                valueKey="store_no" // We use company_no for unique identification
+                displayKey="store_name" // We display company_name in the list
+                disabled={!(!isCompanyNoEmpty && isStoresExist)}
+              />
               <Box style={{ display: "flex", gap: "20px" }}>
                 <TextBoxWithLabel
                   label="店舗No"
                   width="15vw" // Uncomment to set a custom width
-                  value={textValue1}
-                  onChange={(e: any) => setTextValue1(e.target.value)}
-                  disabled={false}
+                  value={storeNo}
                 />
                 <TextBoxWithLabel
                   label="店舗名"
                   width="15vw" // Uncomment to set a custom width
-                  value={textValue1}
-                  onChange={(e: any) => setTextValue1(e.target.value)}
-                  disabled={false}
+                  value={storeName}
                 />
               </Box>
             </Box>
@@ -183,16 +320,22 @@ function InterpretersList() {
             <TextBoxWithLabel
               label="通訳者No"
               width="6vw" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
               disabled={false}
+              type="number"
+              value={contractorNoRangeMin}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setContractorNoRangeMin(e.target.value)
+              }
             />
             <TextBoxWithLabel
               label="~"
               width="6vw" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
+              value={contractorNoRangeMax}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setContractorNoRangeMax(e.target.value)
+              }
               disabled={false}
+              type="number"
               labelWidth="25px"
             />
 
@@ -200,8 +343,10 @@ function InterpretersList() {
               <TextBoxWithLabel
                 label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 width="18vw" // Uncomment to set a custom width
-                value={textValue2}
-                onChange={(e: any) => setTextValue2(e.target.value)}
+                value={contractorNameFuriganaLast}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setContractorNameFuriganaLast(e.target.value)
+                }
                 labelWidth="130px"
                 disabled={false}
               />
@@ -209,8 +354,10 @@ function InterpretersList() {
                 labelWidth="130px"
                 label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                 width="18vw" // Uncomment to set a custom width
-                value={textValue3}
-                onChange={(e: any) => setTextValue3(e.target.value)}
+                value={contractorNameLast}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setContractorNameLast(e.target.value)
+                }
                 disabled={false}
               />
             </Box>
@@ -220,16 +367,20 @@ function InterpretersList() {
                 label="メイ"
                 labelWidth="40px"
                 width="12vw" // Uncomment to set a custom width
-                value={textValue4}
-                onChange={(e: any) => setTextValue4(e.target.value)}
+                value={contractorNameFuriganaFirst}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setContractorNameFuriganaFirst(e.target.value)
+                }
                 disabled={false}
               />
               <TextBoxWithLabel
                 label="名"
                 labelWidth="40px"
                 width="12vw" // Uncomment to set a custom width
-                value={textValue5}
-                onChange={(e: any) => setTextValue5(e.target.value)}
+                value={contractorNameFirst}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setContractorNameFirst(e.target.value)
+                }
                 disabled={false}
               />
             </Box>
@@ -243,7 +394,7 @@ function InterpretersList() {
 
       <DataTable // Customize header height
         headers={headers}
-        data={tableData}
+        data={searchData}
         maxHeight="calc(87vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
