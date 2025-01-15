@@ -50,13 +50,12 @@ const Sample: React.FC = () => {
 
   const isButtonDisabled = !meetingNumber || !password;
 
-  const authEndpoint = "http://localhost:4000";
+  const authEndpoint = "https://zoomsamplebackend.onrender.com";
   const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
 
   const role = 1;
   const userName = "host";
-  // const zakToken = "";
-  const leaveUrl = "http://localhost:5173";
+  const leaveUrl = "https://zoomsamplebackend.onrender.com";
 
   const getSignature = async () => {
     console.log(155, import.meta.env.VITE_ZOOM_MEETING_SDK_KEY);
@@ -175,7 +174,7 @@ const Sample: React.FC = () => {
     <Container className="App" maxWidth="sm">
       <Box component="main" sx={{ textAlign: "center", mt: 4 }}>
         <Typography variant="h5" component="h1" gutterBottom>
-          Zoom Meeting SDK Sample React
+          Zoom Meeting SDK Sample React2
         </Typography>
         <TextField
           label="Meeting Number"
