@@ -1,15 +1,14 @@
-// import InterpreterHomePage from '../components/InterpreterHomePage'
 import { Route, Routes } from "react-router-dom";
-import AdministratorList from "../Pages/Admin/AdminMenu/AdministratorListPage";
-import CompaniesList from "../Pages/Admin/AdminMenu/CompaniesListPage";
-import InterpreterEvaluationList from "../Pages/Admin/AdminMenu/InterpreterEvaluationListPage";
-import InterpretersList from "../Pages/Admin/AdminMenu/InterpretersListPage";
-import LanguagesSupportList from "../Pages/Admin/AdminMenu/LanguagesSupportListPage";
-import LogList from "../Pages/Admin/AdminMenu/LogListPage";
-import MeetingHistoryList from "../Pages/Admin/AdminMenu/MeetingHistoryListPage";
-import MeetingInvitationList from "../Pages/Admin/AdminMenu/MeetingInvitationListPage";
-import ContractorListPage from "../Pages/Admin/AdminMenu/ContractorListPage";
-import StoreListPage from "../Pages/Admin/AdminMenu/StoreListPage";
+import AdministratorList from "../components/Admin/Entities/Administrator/AdministratorList";
+import CompaniesList from "../components/Admin/Entities/Companies/CompaniesList";
+import InterpreterEvaluationList from "../components/Admin/Entities/InterpreterEvaluation/InterpreterEvaluationList";
+import InterpretersList from "../components/Admin/Entities/Interpreter/InterpretersList";
+import LanguagesSupportList from "../components/Admin/Entities/LanguagesSupport/LanguagesSupportList";
+import LogList from "../components/Admin/Entities/Log/LogList";
+import MeetingHistoryList from "../components/Admin/Entities/MeetingHistory/MeetingHistoryList";
+import MeetingInvitationList from "../components/Admin/Entities/MeetingInvitation/MeetingInvitationList";
+import ContractorList from "../components/Admin/Entities/Contractor/ContractorList";
+import StoreList from "../components/Admin/Entities/Stores/StoreList";
 
 const AppMenuRoutes = () => (
   <Routes>
@@ -24,8 +23,8 @@ const AppMenuRoutes = () => (
     <Route path="/LogList" element={<LogList />} />
     <Route path="/MeetingHistoryList" element={<MeetingHistoryList />} />
     <Route path="/MeetingInvitationList" element={<MeetingInvitationList />} />
-    <Route path="/ContractorList" element={<ContractorListPage />} />
-    <Route path="/StoreList" element={<StoreListPage />} />
+    <Route path="/ContractorList" element={<ContractorList />} />
+    <Route path="/StoreList" element={<StoreList />} />
   </Routes>
 );
 

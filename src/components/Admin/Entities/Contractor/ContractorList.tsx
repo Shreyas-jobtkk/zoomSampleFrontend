@@ -1,20 +1,21 @@
-import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
+import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import MenuHeader from "../../../components/LV3/Header/MenuHeader";
-import DataTable from "../../../components/LV3/DataTable/DataTable";
-import "./AdminMenu.scss";
+import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
+import MenuHeader from "../../../LV3/Header/MenuHeader";
+import DataTable from "../../../LV3/DataTable/DataTable";
+// import "./AdminMenu.scss";
 import { useNavigate } from "react-router-dom";
-import { UserApiService } from "../../../api/apiService/user/user-api-service";
-import { UserInfo } from "../../../types/UserTypes/UserTypes";
-import { convertToJST, deleteStatus } from "../../../utils/utils";
-import { DataTableRow } from "../../../components/LV3/DataTable/DataTable";
-import SelectableModal from "../../../components/LV1/SelectableModal/SelectableModal";
-import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
-import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
-import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
-import { StoreApiService } from "../../../api/apiService/store/store-api-service";
+import { UserApiService } from "../../../../api/apiService/user/user-api-service";
+import { UserInfo } from "../../../../types/UserTypes/UserTypes";
+import { convertToJST, deleteStatus } from "../../../../utils/utils";
+import { DataTableRow } from "../../../LV3/DataTable/DataTable";
+import SelectableModal from "../../../LV1/SelectableModal/SelectableModal";
+import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
+import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
+import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
+import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
+import classes from "../styles/AdminEntities.module.scss";
 
 function InterpretersList() {
   const navigate = useNavigate();
@@ -263,14 +264,13 @@ function InterpretersList() {
   };
 
   return (
-    <Box className="admin-menu-nav-page">
+    <Box className={classes.adminEntity}>
       <MenuHeader title="通訳者一覧" />
-      <Box className="search-container">
-        <Box className="search-label">検索条件</Box>
-        <Box className="move-top">
-          <Box style={{ display: "flex", gap: "100px", marginBottom: "20px" }}>
+      <Box className={classes.searchContainer}>
+        <Box className={classes.searchLabel}>検索条件</Box>
+        <Box className={classes.moveTop}>
+          <Box className={classes.companyStoreRow}>
             <Box>
-              {/* <Box>企業検索</Box> */}
               <SelectableModal
                 title="企業検索"
                 options={companyData}
@@ -279,7 +279,7 @@ function InterpretersList() {
                 valueKey="company_no" // We use company_no for unique identification
                 displayKey="company_name" // We display company_name in the list
               />
-              <Box style={{ display: "flex", gap: "20px" }}>
+              <Box className={classes.companiesDetails}>
                 <TextBoxWithLabel
                   label="企業No"
                   width="15vw" // Uncomment to set a custom width
@@ -302,7 +302,7 @@ function InterpretersList() {
                 displayKey="store_name" // We display company_name in the list
                 disabled={!(!isCompanyNoEmpty && isStoresExist)}
               />
-              <Box style={{ display: "flex", gap: "20px" }}>
+              <Box className={classes.storeDetails}>
                 <TextBoxWithLabel
                   label="店舗No"
                   width="15vw" // Uncomment to set a custom width
@@ -316,7 +316,7 @@ function InterpretersList() {
               </Box>
             </Box>
           </Box>
-          <Box className="interpreter-details">
+          <Box className={classes.contractorDetails}>
             <TextBoxWithLabel
               label="通訳者No"
               width="6vw" // Uncomment to set a custom width
@@ -341,7 +341,7 @@ function InterpretersList() {
 
             <Box>
               <TextBoxWithLabel
-                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 width="18vw" // Uncomment to set a custom width
                 value={contractorNameFuriganaLast}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -385,7 +385,7 @@ function InterpretersList() {
               />
             </Box>
 
-            <Box className="search-button">
+            <Box className={classes.searchButton}>
               <ButtonAtom onClick={searchConditions} label="検索" />
             </Box>
           </Box>
@@ -400,21 +400,24 @@ function InterpretersList() {
         operationButton="新規"
         onClick={navigateToInterpreterCreate}
       />
-      <ButtonAtom
-        onClick={navigateToInfoPage}
-        disabled={selectedData.length !== 1}
-        label="閲覧"
-      />
-      <ButtonAtom
-        onClick={navigateToEditPage}
-        disabled={selectedData.length !== 1}
-        label="編集"
-      />
-      <ButtonAtom
-        onClick={handleDeleteInterpreters}
-        disabled={selectedData.length <= 0}
-        label="削除"
-      />
+
+      <Box className={classes.actionButtons}>
+        <ButtonAtom
+          onClick={navigateToInfoPage}
+          disabled={selectedData.length !== 1}
+          label="閲覧"
+        />
+        <ButtonAtom
+          onClick={navigateToEditPage}
+          disabled={selectedData.length !== 1}
+          label="編集"
+        />
+        <ButtonAtom
+          onClick={handleDeleteInterpreters}
+          disabled={selectedData.length <= 0}
+          label="削除"
+        />
+      </Box>
     </Box>
   );
 }

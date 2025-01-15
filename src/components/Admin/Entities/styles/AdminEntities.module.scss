@@ -1,0 +1,122 @@
+$border-style: 1px solid #ccc;
+
+.adminEntity {
+  height: 100%;
+  overflow-y: auto;
+  white-space: nowrap; /* Prevents text from wrapping to the next line */
+  overflow: hidden; /* Hides any overflowed content */
+  text-overflow: ellipsis;
+  margin: 0 1vw;
+}
+
+.searchContainer {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+  margin: 3vh 0;
+}
+
+.searchLabel {
+  position: relative;
+  bottom: 3vh;
+  left: 1vw;
+  background-color: #f1f2f3;
+  border: $border-style;
+  width: 150px;
+  text-align: center;
+}
+
+.selectRange {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: -20px;
+}
+
+.interpreter-menu-button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  .navigate-buttons {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.moveTop {
+  margin-top: -2vh;
+}
+
+.margin-top {
+  margin-top: 1vh;
+}
+
+.searchButton {
+  margin-left: auto;
+  margin-top: auto;
+}
+
+.actionButtons {
+  margin-top: 12px;
+}
+
+.contractorDetails,
+.interpreterDetails,
+.languageSearchDetails,
+.companiesDetails,
+.admin-details,
+.responders-search-container,
+.storeDetails {
+  display: flex;
+  align-items: flex-start;
+  gap: 2vw;
+}
+
+.storeDetails {
+  display: flex;
+  align-items: flex-start;
+  gap: 2vw;
+}
+
+.companyStoreRow {
+  display: flex;
+  gap: 5vw;
+  margin-bottom: 2vw;
+}
+
+// .number-detail-column {
+//   display: flex;
+//   flex-direction: column;
+//   margin-right: 1vw;
+
+//   .margin-bottom {
+//     margin-bottom: 1vh;
+//   }
+// }
+
+// .name-detail-column {
+//   display: flex;
+//   flex-direction: column;
+
+//   .margin-bottom {
+//     margin-bottom: 1vh;
+//   }
+// }
+
+// .2 {
+//   display: flex;
+//   gap: 2vw;
+// }
+
+.description-label {
+  position: relative;
+  bottom: 3vh;
+  left: 1vw;
+  background-color: #f1f2f3;
+  border: $border-style;
+  width: 150px;
+  text-align: center;
+}

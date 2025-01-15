@@ -1,0 +1,11 @@
+.loginContainer {
+  display: flex;
+  justify-content: center; /* horizontally centers */
+  align-items: center; /* vertically centers */
+  gap: 2vh; /* space between items */
+  flex-direction: column; /* stacks items vertically */
+}
+
+.loginButton {
+  margin-left: 200px;
+}

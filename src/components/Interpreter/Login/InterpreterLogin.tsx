@@ -1,13 +1,14 @@
 // components/Login.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginHeader from "../../Header/LoginHeader";
-import ValidationButton from "../../components/LV1/ValidationButton/ValidationButton";
+import LoginHeader from "../../../Header/LoginHeader";
+import ValidationButton from "../../LV1/ValidationButton/ValidationButton";
 import { Box } from "@mui/material";
-import { UserApiService } from "../../api/apiService/user/user-api-service";
-import ValidationInputField from "../../components/LV1/ValidationInputField/ValidationInputField";
+import { UserApiService } from "../../../api/apiService/user/user-api-service";
+import ValidationInputField from "../../LV1/ValidationInputField/ValidationInputField";
 import { useForm } from "react-hook-form";
-import { UserAuth } from "../../types/UserTypes/UserTypes";
+import { UserAuth } from "../../../types/UserTypes/UserTypes";
+import classes from "../../../styles/Login.module.scss";
 
 const InterpreterLogin: React.FC = () => {
   const [formData, setFormData] = useState<UserAuth>({
@@ -73,9 +74,9 @@ const InterpreterLogin: React.FC = () => {
   return (
     <Box>
       <LoginHeader />
-      <Box className="login-layout">
+      <Box>
         <Box
-          className="login-container"
+          className={classes.loginContainer}
           onSubmit={handleSubmit(checkAuth)}
           component="form"
         >
@@ -101,7 +102,7 @@ const InterpreterLogin: React.FC = () => {
             type="password"
           />
           {error && <Box color="red">{error}</Box>}{" "}
-          <Box className="login-button">
+          <Box className={classes.loginButton}>
             <ValidationButton label="ログイン" type="submit" />
           </Box>
         </Box>

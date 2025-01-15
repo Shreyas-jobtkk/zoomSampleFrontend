@@ -33,36 +33,6 @@ $border-style: 1px solid #ccc;
   border: 1px solid black;
 }
 
-.login-container {
-  display: flex;
-  justify-content: center; /* horizontally centers */
-  align-items: center; /* vertically centers */
-  // height: 100vh; /* or any height you prefer */
-  gap: 2vh; /* space between items */
-  flex-direction: column; /* stacks items vertically */
-  //   // display: flex;
-
-  //   display: flex;
-  //   flex-direction: column;
-
-  //   // /* Stack the groups vertically */
-  //   gap: 16px;
-  //   /* Space between the groups */
-
-  //   .login-id {
-  //     // display: inline-flex;
-  //   }
-  // }
-
-  .login-button {
-    margin-left: 200px;
-  }
-}
-
-// .occupy-extreme-right {
-//   margin-left: auto;
-// }
-
 .responder-menu-button-container {
   display: flex;
   justify-content: space-between;

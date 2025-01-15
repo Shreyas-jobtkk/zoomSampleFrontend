@@ -3,17 +3,17 @@ import { Route, Routes } from "react-router-dom";
 import UserMenu from "../Pages/User/UserMenuPage"; // Adjust the import path as needed
 // import UserLogin from '../Pages/User/UserLoginPage'; // Adjust the import path as needed
 
-import InterpreterLogin from "../Pages/Interpreter/InterpreterLoginPage"; // Adjust the import path as needed
+import InterpreterLogin from "../components/Interpreter/Login/InterpreterLogin"; // Adjust the import path as needed
 import InterpreterMenu from "../Pages/Interpreter/InterpreterMenuPage"; // Adjust the import path as needed
 
-import AdminLogin from "../Pages/Admin/AdminLoginPage"; // Adjust the import path as needed
+import AdminLogin from "../components/Admin/Login/AdminLogin"; // Adjust the import path as needed
 import AdminMenu from "../Pages/Admin/AdminMenuPage"; // Adjust the import path as needed
 // import CompaniesList from '../Pages/Admin/AdminMenu/CompaniesListPage';
 
 import Sample from "../Pages/Sample/Sample"; // Adjust the import path as needed
 import Sample2 from "../Pages/zoomApiMeetings/Sample"; // Adjust the import path as needed
 
-import ResponderLogin from "../Pages/Responder/ResponderLoginPage"; // Adjust the import path as needed
+import ResponderLogin from "../components/Contractor/Login/ContractorLogin"; // Adjust the import path as needed
 import ResponderMenu from "../Pages/Responder/ResponderMenuPage";
 
 const NavRoutes = () => (
