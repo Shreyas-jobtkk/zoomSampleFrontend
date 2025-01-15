@@ -102,7 +102,7 @@ function InterpretersList() {
 
   const fetchUsersListData = async () => {
     try {
-      const response = await UserApiService.fetchContractorAll();
+      const response = await UserApiService.fetchAdministratorAll();
 
       console.log(147, response);
 
