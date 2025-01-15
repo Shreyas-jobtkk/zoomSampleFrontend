@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-import { apiUrl } from "../../components/constants";
+import { apiUrl } from "../../apiUrl";
 
 const socket = io(apiUrl);
 

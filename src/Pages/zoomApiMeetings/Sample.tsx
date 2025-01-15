@@ -13,7 +13,7 @@ import {
   hideEmojiPicker,
   createEmojiReactionAnimation,
 } from "./showEmojiPicker"; // Import the function
-import { apiUrl } from "../../components/constants";
+import { apiUrl } from "../../apiUrl";
 import io from "socket.io-client";
 import { useEffect } from "react";
 

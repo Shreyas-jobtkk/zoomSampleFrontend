@@ -5,7 +5,7 @@ import io from "socket.io-client";
 import ringtone from "../../components/ringtone.mp3";
 import { v4 as uuidv4 } from "uuid";
 import { useLocation } from "react-router-dom";
-import { apiUrl } from "../../components/constants";
+import { apiUrl } from "../../apiUrl.js";
 import MenuHeader from "../../components/LV3/Header/MenuHeader";
 import RadioButtonGroupRound from "../../components/LV1/RadioButton/RadioButtonGroupRound";
 import { useTranslation } from "react-i18next";

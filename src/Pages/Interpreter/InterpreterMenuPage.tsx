@@ -13,7 +13,7 @@ import { Box } from "@mui/material";
 // let apiUrl = "https://zoomsamplebackend.onrender.com"
 // let apiUrl = "http://localhost:4000"
 
-import { apiUrl } from "../../components/constants";
+import { apiUrl } from "../../apiUrl";
 
 // Connect to the socket.io server
 const socket = io(apiUrl);
