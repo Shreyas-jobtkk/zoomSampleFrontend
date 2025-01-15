@@ -5,7 +5,7 @@ import io from "socket.io-client";
 import ringtone from "../../components/ringtone.mp3";
 import { v4 as uuidv4 } from "uuid";
 import { useLocation } from "react-router-dom";
-import { homePage } from "../../components/constants";
+import { apiUrl } from "../../components/constants";
 import MenuHeader from "../../components/LV3/Header/MenuHeader";
 import RadioButtonGroupRound from "../../components/LV1/RadioButton/RadioButtonGroupRound";
 import { useTranslation } from "react-i18next";
@@ -13,10 +13,10 @@ import "../../../src/i18n.js";
 import ButtonAtom from "../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import { Box } from "@mui/material";
 
-// let homePage = "https://zoomsamplebackend.onrender.com"
-// let homePage = "http://localhost:4000"
+// let apiUrl = "https://zoomsamplebackend.onrender.com"
+// let apiUrl = "http://localhost:4000"
 // Connect to the socket.io server
-const socket = io(homePage);
+const socket = io(apiUrl);
 let zoomJoinURL: string;
 let uniqueId: any = null;
 
@@ -181,7 +181,7 @@ function UserMenu() {
   // const fetchData = async () => {
   //     try {
   //         // alert(language)
-  //         const response = await fetch(`${homePage}/api/users`);
+  //         const response = await fetch(`${apiUrl}/api/users`);
   //         // const userData: User[] = await response.json();
   //         // console.log('Fetched user data:', userData);
 

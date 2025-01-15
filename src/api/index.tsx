@@ -1,7 +1,7 @@
 import axios from "axios";
-import { homePage } from "../components/constants";
+import { apiUrl } from "../components/constants";
 
-const API_URL = homePage;
+const API_URL = apiUrl;
 
 const api = axios.create({
   baseURL: API_URL,

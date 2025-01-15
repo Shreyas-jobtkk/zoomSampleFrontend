@@ -93,7 +93,7 @@ function InterpretersList() {
       setStoreData(response);
       setIsStoresExist(true);
 
-      // const response = await axios.get(`${homePage}/company`);
+      // const response = await axios.get(`${apiUrl}/company`);
     } catch (error) {
       setIsStoresExist(false);
       alert("no stores exist");
@@ -107,7 +107,7 @@ function InterpretersList() {
 
       console.log(147, response);
 
-      // const response = await axios.get(`${homePage}/company`);
+      // const response = await axios.get(`${apiUrl}/company`);
       const sortedData = response
         .sort(
           (a: UserInfo, b: UserInfo) => Number(a.user_no) - Number(b.user_no)

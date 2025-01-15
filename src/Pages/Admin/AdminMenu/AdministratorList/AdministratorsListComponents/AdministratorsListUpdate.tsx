@@ -75,7 +75,7 @@ function ContractorListUpdate() {
 
       setCompanyData(filteredData);
 
-      // const response = await axios.get(`${homePage}/company`);
+      // const response = await axios.get(`${apiUrl}/company`);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
@@ -237,7 +237,7 @@ function ContractorListUpdate() {
       setStoreData(response);
       setIsStoresExist(true);
 
-      // const response = await axios.get(`${homePage}/company`);
+      // const response = await axios.get(`${apiUrl}/company`);
     } catch (error) {
       setIsStoresExist(false);
       alert("no stores exist");

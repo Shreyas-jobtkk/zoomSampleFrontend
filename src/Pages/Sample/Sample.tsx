@@ -13,12 +13,12 @@ import {
   hideEmojiPicker,
   createEmojiReactionAnimation,
 } from "./showEmojiPicker"; // Import the function
-import { homePage } from "../../components/constants";
+import { apiUrl } from "../../components/constants";
 import io from "socket.io-client";
 import { useEffect } from "react";
 
 // Connect to the socket.io server
-const socket = io(homePage);
+const socket = io(apiUrl);
 
 ZoomMtg.preLoadWasm();
 ZoomMtg.prepareWebSDK();

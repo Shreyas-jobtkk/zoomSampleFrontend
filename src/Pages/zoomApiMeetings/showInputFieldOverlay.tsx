@@ -1,7 +1,7 @@
 import io from "socket.io-client";
-import { homePage } from "../../components/constants";
+import { apiUrl } from "../../components/constants";
 
-const socket = io(homePage);
+const socket = io(apiUrl);
 
 const messageQueue: string[] = [];
 const activeOverlays: HTMLElement[] = [];

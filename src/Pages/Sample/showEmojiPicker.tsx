@@ -1,7 +1,7 @@
 import "emoji-picker-element";
 import io from "socket.io-client";
-import { homePage } from "../../components/constants";
-const socket = io(homePage);
+import { apiUrl } from "../../components/constants";
+const socket = io(apiUrl);
 
 export const showEmojiPicker = () => {
   // Create the emoji picker element

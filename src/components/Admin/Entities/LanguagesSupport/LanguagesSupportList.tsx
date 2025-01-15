@@ -40,7 +40,7 @@ function LanguagesSupportList() {
     try {
       const response = await LanguageApiService.fetchLanguagesAll();
       console.log(144, response);
-      // const response = await axios.get(`${homePage}/company`);
+      // const response = await axios.get(`${apiUrl}/company`);
       const sortedData = response
         .sort(
           (a: LanguageInfo, b: LanguageInfo) =>

@@ -10,13 +10,13 @@ import { Box } from "@mui/material";
 
 // import axios from 'axios';
 
-// let homePage = "https://zoomsamplebackend.onrender.com"
-// let homePage = "http://localhost:4000"
+// let apiUrl = "https://zoomsamplebackend.onrender.com"
+// let apiUrl = "http://localhost:4000"
 
-import { homePage } from "../../components/constants";
+import { apiUrl } from "../../components/constants";
 
 // Connect to the socket.io server
-const socket = io(homePage);
+const socket = io(apiUrl);
 let zoomStartURL: string;
 let uniqueId: string;
 
@@ -41,7 +41,7 @@ function InterpreterLogin() {
 
     try {
       // alert(event.target.value)
-      const response = await fetch(`${homePage}/api/terminalActivity`, {
+      const response = await fetch(`${apiUrl}/api/terminalActivity`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

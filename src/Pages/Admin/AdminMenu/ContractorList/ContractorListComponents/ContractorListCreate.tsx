@@ -70,7 +70,7 @@ function ContractorListInfo() {
       const response = await CompanyApiService.fetchCompaniesNameDetails();
       setCompanyData(response);
 
-      // const response = await axios.get(`${homePage}/company`);
+      // const response = await axios.get(`${apiUrl}/company`);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
@@ -85,7 +85,7 @@ function ContractorListInfo() {
       setStoreData(response);
       setIsStoresExist(true);
 
-      // const response = await axios.get(`${homePage}/company`);
+      // const response = await axios.get(`${apiUrl}/company`);
     } catch (error) {
       setIsStoresExist(false);
       alert("no stores exist");
