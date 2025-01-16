@@ -7,7 +7,7 @@ import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 import NumberInput from "../../../LV1/NumberInput/NumberInput";
 import SelectOption from "../../../LV1/SelectOption/SelectOption";
-import JapanPrefectures from "../../../../Pages/Admin/AdminMenu/StoreList/JapanPrefectures/JapanPrefectures";
+import JapanPrefectures from "../../../../JapanPrefectures/JapanPrefectures";
 import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
 import { useLocation } from "react-router-dom";
 import { StoreInfoFormValues } from "../../../../types/StoreTypes/StoreTypes";

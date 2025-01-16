@@ -11,7 +11,7 @@ import SelectableModal from "../../../LV1/SelectableModal/SelectableModal";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 import NumberInput from "../../../LV1/NumberInput/NumberInput";
 import SelectOption from "../../../LV1/SelectOption/SelectOption";
-import JapanPrefectures from "../../../../Pages/Admin/AdminMenu/StoreList/JapanPrefectures/JapanPrefectures";
+import JapanPrefectures from "../../../../JapanPrefectures/JapanPrefectures";
 import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
 import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
 import ValidationButton from "../../../LV1/ValidationButton/ValidationButton";
