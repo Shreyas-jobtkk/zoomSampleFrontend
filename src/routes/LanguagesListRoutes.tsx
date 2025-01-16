@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import LanguagesCreate from "../Pages/Admin/AdminMenu/LanguagesList/LanguagesListComponents/LanguagesCreatePage";
-import LanguagesInfo from "../Pages/Admin/AdminMenu/LanguagesList/LanguagesListComponents/LanguagesInfoPage";
-import LanguagesEdit from "../Pages/Admin/AdminMenu/LanguagesList/LanguagesListComponents/LanguagesEditPage";
+import LanguagesCreate from "../components/Admin/Entities/LanguagesSupport/LanguagesCreatePage";
+import LanguagesInfo from "../components/Admin/Entities/LanguagesSupport/LanguagesInfoPage";
+import LanguagesEdit from "../components/Admin/Entities/LanguagesSupport/LanguagesEditPage";
 
 const LanguagesListRoutes = () => (
   <Routes>

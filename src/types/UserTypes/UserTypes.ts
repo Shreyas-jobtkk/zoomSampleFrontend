@@ -18,6 +18,9 @@ export interface UserCreateFormValues {
   user_password: string;
   user_password_confirm: string;
   user_note: string;
+  translate_languages: any;
+  meeting_id: string | null;
+  meeting_passcode: string | null;
 }
 
 export interface UserInfo {
@@ -42,6 +45,9 @@ export interface UserInfo {
   updated_at: Date | string;
   created_at: Date | string;
   user_deleted: Boolean;
+  translate_languages: any;
+  meeting_id: string | null;
+  meeting_passcode: string | null;
 }
 
 export interface UserAuth {

@@ -162,24 +162,26 @@ function LanguagesSupportList() {
         operationButton="新規"
         onClick={navigateToLanguageCreate}
       />
-      <ButtonAtom
-        onClick={navigateToInfoPage}
-        label="閲覧"
-        disabled={selectedData.length !== 1}
-        // margin='0 2vw'
-      />
-      <ButtonAtom
-        onClick={navigateToEditPage}
-        label="編集"
-        disabled={selectedData.length !== 1}
-        // margin='0 2vw'
-      />
-      <ButtonAtom
-        onClick={handleDeleteLanguages}
-        label="削除"
-        disabled={selectedData.length === 0}
-        // margin='0 2vw'
-      />
+      <Box className={classes.actionButtons}>
+        <ButtonAtom
+          onClick={navigateToInfoPage}
+          label="閲覧"
+          disabled={selectedData.length !== 1}
+          // margin='0 2vw'
+        />
+        <ButtonAtom
+          onClick={navigateToEditPage}
+          label="編集"
+          disabled={selectedData.length !== 1}
+          // margin='0 2vw'
+        />
+        <ButtonAtom
+          onClick={handleDeleteLanguages}
+          label="削除"
+          disabled={selectedData.length === 0}
+          // margin='0 2vw'
+        />
+      </Box>
     </Box>
   );
 }

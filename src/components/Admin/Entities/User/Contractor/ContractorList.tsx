@@ -1,21 +1,21 @@
-import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
+import TextBoxWithLabel from "../../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
-import MenuHeader from "../../../LV3/Header/MenuHeader";
-import DataTable from "../../../LV3/DataTable/DataTable";
+import ButtonAtom from "../../../../LV1/Button/ButtonAtom/ButtonAtom";
+import MenuHeader from "../../../../LV3/Header/MenuHeader";
+import DataTable from "../../../../LV3/DataTable/DataTable";
 // import "./AdminMenu.scss";
 import { useNavigate } from "react-router-dom";
-import { UserApiService } from "../../../../api/apiService/user/user-api-service";
-import { UserInfo } from "../../../../types/UserTypes/UserTypes";
-import { convertToJST, deleteStatus } from "../../../../utils/utils";
-import { DataTableRow } from "../../../LV3/DataTable/DataTable";
-import SelectableModal from "../../../LV1/SelectableModal/SelectableModal";
-import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
-import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
-import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
-import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
-import classes from "../styles/AdminEntities.module.scss";
+import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
+import { UserInfo } from "../../../../../types/UserTypes/UserTypes";
+import { convertToJST, deleteStatus } from "../../../../../utils/utils";
+import { DataTableRow } from "../../../../LV3/DataTable/DataTable";
+import SelectableModal from "../../../../LV1/SelectableModal/SelectableModal";
+import { CompanyInfo } from "../../../../../types/CompanyTypes/CompanyTypes";
+import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
+import { StoreInfo } from "../../../../../types/StoreTypes/StoreTypes";
+import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
+import classes from "../../styles/AdminEntities.module.scss";
 
 function InterpretersList() {
   const navigate = useNavigate();
@@ -218,11 +218,16 @@ function InterpretersList() {
   };
 
   const navigateToInterpreterCreate = () => {
-    navigate("/ContractorListCreate");
+    navigate("/InterpretersListCreate", {
+      state: { userType: "contractor" },
+    });
   };
   const navigateToEditPage = () => {
-    navigate("/ContractorListUpdate", {
-      state: { selectedInterpreterNo: selectedInterpreterNoArray[0] },
+    navigate("/InterpretersListUpdate", {
+      state: {
+        selectedInterpreterNo: selectedInterpreterNoArray[0],
+        userType: "contractor",
+      },
     });
   };
 

@@ -1,4 +1,8 @@
-.store-list-navigate {
+.storeCreateContainer,
+.storeInfoContainer,
+.storeEditContainer {
+  height: calc(92vh - 30px);
+  overflow: auto;
   padding: 1vh 1vw;
   display: flex;
   flex-direction: column;
@@ -7,65 +11,75 @@
   white-space: nowrap;
 }
 
-.store-list-navigate-content {
-  height: calc(92vh - 30px);
-  overflow: auto;
-}
-
-.time-details-delete-flag {
+.timeDetailsDeleteFlag {
   display: flex;
   justify-content: space-between;
   margin: 1vh 0;
 }
 
-.time-details {
+.timeDetails {
   padding: 1vh 1vw;
   display: flex;
   flex-direction: column;
 }
 
-// .delete-flag {
-// }
-
-.company-info {
+.companyInfo {
   width: 600px !important;
   padding: 1vh 1vw;
   margin: 2vh 0;
   border: 1px solid #ccc; // Replace with your borderStyle
 }
 
-.basic-info {
+.descriptionLabel {
+  position: relative;
+  bottom: 3vh;
+  left: 1vw;
+  background-color: #f1f2f3;
+  border: 1px solid #ccc;
+  width: 150px;
+  text-align: center;
+}
+
+.basicInfo {
   padding: 1vh 1vw;
-  margin: 3vh 0 !important;
+  margin: 3vh 0;
   border: 1px solid #ccc; // Replace with your borderStyle
 }
 
-.address-container {
+.nameRow {
+  display: flex;
+  flex-direction: row;
+  margin: 3vh 0;
+  justify-content: space-between;
+  gap: 1vw;
+}
+
+.addressContainer {
   display: flex;
   flex-direction: row;
   width: 500px;
 }
 
-.address-label {
+.addressLabel {
   width: 50px;
 }
 
-.address-details {
+.addressDetails {
   width: 400px;
 }
 
-.contact-details {
+.contactDetails {
   width: 500px;
 }
 
-.store-details {
+.storeDetails {
   display: flex;
   flex-direction: row;
 }
 
-.pin-code-label,
-.tel-label,
-.fax-label {
+.pinCodeLabel,
+.telLabel,
+.faxLabel {
   width: 67px;
   display: inline-block;
   text-align: left;

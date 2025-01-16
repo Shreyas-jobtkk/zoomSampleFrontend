@@ -18,7 +18,7 @@ type ValidationInputFieldProps = {
   width?: string | number; // Optional input width
   inputHeight?: string | number; // Optional input height
   fontSize?: string; // Optional font size for label and TextField
-  value?: string; // Controlled value for the input
+  value?: string | null; // Controlled value for the input
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Controlled onChange handler
   isSubmitted?: boolean;
 };

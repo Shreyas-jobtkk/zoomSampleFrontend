@@ -1,21 +1,24 @@
-import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
+import TextBoxWithLabel from "../../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
-import MenuHeader from "../../../LV3/Header/MenuHeader";
-import DataTable from "../../../LV3/DataTable/DataTable";
+import ButtonAtom from "../../../../LV1/Button/ButtonAtom/ButtonAtom";
+import MenuHeader from "../../../../LV3/Header/MenuHeader";
+import MultipleOptionsSelect from "../../../../LV1/SelectOption/MultipleOptionsSelect";
+import DataTable from "../../../../LV3/DataTable/DataTable";
 // import "./AdminMenu.scss";
 import { useNavigate } from "react-router-dom";
-import { UserApiService } from "../../../../api/apiService/user/user-api-service";
-import { UserInfo } from "../../../../types/UserTypes/UserTypes";
-import { convertToJST, deleteStatus } from "../../../../utils/utils";
-import { DataTableRow } from "../../../LV3/DataTable/DataTable";
-import SelectableModal from "../../../LV1/SelectableModal/SelectableModal";
-import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
-import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
-import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
-import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
-import classes from "../styles/AdminEntities.module.scss";
+import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
+import { InterpreterInfo } from "../../../../../types/UserTypes/UserTypes";
+import { convertToJST, deleteStatus } from "../../../../../utils/utils";
+import { DataTableRow } from "../../../../LV3/DataTable/DataTable";
+import SelectableModal from "../../../../LV1/SelectableModal/SelectableModal";
+import { CompanyInfo } from "../../../../../types/CompanyTypes/CompanyTypes";
+import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
+import { StoreInfo } from "../../../../../types/StoreTypes/StoreTypes";
+import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
+import { LanguageApiService } from "../../../../../api/apiService/languages/languages-api-service";
+import { LanguageInfo } from "../../../../../types/LanguageTypes/LanguageTypes";
+import classes from "../../styles/AdminEntities.module.scss";
 
 function InterpretersList() {
   const navigate = useNavigate();
@@ -43,6 +46,12 @@ function InterpretersList() {
     useState<string>("");
   const [searchData, setSearchData] = useState<DataTableRow[]>([]);
   const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
+  const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
+    []
+  );
+  const [languagesSupport, setLanguagesSupport] = useState<
+    { label: string; value: string | number }[]
+  >([]);
 
   const [selectedData, setSelectedData] = useState<
     Array<{ No: string | number; [key: string]: string | number }>
@@ -58,13 +67,21 @@ function InterpretersList() {
     "店舗名",
     "通訳者No",
     "名前",
+    "通訳言語",
     "フリガナ",
     "削除",
   ];
 
+  // Handler for onChange to update the selected options
+  const handleSelectChange = (value: (string | number)[]) => {
+    console.log(655, value);
+    setSelectedOptions(value); // Update the state with selected options
+  };
+
   useEffect(() => {
     fetchCompaniesNames();
     fetchUsersListData();
+    fetchLanguageNames();
   }, []);
 
   useEffect(() => {
@@ -73,6 +90,25 @@ function InterpretersList() {
       fetchStoreNames();
     }
   }, [companyNo]);
+
+  const fetchLanguageNames = async () => {
+    try {
+      let response = await LanguageApiService.fetchLanguageNames();
+
+      console.log(177, response);
+
+      response = response.map((item: LanguageInfo) => ({
+        label: item.language_name_furigana, // Map 'language_name' to 'label'
+        value: item.languages_support_no, // Map 'languages_support_no' to 'value'
+      }));
+
+      setLanguagesSupport(response);
+
+      // const response = await axios.get(`${apiUrl}/company`);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
+    }
+  };
 
   const fetchCompaniesNames = async () => {
     try {
@@ -103,16 +139,30 @@ function InterpretersList() {
 
   const fetchUsersListData = async () => {
     try {
-      const response = await UserApiService.fetchAdministratorAll();
+      const response = await UserApiService.fetchInterpretersAll();
 
       console.log(147, response);
 
-      // const response = await axios.get(`${apiUrl}/company`);
+      const getLanguageDetails: LanguageInfo[] =
+        await LanguageApiService.fetchLanguageNames();
+      console.log(144, getLanguageDetails);
+
+      // Function to get language_name_furigana based on selected numbers
+      const getLanguageNames = (numbers: any[]): string => {
+        return getLanguageDetails
+          .filter((lang) =>
+            numbers.map(Number).includes(lang.languages_support_no)
+          )
+          .map((lang) => lang.language_name_furigana)
+          .join(" , "); // Join the results with a comma and space
+      };
+
       const sortedData = response
         .sort(
-          (a: UserInfo, b: UserInfo) => Number(a.user_no) - Number(b.user_no)
+          (a: InterpreterInfo, b: InterpreterInfo) =>
+            Number(a.user_no) - Number(b.user_no)
         )
-        .map((item: UserInfo, index: number) => ({
+        .map((item: InterpreterInfo, index: number) => ({
           No: index + 1,
           登録日時: convertToJST(item.created_at),
           更新日時: convertToJST(item.updated_at),
@@ -123,12 +173,14 @@ function InterpretersList() {
           通訳者No: item.user_no,
           名前: `${item.user_name_last} ${item.user_name_first}`,
           フリガナ: `${item.user_name_last_furigana} ${item.user_name_first_furigana}`,
+          通訳言語: getLanguageNames(item.translate_languages),
           削除: deleteStatus(item.user_deleted),
 
           名前_last: item.user_name_last,
           名前_first: item.user_name_first,
           フリガナ_last: item.user_name_last_furigana,
           フリガナ_first: item.user_name_first_furigana,
+          通訳言語_Ids: item.translate_languages,
         }));
       console.log(141, sortedData);
       setTableData(sortedData);
@@ -173,12 +225,25 @@ function InterpretersList() {
         (!contractorNameFuriganaFirst ||
           String(item["フリガナ_first"]).includes(contractorNameFuriganaFirst));
 
-      console.log(21445, matchesFilters);
-      console.log(21446, String(item["フリガナ_last"]));
-      console.log(21447, contractorNameFuriganaLast);
+      const matchesLanguageNo =
+        !selectedOptions ||
+        selectedOptions.every(
+          (element) =>
+            Array.isArray(item["通訳言語_Ids"]) &&
+            item["通訳言語_Ids"].includes(Number(element))
+        );
+
+      console.log(21445, matchesLanguageNo);
+      // console.log(21447, contractorNameFuriganaLast);
 
       // An item is included in the results only if it satisfies both range and search conditions
-      return isInRange && matchesFilters && matchesCompanyNo && matchesStoreNo;
+      return (
+        isInRange &&
+        matchesFilters &&
+        matchesCompanyNo &&
+        matchesStoreNo &&
+        matchesLanguageNo
+      );
     });
 
     // Update the table data to show filtered results
@@ -212,21 +277,26 @@ function InterpretersList() {
   };
 
   const navigateToInfoPage = () => {
-    navigate("/AdministratorListInfo", {
+    navigate("/InterpretersListInfo", {
       state: { selectedInterpreterNo: selectedInterpreterNoArray[0] },
     });
   };
 
   const navigateToInterpreterCreate = () => {
-    navigate("/AdministratorsListCreate");
+    navigate("/InterpretersListCreate", {
+      state: { userType: "interpreter" },
+    });
   };
   const navigateToEditPage = () => {
-    navigate("/AdministratorsListUpdate", {
-      state: { selectedInterpreterNo: selectedInterpreterNoArray[0] },
+    navigate("/InterpretersListUpdate", {
+      state: {
+        selectedInterpreterNo: selectedInterpreterNoArray[0],
+        userType: "interpreter",
+      },
     });
   };
 
-  const handleDeleteAdministrators = async () => {
+  const handleDeleteInterpreters = async () => {
     console.log(114, selectedInterpreterNoArray);
     try {
       await UserApiService.deleteUsers(selectedInterpreterNoArray);
@@ -256,11 +326,6 @@ function InterpretersList() {
     setStoreNo(store_no);
 
     console.log(133, store);
-    // const { store_no, store_name } = store;
-    // updateFormData("store_no", store_no);
-    // updateFormData("store_name", store_name);
-    // setValue("store_no", store_no);
-    // setValue("store_name", store_name);
   };
 
   return (
@@ -342,7 +407,7 @@ function InterpretersList() {
 
             <Box>
               <TextBoxWithLabel
-                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 width="18vw" // Uncomment to set a custom width
                 value={contractorNameFuriganaLast}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -385,6 +450,13 @@ function InterpretersList() {
                 disabled={false}
               />
             </Box>
+            <MultipleOptionsSelect
+              label="通訳言語："
+              width={150}
+              options={languagesSupport}
+              value={selectedOptions}
+              onChange={handleSelectChange}
+            />
 
             <Box className={classes.searchButton}>
               <ButtonAtom onClick={searchConditions} label="検索" />
@@ -392,6 +464,7 @@ function InterpretersList() {
           </Box>
         </Box>
       </Box>
+
       <DataTable // Customize header height
         headers={headers}
         data={searchData}
@@ -400,6 +473,7 @@ function InterpretersList() {
         operationButton="新規"
         onClick={navigateToInterpreterCreate}
       />
+
       <Box className={classes.actionButtons}>
         <ButtonAtom
           onClick={navigateToInfoPage}
@@ -412,7 +486,7 @@ function InterpretersList() {
           label="編集"
         />
         <ButtonAtom
-          onClick={handleDeleteAdministrators}
+          onClick={handleDeleteInterpreters}
           disabled={selectedData.length <= 0}
           label="削除"
         />

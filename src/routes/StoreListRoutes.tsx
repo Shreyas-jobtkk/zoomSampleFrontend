@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 // import StoreListInfo from "../Pages/Admin/AdminMenu/StoreList/StoreComponents/StoreInfoPage";
-import StoreCreate from "../Pages/Admin/AdminMenu/StoreList/StoreComponents/StoreCreatePage";
-import StoreInfo from "../Pages/Admin/AdminMenu/StoreList/StoreComponents/StoreInfoPage";
-import StoreEdit from "../Pages/Admin/AdminMenu/StoreList/StoreComponents/StoreEditPage";
+import StoreCreate from "../components/Admin/Entities/Stores/StoreCreate";
+import StoreInfo from "../components/Admin/Entities/Stores/StoreInfo";
+import StoreEdit from "../components/Admin/Entities/Stores/StoreEdit";
 // import AdministratorListEdit from "../Pages/Admin/AdminMenu/AdministratorList/AdministratorListEditPage";
 
 const AdministratorListRoutes = () => (

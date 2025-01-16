@@ -1,15 +1,15 @@
-import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
-import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
+import MenuHeader from "../../../LV3/Header/MenuHeader";
+import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-// import "../LanguagesListStyles/LanguagesList.scss";
+import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
+import classes from "./styles/LanguagesList.module.scss";
 import { useForm } from "react-hook-form";
-import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
-import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
-import { LanguageCreateFormValues } from "../../../../../types/LanguageTypes/LanguageTypes";
-import { LanguageApiService } from "../../../../../api/apiService/languages/languages-api-service";
-import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
+import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
+import ValidationButton from "../../../LV1/ValidationButton/ValidationButton";
+import { LanguageCreateFormValues } from "../../../../types/LanguageTypes/LanguageTypes";
+import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
+import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 
 const LanguageCreate = () => {
   const [formData, setFormData] = useState<LanguageCreateFormValues>({
@@ -51,15 +51,11 @@ const LanguageCreate = () => {
   };
 
   return (
-    <Box
-      className="language-list-navigate"
-      onSubmit={handleSubmit(saveLanguageInfo)}
-      component="form"
-    >
+    <Box onSubmit={handleSubmit(saveLanguageInfo)} component="form">
       <MenuHeader title="言語情報" />
-      <Box className="language-list-navigate-content">
-        <Box className="time-details-delete-flag">
-          <Box className="time-details">
+      <Box>
+        <Box className={classes.timeDetailsDeleteFlag}>
+          <Box className={classes.timeDetails}>
             <TextBoxWithLabel
               labelWidth="125px"
               label="登録日時"
@@ -71,7 +67,7 @@ const LanguageCreate = () => {
               width="30vw"
             />
           </Box>
-          <Box className="delete-flag">
+          <Box>
             <TextBoxWithLabel
               labelWidth="100px"
               label="削除フラグ"
@@ -79,10 +75,10 @@ const LanguageCreate = () => {
             />
           </Box>
         </Box>
-        <Box className="basic-info">
-          <Box className="description-label">基本情報</Box>
+        <Box className={classes.basicInfo}>
+          <Box className={classes.descriptionLabel}>基本情報</Box>
           <TextBoxWithLabel labelWidth="125px" label="言語No" width="30vw" />
-          <Box className="name-row">
+          <Box className={classes.nameRow}>
             <Box>
               <ValidationInputField
                 isSubmitted={isSubmitted}
@@ -120,8 +116,10 @@ const LanguageCreate = () => {
           name="language_note"
         />
 
-        <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
-        <ValidationButton label="保存" type="submit" />
+        <Box className={classes.actionButtons}>
+          <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
+          <ValidationButton label="保存" type="submit" />
+        </Box>
       </Box>
     </Box>
   );

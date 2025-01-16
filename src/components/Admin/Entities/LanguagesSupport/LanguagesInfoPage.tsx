@@ -1,14 +1,14 @@
-import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
-import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
+import MenuHeader from "../../../LV3/Header/MenuHeader";
+import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-// import "../LanguagesListStyles/LanguagesList.scss";
-import { LanguageInfo } from "../../../../../types/LanguageTypes/LanguageTypes";
+import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
+import classes from "./styles/LanguagesList.module.scss";
+import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
 import { useLocation } from "react-router-dom";
-import { LanguageApiService } from "../../../../../api/apiService/languages/languages-api-service";
-import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
-import { convertToJST, deleteStatus } from "../../../../../utils/utils";
+import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
+import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
+import { convertToJST, deleteStatus } from "../../../../utils/utils";
 
 const LanguageSupportInfo = () => {
   const [formData, setFormData] = useState<LanguageInfo>({
@@ -70,9 +70,9 @@ const LanguageSupportInfo = () => {
   return (
     <Box className="language-list-navigate">
       <MenuHeader title="言語情報" />
-      <Box className="language-list-navigate-content">
-        <Box className="time-details-delete-flag">
-          <Box className="time-details">
+      <Box>
+        <Box className={classes.timeDetailsDeleteFlag}>
+          <Box className={classes.timeDetails}>
             <TextBoxWithLabel
               labelWidth="125px"
               label="登録日時"
@@ -98,8 +98,8 @@ const LanguageSupportInfo = () => {
             />
           </Box>
         </Box>
-        <Box className="basic-info">
-          <Box className="description-label">基本情報</Box>
+        <Box className={classes.basicInfo}>
+          <Box className={classes.descriptionLabel}>基本情報</Box>
           <TextBoxWithLabel
             labelWidth="125px"
             label="言語No"
@@ -107,7 +107,7 @@ const LanguageSupportInfo = () => {
             value={formData.languages_support_no}
             onChange={handleChange}
           />
-          <Box className="name-row">
+          <Box className={classes.nameRow}>
             <Box>
               <TextBoxWithLabel
                 labelWidth="125px"
@@ -136,9 +136,10 @@ const LanguageSupportInfo = () => {
           maxLength={2}
           name="language_note"
         />
-
-        <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
-        <ButtonAtom onClick={searchConditions} label="保存" width="100px" />
+        <Box className={classes.actionButtons}>
+          <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
+          <ButtonAtom onClick={searchConditions} label="保存" width="100px" />
+        </Box>
       </Box>
     </Box>
   );

@@ -1,17 +1,18 @@
-import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
-import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
+import MenuHeader from "../../../LV3/Header/MenuHeader";
+import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
+import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 // import "../StoreStyles/StoreList.scss";
-import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
-import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
-import SelectOption from "../../../../../components/LV1/SelectOption/SelectOption";
-import JapanPrefectures from "../JapanPrefectures/JapanPrefectures";
-import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
+import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
+import NumberInput from "../../../LV1/NumberInput/NumberInput";
+import SelectOption from "../../../LV1/SelectOption/SelectOption";
+import JapanPrefectures from "../../../../Pages/Admin/AdminMenu/StoreList/JapanPrefectures/JapanPrefectures";
+import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
 import { useLocation } from "react-router-dom";
-import { StoreInfoFormValues } from "../../../../../types/StoreTypes/StoreTypes";
-import { convertToJST } from "../../../../../utils/utils";
+import { StoreInfoFormValues } from "../../../../types/StoreTypes/StoreTypes";
+import { convertToJST } from "../../../../utils/utils";
+import classes from "./styles/StoreList.module.scss";
 
 function StoreListInfo() {
   const { state } = useLocation();
@@ -85,11 +86,11 @@ function StoreListInfo() {
   };
 
   return (
-    <Box className="store-list-navigate">
+    <Box>
       <MenuHeader title="店舗情報" />
-      <Box className="store-list-navigate-content">
-        <Box className="time-details-delete-flag">
-          <Box className="time-details">
+      <Box className={classes.storeInfoContainer}>
+        <Box className={classes.timeDetailsDeleteFlag}>
+          <Box className={classes.timeDetails}>
             <TextBoxWithLabel
               labelWidth="125px"
               label="登録日時"
@@ -105,7 +106,7 @@ function StoreListInfo() {
               //  onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
-          <Box className="delete-flag">
+          <Box>
             <TextBoxWithLabel
               labelWidth="100px"
               label="削除フラグ"
@@ -115,9 +116,9 @@ function StoreListInfo() {
             />
           </Box>
         </Box>
-        <Box className="company-info">
-          <Box className="description-label">企業情報</Box>
-          <Box className="move-top">
+        <Box className={classes.companyInfo}>
+          <Box className={classes.descriptionLabel}>企業情報</Box>
+          <Box>
             <ButtonAtom label="企業検索" disabled={true} />
 
             <TextBoxWithLabel
@@ -136,9 +137,9 @@ function StoreListInfo() {
             />
           </Box>
         </Box>
-        <Box className="basic-info">
-          <Box className="description-label">基本情報</Box>
-          <Box className="move-top">
+        <Box className={classes.basicInfo}>
+          <Box className={classes.descriptionLabel}>基本情報</Box>
+          <Box>
             <TextBoxWithLabel
               labelWidth="125px"
               label="店舗No"
@@ -146,7 +147,7 @@ function StoreListInfo() {
               value={formData.store_no}
               //  onChange={(e: any) => setTextValue1(e.target.value)}
             />
-            <Box className="name-row">
+            <Box className={classes.nameRow}>
               <Box>
                 <TextBoxWithLabel
                   labelWidth="125px"
@@ -165,12 +166,15 @@ function StoreListInfo() {
                 />
               </Box>
             </Box>
-            <Box className="store-details">
-              <Box className="address-container">
-                <Box className="address-label">住所</Box>
-                <Box className="address-details">
+            <Box className={classes.storeDetails}>
+              <Box className={classes.addressContainer}>
+                <Box className={classes.addressLabel}>住所</Box>
+                <Box className={classes.addressDetails}>
                   <Box>
-                    <Typography component="span" className="pin-code-label">
+                    <Typography
+                      component="span"
+                      className={classes.pinCodeLabel}
+                    >
                       〒
                     </Typography>
 
@@ -229,9 +233,9 @@ function StoreListInfo() {
                 </Box>
                 {/* <Box className="contact-details">TEL</Box> */}
               </Box>
-              <Box className="contact-details">
+              <Box className={classes.contactDetails}>
                 <Box>
-                  <Typography component="span" className="tel-label">
+                  <Typography component="span" className={classes.telLabel}>
                     TEL
                   </Typography>
 
@@ -263,7 +267,7 @@ function StoreListInfo() {
                   />
                 </Box>
                 <Box>
-                  <Typography component="span" className="fax-label">
+                  <Typography component="span" className={classes.faxLabel}>
                     FAX
                   </Typography>
 
@@ -308,8 +312,10 @@ function StoreListInfo() {
           name="store_note"
           disabled={true}
         />
-        <ButtonAtom label="閉じる" width="100px" />
-        {/* <ButtonAtom onClick={createStore} label="編集" width="100px" /> */}
+        <Box className={classes.actionButtons}>
+          <ButtonAtom label="閉じる" width="100px" />
+          {/* <ButtonAtom onClick={createStore} label="編集" width="100px" /> */}
+        </Box>
       </Box>
     </Box>
   );

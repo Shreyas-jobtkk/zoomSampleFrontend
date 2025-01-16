@@ -1,24 +1,30 @@
-import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
-import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
+// import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
+import MenuHeader from "../../../../components/LV3/Header/MenuHeader";
+import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import classes from "./styles/ContractorList.module.scss";
-import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
-import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
-import SelectableModal from "../../../../../components/LV1/SelectableModal/SelectableModal";
+import ButtonAtom from "../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
+import classes from "./styles/User.module.scss";
+import NumberInput from "../../../../components/LV1/NumberInput/NumberInput";
+import ValidationInputField from "../../../../components/LV1/ValidationInputField/ValidationInputField";
+import SelectableModal from "../../../../components/LV1/SelectableModal/SelectableModal";
 import { useForm } from "react-hook-form";
-import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
-import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
-import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
-import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
-import { UserCreateFormValues } from "../../../../../types/UserTypes/UserTypes";
-import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
-import { CompanyInfo } from "../../../../../types/CompanyTypes/CompanyTypes";
-import { StoreInfo } from "../../../../../types/StoreTypes/StoreTypes";
+import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
+import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
+import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
+import ValidateSelectMultipleOptions from "../../../../components/LV1/SelectOption/validateMultipleOptions";
+import TextAreaWithLabel from "../../../../components/LV1/TextArea/TextAreaWithLabel";
+import ValidationButton from "../../../../components/LV1/ValidationButton/ValidationButton";
+import { UserCreateFormValues } from "../../../../types/UserTypes/UserTypes";
+import { UserApiService } from "../../../../api/apiService/user/user-api-service";
+import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
+import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
+import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
+import { useLocation } from "react-router-dom";
 
-function ContractorListInfo() {
-  const [textValue1, setTextValue1] = useState<string>("");
+function InterpretersListInfo() {
+  const location = useLocation();
+  const { userType } = location.state || {};
 
   const searchConditions = () => {};
   const handleChange = (
@@ -30,8 +36,24 @@ function ContractorListInfo() {
 
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
   const [storeData, setStoreData] = useState<StoreInfo[]>([]);
-
+  const [languagesSupport, setLanguagesSupport] = useState<
+    { label: string; value: string | number }[]
+  >([]);
   const [isStoresExist, setIsStoresExist] = useState<boolean>(false);
+  const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
+    []
+  );
+
+  // Handler for onChange to update the selected options
+  const handleSelectChange = (value: (string | number)[]) => {
+    console.log(655, value);
+    setSelectedOptions(value); // Update the state with selected options
+
+    setFormData((prevData) => ({
+      ...prevData,
+      translate_languages: value, // Convert array to a string if needed
+    }));
+  };
 
   const [formData, setFormData] = useState<UserCreateFormValues>({
     company_no: "",
@@ -47,9 +69,12 @@ function ContractorListInfo() {
     tel2: "",
     tel3: "",
     tel_extension: "",
+    translate_languages: null,
     password_expire: "",
     user_password: "",
     user_password_confirm: "",
+    meeting_id: null,
+    meeting_passcode: null,
     user_note: "",
   });
 
@@ -62,7 +87,27 @@ function ContractorListInfo() {
 
   useEffect(() => {
     fetchCompaniesNames();
+    fetchLanguageNames();
   }, []);
+
+  const fetchLanguageNames = async () => {
+    try {
+      let response = await LanguageApiService.fetchLanguageNames();
+
+      console.log(177, response);
+
+      response = response.map((item: LanguageInfo) => ({
+        label: item.language_name_furigana, // Map 'language_name' to 'label'
+        value: item.languages_support_no, // Map 'languages_support_no' to 'value'
+      }));
+
+      setLanguagesSupport(response);
+
+      // const response = await axios.get(`${apiUrl}/company`);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
+    }
+  };
 
   const fetchCompaniesNames = async () => {
     // console.log(244, await LanguageApiService.fetchLanguageNames());
@@ -150,12 +195,12 @@ function ContractorListInfo() {
         formData.tel2,
         formData.tel3,
         formData.tel_extension,
-        "contractor",
+        userType,
         formData.user_note,
-        null,
+        formData.translate_languages,
         formData.password_expire,
-        null,
-        null
+        formData.meeting_id,
+        formData.meeting_passcode
       );
       alert("saved");
     } catch (error) {
@@ -165,31 +210,24 @@ function ContractorListInfo() {
   };
 
   return (
-    <Box
-      className="interpreters-list-navigate"
-      onSubmit={handleSubmit(createInterpreter)}
-      component="form"
-    >
+    <Box onSubmit={handleSubmit(createInterpreter)} component="form">
+      <p>Received value: {userType}</p>
       <MenuHeader title="通訳者情報" />
-      <Box className="interpreters-list-navigate-content">
-        <Box className="time-details-delete-flag">
-          <Box className="time-details">
+      <Box className={classes.userContent}>
+        <Box className={classes.timeDetailsDeleteFlag}>
+          <Box className={classes.timeDetails}>
             <TextBoxWithLabel
               labelWidth="125px"
               label="登録日時"
               width="30vw"
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
               width="30vw"
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
-          <Box className="delete-flag">
+          <Box>
             <TextBoxWithLabel
               labelWidth="100px"
               label="削除フラグ"
@@ -197,9 +235,9 @@ function ContractorListInfo() {
             />
           </Box>
         </Box>
-        <Box className="company-store-info">
-          <Box className="company-info">
-            <Box className="description-label">企業情報</Box>
+        <Box className={classes.companyStoreInfo}>
+          <Box className={classes.companyInfo}>
+            <Box className={classes.descriptionLabel}>企業情報</Box>
             <SelectableModal
               title="企業検索"
               options={companyData}
@@ -232,8 +270,8 @@ function ContractorListInfo() {
               type="none"
             />
           </Box>
-          <Box className="store-info">
-            <Box className="description-label">店舗情報</Box>
+          <Box className={classes.storeInfo}>
+            <Box className={classes.descriptionLabel}>店舗情報</Box>
             <SelectableModal
               title="店舗検索"
               options={storeData}
@@ -268,11 +306,11 @@ function ContractorListInfo() {
             />
           </Box>
         </Box>
-        <Box className="basic-info">
-          <Box className="description-label">基本情報</Box>
+        <Box className={classes.basicInfo}>
+          <Box className={classes.descriptionLabel}>基本情報</Box>
           <TextBoxWithLabel labelWidth="125px" label="No" width="30vw" />
-          <Box className="name-row">
-            <Box className="last-name">
+          <Box className={classes.nameRow}>
+            <Box className={classes.lastName}>
               <ValidationInputField
                 isSubmitted={isSubmitted}
                 label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
@@ -297,10 +335,10 @@ function ContractorListInfo() {
                 onChange={handleChange}
               />
             </Box>
-            <Box className="first-name">
+            <Box className={classes.firstName}>
               <ValidationInputField
                 isSubmitted={isSubmitted}
-                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メイ"
+                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メイ"
                 name="user_name_first_furigana" // Name for the phonetic spelling
                 labelWidth="125px"
                 width="30vw"
@@ -311,7 +349,7 @@ function ContractorListInfo() {
               />
               <ValidationInputField
                 isSubmitted={isSubmitted}
-                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名"
+                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名"
                 name="user_name_first" // Name for the phonetic spelling
                 labelWidth="125px"
                 width="30vw"
@@ -322,8 +360,8 @@ function ContractorListInfo() {
               />
             </Box>
           </Box>
-          <Box className="contact-details">
-            <Box className="mail-address">
+          <Box className={classes.contactDetails}>
+            <Box>
               <ValidationInputField
                 isSubmitted={isSubmitted}
                 label="メールアドレス"
@@ -337,9 +375,9 @@ function ContractorListInfo() {
                 type="email"
               />
             </Box>
-            <Box className="tel-no">
-              <Box className="tel-no">
-                <Typography component="span" className="tel-label">
+            <Box>
+              <Box>
+                <Typography component="span" className={classes.telNo}>
                   TEL
                 </Typography>
 
@@ -367,8 +405,8 @@ function ContractorListInfo() {
                   margin="0 8px"
                 />
               </Box>
-              <Box className="tel-extension">
-                <Typography component="span" className="tel-label">
+              <Box>
+                <Typography component="span" className={classes.telExtension}>
                   内線
                 </Typography>
 
@@ -382,28 +420,29 @@ function ContractorListInfo() {
               </Box>
             </Box>
           </Box>
-          {/* <ValidateSelectMultipleOptions
-            isSubmitted={isSubmitted}
-            label="通訳言語"
-            labelWidth="125px"
-            options={languagesSupport}
-            value={selectedOptions}
-            onChange={handleSelectChange}
-            register={register}
-            name="translate_languages"
-          /> */}
+          {userType === "interpreter" && (
+            <ValidateSelectMultipleOptions
+              isSubmitted={isSubmitted}
+              label="通訳言語"
+              labelWidth="125px"
+              options={languagesSupport}
+              value={selectedOptions}
+              onChange={handleSelectChange}
+              register={register}
+              name="translate_languages"
+            />
+          )}
         </Box>
-        <Box className="password-meeting-info">
-          <Box className="password-info">
-            <Box className="description-label">パスワード情報</Box>
+        <Box className={classes.passwordMeetingInfo}>
+          <Box className={classes.passwordInfo}>
+            <Box className={classes.descriptionLabel}>パスワード情報</Box>
             <TextBoxWithLabel
               labelWidth="125px"
               label="有効期限"
               width="15vw"
               value={formData.password_expire}
-              onChange={(e: any) => setTextValue1(e.target.value)}
             />
-            <Box className="password-input">
+            <Box className={classes.passwordInput}>
               <ValidationInputField
                 isSubmitted={isSubmitted}
                 name="user_password" // Name for the phonetic spelling
@@ -430,7 +469,33 @@ function ContractorListInfo() {
               />
             </Box>
           </Box>
-          <Box className="meeting-info">
+          <Box className={classes.meetingInfo}>
+            {userType === "interpreter" && (
+              <Box className={classes.meetingCredentials}>
+                <ValidationInputField
+                  isSubmitted={isSubmitted}
+                  name="meeting_id" // Name for the phonetic spelling
+                  labelWidth="125px"
+                  label="ミーティングID"
+                  width="15vw"
+                  register={register}
+                  maxLength={128}
+                  value={formData.meeting_id}
+                  onChange={handleChange}
+                />
+                <ValidationInputField
+                  isSubmitted={isSubmitted}
+                  name="meeting_passcode" // Name for the phonetic spelling
+                  labelWidth="125px"
+                  label="パスコード"
+                  width="15vw"
+                  register={register}
+                  maxLength={128}
+                  value={formData.meeting_passcode}
+                  onChange={handleChange}
+                />
+              </Box>
+            )}
             <TextAreaWithLabel
               label="備考"
               value={formData.user_note}
@@ -442,7 +507,7 @@ function ContractorListInfo() {
             />
           </Box>
         </Box>
-        <Box className="button-container">
+        <Box className={classes.actionButtons}>
           <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
           <ValidationButton label="保存" width="100px" type="submit" />
         </Box>
@@ -451,4 +516,4 @@ function ContractorListInfo() {
   );
 }
 
-export default ContractorListInfo;
+export default InterpretersListInfo;

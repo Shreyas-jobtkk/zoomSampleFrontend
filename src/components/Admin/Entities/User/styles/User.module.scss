@@ -1,5 +1,9 @@
-.interpreters-list-navigate-content {
-  height: calc(92vh - 30px);
+// .interpreters-list-navigate {
+
+// }
+
+.userContent {
+  height: calc(87vh - 30px);
   overflow: auto;
   padding: 1vh 1vw;
   display: flex;
@@ -9,22 +13,27 @@
   white-space: nowrap;
 }
 
-.time-details {
-  padding: 1vh 1vw;
+.timeDetailsDeleteFlag {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   margin: 1vh 0;
 }
 
-.company-store-info {
+.timeDetails {
+  padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.companyStoreInfo {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 100 !important;
 }
 
-.store-info,
-.company-info {
+.storeInfo,
+.companyInfo {
   padding: 1vh 1vw;
   display: flex;
   flex-direction: column;
@@ -33,14 +42,24 @@
   border: 1px solid #ccc; // Replace with your borderStyle
 }
 
-.basic-info {
+.descriptionLabel {
+  position: relative;
+  bottom: 3vh;
+  left: 1vw;
+  background-color: #f1f2f3;
+  border: 1px solid #ccc;
+  width: 150px;
+  text-align: center;
+}
+
+.basicInfo {
   padding: 1vh 1vw;
   margin: 2vh 0;
   border: 1px solid #ccc; // Replace with your borderStyle
 }
 
-.name-row,
-.contact-details {
+.nameRow,
+.contactDetails {
   display: flex;
   flex-direction: row;
   margin: 3vh 0;
@@ -49,76 +68,65 @@
   width: 45vw !important;
 }
 
-.last-name,
-.first-name {
+.lastName,
+.firstName {
   display: flex;
   flex-direction: column;
   width: 45vw;
 }
 
-.contact-details {
+.contactDetails {
   display: flex;
-}
-
-.contact-details {
-  // display: flex;
-  // flex-direction: row;
   margin: 3vh 0;
-  // justify-content: space-between;
-
-  // width: 100vw;
 }
 
-.tel-no,
-.tel-extension {
-  // display: flex;
+.telNo,
+.telExtension {
+  display: inline-block;
   // flex-direction: column;
-  margin-left: 25px;
+  margin-left: 70px;
+  width: 50px;
 }
 
-.password-meeting-info {
+.passwordMeetingInfo {
   display: flex;
   gap: 2vw;
-  // padding: 1vh 1vw;
-  // margin: 3vh 0;
-  // width: 45vw;
-  // border: 1px solid #ccc; // Replace with your borderStyle
 }
 
-.password-info {
+.passwordInfo {
   padding: 1vh 1vw;
   margin: 3vh 0;
   width: 45vw;
   border: 1px solid #ccc; // Replace with your borderStyle
 }
 
-.password-input {
+.passwordInput {
   // display: flex;
   // align-items: center;
   // justify-content: space-between;
   margin-top: 2vh;
 }
 
-.password-change {
+.passwordChange {
   align-items: center;
   margin-top: 2vh;
 }
 
-.meeting-info {
+.meetingInfo {
   padding: 1vh 1vw;
   margin: 3vh 0;
   width: 45vw;
 }
 
-.meeting-credentials {
+.meetingCredentials {
   display: flex;
   gap: 1vw;
 }
 
-.occupy-extreme-right {
+.occupyExtremeRight {
   margin-left: auto;
 }
 
-.button-container {
+.buttonContainer {
   margin-bottom: 1vh;
 }
