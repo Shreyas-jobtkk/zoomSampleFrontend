@@ -151,7 +151,7 @@ function InterpretersList() {
       const getLanguageNames = (numbers: any[]): string => {
         return getLanguageDetails
           .filter((lang) =>
-            numbers.map(Number).includes(lang.languages_support_no)
+            numbers.map(Number).includes(Number(lang.languages_support_no))
           )
           .map((lang) => lang.language_name_furigana)
           .join(" , "); // Join the results with a comma and space
@@ -278,7 +278,10 @@ function InterpretersList() {
 
   const navigateToInfoPage = () => {
     navigate("/InterpretersListInfo", {
-      state: { selectedInterpreterNo: selectedInterpreterNoArray[0] },
+      state: {
+        selectedInterpreterNo: selectedInterpreterNoArray[0],
+        userType: "interpreter",
+      },
     });
   };
 

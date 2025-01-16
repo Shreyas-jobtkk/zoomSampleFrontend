@@ -212,8 +212,11 @@ function InterpretersList() {
   };
 
   const navigateToInfoPage = () => {
-    navigate("/AdministratorListInfo", {
-      state: { selectedInterpreterNo: selectedInterpreterNoArray[0] },
+    navigate("/InterpretersListInfo", {
+      state: {
+        selectedInterpreterNo: selectedInterpreterNoArray[0],
+        userType: "administrator",
+      },
     });
   };
 

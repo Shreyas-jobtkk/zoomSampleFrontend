@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import InterpretersListInfo from "../Pages/Admin/AdminMenu/InterpretersList/InterpretersListComponents/InterpretersListInfo";
+import InterpretersListInfo from "../../src/components/Admin/Entities/User/UserInfo";
 // import InterpretersListCreate from "../Pages/Admin/AdminMenu/InterpretersList/InterpretersListComponents/InterpretersListCreate";
 import InterpretersListCreate from "../../src/components/Admin/Entities/User/UserCreate";
 import InterpretersListUpdate from "../../src/components/Admin/Entities/User/UserEdit";
