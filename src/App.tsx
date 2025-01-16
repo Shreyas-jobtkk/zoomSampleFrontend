@@ -1,7 +1,7 @@
 // App.tsx
 import React from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import AppRoutes from "./App-Routes";
+import AppRoutes from "./routes/App-Routes";
 import "./App.scss";
 // import "./App-Routes.js";
 

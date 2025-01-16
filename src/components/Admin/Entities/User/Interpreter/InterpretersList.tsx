@@ -277,7 +277,7 @@ function InterpretersList() {
   };
 
   const navigateToInfoPage = () => {
-    navigate("/InterpretersListInfo", {
+    navigate("/UserInfo", {
       state: {
         selectedInterpreterNo: selectedInterpreterNoArray[0],
         userType: "interpreter",
@@ -286,12 +286,12 @@ function InterpretersList() {
   };
 
   const navigateToInterpreterCreate = () => {
-    navigate("/InterpretersListCreate", {
+    navigate("/UserCreate", {
       state: { userType: "interpreter" },
     });
   };
   const navigateToEditPage = () => {
-    navigate("/InterpretersListUpdate", {
+    navigate("/UserUpdate", {
       state: {
         selectedInterpreterNo: selectedInterpreterNoArray[0],
         userType: "interpreter",

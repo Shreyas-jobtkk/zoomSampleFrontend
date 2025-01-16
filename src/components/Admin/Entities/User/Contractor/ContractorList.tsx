@@ -212,7 +212,7 @@ function InterpretersList() {
   };
 
   const navigateToInfoPage = () => {
-    navigate("/InterpretersListInfo", {
+    navigate("/UserInfo", {
       state: {
         selectedInterpreterNo: selectedInterpreterNoArray[0],
         userType: "contractor",
@@ -221,12 +221,12 @@ function InterpretersList() {
   };
 
   const navigateToInterpreterCreate = () => {
-    navigate("/InterpretersListCreate", {
+    navigate("/UserCreate", {
       state: { userType: "contractor" },
     });
   };
   const navigateToEditPage = () => {
-    navigate("/InterpretersListUpdate", {
+    navigate("/UserUpdate", {
       state: {
         selectedInterpreterNo: selectedInterpreterNoArray[0],
         userType: "contractor",
