@@ -3,7 +3,7 @@ import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithL
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import "../InterpretersListStyles/InterpretersList.scss";
+// import "../InterpretersListStyles/InterpretersList.scss";
 import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
 import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
 import SelectableModal from "../../../../../components/LV1/SelectableModal/SelectableModal";

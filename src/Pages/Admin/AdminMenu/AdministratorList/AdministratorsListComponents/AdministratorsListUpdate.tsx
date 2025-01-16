@@ -3,7 +3,7 @@ import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithL
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import "../AdministratorsListStyles/AdministratorsList.scss";
+// import "../AdministratorsListStyles/AdministratorsList.scss";
 import { useLocation } from "react-router-dom";
 import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";

@@ -1,16 +1,16 @@
-import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
-import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
+import MenuHeader from "../../../LV3/Header/MenuHeader";
+import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import "../CompanyStyles/CompanyList.scss";
+import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
+import classes from "./styles/Companies.module.scss";
 import { useLocation, useNavigate } from "react-router-dom";
-import { convertToJST, deleteStatus } from "../../../../../utils/utils";
-import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
-import { CompanyInfo } from "../../../../../types/CompanyTypes/CompanyTypes";
-import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
+import { convertToJST, deleteStatus } from "../../../../utils/utils";
+import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
+import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
+import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 
-function CompanyListInfo() {
+function CompanyInformation() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const { state } = useLocation();
@@ -65,9 +65,9 @@ function CompanyListInfo() {
     <Box className="company-list-navigate">
       <MenuHeader title="企業情報" />
 
-      <Box className="company-list-navigate-content">
-        <Box className="time-details-delete-flag">
-          <Box className="time-details">
+      <Box className={classes.companyInfoContainer}>
+        <Box className={classes.timeDetailsDeleteFlag}>
+          <Box className={classes.timeDetails}>
             <TextBoxWithLabel
               labelWidth="125px"
               label="登録日時"
@@ -91,9 +91,8 @@ function CompanyListInfo() {
             />
           </Box>
         </Box>
-
-        <Box className="basic-info">
-          <Box className="description-label">基本情報</Box>
+        <Box className={classes.basicInfo}>
+          <Box className={classes.descriptionLabel}>基本情報</Box>
           <TextBoxWithLabel
             labelWidth="125px"
             label="企業No"
@@ -102,7 +101,7 @@ function CompanyListInfo() {
             // Optionally disable this field as it's a read-only field
             disabled={true}
           />
-          <Box className="name-row">
+          <Box className={classes.nameRow}>
             <Box>
               <TextBoxWithLabel
                 labelWidth="125px"
@@ -121,19 +120,19 @@ function CompanyListInfo() {
             </Box>
           </Box>
         </Box>
-
         <TextAreaWithLabel
           label="備考"
           value={formData.company_note}
           margin="1vh 0 1vh 40vw"
           disabled={true}
         />
-
-        <ButtonAtom onClick={handleClose} label="閉じる" width="100px" />
-        {/* <ButtonAtom onClick={handleEdit} label="編集" width="100px" /> */}
+        <Box className={classes.actionButtons}>
+          <ButtonAtom onClick={handleClose} label="閉じる" width="100px" />
+          {/* <ButtonAtom onClick={handleEdit} label="編集" width="100px" /> */}
+        </Box>
       </Box>
     </Box>
   );
 }
 
-export default CompanyListInfo;
+export default CompanyInformation;

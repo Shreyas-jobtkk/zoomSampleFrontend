@@ -125,7 +125,7 @@ function CompaniesList() {
   };
 
   const navigateToInfoPage = () => {
-    navigate("/CompanyListInfo", {
+    navigate("/CompanyInfo", {
       state: { selectedCompanyNo: selectedCompanyNoArray[0] },
     });
   };

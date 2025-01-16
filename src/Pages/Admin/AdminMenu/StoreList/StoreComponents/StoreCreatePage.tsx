@@ -3,7 +3,7 @@ import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithL
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import "../StoreStyles/StoreList.scss";
+// import "../StoreStyles/StoreList.scss";
 // import ValidationTextArea from "../../../../components/LV1/ValidationTextArea/ValidationTextArea";
 import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
 // import { fetchCompaniesAll } from "../../../../api/apiService/company/company";

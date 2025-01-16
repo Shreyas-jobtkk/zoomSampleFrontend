@@ -3,7 +3,7 @@ import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithL
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import "../LanguagesListStyles/LanguagesList.scss";
+// import "../LanguagesListStyles/LanguagesList.scss";
 import { useForm } from "react-hook-form";
 import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
 import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";

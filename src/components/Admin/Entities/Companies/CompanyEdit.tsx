@@ -1,23 +1,23 @@
-import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
-import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
+import MenuHeader from "../../../LV3/Header/MenuHeader";
+import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import "../CompanyStyles/CompanyList.scss";
+import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
+import classes from "./styles/Companies.module.scss";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { convertToJST, deleteStatus } from "../../../../../utils/utils";
-import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
+import { convertToJST, deleteStatus } from "../../../../utils/utils";
+import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 // import ValidationTextArea from "../../../../components/LV1/ValidationTextArea/ValidationTextArea";
-import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
+import ValidationButton from "../../../LV1/ValidationButton/ValidationButton";
 // import { updateCompany } from "../../../../api/apiService/company/actions/company-update";
 // import { fetchCompany } from "../../../../api/apiService/company/actions/company-fetch";
-import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
+import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 import {
   CompanyCreateFormValues,
   CompanyInfo,
-} from "../../../../../types/CompanyTypes/CompanyTypes";
-import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
+} from "../../../../types/CompanyTypes/CompanyTypes";
+import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
 
 function CompanyInfoEdit() {
   const { state } = useLocation();
@@ -90,15 +90,11 @@ function CompanyInfoEdit() {
   };
 
   return (
-    <Box
-      className="company-list-navigate"
-      onSubmit={handleSubmit(handleEdit)}
-      component="form"
-    >
+    <Box onSubmit={handleSubmit(handleEdit)} component="form">
       <MenuHeader title="企業情報" />
-      <Box className="company-list-navigate-content">
-        <Box className="time-details-delete-flag">
-          <Box className="time-details">
+      <Box className={classes.companyEditContainer}>
+        <Box className={classes.timeDetailsDeleteFlag}>
+          <Box className={classes.timeDetails}>
             <TextBoxWithLabel
               labelWidth="125px"
               label="登録日時"
@@ -124,8 +120,8 @@ function CompanyInfoEdit() {
           </Box>
         </Box>
 
-        <Box className="basic-info">
-          <Box className="description-label">基本情報</Box>
+        <Box className={classes.basicInfo}>
+          <Box className={classes.descriptionLabel}>基本情報</Box>
           <TextBoxWithLabel
             labelWidth="125px"
             label="企業No"
@@ -133,7 +129,7 @@ function CompanyInfoEdit() {
             value={formData.company_no}
             // onChange={(e: any) => setCompanyNo(e.target.value)}
           />
-          <Box className="name-row">
+          <Box className={classes.nameRow}>
             <Box>
               <ValidationInputField
                 isSubmitted={isSubmitted}
@@ -183,10 +179,13 @@ function CompanyInfoEdit() {
           maxLength={2}
           name="company_note"
         />
-        <ButtonAtom onClick={handleClose} label="閉じる" width="100px" />
-        <ValidationButton label="編集" width="100px" type="submit" />
-        {/* <Box>{companyNo} </Box> */}
-      </Box>
+
+        <Box className={classes.actionButtons}>
+          <ButtonAtom onClick={handleClose} label="閉じる" width="100px" />
+          <ValidationButton label="編集" width="100px" type="submit" />
+          {/* <Box>{companyNo} </Box> */}
+        </Box>
+      </Box>{" "}
     </Box>
   );
 }

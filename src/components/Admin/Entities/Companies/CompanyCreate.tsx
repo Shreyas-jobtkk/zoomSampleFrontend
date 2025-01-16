@@ -1,15 +1,15 @@
-import MenuHeader from "../../../../../components/LV3/Header/MenuHeader";
-import TextBoxWithLabel from "../../../../../components/LV1/TextBox/TextBoxWithLabel";
+import MenuHeader from "../../../LV3/Header/MenuHeader";
+import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import "../CompanyStyles/CompanyList.scss";
+import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
+import classes from "./styles/Companies.module.scss";
 import { useForm } from "react-hook-form";
-import ValidationInputField from "../../../../../components/LV1/ValidationInputField/ValidationInputField";
-import ValidationButton from "../../../../../components/LV1/ValidationButton/ValidationButton";
-import { CompanyCreateFormValues } from "../../../../../types/CompanyTypes/CompanyTypes";
-import { CompanyApiService } from "../../../../../api/apiService/company/company-api-service";
-import TextAreaWithLabel from "../../../../../components/LV1/TextArea/TextAreaWithLabel";
+import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
+import ValidationButton from "../../../LV1/ValidationButton/ValidationButton";
+import { CompanyCreateFormValues } from "../../../../types/CompanyTypes/CompanyTypes";
+import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
+import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 
 const CompanyCreate = () => {
   const [formData, setFormData] = useState<CompanyCreateFormValues>({
@@ -49,15 +49,11 @@ const CompanyCreate = () => {
   };
 
   return (
-    <Box
-      className="company-list-navigate"
-      onSubmit={handleSubmit(saveCompanyInfo)}
-      component="form"
-    >
+    <Box onSubmit={handleSubmit(saveCompanyInfo)} component="form">
       <MenuHeader title="企業情報" />
-      <Box className="company-list-navigate-content">
-        <Box className="time-details-delete-flag">
-          <Box className="time-details">
+      <Box className={classes.companyCreateContainer}>
+        <Box className={classes.timeDetailsDeleteFlag}>
+          <Box className={classes.timeDetails}>
             <TextBoxWithLabel
               labelWidth="125px"
               label="登録日時"
@@ -69,7 +65,7 @@ const CompanyCreate = () => {
               width="30vw" // Uncomment to set a custom width
             />
           </Box>
-          <Box className="delete-flag">
+          <Box>
             <TextBoxWithLabel
               labelWidth="100px"
               label="削除フラグ"
@@ -77,10 +73,10 @@ const CompanyCreate = () => {
             />
           </Box>
         </Box>
-        <Box className="basic-info">
-          <Box className="description-label">基本情報</Box>
+        <Box className={classes.basicInfo}>
+          <Box className={classes.descriptionLabel}>基本情報</Box>
           <TextBoxWithLabel labelWidth="125px" label="企業No" width="30vw" />
-          <Box className="name-row">
+          <Box className={classes.nameRow}>
             <Box>
               <ValidationInputField
                 isSubmitted={isSubmitted}
@@ -128,12 +124,14 @@ const CompanyCreate = () => {
           name="company_note"
         />
 
-        <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
-        <ValidationButton
-          label="保存"
-          // onClick={saveCompanyInfo}
-          type="submit"
-        />
+        <Box className={classes.actionButtons}>
+          <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
+          <ValidationButton
+            label="保存"
+            // onClick={saveCompanyInfo}
+            type="submit"
+          />
+        </Box>
       </Box>
     </Box>
   );

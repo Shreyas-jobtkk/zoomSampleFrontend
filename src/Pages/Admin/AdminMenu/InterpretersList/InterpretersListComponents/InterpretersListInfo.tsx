@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import PasswordBoxWithLabel from "../../../../../components/LV1/TextBox/PasswordBoxWithLabel";
 import ButtonAtom from "../../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
-import "../InterpretersListStyles/InterpretersList.scss";
+// import "../InterpretersListStyles/InterpretersList.scss";
 import { useLocation } from "react-router-dom";
 import MultipleOptionsSelect from "../../../../../components/LV1/SelectOption/MultipleOptionsSelect";
 import NumberInput from "../../../../../components/LV1/NumberInput/NumberInput";

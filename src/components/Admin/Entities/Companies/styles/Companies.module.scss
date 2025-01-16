@@ -1,0 +1,60 @@
+// .companyCreate {
+//   // padding: 1vh 1vw;
+//   // display: flex;
+//   // flex-direction: column;
+//   // overflow-y: scroll;
+//   // overflow: auto;
+//   // white-space: nowrap;
+// }
+
+.companyCreateContainer,
+.companyCreateContainer,
+.companyInfoContainer {
+  height: calc(92vh - 30px);
+  overflow: auto;
+  padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.timeDetailsDeleteFlag {
+  display: flex;
+  justify-content: space-between;
+  margin: 1vh 0;
+}
+
+.timeDetails {
+  padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+}
+
+// .delete-flag {
+// }
+
+.basicInfo {
+  padding: 1vh 1vw;
+  margin: 2vh 0;
+  border: 1px solid #ccc; // Replace with your borderStyle
+}
+
+.nameRow {
+  display: flex;
+  flex-direction: row;
+  margin: 3vh 0;
+  justify-content: space-between;
+  gap: 1vw;
+}
+
+.descriptionLabel {
+  position: relative;
+  bottom: 3vh;
+  left: 1vw;
+  background-color: #f1f2f3;
+  border: 1px solid #ccc;
+  width: 150px;
+  text-align: center;
+}

@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import CompanyListInfo from "../Pages/Admin/AdminMenu/CompanyList/CompanyComponents/CompanyListInfoPage";
-import CompanyCreate from "../Pages/Admin/AdminMenu/CompanyList/CompanyComponents/CompanyCreatePage";
-import CompanyInfoEdit from "../Pages/Admin/AdminMenu/CompanyList/CompanyComponents/CompanyInfoEditPage";
+import CompanyInfo from "../components/Admin/Entities/Companies/CompanyInfo";
+import CompanyCreate from "../components/Admin/Entities/Companies/CompanyCreate";
+import CompanyInfoEdit from "../components/Admin/Entities/Companies/CompanyEdit";
 // import AdministratorListEdit from "../Pages/Admin/AdminMenu/AdministratorList/AdministratorListEditPage";
 
 const AdministratorListRoutes = () => (
   <Routes>
-    <Route path="/CompanyListInfo" element={<CompanyListInfo />} />
+    <Route path="/CompanyInfo" element={<CompanyInfo />} />
     <Route path="/CompanyCreate" element={<CompanyCreate />} />
     <Route path="/CompanyInfoEdit" element={<CompanyInfoEdit />} />
 
