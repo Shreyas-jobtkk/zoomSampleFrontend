@@ -122,7 +122,8 @@ function InterpretersListInfo() {
     console.log(997, typeof formData.translate_languages);
     console.log(998, formData.translate_languages);
 
-    setOptionValue(formData.translate_languages.map(Number));
+    // setOptionValue(formData.translate_languages.map(Number));
+    setOptionValue(formData.translate_languages);
 
     // Now you can set the options like this:
     setLanguagesSupport(transformedOptions);

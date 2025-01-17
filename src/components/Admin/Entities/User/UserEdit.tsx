@@ -286,7 +286,8 @@ function InterpretersListUpdate() {
     console.log(997, typeof formData.translate_languages);
     console.log(998, formData.translate_languages);
 
-    setOptionValue(formData.translate_languages.map(Number));
+    // setOptionValue(formData.translate_languages.map(Number));
+    setOptionValue(formData.translate_languages);
   };
 
   const handleSelectChange = (value: (string | number)[]) => {

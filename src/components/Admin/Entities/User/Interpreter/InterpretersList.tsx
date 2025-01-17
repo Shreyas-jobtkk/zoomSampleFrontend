@@ -149,12 +149,15 @@ function InterpretersList() {
 
       // Function to get language_name_furigana based on selected numbers
       const getLanguageNames = (numbers: any[]): string => {
-        return getLanguageDetails
-          .filter((lang) =>
-            numbers.map(Number).includes(Number(lang.languages_support_no))
-          )
-          .map((lang) => lang.language_name_furigana)
-          .join(" , "); // Join the results with a comma and space
+        return (
+          getLanguageDetails
+            // .filter((lang) =>
+            //   numbers.map(Number).includes(Number(lang.languages_support_no))
+            // )
+            .filter((lang) => numbers.includes(lang.languages_support_no))
+            .map((lang) => lang.language_name_furigana)
+            .join(" , ")
+        ); // Join the results with a comma and space
       };
 
       const sortedData = response

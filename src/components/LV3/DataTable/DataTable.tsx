@@ -220,7 +220,8 @@ const DataTable: React.FC<DataTableProps> = ({
               { label: "5", value: 5 },
               { label: "10", value: 10 },
             ]}
-            width={150}
+            // width={150}
+            labelWidth={130}
             value={rowsPerPage.toString()}
             onChange={handleChangeRowsPerPage}
           />

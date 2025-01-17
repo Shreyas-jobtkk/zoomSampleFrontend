@@ -30,6 +30,8 @@ function InterpreterLogin() {
   const { message } = location.state || {}; // Safely access state
   const terminal_id = message.terminal_id;
 
+  console.log(144, message);
+
   const [status, setStatus] = useState("inactive"); // State to hold the selected status
 
   // Send API request when user is active or inactive
@@ -170,20 +172,11 @@ function InterpreterLogin() {
       // setStatus('inactive');
     });
 
-    // socket.on('startUrl', (startUrl) => {
-    //   console.log(136, startUrl)
-    //   zoomStartURL = startUrl
-    // });
     socket.on("startUrl", (meetingData) => {
       if (meetingData.uniqueId == uniqueId) {
         console.log(136, meetingData, uniqueId);
         zoomStartURL = meetingData.url;
-        // socket.emit('userUniqueId', uniqueId)
       }
-      // setTimeout(() => {
-      //   window.location.href = zoomStartURL;
-      //   // window.open(zoomStartURL, '_blank');
-      // }, 1000);  // 1 second delay
     });
 
     // Clean up the socket connection on component unmount
