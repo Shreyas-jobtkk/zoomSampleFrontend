@@ -346,26 +346,24 @@ function InterpretersListUpdate() {
 
   return (
     <Box onSubmit={handleSubmit(updateInterpreter)} component="form">
-      <MenuHeader title={`${getUserTitle(userType)}情報`} />;
-      <p>Received value: {userType}</p>
-      <p>Received value: {selectedInterpreterNo}</p>
+      <MenuHeader title={`${getUserTitle(userType)}情報`} />
       <Box className={classes.userContent}>
         <Box className={classes.timeDetailsDeleteFlag}>
           <Box className={classes.timeDetails}>
             <TextBoxWithLabel
-              labelWidth="125px"
+              labelWidth="150px"
               label="登録日時"
-              width="30vw"
+              width="calc(45vw-100px)"
               value={convertToJST(formData.created_at ?? "")}
             />
             <TextBoxWithLabel
-              labelWidth="125px"
+              labelWidth="150px"
               label="更新日時"
-              width="30vw"
+              width="calc(45vw-100px)"
               value={convertToJST(formData.updated_at ?? "")}
             />
           </Box>
-          <Box className="delete-flag">
+          <Box>
             <TextBoxWithLabel
               labelWidth="100px"
               label="削除フラグ"
@@ -388,9 +386,9 @@ function InterpretersListUpdate() {
             <ValidationInputField
               isSubmitted={isSubmitted}
               name="company_no" // Name for the phonetic spelling
-              labelWidth="125px"
+              labelWidth="150px"
               label="企業No"
-              width="30vw"
+              width="calc(45vw-100px)"
               register={register}
               maxLength={128}
               value={formData.company_no}
@@ -399,9 +397,9 @@ function InterpretersListUpdate() {
             <ValidationInputField
               isSubmitted={isSubmitted}
               name="company_name" // Name for the phonetic spelling
-              labelWidth="125px"
+              labelWidth="150px"
               label="企業名"
-              width="30vw"
+              width="calc(45vw-100px)"
               register={register}
               maxLength={128}
               value={formData.company_name}
@@ -422,9 +420,9 @@ function InterpretersListUpdate() {
             <ValidationInputField
               isSubmitted={isSubmitted}
               name="store_no" // Name for the phonetic spelling
-              labelWidth="125px"
+              labelWidth="150px"
               label="店舗No"
-              width="30vw"
+              width="calc(45vw-100px)"
               register={register}
               maxLength={128}
               value={formData.store_no}
@@ -433,9 +431,9 @@ function InterpretersListUpdate() {
             <ValidationInputField
               isSubmitted={isSubmitted}
               name="store_name" // Name for the phonetic spelling
-              labelWidth="125px"
+              labelWidth="150px"
               label="店舗名"
-              width="30vw"
+              width="calc(45vw-100px)"
               register={register}
               maxLength={128}
               value={formData.store_name}
@@ -448,7 +446,7 @@ function InterpretersListUpdate() {
           <TextBoxWithLabel
             labelWidth="125px"
             label="No"
-            width="30vw"
+            width="calc(35vw - 80px);"
             value={formData.user_no}
           />
           <Box className={classes.nameRow}>
@@ -458,7 +456,7 @@ function InterpretersListUpdate() {
                 label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 name="user_name_last_furigana" // Name for the phonetic spelling
                 labelWidth="125px"
-                width="30vw"
+                width="calc(35vw - 80px);"
                 register={register}
                 maxLength={128}
                 value={formData.user_name_last_furigana}
@@ -470,7 +468,7 @@ function InterpretersListUpdate() {
                 label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                 name="user_name_last" // Name for the phonetic spelling
                 labelWidth="125px"
-                width="30vw"
+                width="calc(35vw - 80px);"
                 register={register}
                 maxLength={128}
                 value={formData.user_name_last}
@@ -480,10 +478,10 @@ function InterpretersListUpdate() {
             <Box className={classes.firstName}>
               <ValidationInputField
                 isSubmitted={isSubmitted}
-                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メイ"
+                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メイ"
                 name="user_name_first_furigana" // Name for the phonetic spelling
                 labelWidth="125px"
-                width="30vw"
+                width="calc(35vw - 80px);"
                 register={register}
                 maxLength={128}
                 value={formData.user_name_first_furigana}
@@ -491,10 +489,10 @@ function InterpretersListUpdate() {
               />
               <ValidationInputField
                 isSubmitted={isSubmitted}
-                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名"
+                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名"
                 name="user_name_first" // Name for the phonetic spelling
                 labelWidth="125px"
-                width="30vw"
+                width="calc(35vw - 80px);"
                 register={register}
                 maxLength={128}
                 value={formData.user_name_first}
@@ -503,13 +501,13 @@ function InterpretersListUpdate() {
             </Box>
           </Box>
           <Box className={classes.contactDetails}>
-            <Box>
+            <Box className={classes.mailAddress}>
               <ValidationInputField
                 isSubmitted={isSubmitted}
                 label="メールアドレス"
                 name="mail_address" // Name for the phonetic spelling
                 labelWidth="125px"
-                width="30vw"
+                width="calc(35vw - 80px);"
                 register={register}
                 maxLength={128}
                 value={formData.mail_address}
@@ -517,13 +515,14 @@ function InterpretersListUpdate() {
                 type="email"
               />
             </Box>
-            <Box>
-              <Box>
-                <Typography component="span" className={classes.telNo}>
-                  TEL
+            <Box className={classes.telDetails}>
+              <Box className={classes.telNo}>
+                <Typography component="span">
+                  TEL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </Typography>
 
                 <NumberInput
+                  width="5vw"
                   onChange={handleChange}
                   value={formData.tel1}
                   name="tel1"
@@ -532,6 +531,7 @@ function InterpretersListUpdate() {
                 />
                 <Typography component="span">-</Typography>
                 <NumberInput
+                  width="5vw"
                   onChange={handleChange}
                   value={formData.tel2}
                   name="tel2"
@@ -540,6 +540,7 @@ function InterpretersListUpdate() {
                 />
                 <Typography component="span">-</Typography>
                 <NumberInput
+                  width="5vw"
                   onChange={handleChange}
                   value={formData.tel3}
                   name="tel3"
@@ -547,12 +548,13 @@ function InterpretersListUpdate() {
                   margin="0 8px"
                 />
               </Box>
-              <Box>
-                <Typography component="span" className={classes.telExtension}>
-                  内線
+              <Box className={classes.telExtension}>
+                <Typography component="span">
+                  内線&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </Typography>
 
                 <NumberInput
+                  width="5vw"
                   onChange={handleChange}
                   value={formData.tel_extension}
                   name="tel_extension"
@@ -624,7 +626,7 @@ function InterpretersListUpdate() {
                   name="meeting_id" // Name for the phonetic spelling
                   labelWidth="125px"
                   label="ミーティングID"
-                  width="15vw"
+                  width="12vw"
                   register={register}
                   maxLength={128}
                   value={formData.meeting_id}
@@ -633,9 +635,9 @@ function InterpretersListUpdate() {
                 <ValidationInputField
                   isSubmitted={isSubmitted}
                   name="meeting_passcode" // Name for the phonetic spelling
-                  labelWidth="125px"
+                  labelWidth="85px"
                   label="パスコード"
-                  width="15vw"
+                  width="12vw"
                   register={register}
                   maxLength={128}
                   value={formData.meeting_passcode}

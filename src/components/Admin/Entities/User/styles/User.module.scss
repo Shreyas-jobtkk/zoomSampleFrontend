@@ -3,7 +3,7 @@
 // }
 
 .userContent {
-  height: calc(87vh - 30px);
+  height: calc(94vh - 30px);
   overflow: auto;
   padding: 1vh 1vw;
   display: flex;
@@ -29,7 +29,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100 !important;
 }
 
 .storeInfo,
@@ -38,7 +37,7 @@
   display: flex;
   flex-direction: column;
   margin: 1vh 0;
-  width: 45vw !important;
+  width: 46vw;
   border: 1px solid #ccc; // Replace with your borderStyle
 }
 
@@ -65,26 +64,35 @@
   margin: 3vh 0;
   justify-content: space-between;
   gap: 1vw;
-  width: 45vw !important;
+  // width: 45vw !important;
 }
 
 .lastName,
 .firstName {
   display: flex;
   flex-direction: column;
-  width: 45vw;
+  width: 46vw;
+  // width: calc(30vw - 150px);
 }
 
-.contactDetails {
+.mailAddress,
+.telDetails {
   display: flex;
-  margin: 3vh 0;
+  flex-direction: column;
+  width: 50vw;
+  // z-index: 1000;
 }
+
+// .contactDetails {
+//   display: flex;
+//   margin: 3vh 0;
+// }
 
 .telNo,
 .telExtension {
   // display: inline-block;
   // // flex-direction: column;
-  margin-left: 100px;
+  margin-left: 80px;
   // width: 150px;
 }
 

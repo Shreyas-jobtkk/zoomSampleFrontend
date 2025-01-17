@@ -130,9 +130,7 @@ function InterpretersListInfo() {
 
   return (
     <Box>
-      <MenuHeader title={`${getUserTitle(userType)}情報`} />;
-      <p>Received value: {userType}</p>
-      <p>Received value: {selectedInterpreterNo}</p>
+      <MenuHeader title={`${getUserTitle(userType)}情報`} />
       <Box className={classes.userContent}>
         <Box className={classes.timeDetailsDeleteFlag}>
           <Box className={classes.timeDetails}>
@@ -163,15 +161,15 @@ function InterpretersListInfo() {
             <Box className={classes.descriptionLabel}>企業情報</Box>
             <ButtonAtom label="企業検索" disabled={true} />
             <TextBoxWithLabel
-              labelWidth="125px"
+              labelWidth="150px"
               label="企業No"
-              width="30vw"
+              width="calc(45vw-100px)"
               value={formData.company_no}
             />
             <TextBoxWithLabel
-              labelWidth="125px"
+              labelWidth="150px"
               label="企業名"
-              width="30vw"
+              width="calc(45vw-100px)"
               value={formData.company_name}
             />
           </Box>
@@ -179,15 +177,15 @@ function InterpretersListInfo() {
             <Box className={classes.descriptionLabel}>店舗情報</Box>
             <ButtonAtom label="店舗検索" disabled={true} />
             <TextBoxWithLabel
-              labelWidth="125px"
+              labelWidth="150px"
               label="店舗No"
-              width="30vw"
+              width="calc(45vw-100px)"
               value={formData.store_no}
             />
             <TextBoxWithLabel
-              labelWidth="125px"
+              labelWidth="150px"
               label="店舗名"
-              width="30vw"
+              width="calc(45vw-100px)"
               value={formData.store_name}
             />
           </Box>
@@ -197,55 +195,56 @@ function InterpretersListInfo() {
           <TextBoxWithLabel
             labelWidth="125px"
             label="No"
-            width="30vw"
+            width="calc(35vw - 80px);"
             value={formData.user_no}
           />
           <Box className={classes.nameRow}>
             <Box className={classes.lastName}>
               <TextBoxWithLabel
                 labelWidth="125px"
-                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
-                width="30vw"
+                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                width="calc(35vw - 80px);"
                 value={formData.user_name_last_furigana}
               />
               <TextBoxWithLabel
                 labelWidth="125px"
                 label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
-                width="30vw"
+                width="calc(35vw - 80px);"
                 value={formData.user_name_last}
               />
             </Box>
             <Box className={classes.firstName}>
               <TextBoxWithLabel
                 labelWidth="125px"
-                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メイ"
-                width="30vw"
+                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;メイ"
+                width="calc(35vw - 80px);"
                 value={formData.user_name_first_furigana}
               />
               <TextBoxWithLabel
                 labelWidth="125px"
-                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名"
-                width="30vw"
+                label="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名"
+                width="calc(35vw - 80px);"
                 value={formData.user_name_first}
               />
             </Box>
           </Box>
           <Box className={classes.contactDetails}>
-            <Box>
+            <Box className={classes.mailAddress}>
               <TextBoxWithLabel
                 labelWidth="125px"
                 label="メールアドレス"
-                width="30vw"
+                width="calc(35vw - 80px);"
                 value={formData.mail_address}
               />
             </Box>
-            <Box>
-              <Box>
-                <Typography component="span" className={classes.telNo}>
-                  TEL
+            <Box className={classes.telDetails}>
+              <Box className={classes.telNo}>
+                <Typography component="span">
+                  TEL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </Typography>
 
                 <NumberInput
+                  width="5vw"
                   disabled={true}
                   value={formData.tel1}
                   name="tel1"
@@ -254,6 +253,7 @@ function InterpretersListInfo() {
                 />
                 <Typography component="span">-</Typography>
                 <NumberInput
+                  width="5vw"
                   disabled={true}
                   value={formData.tel2}
                   name="tel2"
@@ -262,6 +262,7 @@ function InterpretersListInfo() {
                 />
                 <Typography component="span">-</Typography>
                 <NumberInput
+                  width="5vw"
                   disabled={true}
                   value={formData.tel3}
                   name="tel3"
@@ -269,12 +270,13 @@ function InterpretersListInfo() {
                   margin="0 8px"
                 />
               </Box>
-              <Box>
-                <Typography component="span" className={classes.telExtension}>
-                  内線
+              <Box className={classes.telExtension}>
+                <Typography component="span">
+                  内線&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </Typography>
 
                 <NumberInput
+                  width="5vw"
                   disabled={true}
                   value={formData.tel_extension}
                   name="tel1"
@@ -287,6 +289,7 @@ function InterpretersListInfo() {
           {userType === "interpreter" && (
             <MultipleOptionsSelect
               label="通訳言語"
+              labelWidth="125px"
               options={languagesSupport}
               value={optionValue} // Pass dynamic value
               disabled={true}
@@ -325,13 +328,13 @@ function InterpretersListInfo() {
                 <TextBoxWithLabel
                   labelWidth="125px"
                   label="ミーティングID"
-                  width="15vw"
+                  width="12vw"
                   value={formData.meeting_id}
                 />
                 <TextBoxWithLabel
-                  labelWidth="125px"
+                  labelWidth="85px"
                   label="パスコード"
-                  width="15vw"
+                  width="12vw"
                   value={formData.meeting_passcode}
                 />
               </Box>

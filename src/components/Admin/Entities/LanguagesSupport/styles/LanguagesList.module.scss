@@ -1,3 +1,14 @@
+.langContent {
+  height: calc(94vh - 30px);
+  overflow: auto;
+  padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  overflow: auto;
+  white-space: nowrap;
+}
+
 .timeDetailsDeleteFlag {
   display: flex;
   justify-content: space-between;

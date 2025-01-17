@@ -470,7 +470,7 @@ function InterpretersList() {
       <DataTable // Customize header height
         headers={headers}
         data={searchData}
-        maxHeight="calc(87vh - 260px)"
+        maxHeight="calc(81vh - 280px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
         onClick={navigateToInterpreterCreate}
