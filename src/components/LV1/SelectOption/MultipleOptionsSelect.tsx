@@ -21,7 +21,7 @@ interface MultipleOptionsSelectProps {
   value: (string | number)[]; // value is now an array
   onChange?: (value: (string | number)[]) => void; // Optional callback for handling changes
   labelWidth?: string | number;
-  width?: number;
+  width?: string | number;
   height?: number;
   disabled?: boolean;
 }

@@ -55,7 +55,9 @@ $border-style: 1px solid #ccc;
 }
 
 .searchButton {
-  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+  // margin-left: auto;
   margin-top: auto;
 }
 
@@ -64,10 +66,10 @@ $border-style: 1px solid #ccc;
 }
 
 .contractorDetails,
-.interpreterDetails,
 .languageSearchDetails,
 .companiesDetails,
 .admin-details,
+.interpreterDetails,
 .responders-search-container,
 .storeDetails {
   display: flex;
@@ -79,6 +81,11 @@ $border-style: 1px solid #ccc;
   display: flex;
   align-items: flex-start;
   gap: 2vw;
+}
+
+.interpreterNoRange {
+  display: flex;
+  align-items: flex-start;
 }
 
 .storeDetails {

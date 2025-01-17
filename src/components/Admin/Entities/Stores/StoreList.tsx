@@ -211,7 +211,7 @@ function StoreList() {
             </Box>
           </Box>
           <Box className={`${classes.storeDetails} ${classes.marginTop}`}>
-            <Box sx={{ display: "flex", minWidth: "35vw", gap: "2vw" }}>
+            <Box sx={{ display: "flex", minWidth: "36vw", gap: "2vw" }}>
               <TextBoxWithLabel
                 disabled={false}
                 label="店舗No"
