@@ -21,6 +21,7 @@ import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
 import { useLocation } from "react-router-dom";
+import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
 
 function InterpretersListInfo() {
   const location = useLocation();
@@ -209,10 +210,16 @@ function InterpretersListInfo() {
     }
   };
 
+  // const menuTitles: Record<string, string> = {
+  //   interpreter: "通訳者情報",
+  //   administrator: "管理者情報",
+  //   contractor: "契約情報",
+  // };
+
   return (
     <Box onSubmit={handleSubmit(createInterpreter)} component="form">
       <p>Received value: {userType}</p>
-      <MenuHeader title="通訳者情報" />
+      <MenuHeader title={`${getUserTitle(userType)}情報`} />;
       <Box className={classes.userContent}>
         <Box className={classes.timeDetailsDeleteFlag}>
           <Box className={classes.timeDetails}>

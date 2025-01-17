@@ -210,7 +210,7 @@ function CompaniesList() {
       <DataTable
         headers={headers}
         data={searchData}
-        maxHeight="calc(87vh - 260px)"
+        maxHeight="calc(94vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
         onClick={navigateToCompanyCreate}

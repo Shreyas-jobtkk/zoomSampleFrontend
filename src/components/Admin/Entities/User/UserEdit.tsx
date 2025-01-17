@@ -21,6 +21,7 @@ import ValidateSelectMultipleOptions from "../../../../components/LV1/SelectOpti
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
+import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
 
 function InterpretersListUpdate() {
   const [optionValue, setOptionValue] = useState<Array<number | string>>([]);
@@ -345,7 +346,7 @@ function InterpretersListUpdate() {
 
   return (
     <Box onSubmit={handleSubmit(updateInterpreter)} component="form">
-      <MenuHeader title="通訳者情報" />
+      <MenuHeader title={`${getUserTitle(userType)}情報`} />;
       <p>Received value: {userType}</p>
       <p>Received value: {selectedInterpreterNo}</p>
       <Box className={classes.userContent}>

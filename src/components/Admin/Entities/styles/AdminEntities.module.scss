@@ -50,8 +50,8 @@ $border-style: 1px solid #ccc;
   margin-top: -2vh;
 }
 
-.margin-top {
-  margin-top: 1vh;
+.marginTop {
+  margin-top: 2vh;
 }
 
 .searchButton {
@@ -72,6 +72,12 @@ $border-style: 1px solid #ccc;
 .storeDetails {
   display: flex;
   align-items: flex-start;
+  gap: 3vw;
+}
+
+.contractorRange {
+  display: flex;
+  align-items: flex-start;
   gap: 2vw;
 }
 
@@ -83,33 +89,9 @@ $border-style: 1px solid #ccc;
 
 .companyStoreRow {
   display: flex;
-  gap: 5vw;
+  gap: 10vw;
   margin-bottom: 2vw;
 }
-
-// .number-detail-column {
-//   display: flex;
-//   flex-direction: column;
-//   margin-right: 1vw;
-
-//   .margin-bottom {
-//     margin-bottom: 1vh;
-//   }
-// }
-
-// .name-detail-column {
-//   display: flex;
-//   flex-direction: column;
-
-//   .margin-bottom {
-//     margin-bottom: 1vh;
-//   }
-// }
-
-// .2 {
-//   display: flex;
-//   gap: 2vw;
-// }
 
 .description-label {
   position: relative;

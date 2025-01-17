@@ -196,10 +196,10 @@ function StoreList() {
               displayKey="company_name" // We display company_name in the list
             />
             <Box className={classes.companiesDetails}>
-              <Box style={{ minWidth: "40vw" }}>
+              <Box style={{ minWidth: "35vw" }}>
                 <TextBoxWithLabel
                   label="企業No"
-                  width="12vw" // Uncomment to set a custom width
+                  width="10vw" // Uncomment to set a custom width
                   value={companyNo}
                 />
               </Box>
@@ -210,12 +210,12 @@ function StoreList() {
               />
             </Box>
           </Box>
-          <Box className={classes.storeDetails}>
-            <Box sx={{ display: "flex", minWidth: "40vw", gap: "2vw" }}>
+          <Box className={`${classes.storeDetails} ${classes.marginTop}`}>
+            <Box sx={{ display: "flex", minWidth: "35vw", gap: "2vw" }}>
               <TextBoxWithLabel
                 disabled={false}
                 label="店舗No"
-                width="12vw" // Uncomment to set a custom width
+                width="10vw" // Uncomment to set a custom width
                 value={storeNoRangeMin}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setStoreNoRangeMin(e.target.value)
@@ -225,7 +225,7 @@ function StoreList() {
               <TextBoxWithLabel
                 disabled={false}
                 label="~"
-                width="12vw" // Uncomment to set a custom width
+                width="10vw" // Uncomment to set a custom width
                 value={storeNoRangeMax}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setStoreNoRangeMax(e.target.value)
@@ -265,7 +265,7 @@ function StoreList() {
       <DataTable // Customize header height
         headers={headers}
         data={searchData}
-        maxHeight="calc(82vh - 260px)"
+        maxHeight="calc(87vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
         onClick={navigateToStoreCreate}

@@ -1,10 +1,10 @@
-import AdminRoutes from "../../src/routes/admin/index.js";
-import ContractorRoutes from "../../src/routes/contractor/index.js";
-import InterpreterRoutes from "../../src/routes/interpreter/index.js";
+import AdminRoutes from "./admin/index.js";
+import ContractorRoutes from "./contractor/index.js";
+import InterpreterRoutes from "./interpreter/index.js";
 import { Box } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
-import Sample from "../Pages/Sample/Sample"; // Adjust the import path as needed
-import Sample2 from "../Pages/zoomApiMeetings/Sample"; // Adjust the import path as needed
+import Sample from "../Pages/Sample/Sample.js"; // Adjust the import path as needed
+import Sample2 from "../Pages/zoomApiMeetings/Sample.js"; // Adjust the import path as needed
 
 const AppRoutes: React.FC = () => {
   return (

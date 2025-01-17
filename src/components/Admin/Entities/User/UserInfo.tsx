@@ -14,6 +14,7 @@ import { InterpreterInfo } from "../../../../types/UserTypes/UserTypes";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
+import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
 
 function InterpretersListInfo() {
   const [languagesSupport, setLanguagesSupport] = useState<
@@ -129,7 +130,7 @@ function InterpretersListInfo() {
 
   return (
     <Box>
-      <MenuHeader title="通訳者情報" />
+      <MenuHeader title={`${getUserTitle(userType)}情報`} />;
       <p>Received value: {userType}</p>
       <p>Received value: {selectedInterpreterNo}</p>
       <Box className={classes.userContent}>

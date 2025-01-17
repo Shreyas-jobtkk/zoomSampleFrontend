@@ -28,7 +28,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
   margin, // Default margin value
   value = "", // Default value is an empty string
   onChange, // onChange handler
-  labelWidth = "120px", // Default label width
+  labelWidth = "50px", // Default label width
   maxLength, // Optional maxLength
   register,
 }) => {
