@@ -20,10 +20,10 @@ const App: React.FC = () => {
             <Link to="/AdminLogin">管理者</Link>
           </li>
           <li>
-            <Link to="/Sample">サンプル</Link>
+            <Link to="/zoomApiMeetingsJoin">Join</Link>
           </li>
           <li>
-            <Link to="/Sample2">サンプル2</Link>
+            <Link to="/zoomApiMeetingsHost">Host</Link>
           </li>
         </List>
       </nav>
