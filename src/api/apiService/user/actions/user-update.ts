@@ -48,3 +48,26 @@ export const updateUser = async (
     }
   }
 };
+
+export const updateInterpreterStatus = async (
+  mailAddress: string,
+  interpreterStatus: string
+) => {
+  console.log(155, mailAddress, interpreterStatus);
+  try {
+    const response = await api.put(
+      `/${USER_ENDPOINT}/interpreter/${mailAddress}`,
+      {
+        interpreter_status: interpreterStatus,
+      }
+    );
+    alert("User updated successfully");
+    return response.data;
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      throw new Error("Failed to update user: " + error.message);
+    } else {
+      throw new Error("An unknown error occurred while updating the user");
+    }
+  }
+};

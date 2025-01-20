@@ -7,6 +7,7 @@ import MenuHeader from "../../components/LV3/Header/MenuHeader";
 import ButtonAtom from "../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
+import { UserApiService } from "../../api/apiService/user/user-api-service";
 
 // import axios from 'axios';
 
@@ -36,26 +37,7 @@ function InterpreterLogin() {
 
   // Send API request when user is active or inactive
   const sendActivityStatus = async (status: any) => {
-    // const terminal_id = message.terminal_id
-    const personStatus = status;
-    console.log(135, terminal_id);
-    const data = { terminal_id, personStatus };
-
-    try {
-      // alert(event.target.value)
-      const response = await fetch(`${apiUrl}/api/terminalActivity`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-      console.log("Success:", result);
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    UserApiService.updateInterpreterStatus(message, status);
   };
 
   const handleRingtoneStop = () => {
