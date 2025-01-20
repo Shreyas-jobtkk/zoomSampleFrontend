@@ -2,10 +2,10 @@
 import { STORE_ENDPOINT } from "../store-api-definitions";
 import api from "../../../index";
 
-export const fetchStore = async (id: number) => {
+export const fetchStore = async (store: number) => {
   console.log(1466);
   try {
-    const response = await api.get(`/${STORE_ENDPOINT}/${id}`);
+    const response = await api.get(`/${STORE_ENDPOINT}/${store}`);
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {

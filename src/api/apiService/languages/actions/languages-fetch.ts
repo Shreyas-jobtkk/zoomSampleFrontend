@@ -2,9 +2,9 @@
 import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
-export const fetchLanguage = async (id: number) => {
+export const fetchLanguage = async (language_no: number) => {
   try {
-    const response = await api.get(`/${LANGUAGE_ENDPOINT}/${id}`);
+    const response = await api.get(`/${LANGUAGE_ENDPOINT}/${language_no}`);
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {

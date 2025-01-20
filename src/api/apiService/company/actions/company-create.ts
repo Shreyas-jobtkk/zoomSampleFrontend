@@ -11,7 +11,7 @@ export const createCompany = async (
     const response = await api.post(COMPANY_ENDPOINT, {
       company_name: companyName,
       company_name_furigana: companyNameFurigana,
-      note: note,
+      company_note: note,
     });
     alert("Saved successfully");
     return response.data;

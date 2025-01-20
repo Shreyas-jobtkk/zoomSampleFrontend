@@ -118,7 +118,7 @@ function StoreListInfo() {
       formData.zip2,
       formData.pref,
       formData.city,
-      formData.store_name,
+      formData.street,
       formData.building_name,
       formData.tel1,
       formData.tel2,

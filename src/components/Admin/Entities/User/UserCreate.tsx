@@ -518,7 +518,7 @@ function InterpretersListInfo() {
               register={register}
               onChange={handleChange}
               margin="2vh 1vw 0 1vw"
-              maxLength={2}
+              maxLength={64}
               name="user_note"
             />
           </Box>

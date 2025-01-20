@@ -168,7 +168,7 @@ function CompanyInfoEdit() {
           value={company_note}
           onChange={(e: any) => setcompany_note(e.target.value)}
           margin="1vh 0 1vh 40vw"
-          maxLength={2}
+          maxLength={64}
         /> */}
         <TextAreaWithLabel
           label="備考"
@@ -176,7 +176,7 @@ function CompanyInfoEdit() {
           register={register}
           onChange={handleChange}
           margin="1vh 0 1vh 40vw"
-          maxLength={2}
+          maxLength={64}
           name="company_note"
         />
 

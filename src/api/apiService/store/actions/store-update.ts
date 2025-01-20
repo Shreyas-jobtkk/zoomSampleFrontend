@@ -4,7 +4,6 @@ import api from "../../../index";
 
 export const updateStore = async (
   company_no: string,
-  // company_name: string, // Explicit type for string fields
   store_name: string,
   store_name_furigana: string,
   zip1: string,

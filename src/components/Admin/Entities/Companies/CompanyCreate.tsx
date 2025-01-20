@@ -112,7 +112,7 @@ const CompanyCreate = () => {
           value={note}
           onChange={(e: any) => setNote(e.target.value)}
           margin="1vh 0 1vh 40vw"
-          maxLength={2}
+          maxLength={64}
         /> */}
         <TextAreaWithLabel
           label="備考"
@@ -120,7 +120,7 @@ const CompanyCreate = () => {
           register={register}
           onChange={handleChange}
           margin="1vh 0 1vh 40vw"
-          maxLength={2}
+          maxLength={64}
           name="company_note"
         />
 

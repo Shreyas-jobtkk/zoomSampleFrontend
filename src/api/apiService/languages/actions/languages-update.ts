@@ -3,13 +3,13 @@ import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
 export const updateLanguage = async (
-  id: string | number,
+  language_no: string | number,
   languageName: string,
   languageNameFurigana: string,
   note: string
 ) => {
   try {
-    const response = await api.put(`/${LANGUAGE_ENDPOINT}/${id}`, {
+    const response = await api.put(`/${LANGUAGE_ENDPOINT}/${language_no}`, {
       language_name: languageName,
       language_name_furigana: languageNameFurigana,
       language_note: note,

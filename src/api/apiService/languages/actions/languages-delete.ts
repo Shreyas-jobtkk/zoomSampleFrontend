@@ -2,10 +2,10 @@
 import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
-export const deleteLanguages = async (ids: number[]) => {
+export const deleteLanguages = async (language_nos: number[]) => {
   try {
     const response = await api.delete(`/${LANGUAGE_ENDPOINT}`, {
-      data: { ids },
+      data: { language_nos },
     });
     alert("Languages deleted successfully.");
     return response.data;

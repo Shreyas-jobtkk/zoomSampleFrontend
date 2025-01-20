@@ -2,12 +2,12 @@
 import { COMPANY_ENDPOINT } from "../company-api-definitions";
 import api from "../../../index";
 
-export const deleteCompanies = async (ids: number[]) => {
-  console.log(139, ids);
+export const deleteCompanies = async (company_nos: number[]) => {
+  console.log(139, company_nos);
 
   try {
     const response = await api.delete(`/${COMPANY_ENDPOINT}`, {
-      data: { ids }, // Pass the array in the request body
+      data: { company_nos }, // Pass the array in the request body
     });
     alert("Companies deleted successfully.");
     return response.data;

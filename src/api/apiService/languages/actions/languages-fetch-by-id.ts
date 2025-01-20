@@ -4,7 +4,9 @@ import api from "../../../index";
 // Fetch multiple languages by an array of IDs
 export const fetchLanguagesById = async (ids: number[]) => {
   try {
-    const response = await api.post(`/${LANGUAGE_ENDPOINT}/batch`, { ids });
+    const response = await api.post(`/${LANGUAGE_ENDPOINT}/language_by_id`, {
+      ids,
+    });
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {

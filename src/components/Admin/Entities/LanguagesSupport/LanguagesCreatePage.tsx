@@ -112,7 +112,7 @@ const LanguageCreate = () => {
           register={register}
           onChange={handleChange}
           margin="1vh 0 1vh 40vw"
-          maxLength={2}
+          maxLength={64}
           name="language_note"
         />
 
