@@ -1,7 +1,7 @@
 import ResponderLogin from "../../components/Contractor/Login/ContractorLogin"; // Adjust the import path as needed
-import ResponderMenu from "../../Pages/Contractor/ContractorMenu";
+import ResponderMenu from "../../components/Contractor/Menu/ContractorMenu";
 import { Route, Routes } from "react-router-dom";
-import ContractorCallingMenu from "../../Pages/Contractor/ContractorCallingMenu"; // Adjust the import path as needed
+import ContractorCallingMenu from "../../components/Contractor/Entities/InterpreterRequestMenu"; // Adjust the import path as needed
 
 const NavRoutes = () => (
   <Routes>

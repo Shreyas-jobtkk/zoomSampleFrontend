@@ -1,6 +1,6 @@
-import ButtonAtom from "../../components/LV1/Button/ButtonAtom/ButtonAtom";
+import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom";
 import { useNavigate, useLocation } from "react-router-dom";
-import MenuHeader from "../../components/LV3/Header/MenuHeader";
+import MenuHeader from "../../LV3/Header/MenuHeader";
 import { Box } from "@mui/material";
 
 function ResponderMenu() {

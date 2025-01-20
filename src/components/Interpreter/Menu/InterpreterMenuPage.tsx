@@ -1,20 +1,20 @@
 import { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 // import "../../App.css";
-import ringtoneFile from "../../components/ringtone.mp3";
+import ringtoneFile from "../../ringtone.mp3";
 import { useLocation } from "react-router-dom";
-import MenuHeader from "../../components/LV3/Header/MenuHeader";
-import ButtonAtom from "../../components/LV1/Button/ButtonAtom/ButtonAtom";
+import MenuHeader from "../../LV3/Header/MenuHeader";
+import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
-import { UserApiService } from "../../api/apiService/user/user-api-service";
+import { UserApiService } from "../../../api/apiService/user/user-api-service";
 
 // import axios from 'axios';
 
 // let apiUrl = "https://zoomsamplebackend.onrender.com"
 // let apiUrl = "http://localhost:4000"
 
-import { apiUrl } from "../../apiUrl";
+import { apiUrl } from "../../../apiUrl";
 
 // Connect to the socket.io server
 const socket = io(apiUrl);
