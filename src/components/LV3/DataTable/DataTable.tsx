@@ -164,7 +164,11 @@ const DataTable: React.FC<DataTableProps> = ({
   const totalPages = Math.ceil(data.length / rowsPerPage);
 
   return (
-    <Box>
+    <Box
+      sx={{
+        margin: "0px 1vw",
+      }}
+    >
       <Paper>
         {/* <NumberInput
           value={numberValue}

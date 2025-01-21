@@ -14,7 +14,7 @@ import { StoreApiService } from "../../../../api/apiService/store/store-api-serv
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
 import ValidateSelectMultipleOptions from "../../../../components/LV1/SelectOption/validateMultipleOptions";
 import TextAreaWithLabel from "../../../../components/LV1/TextArea/TextAreaWithLabel";
-import ValidationButton from "../../../../components/LV1/ValidationButton/ValidationButton";
+import ValidationButton from "../../../LV1/Button/ValidationButton/ValidationButton";
 import { UserCreateFormValues } from "../../../../types/UserTypes/UserTypes";
 import { UserApiService } from "../../../../api/apiService/user/user-api-service";
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";

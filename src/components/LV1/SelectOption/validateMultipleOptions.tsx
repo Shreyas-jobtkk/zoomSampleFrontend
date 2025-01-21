@@ -13,7 +13,7 @@ interface Option {
   value: string | number;
 }
 
-interface SelectMultipleOptionsProps {
+interface ValidateMultipleOptionsProps {
   label: string;
   options: Option[];
   width?: number;
@@ -27,7 +27,7 @@ interface SelectMultipleOptionsProps {
   isSubmitted?: boolean;
 }
 
-const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({
+const ValidateMultipleOptions: React.FC<ValidateMultipleOptionsProps> = ({
   label,
   options,
   width = 150,
@@ -140,4 +140,4 @@ const SelectMultipleOptions: React.FC<SelectMultipleOptionsProps> = ({
   );
 };
 
-export default SelectMultipleOptions;
+export default ValidateMultipleOptions;

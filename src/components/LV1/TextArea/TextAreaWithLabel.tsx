@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-type TextAreaFieldProps = {
+type TextAreaWithLabelFieldProps = {
   label: string;
   name?: string;
   disabled?: boolean;
@@ -19,7 +19,7 @@ type TextAreaFieldProps = {
   maxLength?: number; // Optional maxLength for the textarea
 };
 
-const TextAreaField: React.FC<TextAreaFieldProps> = ({
+const TextAreaWithLabelField: React.FC<TextAreaWithLabelFieldProps> = ({
   label,
   name,
   disabled,
@@ -69,4 +69,4 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
   );
 };
 
-export default TextAreaField;
+export default TextAreaWithLabelField;

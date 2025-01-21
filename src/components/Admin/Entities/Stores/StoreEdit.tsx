@@ -14,7 +14,7 @@ import SelectOption from "../../../LV1/SelectOption/SelectOption";
 import JapanPrefectures from "../../../../JapanPrefectures/JapanPrefectures";
 import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
 import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
-import ValidationButton from "../../../LV1/ValidationButton/ValidationButton";
+import ValidationButton from "../../../LV1/Button/ValidationButton/ValidationButton";
 // import { StoreCreateFormValues } from "../../../../../CompanyTypes/CompanyTypes";
 import { useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
