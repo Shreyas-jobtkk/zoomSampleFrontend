@@ -1,6 +1,8 @@
+@use "../../../../styles/variables";
+
 .headerTitle {
   text-align: center;
   background-color: #b3cee5;
-  border: 1px solid black;
+  border: variables.$dark-border;
   padding: 1vh;
 }

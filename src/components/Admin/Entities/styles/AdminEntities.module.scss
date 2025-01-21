@@ -1,4 +1,4 @@
-$border-style: 1px solid #ccc;
+@use "../../../../styles/variables";
 
 .adminEntity {
   height: 100%;
@@ -10,7 +10,7 @@ $border-style: 1px solid #ccc;
 }
 
 .searchContainer {
-  border: 1px solid #ccc;
+  border: variables.$light-border;
   border-radius: 8px;
   padding: 1vh 1vw;
   display: flex;
@@ -23,7 +23,7 @@ $border-style: 1px solid #ccc;
   bottom: 3vh;
   left: 1vw;
   background-color: #f1f2f3;
-  border: $border-style;
+  border: variables.$light-border;
   width: 150px;
   text-align: center;
 }

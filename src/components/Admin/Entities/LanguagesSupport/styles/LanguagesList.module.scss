@@ -1,3 +1,5 @@
+@use "../../../../../styles/variables";
+
 .langContent {
   height: calc(94vh - 30px);
   overflow: auto;
@@ -24,7 +26,7 @@
 .basicInfo {
   padding: 1vh 1vw;
   margin: 2vh 0;
-  border: 1px solid #ccc; // Replace with your borderStyle
+  border: variables.$light-border; // Replace with your borderStyle
 }
 
 .descriptionLabel {
@@ -32,7 +34,7 @@
   bottom: 3vh;
   left: 1vw;
   background-color: #f1f2f3;
-  border: 1px solid #ccc;
+  border: variables.$light-border;
   width: 150px;
   text-align: center;
 }

@@ -1,5 +1,7 @@
+@use "../../../../styles/variables";
+
 .userMessage {
-  border: 1px solid black;
+  border: variables.$dark-border;
   padding: 10px;
   width: fit-content;
   border-radius: 5px;
@@ -12,6 +14,6 @@
 }
 
 .timer {
-  border: 1px solid black;
+  border: variables.$dark-border;
   padding: 10px;
 }
