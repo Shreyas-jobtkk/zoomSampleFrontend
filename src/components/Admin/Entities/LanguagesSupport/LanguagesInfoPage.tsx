@@ -70,7 +70,7 @@ const LanguageSupportInfo = () => {
   return (
     <Box className="language-list-navigate">
       <MenuHeader title="言語情報" />
-      <Box>
+      <Box className={classes.langContent}>
         <Box className={classes.timeDetailsDeleteFlag}>
           <Box className={classes.timeDetails}>
             <TextBoxWithLabel

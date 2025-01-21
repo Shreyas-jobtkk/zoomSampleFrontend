@@ -88,7 +88,7 @@ const LanguageCreate = () => {
   return (
     <Box onSubmit={handleSubmit(editLanguageInfo)} component="form">
       <MenuHeader title="言語情報" />
-      <Box>
+      <Box className={classes.langContent}>
         <Box className={classes.timeDetailsDeleteFlag}>
           <Box className={classes.timeDetails}>
             <TextBoxWithLabel
