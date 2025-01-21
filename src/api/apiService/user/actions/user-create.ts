@@ -17,7 +17,7 @@ export const createUser = async (
   userType: string, // user_type is fixed in backend as "interpreter"
   note: string,
   languages: number[] | null, // Ensure this is an array of integers
-  passwordExpire: string | Date,
+  passwordExpire: Date,
   meetingId: string | null,
   meetingPasscode: string | null
 ) => {

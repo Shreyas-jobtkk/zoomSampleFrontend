@@ -2,9 +2,11 @@
 import { USER_ENDPOINT } from "../user-api-definitions";
 import api from "../../../index";
 
-export const deleteUsers = async (ids: number[]) => {
+export const deleteUsers = async (user_nos: number[]) => {
   try {
-    const response = await api.delete(`/${USER_ENDPOINT}`, { data: { ids } });
+    const response = await api.delete(`/${USER_ENDPOINT}`, {
+      data: { user_nos },
+    });
     alert("Users deleted successfully");
     return response.data;
   } catch (error: unknown) {

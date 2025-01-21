@@ -199,7 +199,7 @@ function InterpretersListInfo() {
         userType,
         formData.user_note,
         formData.translate_languages,
-        formData.password_expire,
+        new Date(),
         formData.meeting_id,
         formData.meeting_passcode
       );
