@@ -1,4 +1,4 @@
-import MenuHeader from "../../../LV3/Header/MenuHeader";
+import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
@@ -68,7 +68,7 @@ const LanguageSupportInfo = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <Box className="language-list-navigate">
+    <Box>
       <MenuHeader title="言語情報" />
       <Box className={classes.langContent}>
         <Box className={classes.timeDetailsDeleteFlag}>
@@ -88,7 +88,7 @@ const LanguageSupportInfo = () => {
               onChange={handleChange}
             />
           </Box>
-          <Box className="delete-flag">
+          <Box>
             <TextBoxWithLabel
               labelWidth="100px"
               label="削除フラグ"

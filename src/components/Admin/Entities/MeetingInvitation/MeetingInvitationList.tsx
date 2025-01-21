@@ -5,7 +5,7 @@ import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
-import MenuHeader from "../../../LV3/Header/MenuHeader";
+import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import SelectOption from "../../../LV1/SelectOption/SelectOption";
 import DataTable from "../../../LV3/DataTable/DataTable";
 import classes from "../styles/AdminEntities.module.scss";

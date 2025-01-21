@@ -35,17 +35,6 @@ $border-style: 1px solid #ccc;
   margin-top: -20px;
 }
 
-.interpreter-menu-button-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 20px;
-  .navigate-buttons {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
 .moveTop {
   margin-top: -2vh;
 }
@@ -98,14 +87,4 @@ $border-style: 1px solid #ccc;
   display: flex;
   gap: 10vw;
   margin-bottom: 2vw;
-}
-
-.description-label {
-  position: relative;
-  bottom: 3vh;
-  left: 1vw;
-  background-color: #f1f2f3;
-  border: $border-style;
-  width: 150px;
-  text-align: center;
 }

@@ -2,7 +2,7 @@ import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
-import MenuHeader from "../../../LV3/Header/MenuHeader";
+import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import DataTable from "../../../LV3/DataTable/DataTable";
 import { DataTableRow } from "../../../LV3/DataTable/DataTable";
 // import "./AdminMenu.scss";
@@ -265,7 +265,7 @@ function StoreList() {
       <DataTable // Customize header height
         headers={headers}
         data={searchData}
-        maxHeight="calc(87vh - 260px)"
+        maxHeight="calc(84vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
         onClick={navigateToStoreCreate}

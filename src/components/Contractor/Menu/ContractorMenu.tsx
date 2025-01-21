@@ -1,7 +1,8 @@
 import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom";
 import { useNavigate, useLocation } from "react-router-dom";
-import MenuHeader from "../../LV3/Header/MenuHeader";
+import MenuHeader from "../../LV3/Header/MenuHeader/MenuHeader";
 import { Box } from "@mui/material";
+import classes from "./ContractorMenu.module.scss";
 
 function ResponderMenu() {
   const navigate = useNavigate();
@@ -21,8 +22,8 @@ function ResponderMenu() {
   return (
     <Box>
       <MenuHeader title="応対者メニュー" />
-      <Box className="responder-menu-button-container">
-        <Box className="list-column">
+      <Box className={classes.responderMenuContainer}>
+        <Box className={classes.listNavColumn}>
           <ButtonAtom
             onClick={navigateToCompaniesList}
             label="通訳評価一覧"

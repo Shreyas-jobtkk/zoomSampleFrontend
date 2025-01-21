@@ -1,4 +1,4 @@
-import MenuHeader from "../../../LV3/Header/MenuHeader";
+import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
@@ -350,7 +350,6 @@ function StoreListInfo() {
                     disabled={false}
                   />
                 </Box>
-                {/* <Box className="contact-details">TEL</Box> */}
               </Box>
               <Box className={classes.contactDetails}>
                 <Box>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MenuHeader from "../../../LV3/Header/MenuHeader";
+import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import DataTable from "../../../LV3/DataTable/DataTable";
 import { DataTableRow } from "../../../LV3/DataTable/DataTable";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";

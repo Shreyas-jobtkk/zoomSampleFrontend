@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
+import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 // import "./AdminMenu.scss";
 
 function LogList() {
   return (
     <Box>
-      {/* <Box className="screen-title">画面ID:DSP10001</Box> */}
-      <h3 className="menu-title">ログ一覧</h3>
+      <MenuHeader title="ログ一覧" />
     </Box>
   );
 }

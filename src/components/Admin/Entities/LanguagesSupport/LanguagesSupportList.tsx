@@ -1,7 +1,7 @@
 import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
-import MenuHeader from "../../../LV3/Header/MenuHeader";
+import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../../LV3/DataTable/DataTable";
 // import "./AdminMenu.scss";

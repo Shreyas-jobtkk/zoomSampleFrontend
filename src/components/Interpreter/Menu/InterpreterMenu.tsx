@@ -3,12 +3,12 @@ import io from "socket.io-client";
 // import "../../App.css";
 import ringtoneFile from "../../ringtone.mp3";
 import { useLocation } from "react-router-dom";
-import MenuHeader from "../../LV3/Header/MenuHeader";
+import MenuHeader from "../../LV3/Header/MenuHeader/MenuHeader";
 import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import { UserApiService } from "../../../api/apiService/user/user-api-service";
-
+import classes from "./InterpreterMenu.module.scss";
 // import axios from 'axios';
 
 // let apiUrl = "https://zoomsamplebackend.onrender.com"
@@ -245,7 +245,7 @@ function InterpreterLogin() {
   };
 
   return (
-    <Box className="App">
+    <Box>
       <MenuHeader title="通訳者メニュー" />
       {/* <Box>
         {isPlaying && (
@@ -271,8 +271,8 @@ function InterpreterLogin() {
       {/* <Box>languages:{message.languages_known}</Box>
         <Box>terminal_id:{message.terminal_id}</Box> */}
 
-      <Box className="interpreter-menu-button-container">
-        <Box className="navigate-buttons">
+      <Box className={classes.interpreterMenuContainer}>
+        <Box className={classes.navigateButtons}>
           <ButtonAtom
             onClick={navigateToInterpreterEvaluationList}
             label="通訳評価一覧"
@@ -296,7 +296,7 @@ function InterpreterLogin() {
           />
         </Box>
         <Box>
-          <Box className="row">
+          <Box className={classes.activeStatusButtons}>
             <ButtonAtom
               onClick={setStatusToInactive}
               label="準備中"
@@ -315,7 +315,7 @@ function InterpreterLogin() {
             />
           </Box>
 
-          <Box className="row">
+          <Box className={classes.activeStatusButtons}>
             <ButtonAtom
               onClick={navigateToAdministratorList}
               label="拒否"

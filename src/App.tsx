@@ -27,7 +27,6 @@ const App: React.FC = () => {
           </li>
         </List>
       </nav>
-      <div></div>
       <AppRoutes />
     </Router>
   );

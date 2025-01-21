@@ -1,6 +1,6 @@
 import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
-import MenuHeader from "../../LV3/Header/MenuHeader";
+import MenuHeader from "../../LV3/Header/MenuHeader/MenuHeader";
 import { Box } from "@mui/material";
 
 function AdminMenu() {
@@ -48,11 +48,7 @@ function AdminMenu() {
 
   return (
     <Box>
-      {/* <Box className="screen-title">画面ID:DSP10001</Box> */}
       <MenuHeader title="管理者メニュー" />
-      {/* <h3 className="menu-title">
-                管理者メニュー
-            </h3> */}
       <Box>
         <ButtonAtom
           onClick={navigateToCompaniesList}

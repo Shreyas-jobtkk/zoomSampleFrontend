@@ -173,7 +173,7 @@ const Sample: React.FC = () => {
   };
 
   return (
-    <Container className="App" maxWidth="sm">
+    <Container maxWidth="sm">
       <Box component="main" sx={{ textAlign: "center", mt: 4 }}>
         <Typography variant="h5" component="h1" gutterBottom>
           Zoom Meeting SDK Sample React2

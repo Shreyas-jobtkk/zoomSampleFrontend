@@ -6,12 +6,13 @@ import ringtone from "../../ringtone.mp3";
 import { v4 as uuidv4 } from "uuid";
 import { useLocation } from "react-router-dom";
 import { apiUrl } from "../../../apiUrl.js";
-import MenuHeader from "../../LV3/Header/MenuHeader.js";
+import MenuHeader from "../../LV3/Header/MenuHeader/MenuHeader.js";
 import RadioButtonGroupRound from "../../LV1/RadioButton/RadioButtonGroupRound.js";
 import { useTranslation } from "react-i18next";
 import "../../../i18n.js";
 import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom.js";
 import { Box } from "@mui/material";
+import classes from "./styles/Entities.module.scss";
 
 // let apiUrl = "https://zoomsamplebackend.onrender.com"
 // let apiUrl = "http://localhost:4000"
@@ -321,7 +322,7 @@ function UserMenu() {
   // }
 
   return (
-    <Box className="user-menu">
+    <Box>
       <MenuHeader title="通訳希望者メニュー" />
       <RadioButtonGroupRound
         options={radioOptions}
@@ -329,8 +330,8 @@ function UserMenu() {
         onChange={handleRadioChange}
         name="options"
       />
-      <Box className="user-message">{t("User message")}</Box>
-      <Box className="user-call-row">
+      <Box className={classes.userMessage}>{t("User message")}</Box>
+      <Box className={classes.userCallRow}>
         <ButtonAtom
           onClick={() => {
             playRingtone();
@@ -351,7 +352,7 @@ function UserMenu() {
           disabled={!isPlaying}
           padding="16px"
         />
-        <p className="timer">{formatTime(ringingTime)}</p>
+        <p className={classes.timer}>{formatTime(ringingTime)}</p>
 
         {/* Hidden audio element that plays the ringtone */}
         <audio ref={audioRef} src={ringtone} />

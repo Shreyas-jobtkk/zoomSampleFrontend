@@ -1,4 +1,4 @@
-import MenuHeader from "../../../LV3/Header/MenuHeader";
+import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
@@ -62,9 +62,8 @@ function CompanyInformation() {
   if (error) return <div>{error}</div>;
 
   return (
-    <Box className="company-list-navigate">
+    <Box>
       <MenuHeader title="企業情報" />
-
       <Box className={classes.companyInfoContainer}>
         <Box className={classes.timeDetailsDeleteFlag}>
           <Box className={classes.timeDetails}>
@@ -81,7 +80,7 @@ function CompanyInformation() {
               value={convertToJST(formData.updated_at ?? "")}
             />
           </Box>
-          <Box className="delete-flag">
+          <Box>
             <TextBoxWithLabel
               labelWidth="100px"
               label="削除フラグ"
