@@ -16,7 +16,7 @@ interface Option {
 interface SelectOptionProps {
   label: string;
   options: Option[];
-  width?: number;
+  width?: string | number;
   height?: number;
   labelWidth?: string | number;
   onChange?: (value: string) => void; // onChange is now optional

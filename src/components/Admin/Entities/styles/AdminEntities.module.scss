@@ -44,9 +44,9 @@
 }
 
 .searchButton {
-  display: flex;
-  justify-content: flex-end;
-  // margin-left: auto;
+  // display: flex;
+  // justify-content: flex-end;
+  margin-left: auto;
   margin-top: auto;
 }
 
@@ -66,15 +66,11 @@
   gap: 3vw;
 }
 
-.contractorRange {
-  display: flex;
-  align-items: flex-start;
-  gap: 2vw;
-}
-
+.contractorRange,
 .interpreterNoRange {
   display: flex;
   align-items: flex-start;
+  gap: 2vw;
 }
 
 .storeDetails {

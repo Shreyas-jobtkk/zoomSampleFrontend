@@ -129,14 +129,14 @@ function StoreListInfo() {
             <TextBoxWithLabel
               labelWidth="125px"
               label="登録日時"
-              width="300px" // Uncomment to set a custom width
+              width="30vw" // Uncomment to set a custom width
               value={textValue1}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
-              width="300px" // Uncomment to set a custom width
+              width="30vw" // Uncomment to set a custom width
               value={textValue1}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
@@ -168,7 +168,7 @@ function StoreListInfo() {
               name="company_no" // Name for the phonetic spelling
               labelWidth="125px"
               label="企業No"
-              width="300px"
+              width="30vw"
               register={register}
               maxLength={128}
               // error={errors.company_no?.message} // Separate error for "furigana"
@@ -182,7 +182,7 @@ function StoreListInfo() {
               name="company_name" // Name for the phonetic spelling
               labelWidth="125px"
               label="企業名"
-              width="300px"
+              width="30vw"
               register={register}
               maxLength={128}
               // error={errors.company_no?.message} // Separate error for "furigana"
@@ -194,7 +194,7 @@ function StoreListInfo() {
             {/* <TextBoxWithLabel
               labelWidth="125px"
               label="企業名"
-              width="300px" // Uncomment to set a custom width
+              width="30vw" // Uncomment to set a custom width
               value={selectedCompanyName}
               onChange={(e: any) => setSelectedCompanyName(e.target.value)}
             /> */}
@@ -206,7 +206,7 @@ function StoreListInfo() {
             <TextBoxWithLabel
               labelWidth="125px"
               label="店舗No"
-              width="300px" // Uncomment to set a custom width
+              width="30vw" // Uncomment to set a custom width
               value={textValue1}
               onChange={(e: any) => setTextValue1(e.target.value)}
             />
@@ -217,7 +217,7 @@ function StoreListInfo() {
                   label="フリガナ"
                   name="store_name_furigana" // Name for the phonetic spelling
                   labelWidth="125px"
-                  width="300px"
+                  width="30vw"
                   register={register}
                   maxLength={128}
                   // error={errors.store_name_furigana?.message} // Separate error for "furigana"
@@ -229,7 +229,7 @@ function StoreListInfo() {
                   name="store_name" // Name for the phonetic spelling
                   labelWidth="125px"
                   label="店舗名"
-                  width="300px"
+                  width="30vw"
                   register={register}
                   maxLength={128}
                   // error={errors.store_name?.message} // Separate error for "furigana"
@@ -251,6 +251,7 @@ function StoreListInfo() {
                     </Typography>
 
                     <NumberInput
+                      width="5vw"
                       value={formData.zip1}
                       onChange={handleChange}
                       maxLength={4}
@@ -259,6 +260,7 @@ function StoreListInfo() {
                     />
                     <Typography component="span">-</Typography>
                     <NumberInput
+                      width="5vw"
                       value={formData.zip2}
                       name="zip2"
                       onChange={handleChange}
@@ -270,7 +272,7 @@ function StoreListInfo() {
                   <SelectOption
                     label="都道府県"
                     options={JapanPrefectures}
-                    width={150}
+                    width={"15vw"}
                     value={formData.pref}
                     onChange={handleSelectChange}
                     labelWidth="75px"
@@ -278,7 +280,7 @@ function StoreListInfo() {
                   <TextBoxWithLabel
                     labelWidth="75px"
                     label="市区町村"
-                    width="300px" // Uncomment to set a custom width
+                    width="30vw" // Uncomment to set a custom width
                     onChange={handleChange}
                     value={formData.city}
                     name="city"
@@ -287,7 +289,7 @@ function StoreListInfo() {
                   <TextBoxWithLabel
                     labelWidth="75px"
                     label="番地"
-                    width="300px" // Uncomment to set a custom width
+                    width="30vw" // Uncomment to set a custom width
                     onChange={handleChange}
                     value={formData.street}
                     name="street"
@@ -296,7 +298,7 @@ function StoreListInfo() {
                   <TextBoxWithLabel
                     labelWidth="75px"
                     label="建物名等"
-                    width="300px" // Uncomment to set a custom width
+                    width="30vw" // Uncomment to set a custom width
                     onChange={handleChange}
                     value={formData.building_name}
                     name="building_name"
@@ -311,6 +313,7 @@ function StoreListInfo() {
                   </Typography>
 
                   <NumberInput
+                    width="5vw"
                     onChange={handleChange}
                     value={formData.tel1}
                     name="tel1"
@@ -319,6 +322,7 @@ function StoreListInfo() {
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
+                    width="5vw"
                     onChange={handleChange}
                     value={formData.tel2}
                     name="tel2"
@@ -327,6 +331,7 @@ function StoreListInfo() {
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
+                    width="5vw"
                     onChange={handleChange}
                     value={formData.tel3}
                     name="tel3"
@@ -340,6 +345,7 @@ function StoreListInfo() {
                   </Typography>
 
                   <NumberInput
+                    width="5vw"
                     onChange={handleChange}
                     value={formData.fax1}
                     name="fax1"
@@ -348,6 +354,7 @@ function StoreListInfo() {
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
+                    width="5vw"
                     onChange={handleChange}
                     value={formData.fax2}
                     name="fax2"
@@ -356,6 +363,7 @@ function StoreListInfo() {
                   />
                   <Typography component="span">-</Typography>
                   <NumberInput
+                    width="5vw"
                     onChange={handleChange}
                     value={formData.fax3}
                     name="fax3"

@@ -199,13 +199,13 @@ function StoreList() {
               <Box style={{ minWidth: "35vw" }}>
                 <TextBoxWithLabel
                   label="企業No"
-                  width="10vw" // Uncomment to set a custom width
+                  width="calc(10vw - 20px)" // Uncomment to set a custom width
                   value={companyNo}
                 />
               </Box>
               <TextBoxWithLabel
                 label="企業名"
-                width="40vw" // Uncomment to set a custom width
+                width="calc(45vw - 120px)" // Uncomment to set a custom width
                 value={companyName}
               />
             </Box>
@@ -215,7 +215,7 @@ function StoreList() {
               <TextBoxWithLabel
                 disabled={false}
                 label="店舗No"
-                width="10vw" // Uncomment to set a custom width
+                width="calc(10vw - 20px)" // Uncomment to set a custom width
                 value={storeNoRangeMin}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setStoreNoRangeMin(e.target.value)
@@ -225,7 +225,7 @@ function StoreList() {
               <TextBoxWithLabel
                 disabled={false}
                 label="~"
-                width="10vw" // Uncomment to set a custom width
+                width="calc(10vw - 20px)" // Uncomment to set a custom width
                 value={storeNoRangeMax}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setStoreNoRangeMax(e.target.value)
@@ -238,7 +238,7 @@ function StoreList() {
               <TextBoxWithLabel
                 disabled={false}
                 label="フリガナ"
-                width="40vw" // Uncomment to set a custom width
+                width="calc(45vw - 120px)" // Uncomment to set a custom width
                 value={storeNameFurigana}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setStoreNameFurigana(e.target.value)
@@ -249,7 +249,7 @@ function StoreList() {
                 disabled={false}
                 // labelWidth="70px"
                 label="店舗名"
-                width="40vw" // Uncomment to set a custom width
+                width="calc(45vw - 120px)" // Uncomment to set a custom width
                 value={storeName}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setStoreName(e.target.value)

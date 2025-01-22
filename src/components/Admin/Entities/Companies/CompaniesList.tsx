@@ -158,7 +158,7 @@ function CompaniesList() {
           <TextBoxWithLabel
             disabled={false}
             label="企業No"
-            width="12vw"
+            width="calc(10vw - 20px)"
             value={companyNoRangeMin}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setCompanyNoRangeMin(e.target.value);
@@ -169,7 +169,7 @@ function CompaniesList() {
           <TextBoxWithLabel
             disabled={false}
             label="~"
-            width="12vw"
+            width="calc(10vw - 20px)"
             value={companyNoRangeMax}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setCompanyNoRangeMax(e.target.value);
@@ -182,7 +182,7 @@ function CompaniesList() {
             <TextBoxWithLabel
               disabled={false}
               label="フリガナ"
-              width="40vw"
+              width="calc(45vw - 100px)"
               value={companyNameFurigana}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setCompanyNameFurigana(e.target.value);
@@ -193,7 +193,7 @@ function CompaniesList() {
             <TextBoxWithLabel
               disabled={false}
               label="企業名"
-              width="40vw"
+              width="calc(45vw - 100px)"
               value={companyName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setCompanyName(e.target.value);

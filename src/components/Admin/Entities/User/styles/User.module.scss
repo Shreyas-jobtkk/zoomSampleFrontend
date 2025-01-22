@@ -60,31 +60,31 @@
   display: flex;
   flex-direction: row;
   margin: 3vh 0;
-  justify-content: space-between;
+  // justify-content: space-between;
   gap: 1vw;
   // width: 45vw !important;
 }
 
 .lastName,
-.firstName {
+.mailAddress {
   display: flex;
   flex-direction: column;
-  width: 46vw;
+  width: calc(40vw - 50px);
   // width: calc(30vw - 150px);
 }
 
-.mailAddress,
+.firstName {
+  display: flex;
+  flex-direction: column;
+  width: calc(50vw - 50px);
+  margin-left: 16px;
+}
+
 .telDetails {
   display: flex;
   flex-direction: column;
-  width: 50vw;
-  // z-index: 1000;
+  width: calc(50vw - 50px);
 }
-
-// .contactDetails {
-//   display: flex;
-//   margin: 3vh 0;
-// }
 
 .telNo,
 .telExtension {

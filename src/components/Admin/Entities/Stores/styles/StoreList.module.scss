@@ -59,7 +59,7 @@
 .addressContainer {
   display: flex;
   flex-direction: row;
-  width: 500px;
+  width: 50vw;
 }
 
 .addressLabel {
@@ -67,16 +67,16 @@
 }
 
 .addressDetails {
-  width: 400px;
+  width: calc(50vw - 50px);
 }
 
 .contactDetails {
-  width: 500px;
+  width: calc(50vw - 50px);
 }
 
 .storeDetails {
   display: flex;
-  flex-direction: row;
+  // flex-direction: row;
 }
 
 .pinCodeLabel,

@@ -394,7 +394,7 @@ function InterpretersListInfo() {
                 </Typography>
 
                 <NumberInput
-                  width="5vw"
+                  width="calc(5vw - 10px)"
                   onChange={handleChange}
                   value={formData.tel1}
                   name="tel1"
@@ -403,7 +403,7 @@ function InterpretersListInfo() {
                 />
                 <Typography component="span">-</Typography>
                 <NumberInput
-                  width="5vw"
+                  width="calc(5vw - 10px)"
                   onChange={handleChange}
                   value={formData.tel2}
                   name="tel2"
@@ -412,7 +412,7 @@ function InterpretersListInfo() {
                 />
                 <Typography component="span">-</Typography>
                 <NumberInput
-                  width="5vw"
+                  width="calc(5vw - 10px)"
                   onChange={handleChange}
                   value={formData.tel3}
                   name="tel3"
@@ -426,7 +426,7 @@ function InterpretersListInfo() {
                 </Typography>
 
                 <NumberInput
-                  width="5vw"
+                  width="calc(5vw - 10px)"
                   onChange={handleChange}
                   value={formData.tel_extension}
                   name="tel_extension"

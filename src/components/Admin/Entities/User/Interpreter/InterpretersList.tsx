@@ -353,13 +353,15 @@ function InterpretersList() {
               />
               <Box className={classes.companiesDetails}>
                 <TextBoxWithLabel
+                  labelWidth="70px"
                   label="企業No"
-                  width="8vw" // Uncomment to set a custom width
+                  width="calc(10vw - 30px)" // Uncomment to set a custom width
                   value={companyNo}
                 />
                 <TextBoxWithLabel
+                  labelWidth="70px"
                   label="企業名"
-                  width="15vw" // Uncomment to set a custom width
+                  width="calc(27vw - 100px)" // Uncomment to set a custom width
                   value={companyName}
                 />
               </Box>
@@ -377,12 +379,13 @@ function InterpretersList() {
               <Box className={classes.storeDetails}>
                 <TextBoxWithLabel
                   label="店舗No"
-                  width="8vw" // Uncomment to set a custom width
+                  width="calc(10vw - 30px)" // Uncomment to set a custom width
                   value={storeNo}
                 />
                 <TextBoxWithLabel
+                  labelWidth="70px"
                   label="店舗名"
-                  width="15vw" // Uncomment to set a custom width
+                  width="calc(27vw - 100px)" // Uncomment to set a custom width
                   value={storeName}
                 />
               </Box>
@@ -391,8 +394,9 @@ function InterpretersList() {
           <Box className={classes.interpreterDetails}>
             <Box className={classes.interpreterNoRange}>
               <TextBoxWithLabel
+                labelWidth="70px"
                 label="通訳者No"
-                width="4vw" // Uncomment to set a custom width
+                width="calc(10vw - 30px)" // Uncomment to set a custom width
                 disabled={false}
                 type="number"
                 value={contractorNoRangeMin}
@@ -402,20 +406,20 @@ function InterpretersList() {
               />
               <TextBoxWithLabel
                 label="~"
-                width="4vw" // Uncomment to set a custom width
+                width="calc(10vw - 30px)" // Uncomment to set a custom width
                 value={contractorNoRangeMax}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setContractorNoRangeMax(e.target.value)
                 }
                 disabled={false}
                 type="number"
-                labelWidth="1vw"
+                labelWidth="3vw"
               />
             </Box>
             <Box>
               <TextBoxWithLabel
                 label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
-                width="15vw" // Uncomment to set a custom width
+                width="calc(27vw - 100px)" // Uncomment to set a custom width
                 value={contractorNameFuriganaLast}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setContractorNameFuriganaLast(e.target.value)
@@ -426,7 +430,7 @@ function InterpretersList() {
               <TextBoxWithLabel
                 labelWidth="130px"
                 label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
-                width="15vw" // Uncomment to set a custom width
+                width="calc(27vw - 100px)" // Uncomment to set a custom width
                 value={contractorNameLast}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setContractorNameLast(e.target.value)
@@ -439,7 +443,7 @@ function InterpretersList() {
               <TextBoxWithLabel
                 label="メイ"
                 labelWidth="40px"
-                width="15vw" // Uncomment to set a custom width
+                width="calc(27vw - 100px)" // Uncomment to set a custom width
                 value={contractorNameFuriganaFirst}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setContractorNameFuriganaFirst(e.target.value)
@@ -449,7 +453,7 @@ function InterpretersList() {
               <TextBoxWithLabel
                 label="名"
                 labelWidth="40px"
-                width="15vw" // Uncomment to set a custom width
+                width="calc(27vw - 100px)" // Uncomment to set a custom width
                 value={contractorNameFirst}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setContractorNameFirst(e.target.value)
@@ -457,15 +461,18 @@ function InterpretersList() {
                 disabled={false}
               />
             </Box>
+          </Box>
+          <Box sx={{ display: "flex" }}>
             <MultipleOptionsSelect
               label="通訳言語："
               options={languagesSupport}
               value={selectedOptions}
               onChange={handleSelectChange}
+              width="calc(10vw - 30px)"
             />
-          </Box>
-          <Box className={classes.searchButton}>
-            <ButtonAtom onClick={searchConditions} label="検索" />
+            <Box className={classes.searchButton}>
+              <ButtonAtom onClick={searchConditions} label="検索" />
+            </Box>
           </Box>
         </Box>
       </Box>

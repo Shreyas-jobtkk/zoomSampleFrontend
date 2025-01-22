@@ -118,7 +118,7 @@ function LanguagesSupportList() {
           <TextBoxWithLabel
             disabled={false}
             label="言語No"
-            width="12vw" // Uncomment to set a custom width
+            width="calc(10vw - 30px)" // Uncomment to set a custom width
             value={textValue1}
             onChange={(e: any) => setTextValue1(e.target.value)}
           />
@@ -129,7 +129,7 @@ function LanguagesSupportList() {
                 <TextBoxWithLabel
                   disabled={false}
                   label="フリガナ"
-                  width="50vw" // Uncomment to set a custom width
+                  width="calc(60vw - 120px)" // Uncomment to set a custom width
                   value={textValue2}
                   onChange={(e: any) => setTextValue2(e.target.value)}
                   labelWidth="70px"
@@ -138,7 +138,7 @@ function LanguagesSupportList() {
                   disabled={false}
                   labelWidth="70px"
                   label="言語"
-                  width="50vw" // Uncomment to set a custom width
+                  width="calc(60vw - 120px)" // Uncomment to set a custom width
                   value={textValue3}
                   onChange={(e: any) => setTextValue3(e.target.value)}
                 />
