@@ -36,13 +36,15 @@ function InterpretersList() {
   const [storeNo, setStoreNo] = useState<string>("");
   const [storeName, setStoreName] = useState<string>("");
 
-  const [contractorNoRangeMin, setContractorNoRangeMin] = useState<string>("");
-  const [contractorNoRangeMax, setContractorNoRangeMax] = useState<string>("");
-  const [contractorNameLast, setContractorNameLast] = useState<string>("");
-  const [contractorNameFuriganaLast, setContractorNameFuriganaLast] =
+  const [interpreterNoRangeMin, setInterpreterNoRangeMin] =
     useState<string>("");
-  const [contractorNameFirst, setContractorNameFirst] = useState<string>("");
-  const [contractorNameFuriganaFirst, setContractorNameFuriganaFirst] =
+  const [interpreterNoRangeMax, setInterpreterNoRangeMax] =
+    useState<string>("");
+  const [interpreterNameLast, setInterpreterNameLast] = useState<string>("");
+  const [interpreterNameFuriganaLast, setInterpreterNameFuriganaLast] =
+    useState<string>("");
+  const [interpreterNameFirst, setInterpreterNameFirst] = useState<string>("");
+  const [interpreterNameFuriganaFirst, setInterpreterNameFuriganaFirst] =
     useState<string>("");
   const [searchData, setSearchData] = useState<DataTableRow[]>([]);
   const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
@@ -199,9 +201,9 @@ function InterpretersList() {
 
   const filterTableData = () => {
     const isInvalidRange =
-      Number(contractorNoRangeMin) > Number(contractorNoRangeMax);
+      Number(interpreterNoRangeMin) > Number(interpreterNoRangeMax);
     const isNotEmpty =
-      contractorNoRangeMin !== "" && contractorNoRangeMax !== "";
+      interpreterNoRangeMin !== "" && interpreterNoRangeMax !== "";
 
     if (isInvalidRange && isNotEmpty) {
       return alert("min is more than max");
@@ -214,19 +216,24 @@ function InterpretersList() {
       const contractorNo = Number(item["通訳者No"]);
 
       const isInRange =
-        (!contractorNoRangeMin ||
-          contractorNo >= Number(contractorNoRangeMin)) &&
-        (!contractorNoRangeMax || contractorNo <= Number(contractorNoRangeMax));
+        (!interpreterNoRangeMin ||
+          contractorNo >= Number(interpreterNoRangeMin)) &&
+        (!interpreterNoRangeMax ||
+          contractorNo <= Number(interpreterNoRangeMax));
 
       const matchesFilters =
-        (!contractorNameLast ||
-          String(item["名前_last"]).includes(contractorNameLast)) &&
-        (!contractorNameFuriganaLast ||
-          String(item["フリガナ_last"]).includes(contractorNameFuriganaLast)) &&
-        (!contractorNameFirst ||
-          String(item["名前_first"]).includes(contractorNameFirst)) &&
-        (!contractorNameFuriganaFirst ||
-          String(item["フリガナ_first"]).includes(contractorNameFuriganaFirst));
+        (!interpreterNameLast ||
+          String(item["名前_last"]).includes(interpreterNameLast)) &&
+        (!interpreterNameFuriganaLast ||
+          String(item["フリガナ_last"]).includes(
+            interpreterNameFuriganaLast
+          )) &&
+        (!interpreterNameFirst ||
+          String(item["名前_first"]).includes(interpreterNameFirst)) &&
+        (!interpreterNameFuriganaFirst ||
+          String(item["フリガナ_first"]).includes(
+            interpreterNameFuriganaFirst
+          ));
 
       const matchesLanguageNo =
         !selectedOptions ||
@@ -237,7 +244,7 @@ function InterpretersList() {
         );
 
       console.log(21445, matchesLanguageNo);
-      // console.log(21447, contractorNameFuriganaLast);
+      // console.log(21447, interpreterNameFuriganaLast);
 
       // An item is included in the results only if it satisfies both range and search conditions
       return (
@@ -282,7 +289,7 @@ function InterpretersList() {
   const navigateToInfoPage = () => {
     navigate("/UserInfo", {
       state: {
-        selectedInterpreterNo: selectedInterpreterNoArray[0],
+        selectedUserNo: selectedInterpreterNoArray[0],
         userType: "interpreter",
       },
     });
@@ -296,7 +303,7 @@ function InterpretersList() {
   const navigateToEditPage = () => {
     navigate("/UserUpdate", {
       state: {
-        selectedInterpreterNo: selectedInterpreterNoArray[0],
+        selectedUserNo: selectedInterpreterNoArray[0],
         userType: "interpreter",
       },
     });
@@ -399,17 +406,17 @@ function InterpretersList() {
                 width="calc(10vw - 30px)" // Uncomment to set a custom width
                 disabled={false}
                 type="number"
-                value={contractorNoRangeMin}
+                value={interpreterNoRangeMin}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setContractorNoRangeMin(e.target.value)
+                  setInterpreterNoRangeMin(e.target.value)
                 }
               />
               <TextBoxWithLabel
                 label="~"
                 width="calc(10vw - 30px)" // Uncomment to set a custom width
-                value={contractorNoRangeMax}
+                value={interpreterNoRangeMax}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setContractorNoRangeMax(e.target.value)
+                  setInterpreterNoRangeMax(e.target.value)
                 }
                 disabled={false}
                 type="number"
@@ -420,9 +427,9 @@ function InterpretersList() {
               <TextBoxWithLabel
                 label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 width="calc(27vw - 100px)" // Uncomment to set a custom width
-                value={contractorNameFuriganaLast}
+                value={interpreterNameFuriganaLast}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setContractorNameFuriganaLast(e.target.value)
+                  setInterpreterNameFuriganaLast(e.target.value)
                 }
                 labelWidth="130px"
                 disabled={false}
@@ -431,9 +438,9 @@ function InterpretersList() {
                 labelWidth="130px"
                 label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                 width="calc(27vw - 100px)" // Uncomment to set a custom width
-                value={contractorNameLast}
+                value={interpreterNameLast}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setContractorNameLast(e.target.value)
+                  setInterpreterNameLast(e.target.value)
                 }
                 disabled={false}
               />
@@ -444,9 +451,9 @@ function InterpretersList() {
                 label="メイ"
                 labelWidth="40px"
                 width="calc(27vw - 100px)" // Uncomment to set a custom width
-                value={contractorNameFuriganaFirst}
+                value={interpreterNameFuriganaFirst}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setContractorNameFuriganaFirst(e.target.value)
+                  setInterpreterNameFuriganaFirst(e.target.value)
                 }
                 disabled={false}
               />
@@ -454,9 +461,9 @@ function InterpretersList() {
                 label="名"
                 labelWidth="40px"
                 width="calc(27vw - 100px)" // Uncomment to set a custom width
-                value={contractorNameFirst}
+                value={interpreterNameFirst}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setContractorNameFirst(e.target.value)
+                  setInterpreterNameFirst(e.target.value)
                 }
                 disabled={false}
               />

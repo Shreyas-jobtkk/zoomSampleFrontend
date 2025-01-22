@@ -23,8 +23,8 @@ function InterpretersListInfo() {
   const [optionValue, setOptionValue] = useState<Array<string>>([]);
 
   const location = useLocation();
-  const { selectedInterpreterNo, userType } = location.state || {};
-  console.log(1557, selectedInterpreterNo);
+  const { selectedUserNo, userType } = location.state || {};
+  console.log(1557, selectedUserNo);
 
   const [formData, setFormData] = useState<InterpreterInfo>({
     user_no: "",
@@ -57,7 +57,7 @@ function InterpretersListInfo() {
 
   useEffect(() => {
     fetchUserDetails();
-  }, [selectedInterpreterNo]);
+  }, [selectedUserNo]);
 
   useEffect(() => {
     if (formData.translate_languages.length > 0) {
@@ -66,9 +66,9 @@ function InterpretersListInfo() {
   }, [formData.translate_languages]);
 
   const fetchUserDetails = async () => {
-    if (!selectedInterpreterNo) return; // Early return if no selectedCompanyNo
+    if (!selectedUserNo) return; // Early return if no selectedCompanyNo
     try {
-      const userDetails = await UserApiService.fetchUser(selectedInterpreterNo);
+      const userDetails = await UserApiService.fetchUser(selectedUserNo);
       const [tel1, tel2, tel3] = userDetails.tel.split("-");
 
       console.log(166, userDetails);

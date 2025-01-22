@@ -29,16 +29,13 @@ function InterpretersListUpdate() {
     { label: string; value: string | number }[]
   >([]);
   const [isStoresExist, setIsStoresExist] = useState<boolean>(true);
-
-  // const { state } = useLocation();
-  // const selectedInterpreterNo = state?.selectedInterpreterNo;
   const location = useLocation();
-  const { selectedInterpreterNo, userType } = location.state || {};
+  const { selectedUserNo, userType } = location.state || {};
 
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
   const [storeData, setStoreData] = useState<StoreInfo[]>([]);
 
-  console.log(1557, selectedInterpreterNo);
+  console.log(1557, selectedUserNo);
 
   const [formData, setFormData] = useState<UserInfo>({
     user_no: "",
@@ -147,7 +144,7 @@ function InterpretersListUpdate() {
 
   useEffect(() => {
     fetchUserDetails();
-  }, [selectedInterpreterNo]);
+  }, [selectedUserNo]);
 
   useEffect(() => {
     if (
@@ -184,10 +181,10 @@ function InterpretersListUpdate() {
   };
 
   const fetchUserDetails = async () => {
-    if (!selectedInterpreterNo) return; // Early return if no selectedInterpreterNo
+    if (!selectedUserNo) return; // Early return if no selectedUserNo
 
     try {
-      const userDetails = await UserApiService.fetchUser(selectedInterpreterNo);
+      const userDetails = await UserApiService.fetchUser(selectedUserNo);
       const {
         tel,
         user_no,

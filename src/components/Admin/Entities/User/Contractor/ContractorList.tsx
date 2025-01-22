@@ -4,7 +4,6 @@ import { Box } from "@mui/material";
 import ButtonAtom from "../../../../LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../../LV3/Header/MenuHeader/MenuHeader";
 import DataTable from "../../../../LV3/DataTable/DataTable";
-// import "./AdminMenu.scss";
 import { useNavigate } from "react-router-dom";
 import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
 import { UserInfo } from "../../../../../types/UserTypes/UserTypes";
@@ -17,10 +16,10 @@ import { StoreInfo } from "../../../../../types/StoreTypes/StoreTypes";
 import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
 import classes from "../../styles/AdminEntities.module.scss";
 
-function InterpretersList() {
+function ContractorList() {
   const navigate = useNavigate();
 
-  const [selectedInterpreterNoArray, setSelectedInterpreterNoArray] = useState<
+  const [selectedContractorNoArray, setSelectedContractorNoArray] = useState<
     number[]
   >([]);
 
@@ -208,13 +207,13 @@ function InterpretersList() {
       .map((item) => Number(item["通訳者No"]))
       .filter((value) => !isNaN(value)); // Filter out invalid numbers
 
-    setSelectedInterpreterNoArray(selectedInterpreterNo);
+    setSelectedContractorNoArray(selectedInterpreterNo);
   };
 
   const navigateToInfoPage = () => {
     navigate("/UserInfo", {
       state: {
-        selectedInterpreterNo: selectedInterpreterNoArray[0],
+        selectedUserNo: selectedContractorNoArray[0],
         userType: "contractor",
       },
     });
@@ -228,16 +227,16 @@ function InterpretersList() {
   const navigateToEditPage = () => {
     navigate("/UserUpdate", {
       state: {
-        selectedInterpreterNo: selectedInterpreterNoArray[0],
+        selectedUserNo: selectedContractorNoArray[0],
         userType: "contractor",
       },
     });
   };
 
   const handleDeleteInterpreters = async () => {
-    console.log(114, selectedInterpreterNoArray);
+    console.log(114, selectedContractorNoArray);
     try {
-      await UserApiService.deleteUsers(selectedInterpreterNoArray);
+      await UserApiService.deleteUsers(selectedContractorNoArray);
       // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -262,13 +261,6 @@ function InterpretersList() {
 
     setStoreName(store_name);
     setStoreNo(store_no);
-
-    console.log(133, store);
-    // const { store_no, store_name } = store;
-    // updateFormData("store_no", store_no);
-    // updateFormData("store_name", store_name);
-    // setValue("store_no", store_no);
-    // setValue("store_name", store_name);
   };
 
   return (
@@ -437,4 +429,4 @@ function InterpretersList() {
   );
 }
 
-export default InterpretersList;
+export default ContractorList;

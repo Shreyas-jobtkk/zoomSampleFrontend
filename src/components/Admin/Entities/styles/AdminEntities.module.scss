@@ -6,7 +6,6 @@
   white-space: nowrap; /* Prevents text from wrapping to the next line */
   overflow: hidden; /* Hides any overflowed content */
   text-overflow: ellipsis;
-  // margin: 0 1vw;
 }
 
 .searchContainer {
@@ -57,9 +56,8 @@
 .contractorDetails,
 .languageSearchDetails,
 .companiesDetails,
-.admin-details,
+.adminDetails,
 .interpreterDetails,
-.responders-search-container,
 .storeDetails {
   display: flex;
   align-items: flex-start;
@@ -67,6 +65,7 @@
 }
 
 .contractorRange,
+.adminRange,
 .interpreterNoRange {
   display: flex;
   align-items: flex-start;

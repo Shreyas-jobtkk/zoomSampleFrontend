@@ -17,12 +17,12 @@ import { StoreInfo } from "../../../../../types/StoreTypes/StoreTypes";
 import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
 import classes from "../../styles/AdminEntities.module.scss";
 
-function InterpretersList() {
+function AdministratorList() {
   const navigate = useNavigate();
 
-  const [selectedInterpreterNoArray, setSelectedInterpreterNoArray] = useState<
-    number[]
-  >([]);
+  const [selectedAdminNoArray, setSelectedAdminNoArray] = useState<number[]>(
+    []
+  );
 
   const [tableData, setTableData] = useState<DataTableRow[]>([]);
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
@@ -33,13 +33,13 @@ function InterpretersList() {
   const [storeNo, setStoreNo] = useState<string>("");
   const [storeName, setStoreName] = useState<string>("");
 
-  const [contractorNoRangeMin, setContractorNoRangeMin] = useState<string>("");
-  const [contractorNoRangeMax, setContractorNoRangeMax] = useState<string>("");
-  const [contractorNameLast, setContractorNameLast] = useState<string>("");
-  const [contractorNameFuriganaLast, setContractorNameFuriganaLast] =
+  const [adminNoRangeMin, setAdminNoRangeMin] = useState<string>("");
+  const [adminNoRangeMax, setAdminNoRangeMax] = useState<string>("");
+  const [adminNameLast, setAdminNameLast] = useState<string>("");
+  const [adminNameFuriganaLast, setAdminNameFuriganaLast] =
     useState<string>("");
-  const [contractorNameFirst, setContractorNameFirst] = useState<string>("");
-  const [contractorNameFuriganaFirst, setContractorNameFuriganaFirst] =
+  const [adminNameFirst, setAdminNameFirst] = useState<string>("");
+  const [adminNameFuriganaFirst, setAdminNameFuriganaFirst] =
     useState<string>("");
   const [searchData, setSearchData] = useState<DataTableRow[]>([]);
   const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
@@ -143,10 +143,8 @@ function InterpretersList() {
   };
 
   const filterTableData = () => {
-    const isInvalidRange =
-      Number(contractorNoRangeMin) > Number(contractorNoRangeMax);
-    const isNotEmpty =
-      contractorNoRangeMin !== "" && contractorNoRangeMax !== "";
+    const isInvalidRange = Number(adminNoRangeMin) > Number(adminNoRangeMax);
+    const isNotEmpty = adminNoRangeMin !== "" && adminNoRangeMax !== "";
 
     if (isInvalidRange && isNotEmpty) {
       return alert("min is more than max");
@@ -159,23 +157,21 @@ function InterpretersList() {
       const contractorNo = Number(item["通訳者No"]);
 
       const isInRange =
-        (!contractorNoRangeMin ||
-          contractorNo >= Number(contractorNoRangeMin)) &&
-        (!contractorNoRangeMax || contractorNo <= Number(contractorNoRangeMax));
+        (!adminNoRangeMin || contractorNo >= Number(adminNoRangeMin)) &&
+        (!adminNoRangeMax || contractorNo <= Number(adminNoRangeMax));
 
       const matchesFilters =
-        (!contractorNameLast ||
-          String(item["名前_last"]).includes(contractorNameLast)) &&
-        (!contractorNameFuriganaLast ||
-          String(item["フリガナ_last"]).includes(contractorNameFuriganaLast)) &&
-        (!contractorNameFirst ||
-          String(item["名前_first"]).includes(contractorNameFirst)) &&
-        (!contractorNameFuriganaFirst ||
-          String(item["フリガナ_first"]).includes(contractorNameFuriganaFirst));
+        (!adminNameLast || String(item["名前_last"]).includes(adminNameLast)) &&
+        (!adminNameFuriganaLast ||
+          String(item["フリガナ_last"]).includes(adminNameFuriganaLast)) &&
+        (!adminNameFirst ||
+          String(item["名前_first"]).includes(adminNameFirst)) &&
+        (!adminNameFuriganaFirst ||
+          String(item["フリガナ_first"]).includes(adminNameFuriganaFirst));
 
       console.log(21445, matchesFilters);
       console.log(21446, String(item["フリガナ_last"]));
-      console.log(21447, contractorNameFuriganaLast);
+      console.log(21447, adminNameFuriganaLast);
 
       // An item is included in the results only if it satisfies both range and search conditions
       return isInRange && matchesFilters && matchesCompanyNo && matchesStoreNo;
@@ -208,13 +204,13 @@ function InterpretersList() {
       .map((item) => Number(item["通訳者No"]))
       .filter((value) => !isNaN(value)); // Filter out invalid numbers
 
-    setSelectedInterpreterNoArray(selectedInterpreterNo);
+    setSelectedAdminNoArray(selectedInterpreterNo);
   };
 
   const navigateToInfoPage = () => {
     navigate("/UserInfo", {
       state: {
-        selectedInterpreterNo: selectedInterpreterNoArray[0],
+        selectedUserNo: selectedAdminNoArray[0],
         userType: "administrator",
       },
     });
@@ -228,16 +224,16 @@ function InterpretersList() {
   const navigateToEditPage = () => {
     navigate("/UserUpdate", {
       state: {
-        selectedInterpreterNo: selectedInterpreterNoArray[0],
+        selectedUserNo: selectedAdminNoArray[0],
         userType: "administrator",
       },
     });
   };
 
   const handleDeleteAdministrators = async () => {
-    console.log(114, selectedInterpreterNoArray);
+    console.log(114, selectedAdminNoArray);
     try {
-      await UserApiService.deleteUsers(selectedInterpreterNoArray);
+      await UserApiService.deleteUsers(selectedAdminNoArray);
       // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -262,13 +258,6 @@ function InterpretersList() {
 
     setStoreName(store_name);
     setStoreNo(store_no);
-
-    console.log(133, store);
-    // const { store_no, store_name } = store;
-    // updateFormData("store_no", store_no);
-    // updateFormData("store_name", store_name);
-    // setValue("store_no", store_no);
-    // setValue("store_name", store_name);
   };
 
   return (
@@ -279,7 +268,6 @@ function InterpretersList() {
         <Box className={classes.moveTop}>
           <Box className={classes.companyStoreRow}>
             <Box>
-              {/* <Box>企業検索</Box> */}
               <SelectableModal
                 title="企業検索"
                 options={companyData}
@@ -329,25 +317,25 @@ function InterpretersList() {
               </Box>
             </Box>
           </Box>
-          <Box className={classes.contractorDetails}>
-            <Box className={classes.contractorRange}>
+          <Box className={classes.adminDetails}>
+            <Box className={classes.adminRange}>
               <TextBoxWithLabel
                 labelWidth="70px"
                 label="通訳者No"
                 width="calc(10vw - 30px)" // Uncomment to set a custom width
                 disabled={false}
                 type="number"
-                value={contractorNoRangeMin}
+                value={adminNoRangeMin}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setContractorNoRangeMin(e.target.value)
+                  setAdminNoRangeMin(e.target.value)
                 }
               />
               <TextBoxWithLabel
                 label="~"
                 width="calc(10vw - 30px)" // Uncomment to set a custom width
-                value={contractorNoRangeMax}
+                value={adminNoRangeMax}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setContractorNoRangeMax(e.target.value)
+                  setAdminNoRangeMax(e.target.value)
                 }
                 disabled={false}
                 type="number"
@@ -358,9 +346,9 @@ function InterpretersList() {
               <TextBoxWithLabel
                 label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 width="calc(25vw - 80px)" // Uncomment to set a custom width
-                value={contractorNameFuriganaLast}
+                value={adminNameFuriganaLast}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setContractorNameFuriganaLast(e.target.value)
+                  setAdminNameFuriganaLast(e.target.value)
                 }
                 labelWidth="100px"
                 disabled={false}
@@ -369,9 +357,9 @@ function InterpretersList() {
                 labelWidth="100px"
                 label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                 width="calc(25vw - 80px)" // Uncomment to set a custom width
-                value={contractorNameLast}
+                value={adminNameLast}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setContractorNameLast(e.target.value)
+                  setAdminNameLast(e.target.value)
                 }
                 disabled={false}
               />
@@ -382,9 +370,9 @@ function InterpretersList() {
                 label="メイ"
                 labelWidth="40px"
                 width="calc(25vw - 80px)" // Uncomment to set a custom width
-                value={contractorNameFuriganaFirst}
+                value={adminNameFuriganaFirst}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setContractorNameFuriganaFirst(e.target.value)
+                  setAdminNameFuriganaFirst(e.target.value)
                 }
                 disabled={false}
               />
@@ -392,9 +380,9 @@ function InterpretersList() {
                 label="名"
                 labelWidth="40px"
                 width="calc(25vw - 80px)" // Uncomment to set a custom width
-                value={contractorNameFirst}
+                value={adminNameFirst}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setContractorNameFirst(e.target.value)
+                  setAdminNameFirst(e.target.value)
                 }
                 disabled={false}
               />
@@ -435,4 +423,4 @@ function InterpretersList() {
   );
 }
 
-export default InterpretersList;
+export default AdministratorList;
