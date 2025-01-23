@@ -29,7 +29,7 @@ function InterpreterLogin() {
 
   const location = useLocation();
   const { message } = location.state || {}; // Safely access state
-  const terminal_id = message.terminal_id;
+  // const terminal_id = message.terminal_id;
 
   console.log(144, message);
 
