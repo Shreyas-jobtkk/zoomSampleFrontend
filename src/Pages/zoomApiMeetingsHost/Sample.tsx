@@ -50,14 +50,14 @@ const Sample: React.FC = () => {
 
   const isButtonDisabled = !meetingNumber || !password;
 
-  const authEndpoint = "https://zoomsamplebackend.onrender.com";
+  const authEndpoint = import.meta.env.VITE_REACT_APP_API_URL;
   const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
 
   console.log(1557, import.meta.env.VITE_REACT_APP_API_URL);
 
   const role = 1;
   const userName = "host";
-  const leaveUrl = "https://zoomsamplebackend.onrender.com";
+  const leaveUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
   const getSignature = async () => {
     console.log(155, import.meta.env.VITE_ZOOM_MEETING_SDK_KEY);
