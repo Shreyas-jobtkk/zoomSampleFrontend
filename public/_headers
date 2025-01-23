@@ -1,1 +1,10 @@
 
+
+/*
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: no-referrer-when-downgrade
+Permissions-Policy: geolocation=(), microphone=()
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://source.zoom.us; style-src 'self' 'unsafe-inline' https://source.zoom.us; img-src 'self'; font-src 'self' https://source.zoom.us; connect-src 'self' https://zoomsamplebackend.onrender.com; object-src 'none'; form-action 'self'; frame-ancestors 'none';
