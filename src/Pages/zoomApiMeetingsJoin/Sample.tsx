@@ -60,7 +60,6 @@ const Sample: React.FC = () => {
   const leaveUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
   const getSignature = async () => {
-    console.log(155, import.meta.env.VITE_ZOOM_MEETING_SDK_KEY);
     try {
       const req = await fetch(authEndpoint, {
         method: "POST",
@@ -72,6 +71,7 @@ const Sample: React.FC = () => {
       });
       const res = await req.json();
       const signature = res.signature as string;
+      console.log(1255, signature);
       startMeeting(signature);
     } catch (e) {
       console.log(e);
