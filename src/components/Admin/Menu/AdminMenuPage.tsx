@@ -2,7 +2,7 @@ import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
 import MenuHeader from "../../LV3/Header/MenuHeader/MenuHeader";
 import { Box } from "@mui/material";
-import { isManualUrl } from "../../../utils/utils";
+// import { isManualUrl } from "../../../utils/utils";
 // import { useEffect } from "react";
 
 function AdminMenu() {
