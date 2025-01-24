@@ -50,13 +50,14 @@ const Sample: React.FC = () => {
 
   const isButtonDisabled = !meetingNumber || !password;
 
-  const authEndpoint = "http://localhost:4000";
+  const authEndpoint = import.meta.env.VITE_REACT_APP_API_URL;
   const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
 
+  console.log(1557, import.meta.env.VITE_REACT_APP_API_URL);
+
   const role = 0;
-  const userName = "participant";
-  // const zakToken = "";
-  const leaveUrl = "http://localhost:5173";
+  const userName = "join";
+  const leaveUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
   const getSignature = async () => {
     console.log(155, import.meta.env.VITE_ZOOM_MEETING_SDK_KEY);
@@ -128,6 +129,10 @@ const Sample: React.FC = () => {
 
     ZoomMtg.init({
       leaveUrl: leaveUrl,
+      loginWindow: {
+        width: "100", // Set your desired width as a string
+        height: "380", // Set your desired height as a string
+      },
       patchJsMedia: true,
       leaveOnPageUnload: true,
       isSupportChat: false,
@@ -139,6 +144,7 @@ const Sample: React.FC = () => {
           meetingNumber: meetingNumber,
           passWord: password,
           userName: userName,
+
           // zak: zakToken,
           success: (success: unknown) => {
             console.log(success);
@@ -167,10 +173,10 @@ const Sample: React.FC = () => {
   };
 
   return (
-    <Container>
+    <Container maxWidth="sm">
       <Box component="main" sx={{ textAlign: "center", mt: 4 }}>
         <Typography variant="h5" component="h1" gutterBottom>
-          Zoom Meeting SDK Sample React
+          Zoom Meeting SDK Sample React2
         </Typography>
         <TextField
           label="Meeting Number"
