@@ -2,18 +2,9 @@ import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
 import MenuHeader from "../../LV3/Header/MenuHeader/MenuHeader";
 import { Box } from "@mui/material";
-// import { isManualUrl } from "../../../utils/utils";
-// import { useEffect } from "react";
 
 function AdminMenu() {
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (isManualUrl()) {
-  //     // Navigate to the dashboard or another page
-  //     navigate("/CompaniesList");
-  //   }
-  // }, [isManualUrl, navigate]);
 
   const navigateToCompaniesList = () => {
     navigate("/CompaniesList");
