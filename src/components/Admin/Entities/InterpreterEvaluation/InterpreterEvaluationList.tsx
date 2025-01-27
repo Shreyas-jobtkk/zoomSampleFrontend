@@ -237,7 +237,6 @@ function InterpreterEvaluationList() {
       <MenuHeader title="通訳評価一覧" />
       <Box className={classes.searchContainer}>
         <Box className={classes.searchLabel}>検索条件</Box>
-
         <Box className={classes.selectRange}>
           {/* <Box style={{ display: 'flex', alignItems: 'center', margin: '0 20px' }}> */}
           <Box>通訳日時</Box>
@@ -245,7 +244,7 @@ function InterpreterEvaluationList() {
           <DatePicker label="" onDateChange={handleStartDateChange} />
           {/* <Box>{formatFullDateTime(selectedStartDate, selectedStartTime)}</Box> Display full start datetime */}
           <TimePicker
-            label="Select Start Time"
+            label=""
             value={selectedStartTime}
             onChange={handleStartTimeChange} // Use the separate handler for start time
           />
@@ -256,7 +255,7 @@ function InterpreterEvaluationList() {
           <DatePicker label="" onDateChange={handleEndDateChange} />
           {/* <Box>{formatFullDateTime(selectedEndDate, selectedEndTime)}</Box> Display full end datetime */}
           <TimePicker
-            label="Select End Time"
+            label=""
             value={selectedEndTime}
             onChange={handleEndTimeChange} // Use the separate handler for end time
           />
@@ -271,33 +270,69 @@ function InterpreterEvaluationList() {
           <Box className={classes.contractorDetails}>
             <TextBoxWithLabel
               label="契約No"
-              width="12vw" // Uncomment to set a custom width
+              width="calc(10vw - 20px)" // Uncomment to set a custom width
               value={textValue10}
               onChange={(e: any) => setTextValue10(e.target.value)}
               // disabled={true}
             />
             <TextBoxWithLabel
               label="企業名"
-              width="18vw" // Uncomment to set a custom width
+              width="calc(32vw - 80px)" // Uncomment to set a custom width
               value={textValue3}
               onChange={(e: any) => setTextValue3(e.target.value)}
             />
             <TextBoxWithLabel
               label="店舗名"
-              width="18vw" // Uncomment to set a custom width
+              width="calc(32vw - 80px)" // Uncomment to set a custom width
               value={textValue9}
               onChange={(e: any) => setTextValue9(e.target.value)}
+            />
+          </Box>
+        </Box>
+        <Box>
+          <ButtonAtom
+            onClick={searchConditions}
+            label="通訳者検索"
+            width="90px"
+            margin="10px 0 0 0"
+          />
+          <Box className={classes.contractorDetails}>
+            <TextBoxWithLabel
+              label="通訳者No"
+              width="calc(10vw - 20px)" // Uncomment to set a custom width
+              value={textValue10}
+              onChange={(e: any) => setTextValue10(e.target.value)}
+              // disabled={true}
+            />
+            <TextBoxWithLabel
+              label="通訳者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+              width="calc(28vw - 150px)" // Uncomment to set a custom width
+              value={textValue3}
+              onChange={(e: any) => setTextValue3(e.target.value)}
+              labelWidth="120px"
+            />
+            <TextBoxWithLabel
+              label="名"
+              width="calc(28vw - 150px)" // Uncomment to set a custom width
+              value={textValue9}
+              onChange={(e: any) => setTextValue9(e.target.value)}
+              labelWidth="30px"
             />
             <SelectOption
               label="通訳言語："
               options={options}
-              width={150}
+              width={"calc(10vw - 15px)"}
               value={selectedOption}
               onChange={setSelectedOption}
+              labelWidth={"85px"}
             />
 
             <Box className={classes.searchButton}>
-              <ButtonAtom onClick={searchConditions} label="検索" />
+              <ButtonAtom
+                margin="0 0 4px 0"
+                onClick={searchConditions}
+                label="検索"
+              />
             </Box>
           </Box>
         </Box>
@@ -305,7 +340,7 @@ function InterpreterEvaluationList() {
       <DataTable // Customize header height
         headers={headers}
         data={data}
-        maxHeight="calc(82vh - 260px)"
+        maxHeight="calc(82vh - 300px)"
         onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.searchButton}>

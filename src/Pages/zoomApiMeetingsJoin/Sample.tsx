@@ -1,7 +1,8 @@
 import { ZoomMtg } from "@zoom/meetingsdk";
 // import { Box, Typography, Button, Container } from "@mui/material";
+import ValidationInputField from "../../components/LV1/ValidationInputField/ValidationInputField";
 import React, { useState } from "react";
-import { Container, Box, Typography, Button, TextField } from "@mui/material";
+import { Container, Box, Typography, Button } from "@mui/material";
 // import { showOverlayMessage } from "./OverlayMessage"; // Import the function
 import {
   showInputFieldOverlay,
@@ -16,6 +17,7 @@ import {
 import { apiUrl } from "../../apiUrl";
 import io from "socket.io-client";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 
 // Connect to the socket.io server
 const socket = io(apiUrl);
@@ -26,6 +28,12 @@ ZoomMtg.prepareWebSDK();
 const Sample: React.FC = () => {
   const [meetingNumber, setMeetingNumber] = useState("");
   const [password, setPassword] = useState("");
+
+  const {
+    register,
+    formState: { isSubmitted },
+  } = useForm<any>();
+
   useEffect(() => {
     // Listen for 'streamMessage' events from the server
     const handleStreamMessage = (data: string) => {
@@ -178,15 +186,25 @@ const Sample: React.FC = () => {
         <Typography variant="h5" component="h1" gutterBottom>
           Zoom Meeting SDK Sample React2
         </Typography>
-        <TextField
+        {/* <TextField
           label="Meeting Number"
           variant="outlined"
           fullWidth
           margin="normal"
           value={meetingNumber}
           onChange={(e) => setMeetingNumber(e.target.value)}
+        /> */}
+        <ValidationInputField
+          isSubmitted={isSubmitted}
+          label="Meeting Number"
+          width="250px" // Uncomment to set a custom width
+          labelWidth="150px"
+          name="mail_address"
+          value={meetingNumber}
+          onChange={(e: any) => setMeetingNumber(e.target.value)} // Update mail_address state on change
+          register={register}
         />
-        <TextField
+        {/* <TextField
           label="Password"
           type="password"
           variant="outlined"
@@ -194,6 +212,17 @@ const Sample: React.FC = () => {
           margin="normal"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+        /> */}
+        <ValidationInputField
+          isSubmitted={isSubmitted}
+          label="Password"
+          width="250px" // Uncomment to set a custom width
+          labelWidth="150px"
+          name="user_password"
+          value={password} // Use state value for user_password
+          onChange={(e: any) => setPassword(e.target.value)} // Update user_password state on change
+          register={register}
+          type="password"
         />
         <Button
           variant="contained"

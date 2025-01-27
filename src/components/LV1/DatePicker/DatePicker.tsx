@@ -32,7 +32,7 @@ const DatePicker: React.FC<DatePickerProps> = ({
           textField: {
             inputProps: {
               sx: {
-                height: "0px", // Set a fixed height for the input field
+                height: "12px", // Set a fixed height for the input field
               },
             },
           },
