@@ -2,7 +2,7 @@ import DatePicker from "../../../LV1/DatePicker/DatePicker";
 import TimePicker from "../../../LV1/TimePicker/TimePicker"; // Adjust the import path as needed
 import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
@@ -14,11 +14,11 @@ import { useNavigate } from "react-router-dom";
 function InterpreterEvaluationList() {
   const navigate = useNavigate();
 
-  // State for selected start and end times
-  const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
-    dayjs()
-  );
-  const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(dayjs());
+  // // State for selected start and end times
+  // const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
+  //   dayjs()
+  // );
+  // const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(dayjs());
   const headers = [
     "No",
     "開始日時",
@@ -204,7 +204,7 @@ function InterpreterEvaluationList() {
 
   // Handle start time change
   const handleStartTimeChange = (newValue: Dayjs | null) => {
-    setSelectedStartTime(newValue);
+    // setSelectedStartTime(newValue);
     console.log(
       "Selected Start Time:",
       newValue ? newValue.format("HH:mm:ss") : "None"
@@ -213,7 +213,7 @@ function InterpreterEvaluationList() {
 
   // Handle end time change
   const handleEndTimeChange = (newValue: Dayjs | null) => {
-    setSelectedEndTime(newValue);
+    // setSelectedEndTime(newValue);
     console.log(
       "Selected End Time:",
       newValue ? newValue.format("HH:mm:ss") : "None"
