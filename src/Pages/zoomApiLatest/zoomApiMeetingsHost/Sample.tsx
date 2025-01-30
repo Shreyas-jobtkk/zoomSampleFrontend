@@ -39,12 +39,12 @@ const Sample: React.FC = () => {
     // Listen for 'streamMessage' events from the server
     const handleStreamMessage = (data: string) => {
       showOverlayMessage(data);
-      console.log(1445, data);
+      //  console.log(1445, data);
     };
 
     const handleZoomStreamEmoji = (data: any) => {
       createEmojiReactionAnimation(data);
-      console.log(1445, data);
+      //  console.log(1445, data);
     };
 
     socket.on("streamMessage", handleStreamMessage);
@@ -62,7 +62,7 @@ const Sample: React.FC = () => {
   const authEndpoint = import.meta.env.VITE_REACT_APP_API_URL;
   const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
 
-  console.log(1557, import.meta.env.VITE_REACT_APP_API_URL);
+  //  console.log(1557, import.meta.env.VITE_REACT_APP_API_URL);
 
   const role = 1;
   const userName = hostName;
@@ -78,15 +78,15 @@ const Sample: React.FC = () => {
         }
       );
 
-      console.log(21255, meetingData);
-      console.log(121255, meetingData.meeting.id, meetingData.meeting.password);
+      //  console.log(21255, meetingData);
+      //  console.log(121255, meetingData.meeting.id, meetingData.meeting.password);
       // setMeetingNumber(meetingData.meeting.id);
       // setPassword(meetingData.meeting.password);
       // Directly pass the values instead of relying on state
       meetingNumber = meetingData.meeting.id;
       password = meetingData.meeting.password;
 
-      console.log(221255, meetingNumber, password);
+      //  console.log(221255, meetingNumber, password);
 
       try {
         const { data: zoomData } = await axios.post(
@@ -172,8 +172,8 @@ const Sample: React.FC = () => {
           // zak: zakToken,
           success: (success: unknown) => {
             console.log(success);
-            console.log(189, ZoomMtg.inMeetingServiceListener.toString());
-            console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
+            //  console.log(189, ZoomMtg.inMeetingServiceListener.toString());
+            //  console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
             console.log(
               144,
               sessionStorage.getItem("s3.pg.isSupportInMeetingListener")

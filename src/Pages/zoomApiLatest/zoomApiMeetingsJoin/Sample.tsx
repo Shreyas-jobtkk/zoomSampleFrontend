@@ -26,11 +26,11 @@ ZoomMtg.prepareWebSDK();
 
 const Sample: React.FC = () => {
   const [hostName, setHostName] = useState("");
-  const [meetingNumber, setMeetingNumber] = useState("");
-  const [password, setPassword] = useState("");
+  // const [meetingNumber, setMeetingNumber] = useState("");
+  // const [password, setPassword] = useState("");
 
-  // let meetingNumber: any;
-  // let password: any;
+  let meetingNumber: any;
+  let password: any;
 
   const {
     register,
@@ -41,32 +41,14 @@ const Sample: React.FC = () => {
     // Listen for 'streamMessage' events from the server
     const handleStreamMessage = (data: string) => {
       showOverlayMessage(data);
-      console.log(1445, data);
     };
 
     const handleZoomStreamEmoji = (data: any) => {
       createEmojiReactionAnimation(data);
-      console.log(1445, data);
     };
 
     socket.on("streamMessage", handleStreamMessage);
     socket.on("zoomStreamEmoji", handleZoomStreamEmoji);
-
-    socket.on("dataFromBackend", (data) => {
-      console.log(889, data);
-      // setReceivedData(data.message);
-    });
-
-    socket.on("meetingDetailsForClient", (data) => {
-      // meetingNumber = data.meetingNumber;
-      // password = data.password;
-      setMeetingNumber(data.meetingNumber);
-      setPassword(data.password);
-      console.log(41889, data);
-      // console.log(1889, meetingNumber);
-      // console.log(31889, password);
-      // setReceivedData(data.message);
-    });
 
     // Clean up the event listeners on component unmount
     return () => {
@@ -80,14 +62,28 @@ const Sample: React.FC = () => {
   const authEndpoint = import.meta.env.VITE_REACT_APP_API_URL;
   const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
 
-  console.log(1557, import.meta.env.VITE_REACT_APP_API_URL);
-
   const role = 0;
   const userName = hostName;
   const leaveUrl = import.meta.env.VITE_REACT_APP_URL;
 
   const getSignature = async () => {
-    console.log(357, meetingNumber, password);
+    try {
+      // Using GET instead of POST for data retrieval
+      const response = await axios.get(`${authEndpoint}/get-meeting-data`, {
+        headers: { "Content-Type": "application/json" }, // Optional: headers, but not needed for a GET request unless required
+      });
+
+      meetingNumber = response.data.meetingNumber;
+      password = response.data.password;
+
+      // console.log("Fetched Data:", response.data); // response.data contains the actual response from the server
+
+      // Assuming you're handling the fetched meeting data here
+      // startMeeting(response.data);
+    } catch (error) {
+      console.error("Error fetching meeting data:", error);
+    }
+
     try {
       const { data: zoomData } = await axios.post(
         `${authEndpoint}/zoom`,
@@ -101,7 +97,6 @@ const Sample: React.FC = () => {
       );
 
       const signature = zoomData.signature as string;
-      console.log(1255, signature);
       startMeeting(signature);
     } catch (e) {
       console.error(e);
@@ -167,12 +162,12 @@ const Sample: React.FC = () => {
           // zak: zakToken,
           success: (success: unknown) => {
             console.log(success);
-            console.log(189, ZoomMtg.inMeetingServiceListener.toString());
-            console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
-            console.log(
-              144,
-              sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
-            );
+            // console.log(189, ZoomMtg.inMeetingServiceListener.toString());
+            // console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
+            // console.log(
+            //   144,
+            //   sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
+            // );
 
             showInputField();
 
