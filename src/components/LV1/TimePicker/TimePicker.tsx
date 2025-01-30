@@ -3,25 +3,31 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker as MuiTimePicker } from "@mui/x-date-pickers/TimePicker";
 import { Dayjs } from "dayjs";
-
+import { useState } from "react";
 interface TimePickerProps {
   label?: string; // Optional label prop
-  value?: Dayjs | null; // Optional value prop
   onChange?: (newValue: Dayjs | null) => void; // Optional onChange handler
 }
 
 const TimePicker: React.FC<TimePickerProps> = ({
   label = "Time Picker",
-  value = null,
   onChange,
 }) => {
+  const [selectedTime, setSelectedTime] = useState<Dayjs | null>(null);
+
+  const handleChange = (newValue: Dayjs | null) => {
+    setSelectedTime(newValue);
+    if (onChange) {
+      onChange(newValue);
+    }
+  };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <MuiTimePicker
         label={label}
-        value={value} // Bind value to the component
+        value={selectedTime} // Bind value to the component
         ampm={false} // Use 24-hour format
-        onChange={onChange} // Handle change event if provided
+        onChange={handleChange} // Handle change event if provided
         slotProps={{
           textField: {
             inputProps: {

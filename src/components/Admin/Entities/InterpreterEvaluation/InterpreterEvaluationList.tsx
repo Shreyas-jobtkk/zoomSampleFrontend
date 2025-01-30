@@ -9,8 +9,11 @@ import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import SelectOption from "../../../LV1/SelectOption/SelectOption";
 import DataTable from "../../../LV3/DataTable/DataTable";
 import classes from "../styles/AdminEntities.module.scss";
+import { useNavigate } from "react-router-dom";
 
 function InterpreterEvaluationList() {
+  const navigate = useNavigate();
+
   // State for selected start and end times
   const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
     dayjs()
@@ -177,6 +180,10 @@ function InterpreterEvaluationList() {
 
   const searchConditions = () => {};
 
+  const searchContractDetails = () => {
+    navigate("/ContractorSearch");
+  };
+
   // Handle start date change
   const handleStartDateChange = (date: Dayjs | null) => {
     // setSelectedStartDate(date);
@@ -245,7 +252,7 @@ function InterpreterEvaluationList() {
           {/* <Box>{formatFullDateTime(selectedStartDate, selectedStartTime)}</Box> Display full start datetime */}
           <TimePicker
             label=""
-            value={selectedStartTime}
+            // value={selectedStartTime}
             onChange={handleStartTimeChange} // Use the separate handler for start time
           />
 
@@ -256,13 +263,13 @@ function InterpreterEvaluationList() {
           {/* <Box>{formatFullDateTime(selectedEndDate, selectedEndTime)}</Box> Display full end datetime */}
           <TimePicker
             label=""
-            value={selectedEndTime}
+            // value={selectedEndTime}
             onChange={handleEndTimeChange} // Use the separate handler for end time
           />
         </Box>
         <Box>
           <ButtonAtom
-            onClick={searchConditions}
+            onClick={searchContractDetails}
             label="契約検索"
             width="90px"
             margin="2px"
