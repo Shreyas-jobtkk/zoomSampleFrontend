@@ -19,18 +19,18 @@ const App: React.FC = () => {
           <li>
             <Link to="/AdminLogin">管理者</Link>
           </li>
-          {/* <li>
+          <li>
             <Link to="/zoomApiMeetingsJoin">Join</Link>
           </li>
           <li>
             <Link to="/zoomApiMeetingsHost">Host</Link>
-          </li> */}
-          <li>
+          </li>
+          {/* <li>
             <Link to="/zoomApiMeetingsJoin2">Join</Link>
           </li>
           <li>
             <Link to="/zoomApiMeetingsHost2">Host</Link>
-          </li>
+          </li> */}
         </List>
       </nav>
       <AppRoutes />

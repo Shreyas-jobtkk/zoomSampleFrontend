@@ -18,6 +18,7 @@ import { apiUrl } from "../../apiUrl";
 import io from "socket.io-client";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 // Connect to the socket.io server
 const socket = io(apiUrl);
@@ -69,16 +70,18 @@ const Sample: React.FC = () => {
 
   const getSignature = async () => {
     try {
-      const req = await fetch(authEndpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      const { data: zoomData } = await axios.post(
+        `${authEndpoint}/zoom`,
+        {
           meetingNumber: meetingNumber,
           role: role,
-        }),
-      });
-      const res = await req.json();
-      const signature = res.signature as string;
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      const signature = zoomData.signature as string;
       console.log(1255, signature);
       startMeeting(signature);
     } catch (e) {
@@ -184,7 +187,7 @@ const Sample: React.FC = () => {
     <Container maxWidth="sm">
       <Box component="main" sx={{ textAlign: "center", mt: 4 }}>
         <Typography variant="h5" component="h1" gutterBottom>
-          Zoom Meeting SDK Sample React2
+          Zoom Meeting SDK Sample React Join
         </Typography>
         {/* <TextField
           label="Meeting Number"
