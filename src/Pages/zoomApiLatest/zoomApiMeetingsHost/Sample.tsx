@@ -78,11 +78,6 @@ const Sample: React.FC = () => {
         }
       );
 
-      //  console.log(21255, meetingData);
-      //  console.log(121255, meetingData.meeting.id, meetingData.meeting.password);
-      // setMeetingNumber(meetingData.meeting.id);
-      // setPassword(meetingData.meeting.password);
-      // Directly pass the values instead of relying on state
       meetingNumber = meetingData.meeting.id;
       password = meetingData.meeting.password;
 
@@ -161,7 +156,7 @@ const Sample: React.FC = () => {
       leaveOnPageUnload: true,
       isSupportChat: false,
       success: (success: unknown) => {
-        console.log(success);
+        console.log(155, success);
         ZoomMtg.join({
           signature: signature,
           sdkKey: sdkKey,
@@ -181,7 +176,13 @@ const Sample: React.FC = () => {
 
             showInputField();
 
-            ZoomMtg.inMeetingServiceListener("onUserLeave", function () {});
+            ZoomMtg.inMeetingServiceListener("onUserLeave", function () {
+              socket.emit("meetingDetails", {
+                meetingNumber: "",
+                password: "",
+              });
+              // alert("admin left");
+            });
             ZoomMtg.inMeetingServiceListener("onUserJoin", function () {});
           },
 

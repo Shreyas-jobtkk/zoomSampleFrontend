@@ -29,7 +29,7 @@ const Sample: React.FC = () => {
   // const [meetingNumber, setMeetingNumber] = useState("");
   // const [password, setPassword] = useState("");
 
-  let meetingNumber: any;
+  let meetingNumber: number;
   let password: any;
 
   const {
@@ -75,6 +75,12 @@ const Sample: React.FC = () => {
 
       meetingNumber = response.data.meetingNumber;
       password = response.data.password;
+
+      console.log(15589, meetingNumber);
+      if (!meetingNumber) {
+        alert("not hosted meeting");
+        return;
+      }
 
       // console.log("Fetched Data:", response.data); // response.data contains the actual response from the server
 
