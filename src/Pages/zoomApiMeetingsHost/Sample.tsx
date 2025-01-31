@@ -135,6 +135,7 @@ const Sample: React.FC = () => {
   };
 
   const startMeeting = (signature: string) => {
+    console.log(111);
     document.getElementById("zmmtg-root")!.style.display = "block";
 
     ZoomMtg.init({
@@ -147,7 +148,8 @@ const Sample: React.FC = () => {
       leaveOnPageUnload: true,
       isSupportChat: false,
       success: (success: unknown) => {
-        console.log(success);
+        console.log(112);
+        console.log(113, success);
         ZoomMtg.join({
           signature: signature,
           sdkKey: sdkKey,
@@ -157,7 +159,7 @@ const Sample: React.FC = () => {
 
           // zak: zakToken,
           success: (success: unknown) => {
-            console.log(success);
+            console.log(114, success);
             console.log(189, ZoomMtg.inMeetingServiceListener.toString());
             console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
             console.log(
