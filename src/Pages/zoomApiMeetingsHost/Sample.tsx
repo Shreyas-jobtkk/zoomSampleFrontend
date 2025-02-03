@@ -64,7 +64,7 @@ const Sample: React.FC = () => {
   console.log(1557, import.meta.env.VITE_REACT_APP_API_URL);
 
   const role = 1;
-  const userName = "join";
+  const userName = "Host";
   const leaveUrl = import.meta.env.VITE_REACT_APP_URL;
 
   const getSignature = async () => {

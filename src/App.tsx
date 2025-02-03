@@ -25,12 +25,12 @@ const App: React.FC = () => {
           <li>
             <Link to="/zoomApiMeetingsHost">Host</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/zoomApiMeetingsJoin2">DirectJoin</Link>
           </li>
           <li>
             <Link to="/zoomApiMeetingsHost2">DirectHost</Link>
-          </li>
+          </li> */}
         </List>
       </nav>
       <AppRoutes />
