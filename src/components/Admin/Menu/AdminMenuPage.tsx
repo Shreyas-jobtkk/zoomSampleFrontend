@@ -27,7 +27,7 @@ function AdminMenu() {
   };
 
   const navigateToInterpreterEvaluationList = () => {
-    navigate("/InterpreterEvaluationList");
+    navigate("/AdminsInterpreterEvaluationList");
   };
 
   const navigateToMeetingHistoryList = () => {

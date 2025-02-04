@@ -17,7 +17,17 @@ function ResponderMenu() {
     });
   };
 
-  const navigateToCompaniesList = () => {};
+  const navigateToInterpreterEvaluationList = () => {
+    navigate("/ContractorsInterpreterEvaluationList");
+  };
+
+  const navigateToMeetingHistoryList = () => {
+    navigate("/ContractorMeetingHistoryList");
+  };
+
+  const navigateToMeetingInvitationList = () => {
+    navigate("/ContractorMeetingInvitationList");
+  };
 
   return (
     <Box>
@@ -25,21 +35,21 @@ function ResponderMenu() {
       <Box className={classes.responderMenuContainer}>
         <Box className={classes.listNavColumn}>
           <ButtonAtom
-            onClick={navigateToCompaniesList}
+            onClick={navigateToInterpreterEvaluationList}
             label="通訳評価一覧"
             width="40vw"
             padding="5vh 5vw 5vh 2vw"
             margin="2vh 5vw"
           />
           <ButtonAtom
-            onClick={navigateToCompaniesList}
+            onClick={navigateToMeetingHistoryList}
             label="ミーティング履歴一覧"
             width="40vw"
             padding="5vh 5vw 5vh 2vw"
             margin="2vh 5vw"
           />
           <ButtonAtom
-            onClick={navigateToCompaniesList}
+            onClick={navigateToMeetingInvitationList}
             label="ミーティング招待一覧"
             width="40vw"
             padding="5vh 5vw 5vh 2vw"

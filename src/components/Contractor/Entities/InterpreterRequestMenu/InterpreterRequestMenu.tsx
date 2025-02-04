@@ -2,17 +2,17 @@
 // import { ZoomMtg } from "@zoom/meetingsdk";
 import { useEffect, useState, useRef, MutableRefObject } from "react";
 import io from "socket.io-client";
-import ringtone from "../../ringtone.mp3";
+import ringtone from "../../../ringtone.mp3";
 import { v4 as uuidv4 } from "uuid";
 import { useLocation } from "react-router-dom";
-import { apiUrl } from "../../../apiUrl.js";
-import MenuHeader from "../../LV3/Header/MenuHeader/MenuHeader.js";
-import RadioButtonGroupRound from "../../LV1/RadioButton/RadioButtonGroupRound.js";
+import { apiUrl } from "../../../../apiUrl.js";
+import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader.js";
+import RadioButtonGroupRound from "../../../LV1/RadioButton/RadioButtonGroupRound.js";
 import { useTranslation } from "react-i18next";
-import "../../../i18n.js";
-import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom.js";
+import "../../../../i18n.js";
+import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom.js";
 import { Box } from "@mui/material";
-import classes from "./styles/Entities.module.scss";
+import classes from "../styles/Entities.module.scss";
 
 // let apiUrl = "https://zoomsamplebackend.onrender.com"
 // let apiUrl = "http://localhost:4000"

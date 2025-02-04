@@ -15,7 +15,7 @@ const AppMenuRoutes = () => (
     <Route path="/AdministratorList" element={<AdministratorList />} />
     <Route path="/CompaniesList" element={<CompaniesList />} />
     <Route
-      path="/InterpreterEvaluationList"
+      path="/AdminsInterpreterEvaluationList"
       element={<InterpreterEvaluationList />}
     />
     <Route path="/InterpretersList" element={<InterpretersList />} />

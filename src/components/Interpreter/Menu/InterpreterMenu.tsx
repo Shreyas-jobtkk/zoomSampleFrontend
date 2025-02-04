@@ -224,15 +224,15 @@ function InterpreterLogin() {
   const navigateToAdministratorList = () => {};
 
   const navigateToInterpreterEvaluationList = () => {
-    navigate("/InterpreterEvaluationList");
+    navigate("/InterpretersInterpreterEvaluationList");
   };
 
   const navigateToMeetingHistoryList = () => {
-    navigate("/MeetingHistoryList");
+    navigate("/InterpreterMeetingHistoryList");
   };
 
   const navigateToMeetingInvitationList = () => {
-    navigate("/MeetingInvitationList");
+    navigate("/InterpreterMeetingInvitationList");
   };
 
   const setStatusToActive = () => {

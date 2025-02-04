@@ -42,7 +42,7 @@ const ResponderLogin: React.FC = () => {
       if (response.success) {
         // Successful login
         console.log("Login successful", response.mail);
-        navigate("/ResponderMenu", {
+        navigate("/ContractorMenu", {
           state: {
             message: response.mail,
           },
