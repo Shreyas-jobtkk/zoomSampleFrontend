@@ -6,7 +6,7 @@ import { Dayjs } from "dayjs";
 
 interface DatePickerProps {
   label?: string; // Optional label prop
-  onDateChange?: (date: Dayjs | null) => void; // Callback for date change
+  onDateChange?: (date: string | null) => void; // Callback for date change
 }
 
 const DatePicker: React.FC<DatePickerProps> = ({
@@ -17,8 +17,9 @@ const DatePicker: React.FC<DatePickerProps> = ({
 
   const handleChange = (newValue: Dayjs | null) => {
     setSelectedDate(newValue);
-    if (onDateChange) {
-      onDateChange(newValue);
+
+    if (onDateChange && newValue) {
+      onDateChange(newValue.format("YYYY/MM/DD"));
     }
   };
 

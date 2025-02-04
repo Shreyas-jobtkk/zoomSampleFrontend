@@ -2,20 +2,15 @@ import DatePicker from "../../../LV1/DatePicker/DatePicker";
 import TimePicker from "../../../LV1/TimePicker/TimePicker"; // Adjust the import path as needed
 import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState } from "react";
-import { Dayjs } from "dayjs";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import SelectOption from "../../../LV1/SelectOption/SelectOption";
 import DataTable from "../../../LV3/DataTable/DataTable";
 import classes from "../styles/AdminEntities.module.scss";
-
+import ContractorSearch from "../User/Contractor/ContractorSearch";
+import InterpreterSearch from "../User/Interpreter/InterpreterSearch";
 function InterpreterEvaluationList() {
-  // State for selected start and end times
-  // const [selectedStartTime, setSelectedStartTime] = useState<Dayjs | null>(
-  //   dayjs()
-  // );
-  // const [selectedEndTime, setSelectedEndTime] = useState<Dayjs | null>(dayjs());
   const headers = [
     "No",
     "開始日時",
@@ -175,49 +170,17 @@ function InterpreterEvaluationList() {
     },
   ];
 
-  const searchConditions = () => {};
+  const [interpreterNo, setIinterpreterNo] = useState<string>("");
+  const [interpreterFirstName, setIinterpreterFirstName] = useState<string>("");
+  const [interpreterLastName, setIinterpreterLastName] = useState<string>("");
+  const [contractNo, setContractNo] = useState<string>("");
+  const [companyName, setCompanyName] = useState<string>("");
+  const [storeName, setStoreName] = useState<string>("");
 
-  // Handle start date change
-  const handleStartDateChange = (date: Dayjs | null) => {
-    // setSelectedStartDate(date);
-    console.log(
-      "Selected Start Date:",
-      date ? date.format("YYYY-MM-DD") : "None"
-    ); // Log the selected start date
-  };
-
-  // Handle end date change
-  const handleEndDateChange = (date: Dayjs | null) => {
-    // setSelectedEndDate(date);
-    console.log(
-      "Selected End Date:",
-      date ? date.format("YYYY-MM-DD") : "None"
-    ); // Log the selected end date
-  };
-
-  // Handle start time change
-  const handleStartTimeChange = (newValue: Dayjs | null) => {
-    // setSelectedStartTime(newValue);
-    console.log(
-      "Selected Start Time:",
-      newValue ? newValue.format("HH:mm:ss") : "None"
-    ); // Log the selected start time
-  };
-
-  // Handle end time change
-  const handleEndTimeChange = (newValue: Dayjs | null) => {
-    // setSelectedEndTime(newValue);
-    console.log(
-      "Selected End Time:",
-      newValue ? newValue.format("HH:mm:ss") : "None"
-    ); // Log the selected end time
-  };
-
-  const [textValue3, setTextValue3] = useState<string>("");
-
-  const [textValue9, setTextValue9] = useState<string>("");
-
-  const [textValue10, setTextValue10] = useState<string>("");
+  // const [dateRangeMin, setDateRangeMin] = useState<Date>(new Date(0));
+  // const [dateRangeMax, setDateRangeMax] = useState<Date>(new Date(8.64e15));
+  // const [timeRangeMin, setTimeRangeMin] = useState("");
+  // const [timeRangeMax, setTimeRangeMax] = useState("");
 
   const [selectedOption, setSelectedOption] = useState<string>("");
 
@@ -228,6 +191,75 @@ function InterpreterEvaluationList() {
     { label: "Option 3", value: "option3" },
   ];
 
+  const [openContractor, setOpenContractor] = useState(false);
+  const [openInterpreter, setOpenInterpreter] = useState(false);
+
+  const handleSearchContractor = () => {
+    setOpenContractor(true);
+  };
+
+  const setContractorDetails = (value: any) => {
+    setOpenContractor(false);
+
+    if (value && typeof value === "object") {
+      setContractNo(value["契約No"] || ""); // Provide a fallback if key is missing
+      setCompanyName(value["企業名"] || "");
+      setStoreName(value["店舗名"] || "");
+    } else {
+      console.error("Invalid value:", value);
+    }
+  };
+
+  const handleSearchInterpreter = () => {
+    setOpenInterpreter(true);
+  };
+
+  const setInterpreterDetails = (value: any) => {
+    console.log(589, value);
+    setOpenInterpreter(false);
+
+    if (value && typeof value === "object") {
+      // setContractNo(value["契約No"] || ""); // Provide a fallback if key is missing
+      setIinterpreterNo(value["通訳者No"] || "");
+      setIinterpreterLastName(value["名前_last"] || "");
+      setIinterpreterFirstName(value["名前_first"] || "");
+    } else {
+      console.error("Invalid value:", value);
+    }
+  };
+
+  const searchConditions = () => {};
+
+  // Handle start date change
+  const handleStartDateChange = (date: any) => {
+    // setSelectedStartDate(date);
+    console.log("Selected Start Date:", date || "None");
+  };
+
+  // Handle end date change
+  const handleEndDateChange = (date: any) => {
+    // setSelectedEndDate(date);
+    console.log("Selected End Date:", date || "None"); // Log the selected end date
+  };
+
+  // Handle start time change
+  const handleStartTimeChange = (newValue: any) => {
+    // setSelectedStartTime(newValue);
+    console.log(
+      "Selected Start Time:",
+      newValue ? newValue.format("HH:mm") : "None"
+    ); // Log the selected start time
+  };
+
+  // Handle end time change
+  const handleEndTimeChange = (newValue: any) => {
+    // setSelectedEndTime(newValue);
+    console.log(
+      "Selected End Time:",
+      newValue ? newValue.format("HH:mm") : "None"
+    ); // Log the selected end time
+  };
+
   const handleSelectionChange = (
     selectedData: Array<{ No: string | number; [key: string]: string | number }>
   ) => {
@@ -236,19 +268,16 @@ function InterpreterEvaluationList() {
 
   return (
     <Box className={classes.adminEntity}>
-      <MenuHeader title="通訳評価一覧" />
+      <MenuHeader title="ミーティング履歴一覧" />
       <Box className={classes.searchContainer}>
         <Box className={classes.searchLabel}>検索条件</Box>
-
         <Box className={classes.selectRange}>
-          {/* <Box style={{ display: 'flex', alignItems: 'center', margin: '0 20px' }}> */}
           <Box>通訳日時</Box>
           <Box>開始日時：</Box>
           <DatePicker label="" onDateChange={handleStartDateChange} />
-          {/* <Box>{formatFullDateTime(selectedStartDate, selectedStartTime)}</Box> Display full start datetime */}
+
           <TimePicker
-            label="Select Start Time"
-            // value={selectedStartTime}
+            label=""
             onChange={handleStartTimeChange} // Use the separate handler for start time
           />
 
@@ -256,58 +285,89 @@ function InterpreterEvaluationList() {
 
           <span>終了日時：</span>
           <DatePicker label="" onDateChange={handleEndDateChange} />
-          {/* <Box>{formatFullDateTime(selectedEndDate, selectedEndTime)}</Box> Display full end datetime */}
           <TimePicker
-            label="Select End Time"
-            // value={selectedEndTime}
+            label=""
             onChange={handleEndTimeChange} // Use the separate handler for end time
           />
         </Box>
         <Box>
           <ButtonAtom
-            onClick={searchConditions}
+            onClick={handleSearchContractor}
             label="契約検索"
+            width="90px"
+            margin="2px"
+          />
+          <InterpreterSearch
+            open={openInterpreter}
+            onClose={setInterpreterDetails}
+          />
+          <Box className={classes.contractorDetails}>
+            <TextBoxWithLabel
+              label="契約No"
+              width="calc(10vw - 20px)" // Uncomment to set a custom width
+              value={contractNo}
+            />
+            <TextBoxWithLabel
+              label="企業名"
+              width="calc(32vw - 80px)" // Uncomment to set a custom width
+              value={companyName}
+            />
+            <TextBoxWithLabel
+              label="店舗名"
+              width="calc(32vw - 80px)" // Uncomment to set a custom width
+              value={storeName}
+            />
+          </Box>
+        </Box>
+        <Box>
+          <ButtonAtom
+            onClick={handleSearchInterpreter}
+            label="通訳者検索"
             width="90px"
             margin="2px"
           />
           <Box className={classes.contractorDetails}>
             <TextBoxWithLabel
-              label="契約No"
-              width="12vw" // Uncomment to set a custom width
-              value={textValue10}
-              onChange={(e: any) => setTextValue10(e.target.value)}
-              // disabled={true}
+              label="通訳者No"
+              width="calc(10vw - 20px)" // Uncomment to set a custom width
+              value={interpreterNo}
             />
             <TextBoxWithLabel
-              label="企業名"
-              width="18vw" // Uncomment to set a custom width
-              value={textValue3}
-              onChange={(e: any) => setTextValue3(e.target.value)}
+              label="通訳者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+              width="calc(28vw - 150px)" // Uncomment to set a custom width
+              value={interpreterLastName}
+              labelWidth="120px"
             />
             <TextBoxWithLabel
-              label="店舗名"
-              width="18vw" // Uncomment to set a custom width
-              value={textValue9}
-              onChange={(e: any) => setTextValue9(e.target.value)}
+              label="名"
+              width="calc(28vw - 150px)" // Uncomment to set a custom width
+              value={interpreterFirstName}
+              labelWidth="30px"
             />
             <SelectOption
               label="通訳言語："
               options={options}
-              width={150}
+              width={"calc(10vw - 15px)"}
               value={selectedOption}
               onChange={setSelectedOption}
+              labelWidth={"85px"}
             />
 
             <Box className={classes.searchButton}>
-              <ButtonAtom onClick={searchConditions} label="検索" />
+              <ButtonAtom
+                margin="0 0 4px 0"
+                onClick={searchConditions}
+                label="検索"
+              />
             </Box>
           </Box>
         </Box>
       </Box>
+      <ContractorSearch open={openContractor} onClose={setContractorDetails} />
       <DataTable // Customize header height
         headers={headers}
         data={data}
-        maxHeight="calc(82vh - 260px)"
+        maxHeight="calc(82vh - 300px)"
         onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.searchButton}>

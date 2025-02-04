@@ -2,7 +2,6 @@ import { COMPANY_ENDPOINT } from "../company-api-definitions";
 import api from "../../../index";
 
 export const fetchCompaniesNameDetails = async () => {
-  console.log(1876);
   try {
     const response = await api.get(`${COMPANY_ENDPOINT}/names`);
     return response.data;

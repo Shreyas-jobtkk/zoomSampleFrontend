@@ -14,10 +14,16 @@ import { CompanyApiService } from "../../../../../api/apiService/company/company
 import { StoreInfo } from "../../../../../types/StoreTypes/StoreTypes";
 import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
 import classes from "../../styles/AdminEntities.module.scss";
-import DatePicker from "../../../../LV1/DatePicker/DatePicker";
-import TimePicker from "../../../../LV1/TimePicker/TimePicker"; // Adjust the import path as needed
+import Dialog from "@mui/material/Dialog";
 
-function ContractorList() {
+export interface SimpleDialogProps {
+  open: boolean;
+  onClose: any;
+}
+
+function ContractorList(props: SimpleDialogProps) {
+  const { onClose, open } = props;
+
   const [selectedContractorNoArray, setSelectedContractorNoArray] = useState<
     number[]
   >([]);
@@ -112,7 +118,10 @@ function ContractorList() {
         .map((item: UserInfo, index: number) => ({
           No: index + 1,
           登録日時: convertToJST(item.created_at),
-          更新日時: convertToJST(item.updated_at),
+          更新日時: String(
+            new Date(convertToJST(item.created_at)) > new Date(0)
+          ),
+          // 更新日時: convertToJST(item.updated_at),
           企業No: item.company_no,
           企業名: item.company_name,
           店舗No: item.store_no,
@@ -126,7 +135,7 @@ function ContractorList() {
           フリガナ_last: item.user_name_last_furigana,
           フリガナ_first: item.user_name_first_furigana,
         }));
-      //   console.log(141, sortedData);
+      console.log(141, sortedData);
       setTableData(sortedData);
       setSearchData(sortedData);
     } catch (error) {
@@ -200,17 +209,24 @@ function ContractorList() {
     console.log("Selected Data:", newSelectedData);
 
     // Extract and convert "契約No" to number
-    const selectedInterpreterNo = newSelectedData
+    const selectedContractorNo = newSelectedData
       .map((item) => Number(item["契約No"]))
       .filter((value) => !isNaN(value)); // Filter out invalid numbers
 
-    setSelectedContractorNoArray(selectedInterpreterNo);
+    setSelectedContractorNoArray(selectedContractorNo);
   };
 
-  const onCancel = () => {};
+  const onCancel = () => {
+    onClose();
+  };
 
   const onSelectContractDetails = () => {
     console.log(156, selectedContractorNoArray);
+    console.log(2156, selectedData);
+
+    const [{ 契約No, 企業名, 店舗名 }] = selectedData;
+    const contractorDetails = { 契約No, 企業名, 店舗名 };
+    onClose(contractorDetails);
   };
 
   const handleCompanySelect = (company: CompanyInfo) => {
@@ -228,217 +244,171 @@ function ContractorList() {
     setStoreNo(store_no);
   };
 
-  // Handle start date change
-  const handleStartDateChange = (date: any) => {
-    // setSelectedStartDate(date);
-    console.log(
-      "Selected Start Date:",
-      date ? date.format("YYYY-MM-DD") : "None"
-    ); // Log the selected start date
-  };
-
-  // Handle end date change
-  const handleEndDateChange = (date: any) => {
-    // setSelectedEndDate(date);
-    console.log(
-      "Selected End Date:",
-      date ? date.format("YYYY-MM-DD") : "None"
-    ); // Log the selected end date
-  };
-
-  // Handle start time change
-  const handleStartTimeChange = (newValue: any) => {
-    // setSelectedStartTime(newValue);
-    console.log(
-      "Selected Start Time:",
-      newValue ? newValue.format("HH:mm:ss") : "None"
-    ); // Log the selected start time
-  };
-
-  // Handle end time change
-  const handleEndTimeChange = (newValue: any) => {
-    // setSelectedEndTime(newValue);
-    console.log(
-      "Selected End Time:",
-      newValue ? newValue.format("HH:mm:ss") : "None"
-    ); // Log the selected end time
-  };
-
   return (
-    <Box className={classes.adminEntity}>
-      <MenuHeader title="契約者一覧" />
-      <Box className={classes.searchContainer}>
-        <Box className={classes.searchLabel}>検索条件</Box>
-        <Box className={classes.selectRange}>
-          {/* <Box style={{ display: 'flex', alignItems: 'center', margin: '0 20px' }}> */}
-          <Box>通訳日時</Box>
-          <Box>開始日時：</Box>
-          <DatePicker label="" onDateChange={handleStartDateChange} />
-          {/* <Box>{formatFullDateTime(selectedStartDate, selectedStartTime)}</Box> Display full start datetime */}
-          <TimePicker
-            label=""
-            // value={selectedStartTime}
-            onChange={handleStartTimeChange} // Use the separate handler for start time
-          />
-
-          <span>~</span>
-
-          <span>終了日時：</span>
-          <DatePicker label="" onDateChange={handleEndDateChange} />
-          {/* <Box>{formatFullDateTime(selectedEndDate, selectedEndTime)}</Box> Display full end datetime */}
-          <TimePicker
-            label=""
-            // value={selectedEndTime}
-            onChange={handleEndTimeChange} // Use the separate handler for end time
-          />
-        </Box>
-
-        <Box className={classes.companyStoreRow}>
-          <Box>
-            <SelectableModal
-              title="企業検索"
-              options={companyData}
-              onOptionSelect={handleCompanySelect}
-              label="企業検索"
-              valueKey="company_no" // We use company_no for unique identification
-              displayKey="company_name" // We display company_name in the list
-            />
-            <Box className={classes.companiesDetails}>
-              <TextBoxWithLabel
-                labelWidth="70px"
-                label="企業No"
-                width="calc(10vw - 30px)" // Uncomment to set a custom width
-                value={companyNo}
-              />
-              <TextBoxWithLabel
-                labelWidth="70px"
-                label="企業名"
-                width="calc(27vw - 100px)" // Uncomment to set a custom width
-                value={companyName}
-              />
+    <Dialog
+      open={open}
+      sx={{
+        "& .MuiDialog-container": {
+          "& .MuiPaper-root": {
+            width: "100%",
+            maxWidth: "98vw", // Set your width here
+          },
+        },
+      }}
+    >
+      <Box className={classes.adminEntity}>
+        <MenuHeader title="契約検索" />
+        <Box className={classes.searchContainer}>
+          <Box className={classes.searchLabel}>検索条件</Box>
+          <Box className={classes.moveTop}>
+            <Box className={classes.companyStoreRow}>
+              <Box>
+                <SelectableModal
+                  title="企業検索"
+                  options={companyData}
+                  onOptionSelect={handleCompanySelect}
+                  label="企業検索"
+                  valueKey="company_no" // We use company_no for unique identification
+                  displayKey="company_name" // We display company_name in the list
+                />
+                <Box className={classes.companiesDetails}>
+                  <TextBoxWithLabel
+                    labelWidth="70px"
+                    label="企業No"
+                    width="calc(10vw - 30px)" // Uncomment to set a custom width
+                    value={companyNo}
+                  />
+                  <TextBoxWithLabel
+                    labelWidth="70px"
+                    label="企業名"
+                    width="calc(27vw - 100px)" // Uncomment to set a custom width
+                    value={companyName}
+                  />
+                </Box>
+              </Box>
+              <Box>
+                <SelectableModal
+                  title="店舗検索"
+                  options={storeData}
+                  onOptionSelect={handleStoreSelect}
+                  label="店舗検索"
+                  valueKey="store_no" // We use company_no for unique identification
+                  displayKey="store_name" // We display company_name in the list
+                  disabled={!(!isCompanyNoEmpty && isStoresExist)}
+                />
+                <Box className={classes.storeDetails}>
+                  <TextBoxWithLabel
+                    labelWidth="70px"
+                    label="店舗No"
+                    width="calc(10vw - 30px)" // Uncomment to set a custom width
+                    value={storeNo}
+                  />
+                  <TextBoxWithLabel
+                    labelWidth="70px"
+                    label="店舗名"
+                    width="calc(27vw - 100px)" // Uncomment to set a custom width
+                    value={storeName}
+                  />
+                </Box>
+              </Box>
             </Box>
           </Box>
-          <Box>
-            <SelectableModal
-              title="店舗検索"
-              options={storeData}
-              onOptionSelect={handleStoreSelect}
-              label="店舗検索"
-              valueKey="store_no" // We use company_no for unique identification
-              displayKey="store_name" // We display company_name in the list
-              disabled={!(!isCompanyNoEmpty && isStoresExist)}
-            />
-            <Box className={classes.storeDetails}>
+          <Box className={classes.contractorDetails}>
+            <Box className={classes.contractorRange}>
               <TextBoxWithLabel
                 labelWidth="70px"
-                label="店舗No"
+                label="契約No"
                 width="calc(10vw - 30px)" // Uncomment to set a custom width
-                value={storeNo}
+                disabled={false}
+                type="number"
+                value={contractorNoRangeMin}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setContractorNoRangeMin(e.target.value)
+                }
               />
               <TextBoxWithLabel
-                labelWidth="70px"
-                label="店舗名"
-                width="calc(27vw - 100px)" // Uncomment to set a custom width
-                value={storeName}
+                label="~"
+                width="calc(10vw - 30px)" // Uncomment to set a custom width
+                value={contractorNoRangeMax}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setContractorNoRangeMax(e.target.value)
+                }
+                disabled={false}
+                type="number"
+                labelWidth="3vw"
               />
+            </Box>
+
+            <Box>
+              <TextBoxWithLabel
+                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                width="calc(25vw - 80px)" // Uncomment to set a custom width
+                value={contractorNameFuriganaLast}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setContractorNameFuriganaLast(e.target.value)
+                }
+                labelWidth="100px"
+                disabled={false}
+              />
+              <TextBoxWithLabel
+                labelWidth="100px"
+                label="契約者名&nbsp;&nbsp;&nbsp;&nbsp;姓"
+                width="calc(25vw - 80px)" // Uncomment to set a custom width
+                value={contractorNameLast}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setContractorNameLast(e.target.value)
+                }
+                disabled={false}
+              />
+            </Box>
+
+            <Box>
+              <TextBoxWithLabel
+                label="メイ"
+                labelWidth="40px"
+                width="calc(25vw - 80px)" // Uncomment to set a custom width
+                value={contractorNameFuriganaFirst}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setContractorNameFuriganaFirst(e.target.value)
+                }
+                disabled={false}
+              />
+              <TextBoxWithLabel
+                label="名"
+                labelWidth="40px"
+                width="calc(25vw - 80px)" // Uncomment to set a custom width
+                value={contractorNameFirst}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setContractorNameFirst(e.target.value)
+                }
+                disabled={false}
+              />
+            </Box>
+
+            <Box className={classes.searchButton}>
+              <ButtonAtom onClick={searchConditions} label="検索" />
             </Box>
           </Box>
         </Box>
-        <Box className={classes.contractorDetails}>
-          <Box className={classes.contractorRange}>
-            <TextBoxWithLabel
-              labelWidth="70px"
-              label="契約No"
-              width="calc(10vw - 30px)" // Uncomment to set a custom width
-              disabled={false}
-              type="number"
-              value={contractorNoRangeMin}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setContractorNoRangeMin(e.target.value)
-              }
-            />
-            <TextBoxWithLabel
-              label="~"
-              width="calc(10vw - 30px)" // Uncomment to set a custom width
-              value={contractorNoRangeMax}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setContractorNoRangeMax(e.target.value)
-              }
-              disabled={false}
-              type="number"
-              labelWidth="3vw"
-            />
-          </Box>
 
-          <Box>
-            <TextBoxWithLabel
-              label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
-              width="calc(25vw - 80px)" // Uncomment to set a custom width
-              value={contractorNameFuriganaLast}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setContractorNameFuriganaLast(e.target.value)
-              }
-              labelWidth="100px"
-              disabled={false}
-            />
-            <TextBoxWithLabel
-              labelWidth="100px"
-              label="契約者名&nbsp;&nbsp;&nbsp;&nbsp;姓"
-              width="calc(25vw - 80px)" // Uncomment to set a custom width
-              value={contractorNameLast}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setContractorNameLast(e.target.value)
-              }
-              disabled={false}
-            />
-          </Box>
-
-          <Box>
-            <TextBoxWithLabel
-              label="メイ"
-              labelWidth="40px"
-              width="calc(25vw - 80px)" // Uncomment to set a custom width
-              value={contractorNameFuriganaFirst}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setContractorNameFuriganaFirst(e.target.value)
-              }
-              disabled={false}
-            />
-            <TextBoxWithLabel
-              label="名"
-              labelWidth="40px"
-              width="calc(25vw - 80px)" // Uncomment to set a custom width
-              value={contractorNameFirst}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setContractorNameFirst(e.target.value)
-              }
-              disabled={false}
-            />
-          </Box>
-
-          <Box className={classes.searchButton}>
-            <ButtonAtom onClick={searchConditions} label="検索" />
-          </Box>
-        </Box>
-      </Box>
-
-      <DataTable // Customize header height
-        headers={headers}
-        data={searchData}
-        maxHeight="calc(80vh - 300px)"
-        onSelectionChange={handleSelectionChange}
-        operationButton="新規"
-      />
-
-      <Box className={classes.actionButtons}>
-        <ButtonAtom onClick={onCancel} label="キャンセル" width="100px" />
-        <ButtonAtom
-          onClick={onSelectContractDetails}
-          disabled={selectedData.length !== 1}
-          label="OK"
+        <DataTable // Customize header height
+          headers={headers}
+          data={searchData}
+          maxHeight="calc(80vh - 300px)"
+          onSelectionChange={handleSelectionChange}
+          operationButton="新規"
         />
+
+        <Box className={classes.actionButtons}>
+          <ButtonAtom onClick={onCancel} label="キャンセル" width="100px" />
+          <ButtonAtom
+            onClick={onSelectContractDetails}
+            disabled={selectedData.length !== 1}
+            label="OK"
+          />
+        </Box>
       </Box>
-    </Box>
+    </Dialog>
   );
 }
 

@@ -31,11 +31,11 @@ function AdminMenu() {
   };
 
   const navigateToMeetingHistoryList = () => {
-    navigate("/MeetingHistoryList");
+    navigate("/AdminMeetingHistoryList");
   };
 
   const navigateToMeetingInvitationList = () => {
-    navigate("/MeetingInvitationList");
+    navigate("/AdminMeetingInvitationList");
   };
 
   const navigateToLanguagesSupportList = () => {

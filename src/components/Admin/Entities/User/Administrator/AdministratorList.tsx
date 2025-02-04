@@ -56,7 +56,7 @@ function AdministratorList() {
     "企業名",
     "店舗No",
     "店舗名",
-    "通訳者No",
+    "管理者No",
     "名前",
     "フリガナ",
     "削除",
@@ -120,7 +120,7 @@ function AdministratorList() {
           企業名: item.company_name,
           店舗No: item.store_no,
           店舗名: item.store_name,
-          通訳者No: item.user_no,
+          管理者No: item.user_no,
           名前: `${item.user_name_last} ${item.user_name_first}`,
           フリガナ: `${item.user_name_last_furigana} ${item.user_name_first_furigana}`,
           削除: deleteStatus(item.user_deleted),
@@ -154,11 +154,11 @@ function AdministratorList() {
       const matchesCompanyNo = companyNo === "" || item["企業No"] === companyNo;
       const matchesStoreNo = storeNo === "" || item["店舗No"] === storeNo;
 
-      const contractorNo = Number(item["通訳者No"]);
+      const adminNo = Number(item["管理者No"]);
 
       const isInRange =
-        (!adminNoRangeMin || contractorNo >= Number(adminNoRangeMin)) &&
-        (!adminNoRangeMax || contractorNo <= Number(adminNoRangeMax));
+        (!adminNoRangeMin || adminNo >= Number(adminNoRangeMin)) &&
+        (!adminNoRangeMax || adminNo <= Number(adminNoRangeMax));
 
       const matchesFilters =
         (!adminNameLast || String(item["名前_last"]).includes(adminNameLast)) &&
@@ -199,12 +199,12 @@ function AdministratorList() {
     // Log the selected data to the console
     console.log("Selected Data:", newSelectedData);
 
-    // Extract and convert "通訳者No" to number
-    const selectedInterpreterNo = newSelectedData
-      .map((item) => Number(item["通訳者No"]))
+    // Extract and convert "管理者No" to number
+    const selectedAdminNo = newSelectedData
+      .map((item) => Number(item["管理者No"]))
       .filter((value) => !isNaN(value)); // Filter out invalid numbers
 
-    setSelectedAdminNoArray(selectedInterpreterNo);
+    setSelectedAdminNoArray(selectedAdminNo);
   };
 
   const navigateToInfoPage = () => {
@@ -216,7 +216,7 @@ function AdministratorList() {
     });
   };
 
-  const navigateToInterpreterCreate = () => {
+  const navigateToCreate = () => {
     navigate("/UserCreate", {
       state: { userType: "administrator" },
     });
@@ -321,7 +321,7 @@ function AdministratorList() {
             <Box className={classes.adminRange}>
               <TextBoxWithLabel
                 labelWidth="70px"
-                label="通訳者No"
+                label="管理者No"
                 width="calc(10vw - 30px)" // Uncomment to set a custom width
                 disabled={false}
                 type="number"
@@ -400,7 +400,7 @@ function AdministratorList() {
         maxHeight="calc(85vh - 280px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
-        onClick={navigateToInterpreterCreate}
+        onClick={navigateToCreate}
       />
       <Box className={classes.actionButtons}>
         <ButtonAtom

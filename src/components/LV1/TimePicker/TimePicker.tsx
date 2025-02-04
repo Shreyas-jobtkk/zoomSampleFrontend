@@ -7,11 +7,13 @@ import { useState } from "react";
 interface TimePickerProps {
   label?: string; // Optional label prop
   onChange?: (newValue: Dayjs | null) => void; // Optional onChange handler
+  disabled?: boolean;
 }
 
 const TimePicker: React.FC<TimePickerProps> = ({
   label = "Time Picker",
   onChange,
+  disabled,
 }) => {
   const [selectedTime, setSelectedTime] = useState<Dayjs | null>(null);
 
@@ -24,6 +26,7 @@ const TimePicker: React.FC<TimePickerProps> = ({
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <MuiTimePicker
+        disabled={disabled}
         label={label}
         value={selectedTime} // Bind value to the component
         ampm={false} // Use 24-hour format

@@ -21,8 +21,11 @@ const AppMenuRoutes = () => (
     <Route path="/InterpretersList" element={<InterpretersList />} />
     <Route path="/LanguagesSupportList" element={<LanguagesSupportList />} />
     <Route path="/LogList" element={<LogList />} />
-    <Route path="/MeetingHistoryList" element={<MeetingHistoryList />} />
-    <Route path="/MeetingInvitationList" element={<MeetingInvitationList />} />
+    <Route path="/AdminMeetingHistoryList" element={<MeetingHistoryList />} />
+    <Route
+      path="/AdminMeetingInvitationList"
+      element={<MeetingInvitationList />}
+    />
     <Route path="/ContractorList" element={<ContractorList />} />
     <Route path="/StoreList" element={<StoreList />} />
   </Routes>
