@@ -61,7 +61,12 @@ const Sample: React.FC = () => {
   const authEndpoint = import.meta.env.VITE_REACT_APP_API_URL;
   const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
 
-  console.log(1557, import.meta.env.VITE_REACT_APP_API_URL);
+  console.log(1557, import.meta.env.VITE_SAMPLE_1);
+  console.log(2557, import.meta.env.VITE_SAMPLE_2);
+
+  for (let i = 1; i <= 2; i++) {
+    console.log(155, import.meta.env[`VITE_SAMPLE_${i}`]);
+  }
 
   const role = 1;
   const userName = "Host";

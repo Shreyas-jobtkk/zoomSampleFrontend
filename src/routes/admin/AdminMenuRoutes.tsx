@@ -9,25 +9,44 @@ import MeetingHistoryList from "../../components/Admin/Entities/MeetingHistory/M
 import MeetingInvitationList from "../../components/Admin/Entities/MeetingInvitation/MeetingInvitationList";
 import ContractorList from "../../components/Admin/Entities/User/Contractor/ContractorList";
 import StoreList from "../../components/Admin/Entities/Stores/StoreList";
+import ProtectedRoute from "../ProtectedRoute";
 
 const AppMenuRoutes = () => (
   <Routes>
-    <Route path="/AdministratorList" element={<AdministratorList />} />
-    <Route path="/CompaniesList" element={<CompaniesList />} />
+    <Route
+      path="/AdministratorList"
+      element={<ProtectedRoute element={<AdministratorList />} />}
+    />
+    <Route
+      path="/CompaniesList"
+      element={<ProtectedRoute element={<CompaniesList />} />}
+    />
     <Route
       path="/AdminsInterpreterEvaluationList"
-      element={<InterpreterEvaluationList />}
+      element={<ProtectedRoute element={<InterpreterEvaluationList />} />}
     />
-    <Route path="/InterpretersList" element={<InterpretersList />} />
+    <Route
+      path="/InterpretersList"
+      element={<ProtectedRoute element={<InterpretersList />} />}
+    />
     <Route path="/LanguagesSupportList" element={<LanguagesSupportList />} />
-    <Route path="/LogList" element={<LogList />} />
-    <Route path="/AdminMeetingHistoryList" element={<MeetingHistoryList />} />
+    <Route path="/LogList" element={<ProtectedRoute element={<LogList />} />} />
+    <Route
+      path="/AdminMeetingHistoryList"
+      element={<ProtectedRoute element={<MeetingHistoryList />} />}
+    />
     <Route
       path="/AdminMeetingInvitationList"
-      element={<MeetingInvitationList />}
+      element={<ProtectedRoute element={<MeetingInvitationList />} />}
     />
-    <Route path="/ContractorList" element={<ContractorList />} />
-    <Route path="/StoreList" element={<StoreList />} />
+    <Route
+      path="/ContractorList"
+      element={<ProtectedRoute element={<ContractorList />} />}
+    />
+    <Route
+      path="/StoreList"
+      element={<ProtectedRoute element={<StoreList />} />}
+    />
   </Routes>
 );
 

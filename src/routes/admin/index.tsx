@@ -1,4 +1,4 @@
-import AppMenuRoutes from "../admin/AdminMenuRoutes.js";
+import AdminMenuRoutes from "../admin/AdminMenuRoutes.js";
 import CompanyListRoutes from "../admin/CompanyListRoutes.js";
 import StoreListRoutes from "../admin/StoreListRoutes.js";
 import UserRoutes from "../admin/UserRoutes.js";
@@ -7,17 +7,21 @@ import AdminLogin from "./../../components/Admin/Login/AdminLogin"; // Adjust th
 import { Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
 import AdminMenu from "../../components/Admin/Menu/AdminMenuPage.js"; // Adjust the import path as needed
+import ProtectedRoute from "../ProtectedRoute";
 
 const AppRoutes: React.FC = () => {
   return (
     <Box>
-      <AppMenuRoutes />
+      <AdminMenuRoutes />
       <CompanyListRoutes />
       <StoreListRoutes />
       <UserRoutes />
       <LanguagesListRoutes />
       <Routes>
-        <Route path="/AdminMenu" element={<AdminMenu />} />
+        <Route
+          path="/AdminMenu"
+          element={<ProtectedRoute element={<AdminMenu />} />}
+        />
         <Route path="/AdminLogin" element={<AdminLogin />} />
       </Routes>
     </Box>

@@ -45,7 +45,7 @@ const InterpreterLogin: React.FC = () => {
         console.log("Login successful", response.mail);
         navigate("/AdminMenu", {
           state: {
-            message: response.mail,
+            userMail: response.mail,
           },
         });
       } else {

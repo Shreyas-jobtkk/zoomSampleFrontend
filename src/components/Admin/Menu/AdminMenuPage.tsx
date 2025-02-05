@@ -2,8 +2,16 @@ import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
 import MenuHeader from "../../LV3/Header/MenuHeader/MenuHeader";
 import { Box } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 function AdminMenu() {
+  const location = useLocation();
+  const userMail = location.state?.userMail; // This will be the value passed as 'response.mail'
+
+  if (userMail) {
+    sessionStorage.setItem("adminMail", userMail);
+  }
+
   const navigate = useNavigate();
 
   const navigateToCompaniesList = () => {
