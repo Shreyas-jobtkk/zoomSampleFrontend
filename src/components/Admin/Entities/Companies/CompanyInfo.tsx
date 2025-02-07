@@ -30,7 +30,11 @@ function CompanyInformation() {
   });
 
   const fetchCompany = async () => {
-    if (!selectedCompanyNo) return; // Early return if no selectedCompanyNo
+    console.log(1555, selectedCompanyNo);
+
+    if (!selectedCompanyNo) {
+      navigate("/BadRequest");
+    }
     try {
       const companyDetails = await CompanyApiService.fetchCompany(
         selectedCompanyNo

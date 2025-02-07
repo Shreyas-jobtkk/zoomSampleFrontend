@@ -131,7 +131,7 @@ function CompaniesList() {
   };
 
   const navigateToEditPage = () => {
-    navigate("/CompanyInfoEdit", {
+    navigate("/CompanyEdit", {
       state: { selectedCompanyNo: selectedCompanyNoArray[0] },
     });
   };

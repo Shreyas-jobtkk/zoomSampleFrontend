@@ -45,7 +45,9 @@ function CompanyInfoEdit() {
 
   useEffect(() => {
     const fetchCompany = async () => {
-      if (!selectedCompanyNo) return;
+      if (!selectedCompanyNo) {
+        navigate("/BadRequest");
+      }
       try {
         const companyDetails = await CompanyApiService.fetchCompany(
           selectedCompanyNo
