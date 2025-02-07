@@ -29,7 +29,10 @@ const AppMenuRoutes = () => (
       path="/InterpretersList"
       element={<ProtectedRoute element={<InterpretersList />} />}
     />
-    <Route path="/LanguagesSupportList" element={<LanguagesSupportList />} />
+    <Route
+      path="/LanguagesSupportList"
+      element={<ProtectedRoute element={<LanguagesSupportList />} />}
+    />
     <Route path="/LogList" element={<ProtectedRoute element={<LogList />} />} />
     <Route
       path="/AdminMeetingHistoryList"
