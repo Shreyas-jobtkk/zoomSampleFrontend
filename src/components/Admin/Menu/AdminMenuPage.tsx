@@ -10,6 +10,7 @@ function AdminMenu() {
 
   if (userMail) {
     sessionStorage.setItem("adminMail", userMail);
+    console.log(155, userMail);
   }
 
   const navigate = useNavigate();
