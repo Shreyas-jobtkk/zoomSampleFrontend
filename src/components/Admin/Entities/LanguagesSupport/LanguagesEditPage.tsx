@@ -9,11 +9,12 @@ import ValidationInputField from "../../../LV1/ValidationInputField/ValidationIn
 import ValidationButton from "../../../LV1/Button/ValidationButton/ValidationButton";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 
 const LanguageCreate = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<LanguageInfo>({
     languages_support_no: "",
     language_name: "",
@@ -24,9 +25,9 @@ const LanguageCreate = () => {
     language_deleted: false,
   });
 
-  const { state } = useLocation();
+  const [searchParams] = useSearchParams();
 
-  const selectedLanguageNo = state?.selectedLanguageNo;
+  const selectedLanguageNo = Number(searchParams.get("selectedLanguageNo"));
 
   const fetchCompany = async () => {
     if (!selectedLanguageNo) return; // Early return if no selectedLanguageNo
@@ -42,11 +43,14 @@ const LanguageCreate = () => {
         languageDetails.language_name_furigana
       );
     } catch (error: any) {
-    } finally {
+      console.log(133, Error);
     }
   };
 
   useEffect(() => {
+    if (!selectedLanguageNo) {
+      navigate("/BadRequest");
+    }
     fetchCompany();
   }, [selectedLanguageNo]);
 
@@ -84,6 +88,10 @@ const LanguageCreate = () => {
       console.error("Error saving company:", error);
     }
   };
+
+  if (!selectedLanguageNo) {
+    return null;
+  }
 
   return (
     <Box onSubmit={handleSubmit(editLanguageInfo)} component="form">

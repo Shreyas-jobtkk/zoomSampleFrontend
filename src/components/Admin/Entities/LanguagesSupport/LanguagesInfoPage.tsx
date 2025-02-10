@@ -5,12 +5,13 @@ import { Box } from "@mui/material";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import classes from "./styles/LanguagesList.module.scss";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 
 const LanguageSupportInfo = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<LanguageInfo>({
     languages_support_no: "",
     language_name: "",
@@ -21,12 +22,11 @@ const LanguageSupportInfo = () => {
     language_deleted: false,
   });
 
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const { state } = useLocation();
-  const selectedLanguageNo = state?.selectedLanguageNo;
+  const [searchParams] = useSearchParams();
+  const selectedLanguageNo = Number(searchParams.get("selectedLanguageNo"));
 
   const fetchCompany = async () => {
+    console.log(145, selectedLanguageNo);
     if (!selectedLanguageNo) return; // Early return if no selectedLanguageNo
     try {
       const languageDetails = await LanguageApiService.fetchLanguage(
@@ -36,17 +36,14 @@ const LanguageSupportInfo = () => {
       // setCompanyDetails(companyDetails);
       console.log(133, languageDetails);
     } catch (error: any) {
-      setError(
-        error.response?.data?.error ||
-          error.message ||
-          "Failed to fetch language."
-      );
-    } finally {
-      setLoading(false);
+      console.log(133, Error);
     }
   };
 
   useEffect(() => {
+    if (!selectedLanguageNo) {
+      navigate("/BadRequest");
+    }
     fetchCompany();
   }, [selectedLanguageNo]);
 
@@ -64,8 +61,9 @@ const LanguageSupportInfo = () => {
 
   const searchConditions = () => {};
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (!selectedLanguageNo) {
+    return null;
+  }
 
   return (
     <Box>
@@ -113,7 +111,7 @@ const LanguageSupportInfo = () => {
                 labelWidth="125px"
                 label="和訳"
                 width="30vw"
-                value={formData.language_name_furigana}
+                value={formData.language_name}
                 onChange={handleChange}
               />
 
@@ -121,7 +119,7 @@ const LanguageSupportInfo = () => {
                 labelWidth="125px"
                 label="言語名"
                 width="30vw"
-                value={formData.language_name}
+                value={formData.language_name_furigana}
                 onChange={handleChange}
               />
             </Box>

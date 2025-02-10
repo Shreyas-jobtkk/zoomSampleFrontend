@@ -23,7 +23,10 @@ function InterpretersListInfo() {
   const [optionValue, setOptionValue] = useState<Array<string>>([]);
 
   const location = useLocation();
-  const { selectedUserNo, userType } = location.state || {};
+  const searchParams = new URLSearchParams(location.search);
+
+  const selectedUserNo = Number(searchParams.get("selectedUserNo"));
+  const userType: string = searchParams.get("userType") as string;
   console.log(1557, selectedUserNo);
 
   const [formData, setFormData] = useState<InterpreterInfo>({
@@ -128,6 +131,10 @@ function InterpretersListInfo() {
     // Now you can set the options like this:
     setLanguagesSupport(transformedOptions);
   };
+
+  if (!selectedUserNo || !userType) {
+    return null;
+  }
 
   return (
     <Box>

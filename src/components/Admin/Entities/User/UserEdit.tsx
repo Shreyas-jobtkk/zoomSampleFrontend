@@ -30,7 +30,9 @@ function InterpretersListUpdate() {
   >([]);
   const [isStoresExist, setIsStoresExist] = useState<boolean>(true);
   const location = useLocation();
-  const { selectedUserNo, userType } = location.state || {};
+  const searchParams = new URLSearchParams(location.search);
+  const selectedUserNo = Number(searchParams.get("selectedUserNo"));
+  const userType: string = searchParams.get("userType") as string;
 
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
   const [storeData, setStoreData] = useState<StoreInfo[]>([]);
@@ -341,6 +343,10 @@ function InterpretersListUpdate() {
       formData.store_no
     );
   };
+
+  if (!selectedUserNo || !userType) {
+    return null;
+  }
 
   return (
     <Box onSubmit={handleSubmit(updateInterpreter)} component="form">

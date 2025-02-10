@@ -64,16 +64,14 @@ function LanguagesSupportList() {
 
   const searchConditions = () => {};
 
-  const navigateToEditPage = () => {
-    navigate("/LanguagesEdit", {
-      state: { selectedLanguageNo: selectedLanguageNoArray[0] },
-    });
+  const navigateToInfoPage = () => {
+    navigate(`/LanguagesInfo?selectedLanguageNo=${selectedLanguageNoArray[0]}`);
   };
 
-  const navigateToInfoPage = () => {
-    navigate("/LanguagesInfo", {
-      state: { selectedLanguageNo: selectedLanguageNoArray[0] },
-    });
+  const navigateToLanguageCreate = () => navigate("/LanguagesCreate");
+
+  const navigateToEditPage = () => {
+    navigate(`/LanguagesEdit?selectedLanguageNo=${selectedLanguageNoArray[0]}`);
   };
 
   const handleDeleteLanguages = async () => {
@@ -90,7 +88,6 @@ function LanguagesSupportList() {
     await fetchLanguagesListData();
   };
 
-  const navigateToLanguageCreate = () => navigate("/LanguagesCreate");
   const [textValue1, setTextValue1] = useState<string>("");
   const [textValue2, setTextValue2] = useState<string>("");
   const [textValue3, setTextValue3] = useState<string>("");

@@ -287,26 +287,19 @@ function InterpretersList() {
   };
 
   const navigateToInfoPage = () => {
-    navigate("/UserInfo", {
-      state: {
-        selectedUserNo: selectedInterpreterNoArray[0],
-        userType: "interpreter",
-      },
-    });
+    navigate(
+      `/UserInfo?selectedUserNo=${selectedInterpreterNoArray[0]}&userType=interpreter`
+    );
   };
 
   const navigateToCreate = () => {
-    navigate("/UserCreate", {
-      state: { userType: "interpreter" },
-    });
+    navigate(`/UserCreate?userType=interpreter`);
   };
+
   const navigateToEditPage = () => {
-    navigate("/UserUpdate", {
-      state: {
-        selectedUserNo: selectedInterpreterNoArray[0],
-        userType: "interpreter",
-      },
-    });
+    navigate(
+      `/UserUpdate?selectedUserNo=${selectedInterpreterNoArray[0]}&userType=interpreter`
+    );
   };
 
   const handleDeleteInterpreters = async () => {

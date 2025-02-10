@@ -208,26 +208,19 @@ function AdministratorList() {
   };
 
   const navigateToInfoPage = () => {
-    navigate("/UserInfo", {
-      state: {
-        selectedUserNo: selectedAdminNoArray[0],
-        userType: "administrator",
-      },
-    });
+    navigate(
+      `/UserInfo?selectedUserNo=${selectedAdminNoArray[0]}&userType=administrator`
+    );
   };
 
   const navigateToCreate = () => {
-    navigate("/UserCreate", {
-      state: { userType: "administrator" },
-    });
+    navigate(`/UserCreate?userType=administrator`);
   };
+
   const navigateToEditPage = () => {
-    navigate("/UserUpdate", {
-      state: {
-        selectedUserNo: selectedAdminNoArray[0],
-        userType: "administrator",
-      },
-    });
+    navigate(
+      `/UserUpdate?selectedUserNo=${selectedAdminNoArray[0]}&userType=administrator`
+    );
   };
 
   const handleDeleteAdministrators = async () => {

@@ -25,7 +25,8 @@ import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
 
 function InterpretersListInfo() {
   const location = useLocation();
-  const { userType } = location.state || {};
+  const searchParams = new URLSearchParams(location.search);
+  const userType: string = searchParams.get("userType") as string;
 
   const searchConditions = () => {};
   const handleChange = (
@@ -210,11 +211,9 @@ function InterpretersListInfo() {
     }
   };
 
-  // const menuTitles: Record<string, string> = {
-  //   interpreter: "通訳者情報",
-  //   administrator: "管理者情報",
-  //   contractor: "契約情報",
-  // };
+  if (!userType) {
+    return null;
+  }
 
   return (
     <Box onSubmit={handleSubmit(createInterpreter)} component="form">

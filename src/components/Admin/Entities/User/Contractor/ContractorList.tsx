@@ -211,26 +211,19 @@ function ContractorList() {
   };
 
   const navigateToInfoPage = () => {
-    navigate("/UserInfo", {
-      state: {
-        selectedUserNo: selectedContractorNoArray[0],
-        userType: "contractor",
-      },
-    });
+    navigate(
+      `/UserInfo?selectedUserNo=${selectedContractorNoArray[0]}&userType=contractor`
+    );
   };
 
   const navigateToCreate = () => {
-    navigate("/UserCreate", {
-      state: { userType: "contractor" },
-    });
+    navigate(`/UserCreate?userType=contractor`);
   };
+
   const navigateToEditPage = () => {
-    navigate("/UserUpdate", {
-      state: {
-        selectedUserNo: selectedContractorNoArray[0],
-        userType: "contractor",
-      },
-    });
+    navigate(
+      `/UserUpdate?selectedUserNo=${selectedContractorNoArray[0]}&userType=contractor`
+    );
   };
 
   const handleDeleteContractors = async () => {
