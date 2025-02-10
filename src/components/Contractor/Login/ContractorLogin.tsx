@@ -42,6 +42,7 @@ const ResponderLogin: React.FC = () => {
       if (response.success) {
         // Successful login
         console.log("Login successful", response.mail);
+        sessionStorage.setItem("contractorMail", response.mail);
         navigate("/ContractorMenu", {
           state: {
             message: response.mail,

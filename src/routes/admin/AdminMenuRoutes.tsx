@@ -9,46 +9,51 @@ import MeetingHistoryList from "../../components/Admin/Entities/MeetingHistory/M
 import MeetingInvitationList from "../../components/Admin/Entities/MeetingInvitation/MeetingInvitationList";
 import ContractorList from "../../components/Admin/Entities/User/Contractor/ContractorList";
 import StoreList from "../../components/Admin/Entities/Stores/StoreList";
-import ProtectedRoute from "../ProtectedRoute";
+import ProtectedRoutes from "../ProtectedRoute";
+
+const { ProtectedAdminRoute } = ProtectedRoutes;
 
 const AppMenuRoutes = () => (
   <Routes>
     <Route
       path="/AdministratorList"
-      element={<ProtectedRoute element={<AdministratorList />} />}
+      element={<ProtectedAdminRoute element={<AdministratorList />} />}
     />
     <Route
       path="/CompaniesList"
-      element={<ProtectedRoute element={<CompaniesList />} />}
+      element={<ProtectedAdminRoute element={<CompaniesList />} />}
     />
     <Route
       path="/AdminsInterpreterEvaluationList"
-      element={<ProtectedRoute element={<InterpreterEvaluationList />} />}
+      element={<ProtectedAdminRoute element={<InterpreterEvaluationList />} />}
     />
     <Route
       path="/InterpretersList"
-      element={<ProtectedRoute element={<InterpretersList />} />}
+      element={<ProtectedAdminRoute element={<InterpretersList />} />}
     />
     <Route
       path="/LanguagesSupportList"
-      element={<ProtectedRoute element={<LanguagesSupportList />} />}
+      element={<ProtectedAdminRoute element={<LanguagesSupportList />} />}
     />
-    <Route path="/LogList" element={<ProtectedRoute element={<LogList />} />} />
+    <Route
+      path="/LogList"
+      element={<ProtectedAdminRoute element={<LogList />} />}
+    />
     <Route
       path="/AdminMeetingHistoryList"
-      element={<ProtectedRoute element={<MeetingHistoryList />} />}
+      element={<ProtectedAdminRoute element={<MeetingHistoryList />} />}
     />
     <Route
       path="/AdminMeetingInvitationList"
-      element={<ProtectedRoute element={<MeetingInvitationList />} />}
+      element={<ProtectedAdminRoute element={<MeetingInvitationList />} />}
     />
     <Route
       path="/ContractorList"
-      element={<ProtectedRoute element={<ContractorList />} />}
+      element={<ProtectedAdminRoute element={<ContractorList />} />}
     />
     <Route
       path="/StoreList"
-      element={<ProtectedRoute element={<StoreList />} />}
+      element={<ProtectedAdminRoute element={<StoreList />} />}
     />
   </Routes>
 );

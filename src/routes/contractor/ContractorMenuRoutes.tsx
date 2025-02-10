@@ -3,22 +3,30 @@ import MeetingHistoryList from "../../components/Contractor/Entities/MeetingHist
 import MeetingInvitationList from "../../components/Contractor/Entities/MeetingInvitation/MeetingInvitationList";
 import ContractorCallingMenu from "../../components/Contractor/Entities/InterpreterRequestMenu/InterpreterRequestMenu"; // Adjust the import path as needed
 import InterpreterEvaluationList from "../../components/Interpreter/Entities/InterpreterEvaluation/InterpreterEvaluationList";
+import ProtectedRoutes from "../ProtectedRoute";
+
+const { ProtectedContractRoute } = ProtectedRoutes;
 
 const AppMenuRoutes = () => (
   <Routes>
     <Route
       path="/ContractorMeetingHistoryList"
-      element={<MeetingHistoryList />}
+      element={<ProtectedContractRoute element={<MeetingHistoryList />} />}
     />
     <Route
       path="/ContractorMeetingInvitationList"
-      element={<MeetingInvitationList />}
+      element={<ProtectedContractRoute element={<MeetingInvitationList />} />}
     />
     <Route
       path="/ContractorsInterpreterEvaluationList"
-      element={<InterpreterEvaluationList />}
+      element={
+        <ProtectedContractRoute element={<InterpreterEvaluationList />} />
+      }
     />
-    <Route path="/ContractorCallingMenu" element={<ContractorCallingMenu />} />
+    <Route
+      path="/ContractorCallingMenu"
+      element={<ProtectedContractRoute element={<ContractorCallingMenu />} />}
+    />
   </Routes>
 );
 

@@ -3,12 +3,19 @@ import ResponderMenu from "../../components/Contractor/Menu/ContractorMenu";
 import { Route, Routes } from "react-router-dom";
 import ContractorMenuRoutes from "./ContractorMenuRoutes";
 import { Box } from "@mui/material";
+import ProtectedRoutes from "../ProtectedRoute";
+
+const { ProtectedContractRoute } = ProtectedRoutes;
+
 const NavRoutes = () => (
   <Box>
     <ContractorMenuRoutes />
     <Routes>
       <Route path="/ContractorLogin" element={<ContractorLogin />} />
-      <Route path="/ContractorMenu" element={<ResponderMenu />} />
+      <Route
+        path="/ContractorMenu"
+        element={<ProtectedContractRoute element={<ResponderMenu />} />}
+      />
     </Routes>
   </Box>
 );

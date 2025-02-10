@@ -9,7 +9,6 @@ function AdminMenu() {
   const userMail = location.state?.userMail; // This will be the value passed as 'response.mail'
 
   if (userMail) {
-    sessionStorage.setItem("adminMail", userMail);
     console.log(155, userMail);
   }
 

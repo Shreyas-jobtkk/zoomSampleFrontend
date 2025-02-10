@@ -7,7 +7,9 @@ import AdminLogin from "./../../components/Admin/Login/AdminLogin"; // Adjust th
 import { Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
 import AdminMenu from "../../components/Admin/Menu/AdminMenuPage.js"; // Adjust the import path as needed
-import ProtectedRoute from "../ProtectedRoute";
+import ProtectedRoutes from "../ProtectedRoute";
+
+const { ProtectedAdminRoute } = ProtectedRoutes;
 
 const AppRoutes: React.FC = () => {
   return (
@@ -20,7 +22,7 @@ const AppRoutes: React.FC = () => {
       <Routes>
         <Route
           path="/AdminMenu"
-          element={<ProtectedRoute element={<AdminMenu />} />}
+          element={<ProtectedAdminRoute element={<AdminMenu />} />}
         />
         <Route path="/AdminLogin" element={<AdminLogin />} />
       </Routes>

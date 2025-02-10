@@ -29,7 +29,7 @@ const InterpreterLogin: React.FC = () => {
   };
 
   // Fetch users list and check credentials
-  const contractorAuth = async (
+  const administratorAuth = async (
     mail_address: string,
     user_password: string
   ) => {
@@ -63,7 +63,7 @@ const InterpreterLogin: React.FC = () => {
   // Handle form submission
   const checkAuth = () => {
     const { mail_address, user_password } = formData;
-    contractorAuth(mail_address, user_password);
+    administratorAuth(mail_address, user_password);
   };
 
   const {

@@ -43,6 +43,7 @@ const InterpreterLogin: React.FC = () => {
       if (response.success) {
         // Successful login
         console.log("Login successful", response.mail);
+        sessionStorage.setItem("interpreterMail", response.mail);
         navigate("/InterpreterMenu", {
           state: {
             message: response.mail,
