@@ -125,15 +125,11 @@ function CompaniesList() {
   };
 
   const navigateToInfoPage = () => {
-    navigate("/CompanyInfo", {
-      state: { selectedCompanyNo: selectedCompanyNoArray[0] },
-    });
+    navigate(`/CompanyInfo?selectedCompanyNo=${selectedCompanyNoArray[0]}`);
   };
 
   const navigateToEditPage = () => {
-    navigate("/CompanyEdit", {
-      state: { selectedCompanyNo: selectedCompanyNoArray[0] },
-    });
+    navigate(`/CompanyEdit?selectedCompanyNo=${selectedCompanyNoArray[0]}`);
   };
 
   const handleDeleteCompanies = async () => {

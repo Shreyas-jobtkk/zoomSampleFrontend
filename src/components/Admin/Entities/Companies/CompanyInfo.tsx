@@ -4,20 +4,19 @@ import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import classes from "./styles/Companies.module.scss";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 
 function CompanyInformation() {
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const { state } = useLocation();
   const navigate = useNavigate();
-  const selectedCompanyNo = state?.selectedCompanyNo;
+  const [searchParams] = useSearchParams();
+  const selectedCompanyNo = Number(searchParams.get("selectedCompanyNo"));
 
   console.log("Selected Company No:", selectedCompanyNo);
+  console.log(7789, selectedCompanyNo);
 
   const [formData, setFormData] = useState<CompanyInfo>({
     company_no: "",
@@ -30,7 +29,7 @@ function CompanyInformation() {
   });
 
   const fetchCompany = async () => {
-    console.log(1555, selectedCompanyNo);
+    console.log(1557, selectedCompanyNo);
 
     if (!selectedCompanyNo) {
       navigate("/BadRequest");
@@ -42,14 +41,8 @@ function CompanyInformation() {
       setFormData(companyDetails);
       // setCompanyDetails(companyDetails);
       console.log(133, companyDetails);
-    } catch (error: any) {
-      setError(
-        error.response?.data?.error ||
-          error.message ||
-          "Failed to fetch company."
-      );
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching company:", error);
     }
   };
 
@@ -62,8 +55,9 @@ function CompanyInformation() {
     navigate(-1); // Navigate back to the previous page
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (!selectedCompanyNo) {
+    return null;
+  }
 
   return (
     <Box>

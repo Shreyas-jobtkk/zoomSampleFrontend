@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import classes from "./styles/Companies.module.scss";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 // import ValidationTextArea from "../../../../components/LV1/ValidationTextArea/ValidationTextArea";
@@ -20,8 +20,8 @@ import {
 import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
 
 function CompanyInfoEdit() {
-  const { state } = useLocation();
-  const selectedCompanyNo = state?.selectedCompanyNo;
+  const [searchParams] = useSearchParams();
+  const selectedCompanyNo = Number(searchParams.get("selectedCompanyNo"));
 
   const {
     register,
@@ -90,6 +90,10 @@ function CompanyInfoEdit() {
       formData.company_note
     );
   };
+
+  if (!selectedCompanyNo) {
+    return null;
+  }
 
   return (
     <Box onSubmit={handleSubmit(handleEdit)} component="form">

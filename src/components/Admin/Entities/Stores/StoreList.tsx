@@ -144,15 +144,11 @@ function StoreList() {
   };
 
   const navigateToInfoPage = () => {
-    navigate("/StoreInfo", {
-      state: { selectedStoreNo: selectedStoreNoArray[0] },
-    });
+    navigate(`/StoreInfo?selectedStoreNo=${selectedStoreNoArray[0]}`);
   };
 
   const navigateToEditPage = () => {
-    navigate("/StoreEdit", {
-      state: { selectedStoreNo: selectedStoreNoArray[0] },
-    });
+    navigate(`/StoreEdit?selectedStoreNo=${selectedStoreNoArray[0]}`);
   };
 
   const handleDeleteStores = async () => {

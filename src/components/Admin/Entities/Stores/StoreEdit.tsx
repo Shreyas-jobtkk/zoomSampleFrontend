@@ -17,15 +17,16 @@ import ValidationInputField from "../../../LV1/ValidationInputField/ValidationIn
 import ValidationButton from "../../../LV1/Button/ValidationButton/ValidationButton";
 // import { StoreCreateFormValues } from "../../../../../CompanyTypes/CompanyTypes";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { StoreInfoFormValues } from "../../../../types/StoreTypes/StoreTypes";
 import { convertToJST } from "../../../../utils/utils";
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import classes from "./styles/StoreList.module.scss";
 
 function StoreListInfo() {
-  const { state } = useLocation();
-  const selectedStoreNo = state?.selectedStoreNo;
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const selectedStoreNo = Number(searchParams.get("selectedStoreNo"));
   const [formData, setFormData] = useState<StoreInfoFormValues>({
     company_no: "",
     company_name: "",
@@ -51,12 +52,13 @@ function StoreListInfo() {
   });
 
   useEffect(() => {
+    if (!selectedStoreNo) {
+      navigate("/BadRequest");
+    }
     fetchStore();
   }, [selectedStoreNo]);
 
   const fetchStore = async () => {
-    if (!selectedStoreNo) return;
-    console.log(148, selectedStoreNo);
     try {
       const storeDetails = await StoreApiService.fetchStore(selectedStoreNo);
       const [zip1, zip2] = storeDetails.zip.split("-");
@@ -168,6 +170,10 @@ function StoreListInfo() {
       pref: value,
     }));
   };
+
+  if (!selectedStoreNo) {
+    return null;
+  }
 
   return (
     <Box onSubmit={handleSubmit(editStore)} component="form">

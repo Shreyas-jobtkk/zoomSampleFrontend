@@ -9,14 +9,15 @@ import NumberInput from "../../../LV1/NumberInput/NumberInput";
 import SelectOption from "../../../LV1/SelectOption/SelectOption";
 import JapanPrefectures from "../../../../JapanPrefectures/JapanPrefectures";
 import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { StoreInfoFormValues } from "../../../../types/StoreTypes/StoreTypes";
 import { convertToJST } from "../../../../utils/utils";
 import classes from "./styles/StoreList.module.scss";
 
 function StoreListInfo() {
-  const { state } = useLocation();
-  const selectedStoreNo = state?.selectedStoreNo;
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const selectedStoreNo = Number(searchParams.get("selectedStoreNo"));
   const [formData, setFormData] = useState<StoreInfoFormValues>({
     company_no: "",
     company_name: "",
@@ -42,12 +43,13 @@ function StoreListInfo() {
   });
 
   useEffect(() => {
+    if (!selectedStoreNo) {
+      navigate("/BadRequest");
+    }
     fetchStore();
   }, [selectedStoreNo]);
 
   const fetchStore = async () => {
-    if (!selectedStoreNo) return;
-    console.log(148, selectedStoreNo);
     try {
       const storeDetails = await StoreApiService.fetchStore(selectedStoreNo);
       console.log(147, storeDetails);
@@ -84,6 +86,10 @@ function StoreListInfo() {
       console.error("Error fetching company:", error);
     }
   };
+
+  if (!selectedStoreNo) {
+    return null;
+  }
 
   return (
     <Box>
