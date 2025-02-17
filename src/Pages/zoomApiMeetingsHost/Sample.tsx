@@ -61,12 +61,12 @@ const Sample: React.FC = () => {
   const authEndpoint = import.meta.env.VITE_REACT_APP_API_URL;
   const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
 
-  console.log(1557, import.meta.env.VITE_SAMPLE_1);
-  console.log(2557, import.meta.env.VITE_SAMPLE_2);
+  // console.log(1557, import.meta.env.VITE_SAMPLE_1);
+  // console.log(2557, import.meta.env.VITE_SAMPLE_2);
 
-  for (let i = 1; i <= 2; i++) {
-    console.log(155, import.meta.env[`VITE_SAMPLE_${i}`]);
-  }
+  // for (let i = 1; i <= 2; i++) {
+  //   console.log(155, import.meta.env[`VITE_SAMPLE_${i}`]);
+  // }
 
   const role = 1;
   const userName = "Host";
@@ -86,7 +86,6 @@ const Sample: React.FC = () => {
       );
 
       const signature = zoomData.signature as string;
-      console.log(1255, signature);
       startMeeting(signature);
     } catch (e) {
       console.log(e);
@@ -140,7 +139,6 @@ const Sample: React.FC = () => {
   };
 
   const startMeeting = (signature: string) => {
-    console.log(111);
     document.getElementById("zmmtg-root")!.style.display = "block";
 
     ZoomMtg.init({
@@ -153,7 +151,6 @@ const Sample: React.FC = () => {
       leaveOnPageUnload: true,
       isSupportChat: false,
       success: (success: unknown) => {
-        console.log(112);
         console.log(113, success);
         ZoomMtg.join({
           signature: signature,
@@ -165,12 +162,12 @@ const Sample: React.FC = () => {
           // zak: zakToken,
           success: (success: unknown) => {
             console.log(114, success);
-            console.log(189, ZoomMtg.inMeetingServiceListener.toString());
-            console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
-            console.log(
-              144,
-              sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
-            );
+            // console.log(189, ZoomMtg.inMeetingServiceListener.toString());
+            // console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
+            // console.log(
+            //   144,
+            //   sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
+            // );
 
             showInputField();
 

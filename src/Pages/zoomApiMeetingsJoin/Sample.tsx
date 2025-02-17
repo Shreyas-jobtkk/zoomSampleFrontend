@@ -62,8 +62,6 @@ const Sample: React.FC = () => {
   const authEndpoint = import.meta.env.VITE_REACT_APP_API_URL;
   const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
 
-  console.log(1557, import.meta.env.VITE_REACT_APP_API_URL);
-
   const role = 0;
   const userName = "join";
   const leaveUrl = import.meta.env.VITE_REACT_APP_URL;
@@ -82,7 +80,6 @@ const Sample: React.FC = () => {
       );
 
       const signature = zoomData.signature as string;
-      console.log(1255, signature);
       startMeeting(signature);
     } catch (e) {
       console.log(e);
@@ -159,12 +156,12 @@ const Sample: React.FC = () => {
           // zak: zakToken,
           success: (success: unknown) => {
             console.log(success);
-            console.log(189, ZoomMtg.inMeetingServiceListener.toString());
-            console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
-            console.log(
-              144,
-              sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
-            );
+            // console.log(189, ZoomMtg.inMeetingServiceListener.toString());
+            // console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
+            // console.log(
+            //   144,
+            //   sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
+            // );
 
             showInputField();
 
