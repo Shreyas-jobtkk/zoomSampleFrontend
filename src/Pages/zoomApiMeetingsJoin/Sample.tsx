@@ -75,7 +75,7 @@ const Sample: React.FC = () => {
   const zoomSDKKey = getZoomSDKKey(Number(selectedOption)); // Example usage
   const sdkKey = zoomSDKKey;
 
-  console.log(2557, sdkKey);
+  console.log(2557, sdkKey?.slice(0, 5));
 
   const role = 0;
   const userName = "join";
