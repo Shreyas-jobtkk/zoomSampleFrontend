@@ -23,7 +23,7 @@ function LanguagesSupportList() {
     "更新日時",
     "言語No",
     "言語",
-    "フリガナ",
+    "和訳",
     "削除",
   ];
   const [selectedLanguageNoArray, setSelectedLanguageNoArray] = useState<any[]>(
@@ -52,7 +52,7 @@ function LanguagesSupportList() {
           更新日時: convertToJST(item.updated_at),
           言語No: item.languages_support_no,
           言語: item.language_name,
-          フリガナ: item.language_name_furigana,
+          和訳: item.language_name_furigana,
           削除: deleteStatus(item.language_deleted),
         }));
       console.log(141, sortedData);
@@ -125,7 +125,7 @@ function LanguagesSupportList() {
               <Box>
                 <TextBoxWithLabel
                   disabled={false}
-                  label="フリガナ"
+                  label="和訳"
                   width="calc(60vw - 120px)" // Uncomment to set a custom width
                   value={textValue2}
                   onChange={(e: any) => setTextValue2(e.target.value)}

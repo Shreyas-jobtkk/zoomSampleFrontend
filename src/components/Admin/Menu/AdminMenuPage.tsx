@@ -6,10 +6,10 @@ import { useLocation } from "react-router-dom";
 
 function AdminMenu() {
   const location = useLocation();
-  const userMail = location.state?.userMail; // This will be the value passed as 'response.mail'
+  const userNo = location.state?.userNo; // This will be the value passed as 'response.user_no'
 
-  if (userMail) {
-    console.log(155, userMail);
+  if (userNo) {
+    console.log(155, userNo);
   }
 
   const navigate = useNavigate();

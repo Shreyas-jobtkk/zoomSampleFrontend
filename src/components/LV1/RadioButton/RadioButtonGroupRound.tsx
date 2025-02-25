@@ -4,8 +4,8 @@ import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
 
 interface RadioButtonGroupRoundProps {
-  options: Array<{ label: string; value: string }>;
-  selectedValue: string;
+  options: Array<{ label: string; value: string | number }>;
+  selectedValue: string | number;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
 }

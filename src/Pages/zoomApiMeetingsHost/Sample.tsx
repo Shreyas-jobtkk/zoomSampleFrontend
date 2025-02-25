@@ -84,7 +84,7 @@ const Sample: React.FC = () => {
   const getSignature = async () => {
     try {
       const { data: zoomData } = await axios.post(
-        `${authEndpoint}/zoom`,
+        `${authEndpoint}/zoomForCS`,
         {
           meetingNumber: meetingNumber,
           role: role,
@@ -96,6 +96,7 @@ const Sample: React.FC = () => {
       );
 
       const signature = zoomData.signature as string;
+      console.log(144, signature);
       startMeeting(signature);
     } catch (e) {
       console.log(e);

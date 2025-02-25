@@ -41,11 +41,11 @@ const ResponderLogin: React.FC = () => {
 
       if (response.success) {
         // Successful login
-        console.log("Login successful", response.mail);
-        sessionStorage.setItem("contractorMail", response.mail);
+        console.log(89, "Login successful", typeof response.user_no);
+        sessionStorage.setItem("contractorNo", response.user_no);
         navigate("/ContractorMenu", {
           state: {
-            message: response.mail,
+            message: response.user_no,
           },
         });
       } else {

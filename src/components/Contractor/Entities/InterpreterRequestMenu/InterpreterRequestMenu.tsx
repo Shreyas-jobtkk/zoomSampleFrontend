@@ -1,10 +1,8 @@
-// import "../../App.css";
-// import { ZoomMtg } from "@zoom/meetingsdk";
 import { useEffect, useState, useRef, MutableRefObject } from "react";
 import io from "socket.io-client";
 import ringtone from "../../../ringtone.mp3";
-import { v4 as uuidv4 } from "uuid";
-import { useLocation } from "react-router-dom";
+// import { v4 as uuidv4 } from "uuid";
+// import { useLocation } from "react-router-dom";
 import { apiUrl } from "../../../../apiUrl.js";
 import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader.js";
 import RadioButtonGroupRound from "../../../LV1/RadioButton/RadioButtonGroupRound.js";
@@ -13,36 +11,213 @@ import "../../../../i18n.js";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom.js";
 import { Box } from "@mui/material";
 import classes from "../styles/Entities.module.scss";
+import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
+import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
+import { ZoomMtg } from "@zoom/meetingsdk";
+import { CallLogApiService } from "../../../../api/apiService/callLog/callLog-api-service";
 
-// let apiUrl = "https://zoomsamplebackend.onrender.com"
-// let apiUrl = "http://localhost:4000"
-// Connect to the socket.io server
 const socket = io(apiUrl);
-let zoomJoinURL: string;
-let uniqueId: any = null;
+// let zoomJoinURL: string;
 
 function UserMenu() {
-  const location = useLocation();
-  const userData = location.state?.message;
-  // const [language, setLanguage] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(() => {
-    return localStorage.getItem("selectedLanguage") || "japanese";
+  const [callDial, setCallDial] = useState<null | Date>(null);
+  const [callCancel, setCallCancel] = useState<null | Date>(null);
+  // const [callStart, setCallStart] = useState<null | Date>(null);
+  let callStart: Date | null = null;
+  const [callEnd, setCallEnd] = useState<null | Date>(null);
+  const [callStatus, setCallStatus] = useState<null | string>(null);
+  const [feedback, setFeedback] = useState<null | number>(null);
+  const [signature, setSignature] = useState<string>("");
+  const contractorNo = Number(sessionStorage.getItem("contractorNo"));
+  const [interpreterNo, setInterpreterNo] = useState<number | null>(null);
+  // const [meetingNo, setMeetingNo] = useState<any>("");
+  const [selectedLanguageNo, setSelectedLanguageNo] = useState(() => {
+    return localStorage.getItem("selectedLanguage") || "1";
   });
+  let meetingEnded = false;
+
+  const startMeeting2 = (signature: string) => {
+    console.log(15589, interpreterNo);
+    document.getElementById("zmmtg-root")!.style.display = "block";
+
+    ZoomMtg.init({
+      leaveUrl: `${import.meta.env.VITE_REACT_APP_URL}/ContractorCallingMenu`,
+      loginWindow: {
+        width: "100", // Set your desired width as a string
+        height: "380", // Set your desired height as a string
+      },
+      patchJsMedia: true,
+      leaveOnPageUnload: true,
+      isSupportChat: false,
+      success: (success: unknown) => {
+        // alert("You have successfully joined the meeting!");
+        console.log(success);
+        console.log(21897, interpreterNo);
+
+        ZoomMtg.join({
+          signature: signature,
+          sdkKey: import.meta.env.VITE_ZOOM_MEETING_SDK_KEY,
+          meetingNumber: "7193586721",
+          passWord: "B0h6vX",
+          userName: "join",
+
+          // zak: zakToken,
+          success: (success: unknown) => {
+            console.log(success);
+            console.log(189, ZoomMtg.inMeetingServiceListener.toString());
+            console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
+            console.log(
+              144,
+              sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
+            );
+
+            // showInputField();
+
+            ZoomMtg.inMeetingServiceListener("onUserJoin", function () {
+              // setCallStart(new Date());
+              callStart = new Date();
+            });
+
+            // Adding event listener for when the meeting ends
+            ZoomMtg.inMeetingServiceListener("onUserLeave", function () {
+              if (meetingEnded) {
+                return;
+              }
+              meetingEnded = true;
+              setCallEnd(new Date());
+              alert(475);
+
+              let rating: number | null = null;
+              let input = prompt("Enter a number between 1 and 5:");
+
+              rating =
+                input !== null && !isNaN(Number(input)) && input.trim() !== ""
+                  ? Number(input)
+                  : null;
+
+              try {
+                CallLogApiService.createCallLog(
+                  Number(interpreterNo),
+                  Number(selectedLanguageNo),
+                  contractorNo,
+                  callDial,
+                  callCancel,
+                  callStart,
+                  new Date(),
+                  "callCanceled",
+                  rating
+                );
+              } catch (error) {
+                console.error("Error saving callLog:", error);
+              }
+              // return;
+
+              // // Send the rating to the backend
+              // fetch("https://your-backend-api.com/feedback", {
+              //   method: "POST",
+              //   headers: {
+              //     "Content-Type": "application/json",
+              //   },
+              //   body: JSON.stringify({ rating: finalRating }),
+              // })
+              //   .then(response => response.json())
+              //   .then(data => console.log("Feedback submitted:", data))
+              //   .catch(error => console.error("Error submitting feedback:", error));
+            });
+            console.log(155, callEnd);
+          },
+
+          error: (error: unknown) => {
+            console.log(error);
+          },
+        });
+      },
+      error: (error: unknown) => {
+        console.log(error);
+      },
+    });
+  };
+
   const { t, i18n } = useTranslation();
+  const [selectLanguage, setSelectLanguage] = useState<
+    { label: string; value: string | number }[]
+  >([]);
+
+  useEffect(() => {
+    fetchLanguageNames();
+  }, []);
+
+  useEffect(() => {
+    if (callCancel) {
+      console.log(
+        8971,
+        "callCancel",
+        callDial,
+        callCancel,
+        selectedLanguageNo,
+        contractorNo
+      );
+
+      try {
+        CallLogApiService.createCallLog(
+          Number(interpreterNo),
+          Number(selectedLanguageNo),
+          contractorNo,
+          callDial,
+          callCancel,
+          callStart,
+          callEnd,
+          "callCanceled",
+          feedback
+        );
+      } catch (error) {
+        console.error("Error saving callLog:", error);
+      }
+    }
+  }, [callCancel]);
+
+  useEffect(() => {
+    if (callStart) {
+      console.log(28971, callStart, callEnd);
+    }
+  }, [callStart]);
+
+  useEffect(() => {
+    if (callEnd) {
+      console.log(38971, callStart, callEnd);
+    }
+  }, [callEnd]);
+
+  const fetchLanguageNames = async () => {
+    try {
+      let response = await LanguageApiService.fetchLanguagesAll();
+
+      console.log(102177, response);
+
+      response = response.map((item: LanguageInfo) => ({
+        label: item.language_name, // Map 'language_name' to 'label'
+        value: String(item.languages_support_no), // Map 'languages_support_no' to 'value'
+      }));
+
+      // radioOptions = response;
+
+      setSelectLanguage(response);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
+    }
+  };
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
-    console.log(144, event.target.value);
-    if (event.target.value === "japanese") {
+    setSelectedLanguageNo(event.target.value);
+    if (event.target.value === "2") {
       i18n.changeLanguage("ja"); // Change to Japanese
-    } else if (event.target.value === "hiragana") {
+    } else if (event.target.value === "4") {
       i18n.changeLanguage("jaKana"); // Change to Japanese
     } else {
       i18n.changeLanguage("en"); // Change to English
     }
-    // setSelectedValue(newValue);
     localStorage.setItem("selectedLanguage", event.target.value); // Save to localStorage
   };
 
@@ -50,22 +225,30 @@ function UserMenu() {
     // Retrieve the selected value from localStorage on mount
     const savedValue = localStorage.getItem("selectedLanguage");
     if (savedValue) {
-      setSelectedValue(savedValue);
+      setSelectedLanguageNo(savedValue);
     }
   }, []);
 
-  const radioOptions = [
-    { label: "日本語", value: "japanese" },
-    { label: "English", value: "english" },
-    { label: "ひらがな", value: "hiragana" },
-    { label: "हिन्दी", value: "hindi" },
-    { label: "नेपाली", value: "nepali" },
-    { label: "Tiếng Việt", value: "vietnamese" },
-    { label: "汉语", value: "chinese" },
-    { label: "한국어", value: "korean" },
-  ];
+  // let radioOptions = [
+  //   { label: "日本語", value: "japanese" },
+  //   { label: "English", value: "english" },
+  //   { label: "ひらがな", value: "hiragana" },
+  //   { label: "हिन्दी", value: "hindi" },
+  //   { label: "नेपाली", value: "nepali" },
+  //   { label: "Tiếng Việt", value: "vietnamese" },
+  //   { label: "汉语", value: "chinese" },
+  //   { label: "한국어", value: "korean" },
+  // ];
 
   useEffect(() => {
+    // socket.on("meetingJoinData", (meetingJoinData) => {
+    //   console.log(1289, contractorNo);
+    //   if (meetingJoinData.contractorNo == contractorNo) {
+    //     console.log(189, meetingJoinData, meetingJoinData.signature.signature);
+    //     setSignature(meetingJoinData.signature.signature);
+    //     // startMeeting2(meetingJoinData.signature.signature);
+    //   }
+    // });
     // // Handle browser/tab close
     // const handleBeforeUnload = () => {
     //     //   sendActivityStatus("inactive"); // User is closing the page (inactive)
@@ -91,26 +274,44 @@ function UserMenu() {
     // };
   }, []);
 
-  socket.on("url", (meetingData) => {
-    console.log(133, meetingData.url);
-    zoomJoinURL = meetingData.url;
-    // setTimeout(() => {
-    //     window.location.href = zoomJoinURL;
-    //     // window.open(zoomJoinURL, '_blank');
-    //   }, 1000);  // 1 second delay
-  });
+  useEffect(() => {
+    socket.on("interpreterServerResponse", (data) => {
+      if (data.contractorNo == contractorNo) {
+        setInterpreterNo(data.interpreterNumber);
+        setSignature(data.signature.signature);
+        console.log(1787, data.signature.signature);
+      }
+    });
+  }, [contractorNo]); // Only re-run if contractorNo changes
+
+  // Watch for changes in interpreterNo and call startMeeting2
+  useEffect(() => {
+    if (signature) {
+      startMeeting2(signature);
+    }
+  }, [signature]); // Trigger startMeeting2 when interpreterNo changes
+
+  // socket.on("url", (meetingData) => {
+  //   // zoomJoinURL = meetingData.url;
+  //   // setTimeout(() => {
+  //   //     window.location.href = zoomJoinURL;
+  //   //     // window.open(zoomJoinURL, '_blank');
+  //   //   }, 1000);  // 1 second delay
+  // });
 
   const [ringingTime, setRingingTime] = useState(0);
   const intervalRef: MutableRefObject<number | null> = useRef(null);
 
   // Function to handle button press
   const playRingtone = () => {
-    if (!selectedValue) {
+    if (!selectedLanguageNo) {
       alert("Please select a language before joining a meeting.");
       return;
     }
     // uniqueId = uuidv4()
-    uniqueId = uuidv4();
+    // uniqueId = uuidv4();
+
+    console.log("playing");
 
     if (audioRef.current) {
       audioRef.current.play();
@@ -124,6 +325,13 @@ function UserMenu() {
   };
 
   const stopRingtone = () => {
+    console.log("Call terminated", new Date().toISOString());
+    const data = {
+      contractorNo: contractorNo,
+    };
+
+    socket.emit("cancelCallRequest", data);
+    setCallCancel(new Date());
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0; // Reset playback to the start
@@ -150,19 +358,18 @@ function UserMenu() {
     // socket.emit('dataFromFrontend', data);
   };
 
-  const emitDisconnectInfo = () => {
-    console.log(144, uniqueId);
-    // const data = "disconnected"
-    const data = {
-      dial: "disconnected", // Replace with actual value
-      institutionid: "institutionid2",
-      uniqueId: uniqueId,
-    };
+  // const emitDisconnectInfo = () => {
+  //   console.log(144, uniqueId);
+  //   // const data = "disconnected"
+  //   const data = {
+  //     dial: "disconnected", // Replace with actual value
+  //     institutionid: "institutionid2",
+  //     uniqueId: uniqueId,
+  //   };
 
-    console.log(1443, data);
-    // Emit the 'dataFromFrontend' event to the server
-    socket.emit("dataFromFrontend", data);
-  };
+  //   // Emit the 'dataFromFrontend' event to the server
+  //   socket.emit("dataFromFrontend", data);
+  // };
   // const [socketResponse, setSocketResponse] = useState(null);
 
   // useEffect(() => {
@@ -207,95 +414,121 @@ function UserMenu() {
   // };
 
   const getSignature = async () => {
-    console.log(23, selectedValue);
-    if (!selectedValue) {
+    if (!selectedLanguageNo) {
       alert("Please select a language before joining a meeting.");
       return;
     }
 
-    // console.log(158, uniqueId);
+    setCallDial(new Date());
+
+    console.log(11, "Call dial", new Date().toISOString());
+    console.log(22, "langNumber", Number(selectedLanguageNo));
     console.log(
-      158,
-      new Date()
-        .toLocaleString("ja-JP", {
-          timeZone: "GMT",
-          hour12: false,
-        })
-        .replace(/\//g, "-")
-        .replace(",", "")
+      33,
+      "contractorNo",
+      Number(sessionStorage.getItem("contractorNo"))
     );
 
+    // console.log(118, signature);
+
+    // startMeeting2(signature);
+
+    // try {
+    //   const { data: zoomData } = await axios.post(
+    //     `${authEndpoint}/zoom`,
+    //     {
+    //       meetingNumber: "7193586721",
+    //       role: 0,
+    //       contractorNo: contractorNo,
+    //       languageSupportNo: selectedLanguageNo,
+    //     },
+    //     {
+    //       headers: { "Content-Type": "application/json" },
+    //     }
+    //   );
+
+    //   const signature = zoomData.signature as string;
+    //   console.log(144, signature);
+    //   startMeeting2(signature);
+    // } catch (e) {
+    //   console.log(e);
+    // }
+
+    // const data = {
+    //   dial: "calling", // Replace with actual value
+    //   institutionid: "institutionid", // Replace with actual value
+    //   name_of_institution: "userData.name_of_institution", // Replace with actual value
+    //   translateLanguage: selectedLanguageNo,
+    //   uniqueId: uniqueId,
+    //   // terminal_id:userData.terminal_id
+    // };
+
     const data = {
-      dial: "calling", // Replace with actual value
-      institutionid: "institutionid", // Replace with actual value
-      name_of_institution: userData.name_of_institution, // Replace with actual value
-      translateLanguage: selectedValue,
-      uniqueId: uniqueId,
-      // terminal_id:userData.terminal_id
+      meetingNumber: "7193586721",
+      contractorNo: contractorNo,
+      languageSupportNo: Number(selectedLanguageNo),
+      // uniqueCallingId: uniqueId,
     };
-    console.log(149, data);
     // Emit the 'dataFromFrontend' event to the server
-    socket.emit("dataFromFrontend", data);
+    socket.emit("callRequest", data);
 
-    // await fetchData();
+    // // await fetchData();
 
-    // Ensure this code only runs once by removing previous listeners
-    socket.off("message").on("message", (data) => {
-      console.log(135, data, uniqueId);
-      // console.log("Received data:", data, uniqueId);
+    // // Ensure this code only runs once by removing previous listeners
+    // socket.off("message").on("message", (data) => {
+    //   console.log(135, data, uniqueId);
 
-      if (
-        data.connectingLink === "terminal joined" &&
-        uniqueId === data.uniqueId
-      ) {
-        console.log(155123);
-        stopRingtone();
-        startMeeting();
-      }
+    //   if (
+    //     data.connectingLink === "terminal joined" &&
+    //     uniqueId === data.uniqueId
+    //   ) {
+    //     stopRingtone();
+    //     startMeeting();
+    //   }
 
-      if (
-        data.connectingLink === "no active terminal" &&
-        uniqueId === data.uniqueId
-      ) {
-        console.log(155123);
-        stopRingtone();
-        alert("no active terminal");
-      }
+    //   if (
+    //     data.connectingLink === "no active terminal" &&
+    //     uniqueId === data.uniqueId
+    //   ) {
+    //     console.log(155123);
+    //     stopRingtone();
+    //     alert("no active terminal");
+    //   }
 
-      if (
-        data.connectingLink === "forcible disconnect" &&
-        uniqueId === data.uniqueId
-      ) {
-        const now = new Date();
-        const formattedDate =
-          now.toLocaleString() +
-          "." +
-          String(now.getMilliseconds()).padStart(3, "0");
-        console.log(2123, formattedDate, data.connectingLink);
-        stopRingtone();
-        alert(
-          "通訳者 が応答できない状態です。しばらくお待ちいただき、もう一度、Call ボタンを押してください。"
-        );
-      }
-    });
+    //   if (
+    //     data.connectingLink === "forcible disconnect" &&
+    //     uniqueId === data.uniqueId
+    //   ) {
+    //     const now = new Date();
+    //     const formattedDate =
+    //       now.toLocaleString() +
+    //       "." +
+    //       String(now.getMilliseconds()).padStart(3, "0");
+    //     console.log(2123, formattedDate, data.connectingLink);
+    //     stopRingtone();
+    //     alert(
+    //       "通訳者 が応答できない状態です。しばらくお待ちいただき、もう一度、Call ボタンを押してください。"
+    //     );
+    //   }
+    // });
   };
 
-  function startMeeting() {
-    // const zoomAppLink = `zoommtg://zoom.us/join?confno=${meetingNumber}&pwd=${passWord}`;
-    // const zoomWebLink = `https://zoom.us/j/${meetingNumber}?pwd=${passWord}`;
+  // function startMeeting() {
+  //   // const zoomAppLink = `zoommtg://zoom.us/join?confno=${meetingNumber}&pwd=${passWord}`;
+  //   // const zoomWebLink = `https://zoom.us/j/${meetingNumber}?pwd=${passWord}`;
 
-    // Try to open Zoom app protocol
-    // window.location.href = zoomAppLink;
-    // const zoomLink = `https://zoom.us/j/7193586721?pwd=OUcLui5QIHATeQ0B0JCzl11RbRQVCO.1`;
+  //   // Try to open Zoom app protocol
+  //   // window.location.href = zoomAppLink;
+  //   // const zoomLink = `https://zoom.us/j/7193586721?pwd=OUcLui5QIHATeQ0B0JCzl11RbRQVCO.1`;
 
-    // Set a fallback in case it doesn't work
-    console.log(155, zoomJoinURL);
+  //   // Set a fallback in case it doesn't work
+  //   console.log(155, zoomJoinURL);
 
-    setTimeout(() => {
-      window.location.href = zoomJoinURL;
-      // window.open(zoomJoinURL, '_blank');
-    }, 1000); // 1 second delay
-  }
+  //   setTimeout(() => {
+  //     window.location.href = zoomJoinURL;
+  //     // window.open(zoomJoinURL, '_blank');
+  //   }, 1000); // 1 second delay
+  // }
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60000);
@@ -325,11 +558,12 @@ function UserMenu() {
     <Box>
       <MenuHeader title="通訳希望者メニュー" />
       <RadioButtonGroupRound
-        options={radioOptions}
-        selectedValue={selectedValue}
+        options={selectLanguage}
+        selectedValue={selectedLanguageNo}
         onChange={handleRadioChange}
         name="options"
       />
+
       <Box className={classes.userMessage}>{t("User message")}</Box>
       <Box className={classes.userCallRow}>
         <ButtonAtom
@@ -345,7 +579,7 @@ function UserMenu() {
         <ButtonAtom
           onClick={() => {
             stopRingtone();
-            emitDisconnectInfo();
+            // emitDisconnectInfo();
           }}
           label="Terminate"
           width="100px"
@@ -357,7 +591,7 @@ function UserMenu() {
         {/* Hidden audio element that plays the ringtone */}
         <audio ref={audioRef} src={ringtone} />
 
-        {/* <p>{selectedValue ? `Selected Language: ${selectedValue}` : 'No language selected'}</p>
+        {/* <p>{selectedLanguageNo ? `Selected Language: ${selectedLanguageNo}` : 'No language selected'}</p>
                 <p>{userData?.name_of_institution}</p> */}
 
         {/* <button onClick={getSignature}>Join Meeting</button> */}

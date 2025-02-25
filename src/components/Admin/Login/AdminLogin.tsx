@@ -42,11 +42,11 @@ const InterpreterLogin: React.FC = () => {
 
       if (response.success) {
         // Successful login
-        console.log("Login successful", response.mail);
-        sessionStorage.setItem("adminMail", response.mail);
+        console.log("Login successful", response.user_no);
+        sessionStorage.setItem("adminNo", response.user_no);
         navigate("/AdminMenu", {
           state: {
-            userMail: response.mail,
+            userNo: response.user_no,
           },
         });
       } else {

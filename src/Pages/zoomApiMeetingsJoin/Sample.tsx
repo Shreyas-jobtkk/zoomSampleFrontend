@@ -84,7 +84,7 @@ const Sample: React.FC = () => {
   const getSignature = async () => {
     try {
       const { data: zoomData } = await axios.post(
-        `${authEndpoint}/zoom`,
+        `${authEndpoint}/zoomForCS`,
         {
           meetingNumber: meetingNumber,
           role: role,

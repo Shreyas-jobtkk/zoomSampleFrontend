@@ -50,18 +50,17 @@ export const updateUser = async (
 };
 
 export const updateInterpreterStatus = async (
-  mailAddress: string,
+  interpreterNo: string | null,
   interpreterStatus: string
 ) => {
-  console.log(155, mailAddress, interpreterStatus);
+  console.log(155, interpreterNo, interpreterStatus);
   try {
     const response = await api.put(
-      `/${USER_ENDPOINT}/interpreter/${mailAddress}`,
+      `/${USER_ENDPOINT}/interpreter/${interpreterNo}`,
       {
         interpreter_status: interpreterStatus,
       }
     );
-    alert("User updated successfully");
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {

@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 
 const ProtectedAdminRoute = ({ element }: { element: JSX.Element }) => {
-  return sessionStorage.getItem("adminMail") ? (
+  return sessionStorage.getItem("adminNo") ? (
     element
   ) : (
     <Navigate to="/BadRequest" />
@@ -9,7 +9,7 @@ const ProtectedAdminRoute = ({ element }: { element: JSX.Element }) => {
 };
 
 const ProtectedContractRoute = ({ element }: { element: JSX.Element }) => {
-  return sessionStorage.getItem("contractorMail") ? (
+  return sessionStorage.getItem("contractorNo") ? (
     element
   ) : (
     <Navigate to="/BadRequest" />
@@ -17,7 +17,7 @@ const ProtectedContractRoute = ({ element }: { element: JSX.Element }) => {
 };
 
 const ProtectedInterpreterRoute = ({ element }: { element: JSX.Element }) => {
-  return sessionStorage.getItem("interpreterMail") ? (
+  return sessionStorage.getItem("interpreterNo") ? (
     element
   ) : (
     <Navigate to="/BadRequest" />
