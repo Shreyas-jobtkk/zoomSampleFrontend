@@ -96,7 +96,6 @@ function InterpreterEvaluationList() {
       const matchesLangNo =
         selectedLanguage === "" || item["lang_no"] === selectedLanguage;
 
-      console.log(145, item);
       let startperiodRangeMin = startDateTimeRangeMin
         ? new Date(startDateTimeRangeMin)
         : null;
@@ -104,6 +103,8 @@ function InterpreterEvaluationList() {
       const matchesStartTimeMin =
         startperiodRangeMin === null ||
         new Date(item["開始日時"]) >= startperiodRangeMin;
+      console.log(144, startperiodRangeMin);
+      console.log(145, matchesStartTimeMin);
 
       let startperiodRangeMax = startDateTimeRangeMax
         ? new Date(startDateTimeRangeMax)
@@ -130,8 +131,7 @@ function InterpreterEvaluationList() {
     try {
       const response = await CallLogApiService.fetchCallLog();
       console.log(75589, response);
-      const sortedData: any = response.map((item: any, index: number) => ({
-        No: index + 1, // `No` field is always included
+      let apiTableData: any = response.map((item: any) => ({
         開始日時: convertToJST(item.call_start),
         終了日時: convertToJST(item.call_end),
         契約No: item.contract_no,
@@ -143,9 +143,20 @@ function InterpreterEvaluationList() {
         評価: item.feed_back,
         lang_no: item.language_support_no,
       }));
-      console.log(189, sortedData);
-      setTableData(sortedData); // Initial table data load
-      setSearchData(sortedData);
+
+      let videoStartTableData = apiTableData.filter(
+        (item: any) => item.開始日時
+      );
+
+      videoStartTableData = videoStartTableData.map(
+        (item: any, index: number) => ({
+          No: index + 1, // Reassign sequential numbering
+          ...item,
+        })
+      );
+      console.log(189, videoStartTableData);
+      setTableData(videoStartTableData); // Initial table data load
+      setSearchData(videoStartTableData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
@@ -264,16 +275,19 @@ function InterpreterEvaluationList() {
               label="契約No"
               width="calc(10vw - 20px)" // Uncomment to set a custom width
               value={contractNo}
+              labelWidth="70px"
             />
             <TextBoxWithLabel
               label="企業名"
               width="calc(32vw - 80px)" // Uncomment to set a custom width
               value={companyName}
+              labelWidth="70px"
             />
             <TextBoxWithLabel
               label="店舗名"
               width="calc(32vw - 80px)" // Uncomment to set a custom width
               value={storeName}
+              labelWidth="70px"
             />
           </Box>
         </Box>
@@ -289,6 +303,7 @@ function InterpreterEvaluationList() {
               label="通訳者No"
               width="calc(10vw - 20px)" // Uncomment to set a custom width
               value={interpreterNo}
+              labelWidth="70px"
             />
             <TextBoxWithLabel
               label="通訳者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
@@ -330,6 +345,8 @@ function InterpreterEvaluationList() {
       />
       <Box className={classes.searchButton}>
         <ButtonAtom onClick={searchConditions} label="閲覧" />
+        <ButtonAtom onClick={searchConditions} label="編集" />
+        <ButtonAtom onClick={searchConditions} label="削除" />
       </Box>
     </Box>
   );

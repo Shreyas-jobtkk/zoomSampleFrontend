@@ -1,8 +1,6 @@
 import { useEffect, useState, useRef, MutableRefObject } from "react";
 import io from "socket.io-client";
 import ringtone from "../../../ringtone.mp3";
-// import { v4 as uuidv4 } from "uuid";
-// import { useLocation } from "react-router-dom";
 import { apiUrl } from "../../../../apiUrl.js";
 import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader.js";
 import RadioButtonGroupRound from "../../../LV1/RadioButton/RadioButtonGroupRound.js";
@@ -17,28 +15,22 @@ import { ZoomMtg } from "@zoom/meetingsdk";
 import { CallLogApiService } from "../../../../api/apiService/callLog/callLog-api-service";
 
 const socket = io(apiUrl);
-// let zoomJoinURL: string;
 
 function UserMenu() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [callDial, setCallDial] = useState<null | Date>(null);
-  const [callCancel, setCallCancel] = useState<null | Date>(null);
-  // const [callStart, setCallStart] = useState<null | Date>(null);
   let callStart: Date | null = null;
-  const [callEnd, setCallEnd] = useState<null | Date>(null);
-  const [callStatus, setCallStatus] = useState<null | string>(null);
-  const [feedback, setFeedback] = useState<null | number>(null);
+  // const [callEnd, setCallEnd] = useState<null | Date>(null);
   const [signature, setSignature] = useState<string>("");
   const contractorNo = Number(sessionStorage.getItem("contractorNo"));
   const [interpreterNo, setInterpreterNo] = useState<number | null>(null);
-  // const [meetingNo, setMeetingNo] = useState<any>("");
   const [selectedLanguageNo, setSelectedLanguageNo] = useState(() => {
     return localStorage.getItem("selectedLanguage") || "1";
   });
   let meetingEnded = false;
 
-  const startMeeting2 = (signature: string) => {
+  const startMeeting = (signature: string) => {
     console.log(15589, interpreterNo);
     document.getElementById("zmmtg-root")!.style.display = "block";
 
@@ -63,7 +55,6 @@ function UserMenu() {
           passWord: "B0h6vX",
           userName: "join",
 
-          // zak: zakToken,
           success: (success: unknown) => {
             console.log(success);
             console.log(189, ZoomMtg.inMeetingServiceListener.toString());
@@ -72,8 +63,6 @@ function UserMenu() {
               144,
               sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
             );
-
-            // showInputField();
 
             ZoomMtg.inMeetingServiceListener("onUserJoin", function () {
               // setCallStart(new Date());
@@ -86,8 +75,6 @@ function UserMenu() {
                 return;
               }
               meetingEnded = true;
-              setCallEnd(new Date());
-              alert(475);
 
               let rating: number | null = null;
               let input = prompt("Enter a number between 1 and 5:");
@@ -103,30 +90,16 @@ function UserMenu() {
                   Number(selectedLanguageNo),
                   contractorNo,
                   callDial,
-                  callCancel,
+                  null,
                   callStart,
                   new Date(),
-                  "callCanceled",
+                  "callAccepted",
                   rating
                 );
               } catch (error) {
                 console.error("Error saving callLog:", error);
               }
-              // return;
-
-              // // Send the rating to the backend
-              // fetch("https://your-backend-api.com/feedback", {
-              //   method: "POST",
-              //   headers: {
-              //     "Content-Type": "application/json",
-              //   },
-              //   body: JSON.stringify({ rating: finalRating }),
-              // })
-              //   .then(response => response.json())
-              //   .then(data => console.log("Feedback submitted:", data))
-              //   .catch(error => console.error("Error submitting feedback:", error));
             });
-            console.log(155, callEnd);
           },
 
           error: (error: unknown) => {
@@ -149,47 +122,6 @@ function UserMenu() {
     fetchLanguageNames();
   }, []);
 
-  useEffect(() => {
-    if (callCancel) {
-      console.log(
-        8971,
-        "callCancel",
-        callDial,
-        callCancel,
-        selectedLanguageNo,
-        contractorNo
-      );
-
-      try {
-        CallLogApiService.createCallLog(
-          Number(interpreterNo),
-          Number(selectedLanguageNo),
-          contractorNo,
-          callDial,
-          callCancel,
-          callStart,
-          callEnd,
-          "callCanceled",
-          feedback
-        );
-      } catch (error) {
-        console.error("Error saving callLog:", error);
-      }
-    }
-  }, [callCancel]);
-
-  useEffect(() => {
-    if (callStart) {
-      console.log(28971, callStart, callEnd);
-    }
-  }, [callStart]);
-
-  useEffect(() => {
-    if (callEnd) {
-      console.log(38971, callStart, callEnd);
-    }
-  }, [callEnd]);
-
   const fetchLanguageNames = async () => {
     try {
       let response = await LanguageApiService.fetchLanguagesAll();
@@ -211,12 +143,12 @@ function UserMenu() {
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedLanguageNo(event.target.value);
-    if (event.target.value === "2") {
+    if (event.target.value === "1") {
       i18n.changeLanguage("ja"); // Change to Japanese
-    } else if (event.target.value === "4") {
-      i18n.changeLanguage("jaKana"); // Change to Japanese
+    } else if (event.target.value === "2") {
+      i18n.changeLanguage("en"); // Change to Japanese
     } else {
-      i18n.changeLanguage("en"); // Change to English
+      i18n.changeLanguage("jaKana"); // Change to English
     }
     localStorage.setItem("selectedLanguage", event.target.value); // Save to localStorage
   };
@@ -229,54 +161,38 @@ function UserMenu() {
     }
   }, []);
 
-  // let radioOptions = [
-  //   { label: "日本語", value: "japanese" },
-  //   { label: "English", value: "english" },
-  //   { label: "ひらがな", value: "hiragana" },
-  //   { label: "हिन्दी", value: "hindi" },
-  //   { label: "नेपाली", value: "nepali" },
-  //   { label: "Tiếng Việt", value: "vietnamese" },
-  //   { label: "汉语", value: "chinese" },
-  //   { label: "한국어", value: "korean" },
-  // ];
-
   useEffect(() => {
-    // socket.on("meetingJoinData", (meetingJoinData) => {
-    //   console.log(1289, contractorNo);
-    //   if (meetingJoinData.contractorNo == contractorNo) {
-    //     console.log(189, meetingJoinData, meetingJoinData.signature.signature);
-    //     setSignature(meetingJoinData.signature.signature);
-    //     // startMeeting2(meetingJoinData.signature.signature);
-    //   }
-    // });
-    // // Handle browser/tab close
-    // const handleBeforeUnload = () => {
-    //     //   sendActivityStatus("inactive"); // User is closing the page (inactive)
-    //     // event.preventDefault();
-    //     if (typeof uniqueId == 'string') {
-    //         const data = {
-    //             dial: 'disconnected', // Replace with actual value
-    //             institutionid: 'institutionid',
-    //             uniqueId: uniqueId,
-    //         };
-    //         console.log(3443, data)
-    //         // Emit the 'dataFromFrontend' event to the server
-    //         // socket.emit('dataFromFrontend', data);
-    //     }
-    // };
-    // // Send initial API call to mark user as active when component mounts
-    // // sendActivityStatus("active");
-    // // Add event listener to detect when the browser or tab is closed
-    // window.addEventListener('beforeunload', handleBeforeUnload);
-    // // Cleanup event listener when component unmounts
-    // return () => {
-    //     window.removeEventListener('beforeunload', handleBeforeUnload);
-    // };
-  }, []);
+    const handleInterpreterResponseReject = (data: any) => {
+      if (data.contractorNo === contractorNo && data.response === "rejected") {
+        stopRingtone();
+        try {
+          CallLogApiService.createCallLog(
+            data.interpreterNumber,
+            Number(selectedLanguageNo),
+            contractorNo,
+            new Date(),
+            null,
+            null,
+            null,
+            "rejected",
+            null
+          );
+        } catch (error) {
+          console.error("Error saving callLog:", error);
+        }
+      }
+    };
+
+    socket.on("interpreterServerResponse", handleInterpreterResponseReject);
+
+    return () => {
+      socket.off("interpreterServerResponse", handleInterpreterResponseReject);
+    };
+  }, [contractorNo]);
 
   useEffect(() => {
     socket.on("interpreterServerResponse", (data) => {
-      if (data.contractorNo == contractorNo) {
+      if (data.contractorNo == contractorNo && data.response == "accepted") {
         setInterpreterNo(data.interpreterNumber);
         setSignature(data.signature.signature);
         console.log(1787, data.signature.signature);
@@ -284,35 +200,56 @@ function UserMenu() {
     });
   }, [contractorNo]); // Only re-run if contractorNo changes
 
-  // Watch for changes in interpreterNo and call startMeeting2
+  // Watch for changes in interpreterNo and call startMeeting
   useEffect(() => {
     if (signature) {
-      startMeeting2(signature);
+      startMeeting(signature);
     }
-  }, [signature]); // Trigger startMeeting2 when interpreterNo changes
+  }, [signature]);
 
-  // socket.on("url", (meetingData) => {
-  //   // zoomJoinURL = meetingData.url;
-  //   // setTimeout(() => {
-  //   //     window.location.href = zoomJoinURL;
-  //   //     // window.open(zoomJoinURL, '_blank');
-  //   //   }, 1000);  // 1 second delay
-  // });
+  useEffect(() => {
+    // Function to send data via API
+    const sendDataOnClose = async () => {
+      try {
+        const response = await fetch("https://your-api-endpoint.com/close", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: "User closed the browser unexpectedly",
+            timestamp: new Date().toISOString(),
+          }),
+        });
+        if (response.ok) {
+          console.log("Data sent successfully.");
+        } else {
+          console.log("Failed to send data.");
+        }
+      } catch (error) {
+        console.error("Error sending data:", error);
+      }
+    };
+
+    // Function to handle the event when the browser is closed or the page is unloaded
+    const handleUnload = () => {
+      sendDataOnClose();
+    };
+
+    // Add the event listener for the unload event
+    window.addEventListener("unload", handleUnload);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("unload", handleUnload);
+    };
+  }, []);
 
   const [ringingTime, setRingingTime] = useState(0);
   const intervalRef: MutableRefObject<number | null> = useRef(null);
 
   // Function to handle button press
   const playRingtone = () => {
-    if (!selectedLanguageNo) {
-      alert("Please select a language before joining a meeting.");
-      return;
-    }
-    // uniqueId = uuidv4()
-    // uniqueId = uuidv4();
-
-    console.log("playing");
-
     if (audioRef.current) {
       audioRef.current.play();
       setIsPlaying(true); // Set state to indicate ringtone is playing
@@ -322,16 +259,16 @@ function UserMenu() {
     intervalRef.current = window.setInterval(() => {
       setRingingTime((prevTime) => prevTime + 10); // Increment by 10 ms
     }, 10);
+
+    // Automatically stop ringtone after 10 seconds
+    setTimeout(() => {
+      stopRingtone();
+      callTimeUp();
+    }, 3000); // 10 seconds (10,000 ms)
   };
 
   const stopRingtone = () => {
-    console.log("Call terminated", new Date().toISOString());
-    const data = {
-      contractorNo: contractorNo,
-    };
-
-    socket.emit("cancelCallRequest", data);
-    setCallCancel(new Date());
+    // setCallCancel(new Date());
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0; // Reset playback to the start
@@ -344,191 +281,73 @@ function UserMenu() {
       intervalRef.current = null;
     }
     setRingingTime(0);
-
-    // console.log(144, uniqueId)
-    // // const data = "disconnected"
-    // const data = {
-    //     dial: 'disconnected', // Replace with actual value
-    //     institutionid: 'institutionid2',
-    //     uniqueId: uniqueId,
-    // };
-
-    // console.log(1443, data)
-    // // Emit the 'dataFromFrontend' event to the server
-    // socket.emit('dataFromFrontend', data);
   };
 
-  // const emitDisconnectInfo = () => {
-  //   console.log(144, uniqueId);
-  //   // const data = "disconnected"
-  //   const data = {
-  //     dial: "disconnected", // Replace with actual value
-  //     institutionid: "institutionid2",
-  //     uniqueId: uniqueId,
-  //   };
+  const callTimeUp = () => {
+    console.log("Call TimeUp", callDial);
+    const data = {
+      contractorNo: contractorNo,
+    };
+    socket.emit("cancelCallRequest", data);
+    try {
+      CallLogApiService.createCallLog(
+        Number(interpreterNo),
+        Number(selectedLanguageNo),
+        contractorNo,
+        callDial,
+        new Date(),
+        callStart,
+        null,
+        "callTimeUp",
+        null
+      );
+    } catch (error) {
+      console.error("Error saving callLog:", error);
+    }
+    stopRingtone();
+  };
 
-  //   // Emit the 'dataFromFrontend' event to the server
-  //   socket.emit("dataFromFrontend", data);
-  // };
-  // const [socketResponse, setSocketResponse] = useState(null);
+  const callCancel = () => {
+    console.log("Call terminated", new Date().toISOString());
+    const data = {
+      contractorNo: contractorNo,
+    };
+    socket.emit("cancelCallRequest", data);
+    try {
+      CallLogApiService.createCallLog(
+        Number(interpreterNo),
+        Number(selectedLanguageNo),
+        contractorNo,
+        callDial,
+        new Date(),
+        callStart,
+        null,
+        "callCanceled",
+        null
+      );
+    } catch (error) {
+      console.error("Error saving callLog:", error);
+    }
+    stopRingtone();
+  };
 
-  // useEffect(() => {
-  //     // Listen for server response
-  //     socket.on('serverResponse', (data) => {
-  //         setSocketResponse(data);
-  //     });
-
-  //     // Cleanup on component unmount
-  //     return () => {
-  //         socket.off('serverResponse');
-  //     };
-  // }, []);
-  // let meetingNumber = ""
-  // let passWord = ""
-
-  // const fetchData = async () => {
-  //     try {
-  //         // alert(language)
-  //         const response = await fetch(`${apiUrl}/api/users`);
-  //         // const userData: User[] = await response.json();
-  //         // console.log('Fetched user data:', userData);
-
-  //         // // Find an available user who speaks the selected language
-  //         // const availableUser = userData.find((user: User) =>
-  //         //     user.languages.includes(language!) && user.status === 'available'
-  //         // );
-
-  //         if (availableUser) {
-  //             // alert(availableUser)
-  //             // meetingNumber = availableUser.meetingNumber
-  //             // passWord = availableUser.password
-  //             // alert(meetingNumber)
-  //             // alert(availableUser.meetingNumber)
-  //         } else {
-  //             alert('No matching users available. Please wait.');
-  //         }
-  //     } catch (error) {
-  //         console.error('Error fetching users:', error);
-  //         alert('Error fetching users. Please try again.');
-  //     }
-  // };
-
-  const getSignature = async () => {
+  const callRequest = async () => {
     if (!selectedLanguageNo) {
       alert("Please select a language before joining a meeting.");
       return;
     }
+    playRingtone();
 
     setCallDial(new Date());
-
-    console.log(11, "Call dial", new Date().toISOString());
-    console.log(22, "langNumber", Number(selectedLanguageNo));
-    console.log(
-      33,
-      "contractorNo",
-      Number(sessionStorage.getItem("contractorNo"))
-    );
-
-    // console.log(118, signature);
-
-    // startMeeting2(signature);
-
-    // try {
-    //   const { data: zoomData } = await axios.post(
-    //     `${authEndpoint}/zoom`,
-    //     {
-    //       meetingNumber: "7193586721",
-    //       role: 0,
-    //       contractorNo: contractorNo,
-    //       languageSupportNo: selectedLanguageNo,
-    //     },
-    //     {
-    //       headers: { "Content-Type": "application/json" },
-    //     }
-    //   );
-
-    //   const signature = zoomData.signature as string;
-    //   console.log(144, signature);
-    //   startMeeting2(signature);
-    // } catch (e) {
-    //   console.log(e);
-    // }
-
-    // const data = {
-    //   dial: "calling", // Replace with actual value
-    //   institutionid: "institutionid", // Replace with actual value
-    //   name_of_institution: "userData.name_of_institution", // Replace with actual value
-    //   translateLanguage: selectedLanguageNo,
-    //   uniqueId: uniqueId,
-    //   // terminal_id:userData.terminal_id
-    // };
 
     const data = {
       meetingNumber: "7193586721",
       contractorNo: contractorNo,
       languageSupportNo: Number(selectedLanguageNo),
-      // uniqueCallingId: uniqueId,
     };
     // Emit the 'dataFromFrontend' event to the server
     socket.emit("callRequest", data);
-
-    // // await fetchData();
-
-    // // Ensure this code only runs once by removing previous listeners
-    // socket.off("message").on("message", (data) => {
-    //   console.log(135, data, uniqueId);
-
-    //   if (
-    //     data.connectingLink === "terminal joined" &&
-    //     uniqueId === data.uniqueId
-    //   ) {
-    //     stopRingtone();
-    //     startMeeting();
-    //   }
-
-    //   if (
-    //     data.connectingLink === "no active terminal" &&
-    //     uniqueId === data.uniqueId
-    //   ) {
-    //     console.log(155123);
-    //     stopRingtone();
-    //     alert("no active terminal");
-    //   }
-
-    //   if (
-    //     data.connectingLink === "forcible disconnect" &&
-    //     uniqueId === data.uniqueId
-    //   ) {
-    //     const now = new Date();
-    //     const formattedDate =
-    //       now.toLocaleString() +
-    //       "." +
-    //       String(now.getMilliseconds()).padStart(3, "0");
-    //     console.log(2123, formattedDate, data.connectingLink);
-    //     stopRingtone();
-    //     alert(
-    //       "通訳者 が応答できない状態です。しばらくお待ちいただき、もう一度、Call ボタンを押してください。"
-    //     );
-    //   }
-    // });
   };
-
-  // function startMeeting() {
-  //   // const zoomAppLink = `zoommtg://zoom.us/join?confno=${meetingNumber}&pwd=${passWord}`;
-  //   // const zoomWebLink = `https://zoom.us/j/${meetingNumber}?pwd=${passWord}`;
-
-  //   // Try to open Zoom app protocol
-  //   // window.location.href = zoomAppLink;
-  //   // const zoomLink = `https://zoom.us/j/7193586721?pwd=OUcLui5QIHATeQ0B0JCzl11RbRQVCO.1`;
-
-  //   // Set a fallback in case it doesn't work
-  //   console.log(155, zoomJoinURL);
-
-  //   setTimeout(() => {
-  //     window.location.href = zoomJoinURL;
-  //     // window.open(zoomJoinURL, '_blank');
-  //   }, 1000); // 1 second delay
-  // }
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60000);
@@ -540,19 +359,6 @@ function UserMenu() {
       "0"
     )}:${String(milliseconds).padStart(2, "0")}`;
   };
-
-  // function startMeeting() {
-  //     // alert(meetingNumber)
-  //     if (meetingNumber && passWord) {
-  //         const zoomAppLink = `zoommtg://zoom.us/join?confno=${meetingNumber}&pwd=${passWord}`;
-  //         // window.location.href = zoomAppLink;
-  //         setTimeout(() => {
-  //             window.open(zoomAppLink, '_blank');
-  //         }, 1000);  // 1 second delay to allow the app to open first
-  //     } else {
-  //         alert("Meeting information is not available.");
-  //     }
-  // }
 
   return (
     <Box>
@@ -568,8 +374,7 @@ function UserMenu() {
       <Box className={classes.userCallRow}>
         <ButtonAtom
           onClick={() => {
-            playRingtone();
-            getSignature();
+            callRequest();
           }}
           label="Call"
           width="50px"
@@ -578,8 +383,7 @@ function UserMenu() {
         />
         <ButtonAtom
           onClick={() => {
-            stopRingtone();
-            // emitDisconnectInfo();
+            callCancel();
           }}
           label="Terminate"
           width="100px"
@@ -590,11 +394,6 @@ function UserMenu() {
 
         {/* Hidden audio element that plays the ringtone */}
         <audio ref={audioRef} src={ringtone} />
-
-        {/* <p>{selectedLanguageNo ? `Selected Language: ${selectedLanguageNo}` : 'No language selected'}</p>
-                <p>{userData?.name_of_institution}</p> */}
-
-        {/* <button onClick={getSignature}>Join Meeting</button> */}
       </Box>
     </Box>
   );

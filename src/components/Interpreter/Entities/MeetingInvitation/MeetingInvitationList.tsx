@@ -20,7 +20,7 @@ function InterpreterEvaluationList() {
     "店舗名",
     "通訳者No",
     "通訳者名",
-    "承諾／拒否 ",
+    "承諾/拒否 ",
   ];
   const data = [
     {
@@ -31,7 +31,7 @@ function InterpreterEvaluationList() {
       企業名: "Company A",
       店舗名: "Sales",
       通訳者No: 7,
-      "承諾／拒否 ": "Japanese",
+      "承諾/拒否 ": "Japanese",
       通訳者名: "John",
       評価: 5,
     },
@@ -43,7 +43,7 @@ function InterpreterEvaluationList() {
       企業名: "Company B",
       店舗名: "Marketing",
       通訳者No: 8,
-      "承諾／拒否 ": "English",
+      "承諾/拒否 ": "English",
       通訳者名: "Alice",
       評価: 4,
     },
@@ -55,7 +55,7 @@ function InterpreterEvaluationList() {
       企業名: "Company C",
       店舗名: "Support",
       通訳者No: 9,
-      "承諾／拒否 ": "Chinese",
+      "承諾/拒否 ": "Chinese",
       通訳者名: "Mike",
       評価: 3,
     },
@@ -67,7 +67,7 @@ function InterpreterEvaluationList() {
       企業名: "Company D",
       店舗名: "IT",
       通訳者No: 10,
-      "承諾／拒否 ": "Korean",
+      "承諾/拒否 ": "Korean",
       通訳者名: "Sarah",
       評価: 5,
     },
@@ -79,7 +79,7 @@ function InterpreterEvaluationList() {
       企業名: "Company E",
       店舗名: "Finance",
       通訳者No: 11,
-      "承諾／拒否 ": "Japanese",
+      "承諾/拒否 ": "Japanese",
       通訳者名: "David",
       評価: 4,
     },
@@ -91,7 +91,7 @@ function InterpreterEvaluationList() {
       企業名: "Company F",
       店舗名: "HR",
       通訳者No: 12,
-      "承諾／拒否 ": "French",
+      "承諾/拒否 ": "French",
       通訳者名: "Anna",
       評価: 5,
     },
@@ -103,7 +103,7 @@ function InterpreterEvaluationList() {
       企業名: "Company G",
       店舗名: "Engineering",
       通訳者No: 13,
-      "承諾／拒否 ": "German",
+      "承諾/拒否 ": "German",
       通訳者名: "Tom",
       評価: 3,
     },
@@ -115,7 +115,7 @@ function InterpreterEvaluationList() {
       企業名: "Company H",
       店舗名: "Legal",
       通訳者No: 14,
-      "承諾／拒否 ": "Japanese",
+      "承諾/拒否 ": "Japanese",
       通訳者名: "Emma",
       評価: 5,
     },
@@ -127,7 +127,7 @@ function InterpreterEvaluationList() {
       企業名: "Company I",
       店舗名: "Operations",
       通訳者No: 15,
-      "承諾／拒否 ": "Spanish",
+      "承諾/拒否 ": "Spanish",
       通訳者名: "James",
       評価: 4,
     },
@@ -139,7 +139,7 @@ function InterpreterEvaluationList() {
       企業名: "Company J",
       店舗名: "R&D",
       通訳者No: 16,
-      "承諾／拒否 ": "English",
+      "承諾/拒否 ": "English",
       通訳者名: "Sophia",
       評価: 3,
     },
@@ -151,7 +151,7 @@ function InterpreterEvaluationList() {
       企業名: "Company K",
       店舗名: "Customer Service",
       通訳者No: 17,
-      "承諾／拒否 ": "Japanese",
+      "承諾/拒否 ": "Japanese",
       通訳者名: "Liam",
       評価: 5,
     },
@@ -163,7 +163,7 @@ function InterpreterEvaluationList() {
       企業名: "Company L",
       店舗名: "Logistics",
       通訳者No: 18,
-      "承諾／拒否 ": "Italian",
+      "承諾/拒否 ": "Italian",
       通訳者名: "Olivia",
       評価: 4,
     },
@@ -344,7 +344,7 @@ function InterpreterEvaluationList() {
               labelWidth="30px"
             />
             <SelectOption
-              label="承諾／拒否 ："
+              label="承諾/拒否 ："
               options={options}
               width={"calc(10vw - 15px)"}
               value={selectedOption}

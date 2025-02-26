@@ -14,3 +14,14 @@ export function deleteStatus(isDeleted: Boolean): string {
     return "OFF";
   }
 }
+
+export function getCallStatus(value: string): string | null {
+  const statusMap: { [key: string]: string } = {
+    callCanceled: "Cancel",
+    callTimeUp: "Time Out",
+    callAccepted: "承諾",
+    rejected: "拒否",
+  };
+
+  return statusMap[value] || null;
+}

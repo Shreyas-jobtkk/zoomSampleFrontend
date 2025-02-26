@@ -35,7 +35,7 @@ function InterpreterLogin() {
 
   console.log(144, message);
 
-  const startMeeting2 = (signature: string) => {
+  const startMeeting = (signature: string) => {
     document.getElementById("zmmtg-root")!.style.display = "block";
 
     ZoomMtg.init({
@@ -48,7 +48,7 @@ function InterpreterLogin() {
       leaveOnPageUnload: true,
       isSupportChat: false,
       success: (success: unknown) => {
-        sendActivityStatus("inactive");
+        // sendActivityStatus("inactive");
         console.log(success);
         ZoomMtg.join({
           signature: signature,
@@ -161,6 +161,16 @@ function InterpreterLogin() {
   });
 
   useEffect(() => {
+    socket.on("cancelCallRequestFromServer", (data) => {
+      setCallRequest(false);
+      if (contractorNo == data.contractorNo) {
+        console.log(189, data, contractorNo, new Date().toISOString());
+        sendActivityStatus("active");
+      }
+    });
+  });
+
+  useEffect(() => {
     // Handle browser/tab close
     const handleBeforeUnload = () => {
       alert(145);
@@ -264,10 +274,11 @@ function InterpreterLogin() {
         contractorNo: contractorNo,
         meetingNumber: meetingNo,
         interpreterNumber: interpreterNo,
+        response: "accepted",
       };
 
       socket.emit("interpreterResponse", data);
-      startMeeting2(signature);
+      startMeeting(signature);
     }
     // try {
     //   startMeeting();
@@ -312,7 +323,19 @@ function InterpreterLogin() {
   //   }, 1000); // 1 second delay
   // }
 
-  const navigateToAdministratorList = () => {};
+  const rejectCall = () => {
+    const data = {
+      contractorNo: contractorNo,
+      meetingNumber: meetingNo,
+      interpreterNumber: interpreterNo,
+      response: "rejected",
+    };
+
+    setStatus("inactive");
+    setCallRequest(false);
+
+    socket.emit("interpreterResponse", data);
+  };
 
   const navigateToInterpreterEvaluationList = () => {
     navigate("/InterpretersInterpreterEvaluationList");
@@ -332,7 +355,7 @@ function InterpreterLogin() {
   };
   const setStatusToInactive = () => {
     setStatus("inactive");
-    sendActivityStatus("inactive");
+    // sendActivityStatus("inactive");
   };
 
   return (
@@ -408,7 +431,7 @@ function InterpreterLogin() {
 
           <Box className={classes.activeStatusButtons}>
             <ButtonAtom
-              onClick={navigateToAdministratorList}
+              onClick={rejectCall}
               label="拒否"
               width="20vw"
               padding="5vh 5vw 5vh 2vw"
