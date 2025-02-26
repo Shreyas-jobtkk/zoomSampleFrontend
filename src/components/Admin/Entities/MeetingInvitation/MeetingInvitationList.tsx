@@ -40,11 +40,11 @@ function InterpreterEvaluationList() {
   // const [startTimeRangeMin, setStartTimeRangeMin] = useState<Date | null>(null);
   // const [startTimeRangeMax, setStartTimeRangeMax] = useState<Date | null>(null);
   const [startDateTimeRangeMax, setStartDateTimeRangeMax] = useState<any>(null);
-  // const [languagesSupport, setLanguagesSupport] = useState<
+  // const [callStatusOptions, setLanguagesSupport] = useState<
   //   { label: string; value: string | number }[]
   // >([]);
 
-  let languagesSupport: { label: string; value: string | number }[] = [
+  let callStatusOptions: { label: string; value: string | number }[] = [
     { label: "Cancel", value: "callCanceled" },
     { label: "Time Out", value: "callTimeUp" },
     { label: "承諾", value: "callAccepted" },
@@ -299,11 +299,11 @@ function InterpreterEvaluationList() {
             />
             <SelectOption
               label="承諾/拒否"
-              options={languagesSupport}
+              options={callStatusOptions}
               width={"calc(10vw - 15px)"}
               value={callStatus}
               onChange={setCallStatus}
-              labelWidth={"85px"}
+              labelWidth={"90px"}
             />
 
             <Box className={classes.searchButton}>
