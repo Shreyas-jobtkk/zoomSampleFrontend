@@ -171,20 +171,13 @@ function InterpreterLogin() {
   });
 
   useEffect(() => {
-    // Handle browser/tab close
     const handleBeforeUnload = () => {
-      alert(145);
-      sendActivityStatus("inactive"); // User is closing the page (inactive)
-      // event.preventDefault();
+      sendActivityStatus("inactive");
     };
 
-    // Send initial API call to mark user as active when component mounts
-    // sendActivityStatus("active");
-
-    // Add event listener to detect when the browser or tab is closed
     window.addEventListener("beforeunload", handleBeforeUnload);
 
-    // Cleanup event listener when component unmounts
+    // Cleanup the event listener when the component is unmounted
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
@@ -355,7 +348,7 @@ function InterpreterLogin() {
   };
   const setStatusToInactive = () => {
     setStatus("inactive");
-    // sendActivityStatus("inactive");
+    sendActivityStatus("inactive");
   };
 
   return (
@@ -436,6 +429,7 @@ function InterpreterLogin() {
               width="20vw"
               padding="5vh 5vw 5vh 2vw"
               margin="2vh 2vw"
+              disabled={!callRequest}
             />
             <ButtonAtom
               onClick={getSignature}

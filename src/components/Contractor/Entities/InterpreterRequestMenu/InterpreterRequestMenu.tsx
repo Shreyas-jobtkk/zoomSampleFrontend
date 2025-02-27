@@ -19,10 +19,12 @@ const socket = io(apiUrl);
 function UserMenu() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [callDial, setCallDial] = useState<null | Date>(null);
-  let callStart: Date | null = null;
-  // const [callEnd, setCallEnd] = useState<null | Date>(null);
-  const [signature, setSignature] = useState<string>("");
+  const callDialRef = useRef<Date | null>(null);
+  let callStartRef = useRef<Date | null>(null);
+  const isCallEndedRef = useRef<boolean>(false);
+  const isCallAcceptedRef = useRef<boolean>(false);
+  const isCallRejectedRef = useRef<boolean>(false);
+  const isCallCanceledRef = useRef<boolean>(false);
   const contractorNo = Number(sessionStorage.getItem("contractorNo"));
   const [interpreterNo, setInterpreterNo] = useState<number | null>(null);
   const [selectedLanguageNo, setSelectedLanguageNo] = useState(() => {
@@ -31,8 +33,9 @@ function UserMenu() {
   let meetingEnded = false;
 
   const startMeeting = (signature: string) => {
-    console.log(15589, interpreterNo);
     document.getElementById("zmmtg-root")!.style.display = "block";
+
+    let zoomCallStart: null | Date;
 
     ZoomMtg.init({
       leaveUrl: `${import.meta.env.VITE_REACT_APP_URL}/ContractorCallingMenu`,
@@ -65,8 +68,9 @@ function UserMenu() {
             );
 
             ZoomMtg.inMeetingServiceListener("onUserJoin", function () {
+              zoomCallStart = new Date();
               // setCallStart(new Date());
-              callStart = new Date();
+              callStartRef.current = new Date();
             });
 
             // Adding event listener for when the meeting ends
@@ -89,13 +93,16 @@ function UserMenu() {
                   Number(interpreterNo),
                   Number(selectedLanguageNo),
                   contractorNo,
-                  callDial,
+                  callDialRef.current,
                   null,
-                  callStart,
+                  zoomCallStart,
                   new Date(),
                   "callAccepted",
                   rating
                 );
+                // setCallDial(null);
+                // callDialRef.current = null;
+                isCallEndedRef.current = true;
               } catch (error) {
                 console.error("Error saving callLog:", error);
               }
@@ -118,10 +125,6 @@ function UserMenu() {
     { label: string; value: string | number }[]
   >([]);
 
-  useEffect(() => {
-    fetchLanguageNames();
-  }, []);
-
   const fetchLanguageNames = async () => {
     try {
       let response = await LanguageApiService.fetchLanguagesAll();
@@ -132,8 +135,6 @@ function UserMenu() {
         label: item.language_name, // Map 'language_name' to 'label'
         value: String(item.languages_support_no), // Map 'languages_support_no' to 'value'
       }));
-
-      // radioOptions = response;
 
       setSelectLanguage(response);
     } catch (error) {
@@ -154,6 +155,35 @@ function UserMenu() {
   };
 
   useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (!isCallEndedRef.current && callStartRef.current) {
+        CallLogApiService.createCallLog(
+          Number(interpreterNo),
+          Number(selectedLanguageNo),
+          contractorNo,
+          callDialRef.current,
+          null,
+          callStartRef.current,
+          new Date(),
+          "callAccepted3",
+          null
+        );
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Cleanup the event listener when the component is unmounted
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [callStartRef.current]);
+
+  useEffect(() => {
+    fetchLanguageNames();
+  }, []);
+
+  useEffect(() => {
     // Retrieve the selected value from localStorage on mount
     const savedValue = localStorage.getItem("selectedLanguage");
     if (savedValue) {
@@ -164,6 +194,7 @@ function UserMenu() {
   useEffect(() => {
     const handleInterpreterResponseReject = (data: any) => {
       if (data.contractorNo === contractorNo && data.response === "rejected") {
+        isCallRejectedRef.current = true;
         stopRingtone();
         try {
           CallLogApiService.createCallLog(
@@ -193,57 +224,13 @@ function UserMenu() {
   useEffect(() => {
     socket.on("interpreterServerResponse", (data) => {
       if (data.contractorNo == contractorNo && data.response == "accepted") {
+        isCallAcceptedRef.current = true;
         setInterpreterNo(data.interpreterNumber);
-        setSignature(data.signature.signature);
         console.log(1787, data.signature.signature);
+        startMeeting(data.signature.signature);
       }
     });
   }, [contractorNo]); // Only re-run if contractorNo changes
-
-  // Watch for changes in interpreterNo and call startMeeting
-  useEffect(() => {
-    if (signature) {
-      startMeeting(signature);
-    }
-  }, [signature]);
-
-  useEffect(() => {
-    // Function to send data via API
-    const sendDataOnClose = async () => {
-      try {
-        const response = await fetch("https://your-api-endpoint.com/close", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            message: "User closed the browser unexpectedly",
-            timestamp: new Date().toISOString(),
-          }),
-        });
-        if (response.ok) {
-          console.log("Data sent successfully.");
-        } else {
-          console.log("Failed to send data.");
-        }
-      } catch (error) {
-        console.error("Error sending data:", error);
-      }
-    };
-
-    // Function to handle the event when the browser is closed or the page is unloaded
-    const handleUnload = () => {
-      sendDataOnClose();
-    };
-
-    // Add the event listener for the unload event
-    window.addEventListener("unload", handleUnload);
-
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("unload", handleUnload);
-    };
-  }, []);
 
   const [ringingTime, setRingingTime] = useState(0);
   const intervalRef: MutableRefObject<number | null> = useRef(null);
@@ -262,8 +249,15 @@ function UserMenu() {
 
     // Automatically stop ringtone after 10 seconds
     setTimeout(() => {
-      stopRingtone();
-      callTimeUp();
+      console.log(155, callDialRef.current);
+      if (
+        !isCallAcceptedRef.current &&
+        !isCallRejectedRef.current &&
+        !isCallCanceledRef.current
+      ) {
+        stopRingtone();
+        callTimeUp();
+      }
     }, 3000); // 10 seconds (10,000 ms)
   };
 
@@ -284,7 +278,6 @@ function UserMenu() {
   };
 
   const callTimeUp = () => {
-    console.log("Call TimeUp", callDial);
     const data = {
       contractorNo: contractorNo,
     };
@@ -294,9 +287,9 @@ function UserMenu() {
         Number(interpreterNo),
         Number(selectedLanguageNo),
         contractorNo,
-        callDial,
-        new Date(),
-        callStart,
+        callDialRef.current,
+        null,
+        null,
         null,
         "callTimeUp",
         null
@@ -313,14 +306,15 @@ function UserMenu() {
       contractorNo: contractorNo,
     };
     socket.emit("cancelCallRequest", data);
+    isCallCanceledRef.current = true;
     try {
       CallLogApiService.createCallLog(
         Number(interpreterNo),
         Number(selectedLanguageNo),
         contractorNo,
-        callDial,
+        callDialRef.current,
         new Date(),
-        callStart,
+        null,
         null,
         "callCanceled",
         null
@@ -336,9 +330,16 @@ function UserMenu() {
       alert("Please select a language before joining a meeting.");
       return;
     }
-    playRingtone();
+    isCallCanceledRef.current = false;
+    isCallAcceptedRef.current = false;
+    isCallEndedRef.current = false;
+    isCallRejectedRef.current = false;
+    callStartRef.current = null;
 
-    setCallDial(new Date());
+    playRingtone();
+    console.log(15589, new Date());
+
+    callDialRef.current = new Date();
 
     const data = {
       meetingNumber: "7193586721",
