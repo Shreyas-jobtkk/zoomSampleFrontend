@@ -5,7 +5,7 @@ import { apiUrl } from "../../../../apiUrl.js";
 import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader.js";
 import RadioButtonGroupRound from "../../../LV1/RadioButton/RadioButtonGroupRound.js";
 import { useTranslation } from "react-i18next";
-import "../../../../i18n.js";
+import "../../../../i18n/i18n.js";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom.js";
 import { Box } from "@mui/material";
 import classes from "../styles/ContractorEntities.module.scss";
