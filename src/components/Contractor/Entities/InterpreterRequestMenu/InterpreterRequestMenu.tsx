@@ -377,7 +377,7 @@ function UserMenu() {
         name="options"
       />
 
-      <Box className={classes.userMessage}>{t("User message")}</Box>
+      <Box className={classes.userMessage}>{t("UserMessage")}</Box>
       <Box className={classes.userCallRow}>
         <ButtonAtom
           onClick={() => {
