@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import "../../../../i18n.js";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom.js";
 import { Box } from "@mui/material";
-import classes from "../styles/Entities.module.scss";
+import classes from "../styles/ContractorEntities.module.scss";
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
 import { ZoomMtg } from "@zoom/meetingsdk";
@@ -26,7 +26,8 @@ function UserMenu() {
   const isCallRejectedRef = useRef<boolean>(false);
   const isCallCanceledRef = useRef<boolean>(false);
   const contractorNo = Number(sessionStorage.getItem("contractorNo"));
-  const [interpreterNo, setInterpreterNo] = useState<number | null>(null);
+  const interpreterNoRef = useRef<number | null>(null);
+  // const [interpreterNo, setInterpreterNo] = useState<number | null>(null);
   const [selectedLanguageNo, setSelectedLanguageNo] = useState(() => {
     return localStorage.getItem("selectedLanguage") || "1";
   });
@@ -35,7 +36,8 @@ function UserMenu() {
   const startMeeting = (signature: string) => {
     document.getElementById("zmmtg-root")!.style.display = "block";
 
-    let zoomCallStart: null | Date;
+    // let zoomCallStart: null | Date;
+    // let interpreterNo: null | number = interpreterNoRef.current;
 
     ZoomMtg.init({
       leaveUrl: `${import.meta.env.VITE_REACT_APP_URL}/ContractorCallingMenu`,
@@ -49,7 +51,6 @@ function UserMenu() {
       success: (success: unknown) => {
         // alert("You have successfully joined the meeting!");
         console.log(success);
-        console.log(21897, interpreterNo);
 
         ZoomMtg.join({
           signature: signature,
@@ -68,7 +69,7 @@ function UserMenu() {
             );
 
             ZoomMtg.inMeetingServiceListener("onUserJoin", function () {
-              zoomCallStart = new Date();
+              // zoomCallStart = new Date();
               // setCallStart(new Date());
               callStartRef.current = new Date();
             });
@@ -88,14 +89,16 @@ function UserMenu() {
                   ? Number(input)
                   : null;
 
+              console.log(2787, interpreterNoRef.current);
+
               try {
                 CallLogApiService.createCallLog(
-                  Number(interpreterNo),
+                  interpreterNoRef.current,
                   Number(selectedLanguageNo),
                   contractorNo,
                   callDialRef.current,
                   null,
-                  zoomCallStart,
+                  callStartRef.current,
                   new Date(),
                   "callAccepted",
                   rating
@@ -143,6 +146,7 @@ function UserMenu() {
   };
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(18999, event.target.value);
     setSelectedLanguageNo(event.target.value);
     if (event.target.value === "1") {
       i18n.changeLanguage("ja"); // Change to Japanese
@@ -158,7 +162,7 @@ function UserMenu() {
     const handleBeforeUnload = () => {
       if (!isCallEndedRef.current && callStartRef.current) {
         CallLogApiService.createCallLog(
-          Number(interpreterNo),
+          interpreterNoRef.current,
           Number(selectedLanguageNo),
           contractorNo,
           callDialRef.current,
@@ -225,8 +229,9 @@ function UserMenu() {
     socket.on("interpreterServerResponse", (data) => {
       if (data.contractorNo == contractorNo && data.response == "accepted") {
         isCallAcceptedRef.current = true;
-        setInterpreterNo(data.interpreterNumber);
-        console.log(1787, data.signature.signature);
+        // setInterpreterNo(data.interpreterNumber);
+        interpreterNoRef.current = Number(data.interpreterNumber);
+        console.log(1787, interpreterNoRef.current);
         startMeeting(data.signature.signature);
       }
     });
@@ -284,7 +289,7 @@ function UserMenu() {
     socket.emit("cancelCallRequest", data);
     try {
       CallLogApiService.createCallLog(
-        Number(interpreterNo),
+        interpreterNoRef.current,
         Number(selectedLanguageNo),
         contractorNo,
         callDialRef.current,
@@ -309,7 +314,7 @@ function UserMenu() {
     isCallCanceledRef.current = true;
     try {
       CallLogApiService.createCallLog(
-        Number(interpreterNo),
+        interpreterNoRef.current,
         Number(selectedLanguageNo),
         contractorNo,
         callDialRef.current,
@@ -335,6 +340,7 @@ function UserMenu() {
     isCallEndedRef.current = false;
     isCallRejectedRef.current = false;
     callStartRef.current = null;
+    interpreterNoRef.current = null;
 
     playRingtone();
     console.log(15589, new Date());

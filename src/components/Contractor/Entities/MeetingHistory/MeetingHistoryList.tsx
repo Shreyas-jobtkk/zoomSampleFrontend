@@ -1,265 +1,165 @@
 import DatePicker from "../../../LV1/DatePicker/DatePicker";
 import TimePicker from "../../../LV1/TimePicker/TimePicker"; // Adjust the import path as needed
-import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import SelectOption from "../../../LV1/SelectOption/SelectOption";
 import DataTable from "../../../LV3/DataTable/DataTable";
-// import classes from "../styles/AdminEntities.module.scss";
-import classes from "../../../../../src/components/Admin/Entities/styles/AdminEntities.module.scss";
-import ContractorSearch from "../../../Admin/Entities/User/Contractor/ContractorSearch";
-// import ContractorSearch from "src/components/Admin/Entities/User/Contractor/ContractorSearch";
-import InterpreterSearch from "../../../Admin/Entities/User/Interpreter/InterpreterSearch";
+// import classes from "../../../../components/Admin/Entities/styles/AdminEntities.module.scss";
+import classes from "../styles/ContractorEntities.module.scss";
+// import ContractorSearch from "c:/Users/g_shreyas/Desktop/zoomFrontend/zoomSampleFrontend/src/components/Admin/Entities/User/Contractor/ContractorSearch";
+import { CallLogApiService } from "../../../../api/apiService/callLog/callLog-api-service";
+import { convertToJST } from "../../../../utils/utils";
+import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
+import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
+
 function InterpreterEvaluationList() {
   const headers = [
     "No",
     "開始日時",
     "終了日時",
-    "契約No",
-    "企業名",
-    "店舗名",
     "通訳者No",
     "通訳者名",
     "通訳言語",
-    "評価",
-  ];
-  const data = [
-    {
-      No: 1,
-      開始日時: "2024-11-01 09:00",
-      終了日時: "2024-11-01 10:00",
-      契約No: "1001",
-      企業名: "Company A",
-      店舗名: "Sales",
-      通訳者No: 7,
-      通訳言語: "Japanese",
-      通訳者名: "John",
-      評価: 5,
-    },
-    {
-      No: 2,
-      開始日時: "2024-11-01 11:00",
-      終了日時: "2024-11-01 12:00",
-      契約No: "1002",
-      企業名: "Company B",
-      店舗名: "Marketing",
-      通訳者No: 8,
-      通訳言語: "English",
-      通訳者名: "Alice",
-      評価: 4,
-    },
-    {
-      No: 3,
-      開始日時: "2024-11-01 13:00",
-      終了日時: "2024-11-01 14:00",
-      契約No: "1003",
-      企業名: "Company C",
-      店舗名: "Support",
-      通訳者No: 9,
-      通訳言語: "Chinese",
-      通訳者名: "Mike",
-      評価: 3,
-    },
-    {
-      No: 4,
-      開始日時: "2024-11-01 15:00",
-      終了日時: "2024-11-01 16:00",
-      契約No: "1004",
-      企業名: "Company D",
-      店舗名: "IT",
-      通訳者No: 10,
-      通訳言語: "Korean",
-      通訳者名: "Sarah",
-      評価: 5,
-    },
-    {
-      No: 5,
-      開始日時: "2024-11-01 17:00",
-      終了日時: "2024-11-01 18:00",
-      契約No: "1005",
-      企業名: "Company E",
-      店舗名: "Finance",
-      通訳者No: 11,
-      通訳言語: "Japanese",
-      通訳者名: "David",
-      評価: 4,
-    },
-    {
-      No: 6,
-      開始日時: "2024-11-01 19:00",
-      終了日時: "2024-11-01 20:00",
-      契約No: "1006",
-      企業名: "Company F",
-      店舗名: "HR",
-      通訳者No: 12,
-      通訳言語: "French",
-      通訳者名: "Anna",
-      評価: 5,
-    },
-    {
-      No: 7,
-      開始日時: "2024-11-02 09:00",
-      終了日時: "2024-11-02 10:00",
-      契約No: "1007",
-      企業名: "Company G",
-      店舗名: "Engineering",
-      通訳者No: 13,
-      通訳言語: "German",
-      通訳者名: "Tom",
-      評価: 3,
-    },
-    {
-      No: 8,
-      開始日時: "2024-11-02 11:00",
-      終了日時: "2024-11-02 12:00",
-      契約No: "1008",
-      企業名: "Company H",
-      店舗名: "Legal",
-      通訳者No: 14,
-      通訳言語: "Japanese",
-      通訳者名: "Emma",
-      評価: 5,
-    },
-    {
-      No: 9,
-      開始日時: "2024-11-02 13:00",
-      終了日時: "2024-11-02 14:00",
-      契約No: "1009",
-      企業名: "Company I",
-      店舗名: "Operations",
-      通訳者No: 15,
-      通訳言語: "Spanish",
-      通訳者名: "James",
-      評価: 4,
-    },
-    {
-      No: 10,
-      開始日時: "2024-11-02 15:00",
-      終了日時: "2024-11-02 16:00",
-      契約No: "1010",
-      企業名: "Company J",
-      店舗名: "R&D",
-      通訳者No: 16,
-      通訳言語: "English",
-      通訳者名: "Sophia",
-      評価: 3,
-    },
-    {
-      No: 11,
-      開始日時: "2024-11-02 17:00",
-      終了日時: "2024-11-02 18:00",
-      契約No: "1011",
-      企業名: "Company K",
-      店舗名: "Customer Service",
-      通訳者No: 17,
-      通訳言語: "Japanese",
-      通訳者名: "Liam",
-      評価: 5,
-    },
-    {
-      No: 12,
-      開始日時: "2024-11-02 19:00",
-      終了日時: "2024-11-02 20:00",
-      契約No: "1012",
-      企業名: "Company L",
-      店舗名: "Logistics",
-      通訳者No: 18,
-      通訳言語: "Italian",
-      通訳者名: "Olivia",
-      評価: 4,
-    },
   ];
 
-  const [interpreterNo, setIinterpreterNo] = useState<string>("");
-  const [interpreterFirstName, setIinterpreterFirstName] = useState<string>("");
-  const [interpreterLastName, setIinterpreterLastName] = useState<string>("");
-  const [contractNo, setContractNo] = useState<string>("");
-  const [companyName, setCompanyName] = useState<string>("");
-  const [storeName, setStoreName] = useState<string>("");
+  const [tableData, setTableData] = useState<any>([]);
+  const [searchData, setSearchData] = useState<any>([]);
+  const [startDateRangeMin, setStartDateRangeMin] = useState<Date | null>(null);
+  const [startDateRangeMax, setStartDateRangeMax] = useState<Date | null>(null);
+  const [startDateTimeRangeMin, setStartDateTimeRangeMin] = useState<any>(null);
+  // const [startTimeRangeMin, setStartTimeRangeMin] = useState<Date | null>(null);
+  // const [startTimeRangeMax, setStartTimeRangeMax] = useState<Date | null>(null);
+  const [startDateTimeRangeMax, setStartDateTimeRangeMax] = useState<any>(null);
+  const [languagesSupport, setLanguagesSupport] = useState<
+    { label: string; value: string | number }[]
+  >([]);
 
-  // const [dateRangeMin, setDateRangeMin] = useState<Date>(new Date(0));
-  // const [dateRangeMax, setDateRangeMax] = useState<Date>(new Date(8.64e15));
-  // const [timeRangeMin, setTimeRangeMin] = useState("");
-  // const [timeRangeMax, setTimeRangeMax] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState<string>("");
 
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const fetchLanguageNames = async () => {
+    try {
+      let response = await LanguageApiService.fetchLanguageNames();
 
-  const options = [
-    { label: "None", value: "" },
-    { label: "Option 1", value: "option1" },
-    { label: "Option 2", value: "option2" },
-    { label: "Option 3", value: "option3" },
-  ];
+      console.log(177, response);
 
-  const [openContractor, setOpenContractor] = useState(false);
-  const [openInterpreter, setOpenInterpreter] = useState(false);
+      response = response.map((item: LanguageInfo) => ({
+        label: item.language_name, // Map 'language_name' to 'label'
+        value: item.languages_support_no, // Map 'languages_support_no' to 'value'
+      }));
 
-  const handleSearchContractor = () => {
-    setOpenContractor(true);
-  };
+      setLanguagesSupport(response);
 
-  const setContractorDetails = (value: any) => {
-    setOpenContractor(false);
-
-    if (value && typeof value === "object") {
-      setContractNo(value["契約No"] || ""); // Provide a fallback if key is missing
-      setCompanyName(value["企業名"] || "");
-      setStoreName(value["店舗名"] || "");
-    } else {
-      console.error("Invalid value:", value);
+      // const response = await axios.get(`${apiUrl}/company`);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
     }
   };
 
-  const handleSearchInterpreter = () => {
-    setOpenInterpreter(true);
+  useEffect(() => {
+    fetchCallLogData();
+    fetchLanguageNames();
+  }, []);
+
+  const searchConditions = () => {
+    filterTableData();
   };
 
-  const setInterpreterDetails = (value: any) => {
-    console.log(589, value);
-    setOpenInterpreter(false);
+  const filterTableData = () => {
+    console.log(1557, selectedLanguage);
+    const filtered = tableData.filter((item: any) => {
+      const matchesLangNo =
+        selectedLanguage === "" || item["lang_no"] === selectedLanguage;
 
-    if (value && typeof value === "object") {
-      // setContractNo(value["契約No"] || ""); // Provide a fallback if key is missing
-      setIinterpreterNo(value["通訳者No"] || "");
-      setIinterpreterLastName(value["名前_last"] || "");
-      setIinterpreterFirstName(value["名前_first"] || "");
-    } else {
-      console.error("Invalid value:", value);
+      let startperiodRangeMin = startDateTimeRangeMin
+        ? new Date(startDateTimeRangeMin)
+        : null;
+
+      const matchesStartTimeMin =
+        startperiodRangeMin === null ||
+        new Date(item["開始日時"]) >= startperiodRangeMin;
+      console.log(144, startperiodRangeMin);
+      console.log(145, matchesStartTimeMin);
+
+      let startperiodRangeMax = startDateTimeRangeMax
+        ? new Date(startDateTimeRangeMax)
+        : null;
+
+      const matchesStartTimeMax =
+        startperiodRangeMax === null ||
+        new Date(item["開始日時"]) <= startperiodRangeMax;
+
+      return matchesStartTimeMin && matchesStartTimeMax && matchesLangNo;
+    });
+
+    // Update the table data to show filtered results
+    setSearchData(filtered);
+  };
+
+  const fetchCallLogData = async () => {
+    try {
+      const response = await CallLogApiService.fetchCallLog();
+      console.log(75589, response);
+      let apiTableData: any = response.map((item: any) => ({
+        開始日時: convertToJST(item.call_start),
+        終了日時: convertToJST(item.call_end),
+        通訳者No: item.interpreter_no,
+        通訳者名: item.interpreter_name,
+        通訳言語: item.language_name,
+        lang_no: item.language_support_no,
+      }));
+
+      let videoStartTableData = apiTableData.filter(
+        (item: any) => item.開始日時
+      );
+
+      videoStartTableData = videoStartTableData.map(
+        (item: any, index: number) => ({
+          No: index + 1, // Reassign sequential numbering
+          ...item,
+        })
+      );
+      console.log(189, videoStartTableData);
+      setTableData(videoStartTableData); // Initial table data load
+      setSearchData(videoStartTableData);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
     }
   };
-
-  const searchConditions = () => {};
 
   // Handle start date change
   const handleStartDateChange = (date: any) => {
-    // setSelectedStartDate(date);
+    setStartDateRangeMin(date);
+    setStartDateTimeRangeMin(date);
     console.log("Selected Start Date:", date || "None");
   };
 
   // Handle end date change
   const handleEndDateChange = (date: any) => {
-    // setSelectedEndDate(date);
+    setStartDateTimeRangeMax(date);
+    setStartDateRangeMax(date);
     console.log("Selected End Date:", date || "None"); // Log the selected end date
   };
 
   // Handle start time change
   const handleStartTimeChange = (newValue: any) => {
-    // setSelectedStartTime(newValue);
     console.log(
       "Selected Start Time:",
       newValue ? newValue.format("HH:mm") : "None"
     ); // Log the selected start time
+    // setStartTimeRangeMin(newValue ? newValue.format("HH:mm") : "None");
+    setStartDateTimeRangeMin(
+      `${startDateRangeMin} ${newValue.format("HH:mm") || "00:00"}`
+    );
   };
 
   // Handle end time change
   const handleEndTimeChange = (newValue: any) => {
-    // setSelectedEndTime(newValue);
-    console.log(
-      "Selected End Time:",
-      newValue ? newValue.format("HH:mm") : "None"
-    ); // Log the selected end time
+    // setStartTimeRangeMax(newValue ? newValue.format("HH:mm") : "None");
+    setStartDateTimeRangeMax(
+      `${startDateRangeMax} ${newValue.format("HH:mm") || "00:00"}`
+    );
   };
 
   const handleSelectionChange = (
@@ -269,8 +169,8 @@ function InterpreterEvaluationList() {
   };
 
   return (
-    <Box className={classes.adminEntity}>
-      <MenuHeader title="ミーティング履歴一覧" />
+    <Box className={classes.interpreterEntity}>
+      <MenuHeader title="通訳評価一覧" />
       <Box className={classes.searchContainer}>
         <Box className={classes.searchLabel}>検索条件</Box>
         <Box className={classes.selectRange}>
@@ -281,81 +181,33 @@ function InterpreterEvaluationList() {
           <TimePicker
             label=""
             onChange={handleStartTimeChange} // Use the separate handler for start time
+            disabled={!startDateRangeMin}
           />
 
           <span>~</span>
 
-          <span>終了日時：</span>
+          {/* <span>終了日時：</span> */}
+          <span>開始日時：</span>
           <DatePicker label="" onDateChange={handleEndDateChange} />
           <TimePicker
             label=""
             onChange={handleEndTimeChange} // Use the separate handler for end time
+            disabled={!startDateRangeMax}
           />
         </Box>
+
         <Box>
-          <ButtonAtom
-            onClick={handleSearchContractor}
-            label="契約検索"
-            width="90px"
-            margin="2px"
-          />
-          <InterpreterSearch
-            open={openInterpreter}
-            onClose={setInterpreterDetails}
-          />
-          <Box className={classes.contractorDetails}>
-            <TextBoxWithLabel
-              label="契約No"
-              width="calc(10vw - 20px)" // Uncomment to set a custom width
-              value={contractNo}
-            />
-            <TextBoxWithLabel
-              label="企業名"
-              width="calc(32vw - 80px)" // Uncomment to set a custom width
-              value={companyName}
-            />
-            <TextBoxWithLabel
-              label="店舗名"
-              width="calc(32vw - 80px)" // Uncomment to set a custom width
-              value={storeName}
-            />
-          </Box>
-        </Box>
-        <Box>
-          <ButtonAtom
-            onClick={handleSearchInterpreter}
-            label="通訳者検索"
-            width="90px"
-            margin="2px"
-          />
-          <Box className={classes.contractorDetails}>
-            <TextBoxWithLabel
-              label="通訳者No"
-              width="calc(10vw - 20px)" // Uncomment to set a custom width
-              value={interpreterNo}
-            />
-            <TextBoxWithLabel
-              label="通訳者名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
-              width="calc(28vw - 150px)" // Uncomment to set a custom width
-              value={interpreterLastName}
-              labelWidth="120px"
-            />
-            <TextBoxWithLabel
-              label="名"
-              width="calc(28vw - 150px)" // Uncomment to set a custom width
-              value={interpreterFirstName}
-              labelWidth="30px"
-            />
+          <Box className={classes.lastRow}>
             <SelectOption
               label="通訳言語："
-              options={options}
+              options={languagesSupport}
               width={"calc(10vw - 15px)"}
-              value={selectedOption}
-              onChange={setSelectedOption}
+              value={selectedLanguage}
+              onChange={setSelectedLanguage}
               labelWidth={"85px"}
             />
 
-            <Box className={classes.searchButton}>
+            <Box>
               <ButtonAtom
                 margin="0 0 4px 0"
                 onClick={searchConditions}
@@ -365,15 +217,17 @@ function InterpreterEvaluationList() {
           </Box>
         </Box>
       </Box>
-      <ContractorSearch open={openContractor} onClose={setContractorDetails} />
+
       <DataTable // Customize header height
         headers={headers}
-        data={data}
+        data={searchData}
         maxHeight="calc(82vh - 300px)"
         onSelectionChange={handleSelectionChange}
       />
-      <Box className={classes.searchButton}>
+      <Box className={classes.actionButtons}>
         <ButtonAtom onClick={searchConditions} label="閲覧" />
+        <ButtonAtom onClick={searchConditions} label="編集" />
+        <ButtonAtom onClick={searchConditions} label="削除" />
       </Box>
     </Box>
   );
