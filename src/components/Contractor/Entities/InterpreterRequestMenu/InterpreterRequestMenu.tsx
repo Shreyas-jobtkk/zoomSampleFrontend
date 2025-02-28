@@ -174,7 +174,7 @@ function UserMenu() {
           null,
           callStartRef.current,
           new Date(),
-          "callAccepted3",
+          "callAccepted",
           null
         );
       }

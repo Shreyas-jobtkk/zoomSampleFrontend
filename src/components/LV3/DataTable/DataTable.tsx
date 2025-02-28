@@ -22,7 +22,7 @@ import {
 import SelectOption from "../../LV1/SelectOption/SelectOption";
 import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom";
 import NumberInput from "../../LV1/NumberInput/NumberInput";
-
+import Tooltip from "@mui/material/Tooltip";
 export interface DataTableRow {
   No: number;
   [key: string]: string | number;
@@ -199,7 +199,7 @@ const DataTable: React.FC<DataTableProps> = ({
           <NumberInput
             value={page + 1}
             onChange={handlePageInputChange}
-            width="100px"
+            width="50px"
             height="30px"
           />
           <Box mx={1}>/ {totalPages}</Box>
@@ -224,8 +224,8 @@ const DataTable: React.FC<DataTableProps> = ({
               { label: "5", value: 5 },
               { label: "10", value: 10 },
             ]}
-            // width={150}
-            labelWidth={130}
+            width={50}
+            labelWidth={120}
             value={rowsPerPage.toString()}
             onChange={handleChangeRowsPerPage}
           />
@@ -310,20 +310,22 @@ const DataTable: React.FC<DataTableProps> = ({
                     />
                   </TableCell>
                   {headers.map((header, cellIndex) => (
-                    <TableCell
-                      key={cellIndex}
-                      style={{
-                        border: "1px solid gray",
-                        padding: "0 8px",
-                        width: columnWidths[cellIndex],
-                        textAlign: cellIndex === 0 ? "right" : "left",
-                        minWidth: "1vw",
-                        maxWidth: "1vw",
-                        overflow: "auto",
-                      }}
-                    >
-                      {row[header]}
-                    </TableCell>
+                    <Tooltip title={row[header]} key={`${header}-${cellIndex}`}>
+                      <TableCell
+                        key={cellIndex}
+                        style={{
+                          border: "1px solid gray",
+                          padding: "0 8px",
+                          width: columnWidths[cellIndex],
+                          textAlign: cellIndex === 0 ? "right" : "left",
+                          minWidth: "1vw",
+                          maxWidth: "1vw",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {row[header]}
+                      </TableCell>
+                    </Tooltip>
                   ))}
                 </TableRow>
               ))}

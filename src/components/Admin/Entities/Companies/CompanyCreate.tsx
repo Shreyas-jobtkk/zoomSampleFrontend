@@ -10,8 +10,10 @@ import ValidationButton from "../../../LV1/Button/ValidationButton/ValidationBut
 import { CompanyCreateFormValues } from "../../../../types/CompanyTypes/CompanyTypes";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
+import { useNavigate } from "react-router-dom";
 
 const CompanyCreate = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<CompanyCreateFormValues>({
     company_name: "",
     company_note: "",
@@ -32,7 +34,7 @@ const CompanyCreate = () => {
     handleSubmit,
     formState: { isSubmitted },
   } = useForm<CompanyCreateFormValues>();
-  const searchConditions = () => {};
+  const searchConditions = () => navigate("/CompaniesList");
   const saveCompanyInfo = async (data: CompanyCreateFormValues) => {
     console.log("Form Data Submitted:", data);
     try {
@@ -107,13 +109,6 @@ const CompanyCreate = () => {
           </Box>
         </Box>
 
-        {/* <TextAreaWithLabel
-          label="備考"
-          value={note}
-          onChange={(e: any) => setNote(e.target.value)}
-          margin="1vh 0 1vh 40vw"
-          maxLength={64}
-        /> */}
         <TextAreaWithLabel
           label="備考"
           value={formData.company_note}
@@ -126,11 +121,7 @@ const CompanyCreate = () => {
 
         <Box className={classes.actionButtons}>
           <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
-          <ValidationButton
-            label="保存"
-            // onClick={saveCompanyInfo}
-            type="submit"
-          />
+          <ValidationButton label="保存" type="submit" />
         </Box>
       </Box>
     </Box>

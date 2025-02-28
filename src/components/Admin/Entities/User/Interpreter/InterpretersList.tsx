@@ -462,7 +462,7 @@ function InterpretersList() {
               />
             </Box>
           </Box>
-          <Box sx={{ display: "flex" }}>
+          <Box className={classes.lastRow}>
             <MultipleOptionsSelect
               label="通訳言語："
               options={languagesSupport}
@@ -470,9 +470,7 @@ function InterpretersList() {
               onChange={handleSelectChange}
               width="calc(10vw - 30px)"
             />
-            <Box className={classes.searchButton}>
-              <ButtonAtom onClick={searchConditions} label="検索" />
-            </Box>
+            <ButtonAtom onClick={searchConditions} label="検索" />
           </Box>
         </Box>
       </Box>
