@@ -31,6 +31,10 @@ function LanguagesSupportList() {
   );
 
   const [tableData, setTableData] = useState<any[]>([]);
+  const [searchData, setSearchData] = useState<any[]>([]);
+  const [langNo, setLangNo] = useState<string | number>("");
+  const [langName, setLangName] = useState<string>("");
+  const [langNameJapanese, setLangNameJapanese] = useState<string>("");
 
   useEffect(() => {
     fetchLanguagesListData();
@@ -57,12 +61,42 @@ function LanguagesSupportList() {
         }));
       console.log(141, sortedData);
       setTableData(sortedData);
+      setSearchData(sortedData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
-  const searchConditions = () => {};
+  const filterTableData = () => {
+    const filtered = tableData.filter((item) => {
+      // Convert "企業No" (company number) to a number for range comparison
+      const matchesLanguageNo =
+        langNo === "" || item["言語No"].includes(langNo);
+      const matchesLangName =
+        langName === "" || item["言語"].includes(langName);
+      const matchesLangNameJapanese =
+        langNameJapanese === "" || item["和訳"] === langNameJapanese;
+
+      console.log(
+        21445,
+        langName,
+        langNameJapanese,
+        item["言語No"],
+        item["言語"],
+        item["和訳"]
+      );
+
+      // An item is included in the results only if it satisfies both range and search conditions
+      return matchesLanguageNo && matchesLangName && matchesLangNameJapanese;
+    });
+
+    // Update the filtered data state to reflect the search results
+    setSearchData(filtered);
+  };
+
+  const searchConditions = () => {
+    filterTableData();
+  };
 
   const navigateToInfoPage = () => {
     navigate(`/LanguagesInfo?selectedLanguageNo=${selectedLanguageNoArray[0]}`);
@@ -88,10 +122,6 @@ function LanguagesSupportList() {
     await fetchLanguagesListData();
   };
 
-  const [textValue1, setTextValue1] = useState<string>("");
-  const [textValue2, setTextValue2] = useState<string>("");
-  const [textValue3, setTextValue3] = useState<string>("");
-
   const handleSelectionChange = (
     newSelectedData: Array<{
       No: string | number;
@@ -116,8 +146,9 @@ function LanguagesSupportList() {
             disabled={false}
             label="言語No"
             width="calc(10vw - 30px)" // Uncomment to set a custom width
-            value={textValue1}
-            onChange={(e: any) => setTextValue1(e.target.value)}
+            value={langNo}
+            onChange={(e: any) => setLangNo(Number(e.target.value))}
+            type="number"
           />
 
           <Box>
@@ -127,8 +158,8 @@ function LanguagesSupportList() {
                   disabled={false}
                   label="和訳"
                   width="calc(60vw - 120px)" // Uncomment to set a custom width
-                  value={textValue2}
-                  onChange={(e: any) => setTextValue2(e.target.value)}
+                  value={langNameJapanese}
+                  onChange={(e: any) => setLangNameJapanese(e.target.value)}
                   labelWidth="70px"
                 />
                 <TextBoxWithLabel
@@ -136,8 +167,8 @@ function LanguagesSupportList() {
                   labelWidth="70px"
                   label="言語"
                   width="calc(60vw - 120px)" // Uncomment to set a custom width
-                  value={textValue3}
-                  onChange={(e: any) => setTextValue3(e.target.value)}
+                  value={langName}
+                  onChange={(e: any) => setLangName(e.target.value)}
                 />
               </Box>
             </Box>
@@ -153,7 +184,7 @@ function LanguagesSupportList() {
             /> */}
       <DataTable // Customize header height
         headers={headers}
-        data={tableData}
+        data={searchData}
         maxHeight="calc(87vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
