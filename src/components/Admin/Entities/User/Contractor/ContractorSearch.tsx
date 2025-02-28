@@ -118,10 +118,10 @@ function ContractorList(props: SimpleDialogProps) {
         .map((item: UserInfo, index: number) => ({
           No: index + 1,
           登録日時: convertToJST(item.created_at),
-          更新日時: String(
-            new Date(convertToJST(item.created_at)) > new Date(0)
-          ),
-          // 更新日時: convertToJST(item.updated_at),
+          // 更新日時: String(
+          //   new Date(convertToJST(item.created_at)) > new Date(0)
+          // ),
+          更新日時: convertToJST(item.updated_at),
           企業No: item.company_no,
           企業名: item.company_name,
           店舗No: item.store_no,

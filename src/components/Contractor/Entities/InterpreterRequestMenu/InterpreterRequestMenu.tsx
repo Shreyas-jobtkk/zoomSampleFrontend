@@ -133,7 +133,9 @@ function UserMenu() {
       let response = await LanguageApiService.fetchLanguagesAll();
 
       console.log(102177, response);
-
+      response = response.sort(
+        (a: any, b: any) => a.languages_support_no - b.languages_support_no
+      );
       response = response.map((item: LanguageInfo) => ({
         label: item.language_name, // Map 'language_name' to 'label'
         value: String(item.languages_support_no), // Map 'languages_support_no' to 'value'
@@ -145,16 +147,19 @@ function UserMenu() {
     }
   };
 
+  const languageMap: Record<string, string> = Object.fromEntries(
+    ["1", "2", "3"].map((num) => [num, num])
+  );
+
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(18999, event.target.value);
     setSelectedLanguageNo(event.target.value);
-    if (event.target.value === "1") {
-      i18n.changeLanguage("ja"); // Change to Japanese
-    } else if (event.target.value === "2") {
-      i18n.changeLanguage("en"); // Change to Japanese
-    } else {
-      i18n.changeLanguage("jaKana"); // Change to English
-    }
+
+    // Get the corresponding language from the map, default to "ja" if not found
+    const selectedLanguage = languageMap[event.target.value] || "ja";
+
+    i18n.changeLanguage(selectedLanguage);
+
     localStorage.setItem("selectedLanguage", event.target.value); // Save to localStorage
   };
 
@@ -377,7 +382,9 @@ function UserMenu() {
         name="options"
       />
 
-      <Box className={classes.userMessage}>{t("UserMessage")}</Box>
+      <Box className={classes.userMessage}>
+        {t("InterpretationRequestMessage")}
+      </Box>
       <Box className={classes.userCallRow}>
         <ButtonAtom
           onClick={() => {

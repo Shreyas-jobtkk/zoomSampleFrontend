@@ -4,16 +4,16 @@ import { initReactI18next } from "react-i18next";
 
 import en from "./locales/en.json";
 import ja from "./locales/ja.json";
-import jaKana from "./locales/ja-kana.json";
+import jaKana from "./locales/jaKana.json";
 
 i18n.use(initReactI18next).init({
   resources: {
-    en: { translation: en },
-    ja: { translation: ja },
-    jaKana: { translation: jaKana },
+    1: { translation: ja },
+    2: { translation: en },
+    3: { translation: jaKana },
   },
-  lng: "ja", // default language
-  fallbackLng: "ja",
+  lng: "1", // default language
+  fallbackLng: "1",
   interpolation: {
     escapeValue: false,
   },
