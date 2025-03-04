@@ -19,8 +19,6 @@ import io from "socket.io-client";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import SelectOption from "../../components/LV1/SelectOption/SelectOption";
-
 // Connect to the socket.io server
 const socket = io(apiUrl);
 
@@ -30,12 +28,6 @@ ZoomMtg.prepareWebSDK();
 const Sample: React.FC = () => {
   const [meetingNumber, setMeetingNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [selectedOption, setSelectedOption] = useState<string>("");
-  const options = [
-    { label: "None", value: "" },
-    { label: "Saitama TC", value: 1 },
-    { label: "Shreyas PA", value: 2 },
-  ];
 
   const {
     register,
@@ -67,15 +59,14 @@ const Sample: React.FC = () => {
   const isButtonDisabled = !meetingNumber || !password;
 
   const authEndpoint = import.meta.env.VITE_REACT_APP_API_URL;
+  const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
 
-  const getZoomSDKKey = (index: number) => {
-    return import.meta.env[`VITE_ZOOM_MEETING_SDK_KEY_${index}`];
-  };
+  console.log(import.meta.env.VITE_ZOOM_MEETING_SDK_KEY?.slice(0, 5));
+  // console.log(2557, import.meta.env.VITE_SAMPLE_2);
 
-  const zoomSDKKey = getZoomSDKKey(Number(selectedOption)); // Example usage
-  const sdkKey = zoomSDKKey;
-
-  console.log(2557, sdkKey?.slice(0, 5));
+  // for (let i = 1; i <= 2; i++) {
+  //   console.log(155, import.meta.env[`VITE_SAMPLE_${i}`]);
+  // }
 
   const role = 1;
   const userName = "Host";
@@ -88,7 +79,6 @@ const Sample: React.FC = () => {
         {
           meetingNumber: meetingNumber,
           role: role,
-          SDKAccount: selectedOption,
         },
         {
           headers: { "Content-Type": "application/json" },
@@ -96,7 +86,6 @@ const Sample: React.FC = () => {
       );
 
       const signature = zoomData.signature as string;
-      console.log(144, signature);
       startMeeting(signature);
     } catch (e) {
       console.log(e);
@@ -173,12 +162,6 @@ const Sample: React.FC = () => {
           // zak: zakToken,
           success: (success: unknown) => {
             console.log(114, success);
-            // console.log(189, ZoomMtg.inMeetingServiceListener.toString());
-            // console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
-            // console.log(
-            //   144,
-            //   sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
-            // );
 
             showInputField();
 
@@ -200,14 +183,6 @@ const Sample: React.FC = () => {
   return (
     <Container maxWidth="sm">
       <Box component="main" sx={{ textAlign: "center", mt: 4 }}>
-        <SelectOption
-          label="Select Account:"
-          options={options}
-          width={"calc(10vw - 15px)"}
-          value={selectedOption}
-          onChange={setSelectedOption}
-          labelWidth={"125px"}
-        />
         <Typography variant="h5" component="h1" gutterBottom>
           Zoom Meeting SDK Sample React Host
         </Typography>
