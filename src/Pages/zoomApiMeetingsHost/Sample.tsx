@@ -19,6 +19,7 @@ import io from "socket.io-client";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+
 // Connect to the socket.io server
 const socket = io(apiUrl);
 
@@ -37,8 +38,18 @@ const Sample: React.FC = () => {
   useEffect(() => {
     // Listen for 'streamMessage' events from the server
     const handleStreamMessage = (data: string) => {
-      showOverlayMessage(data);
-      console.log(1445, data);
+      let streamData: any = [];
+      streamData.push(data);
+      function processStreamData() {
+        if (streamData.length > 0) {
+          showOverlayMessage(streamData[0]);
+          streamData.shift(); // Remove the first item to process next
+          setTimeout(processStreamData, 50); // Wait 100 ms before continuing the loop
+        }
+      }
+
+      // Start processing the stream data with a delay
+      processStreamData();
     };
 
     const handleZoomStreamEmoji = (data: any) => {
@@ -93,49 +104,77 @@ const Sample: React.FC = () => {
   };
 
   const showInputField = () => {
-    const submitButton = document.createElement("button");
-    submitButton.textContent = "button"; // HTML entity for check mark
-    // submitButton.style.padding = "10px 20px";
-    submitButton.style.fontSize = "16px";
-    // submitButton.style.marginLeft = "10px";
-    submitButton.style.cursor = "pointer";
-    submitButton.style.borderRadius = "5px";
-    submitButton.style.backgroundColor = "#4CAF50";
-    submitButton.style.color = "#fff";
+    const MessageButton = document.createElement("button");
+    const emojiButton = document.createElement("button");
+    // const hideButtons = document.createElement("button");
+
+    MessageButton.innerHTML = "&#128172;"; // HTML entity for check mark
+    MessageButton.style.fontSize = "16px";
+    MessageButton.style.cursor = "pointer";
+    MessageButton.style.borderRadius = "5px";
+    MessageButton.style.backgroundColor = "#4CAF50";
+    MessageButton.style.color = "#fff";
 
     // Positioning the button at the extreme right
-    submitButton.style.position = "absolute"; // or 'fixed' if you want it to stay when scrolling
-    submitButton.style.top = "50px"; // Adjust the vertical position
-    submitButton.style.right = "10px"; // Adjust the distance from the right edge
-    submitButton.style.width = "70px";
+    MessageButton.style.position = "absolute"; // or 'fixed' if you want it to stay when scrolling
+    MessageButton.style.top = "50px"; // Adjust the vertical position
+    MessageButton.style.right = "10px"; // Adjust the distance from the right edge
+    MessageButton.style.width = "25px";
 
-    // Set position to absolute for left property to work
-    // submitButton.style.position = "absolute";
-    // submitButton.style.left = "50px";
+    emojiButton.innerHTML = "&#128512;"; // HTML entity for check mark
+    emojiButton.style.fontSize = "16px";
+    emojiButton.style.cursor = "pointer";
+    emojiButton.style.borderRadius = "5px";
+    emojiButton.style.backgroundColor = "#4CAF50";
+    emojiButton.style.color = "#fff";
 
-    let visible = false;
+    // Positioning the button at the extreme right
+    emojiButton.style.position = "absolute"; // or 'fixed' if you want it to stay when scrolling
+    emojiButton.style.top = "80px"; // Adjust the vertical position
+    emojiButton.style.right = "10px"; // Adjust the distance from the right edge
+    emojiButton.style.width = "25px";
 
-    submitButton.onclick = () => {
-      if (!visible) {
+    let inputFieldVisible = false;
+    let emojiVisible = false;
+
+    MessageButton.onclick = () => {
+      if (!inputFieldVisible) {
         showInputFieldOverlay(); // Show the input field overlay
-        showEmojiPicker(); // Show the emoji picker
-        visible = true;
+        hideEmojiPicker();
+        emojiVisible = false;
+        inputFieldVisible = true;
       } else {
         hideInputFieldOverlay(); // Hide the input field overlay.
+        // hideEmojiPicker();
+        inputFieldVisible = false; // Set visible to false when hiding
+      }
+    };
+
+    emojiButton.onclick = () => {
+      if (!emojiVisible) {
+        // showInputFieldOverlay(); // Show the input field overlay
+        showEmojiPicker(); // Show the emoji picker
+        emojiVisible = true;
+        hideInputFieldOverlay();
+        inputFieldVisible = false;
+      } else {
+        // hideInputFieldOverlay(); // Hide the input field overlay.
         hideEmojiPicker();
-        visible = false; // Set visible to false when hiding
+        emojiVisible = false; // Set visible to false when hiding
       }
     };
 
     // else {
-    //   submitButton.onclick = () => {
+    //   MessageButton.onclick = () => {
     //     hideInputFieldOverlay(); // Hide the input field overlay
     //     // hideEmojiPicker();        // Hide the emoji picker
     //   };
     // }
 
     // Append the button to the body or another container
-    document.body.appendChild(submitButton);
+    document.body.appendChild(MessageButton);
+    document.body.appendChild(emojiButton);
+    // document.body.appendChild(hideButtons);
   };
 
   const startMeeting = (signature: string) => {
