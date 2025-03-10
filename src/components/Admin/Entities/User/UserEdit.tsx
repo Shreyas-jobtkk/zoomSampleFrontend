@@ -22,8 +22,10 @@ import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
 import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
+import { useNavigate } from "react-router-dom";
 
 function InterpretersListUpdate() {
+  const navigate = useNavigate();
   const [optionValue, setOptionValue] = useState<Array<number | string>>([]);
   const [languagesSupport, setLanguagesSupport] = useState<
     { label: string; value: string | number }[]
@@ -322,8 +324,49 @@ function InterpretersListUpdate() {
     }
   };
 
-  const updateInterpreter = () => {
-    console.log(1555, formData);
+  function normalizeUserData(user: any) {
+    return {
+      user_no: user.user_no,
+      company_no: user.company_no,
+      store_no: user.store_no,
+      user_name: user.user_name,
+      user_name_furigana: user.user_name_furigana,
+      mail_address: user.mail_address,
+      tel: `${user.tel1}-${user.tel2}-${user.tel3}`, // Merge tel parts
+      tel_extension: `${user.tel_extension}`, // Merge fax parts
+      translate_languages: user.translate_languages,
+      user_password: user.user_password,
+      meeting_id: user.meeting_id,
+      meeting_passcode: user.meeting_passcode,
+      password_expire: user.password_expire,
+      user_note: user.user_note,
+    };
+  }
+
+  function checkForNoChange(obj1: any, obj2: any) {
+    return Object.keys(obj1).every((key) => {
+      // Check if key exists in both objects and values match (deep comparison for arrays)
+      if (Array.isArray(obj1[key])) {
+        return JSON.stringify(obj1[key]) === JSON.stringify(obj2[key]);
+      }
+      return obj1[key] === obj2[key];
+    });
+  }
+
+  const updateInterpreter = async () => {
+    const userDetails = await UserApiService.fetchUser(selectedUserNo);
+    console.log(155, JSON.stringify(userDetails));
+    console.log(2155, JSON.stringify(normalizeUserData(formData)));
+    console.log(
+      3155,
+      checkForNoChange(normalizeUserData(formData), userDetails)
+    );
+
+    if (checkForNoChange(normalizeUserData(formData), userDetails)) {
+      alert("No changes made.");
+      return;
+    }
+
     UserApiService.updateUser(
       formData.user_no,
       formData.user_name_last,
@@ -341,6 +384,9 @@ function InterpretersListUpdate() {
       formData.meeting_id,
       formData.meeting_passcode,
       formData.store_no
+    );
+    navigate(
+      `/UserUpdateConfirm?selectedUserNo=${selectedUserNo}&userType=${userType}`
     );
   };
 

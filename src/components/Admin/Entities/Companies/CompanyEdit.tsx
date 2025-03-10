@@ -82,13 +82,25 @@ function CompanyInfoEdit() {
 
   // Handle edit button action
   const handleEdit = async () => {
-    console.log(123);
-    CompanyApiService.updateCompany(
+    const companyDetails = await CompanyApiService.fetchCompany(
+      selectedCompanyNo
+    );
+
+    // Check if there are any changes
+    const isUnchanged =
+      JSON.stringify(companyDetails) === JSON.stringify(formData);
+
+    if (isUnchanged) {
+      alert("No changes made.");
+      return;
+    }
+    await CompanyApiService.updateCompany(
       formData.company_no,
       formData.company_name,
       formData.company_name_furigana,
       formData.company_note
     );
+    navigate(`/CompanyEditConfirm?selectedCompanyNo=${selectedCompanyNo}`);
   };
 
   if (!selectedCompanyNo) {
@@ -187,11 +199,10 @@ function CompanyInfoEdit() {
         />
 
         <Box className={classes.actionButtons}>
-          <ButtonAtom onClick={handleClose} label="閉じる" width="100px" />
-          <ValidationButton label="編集" width="100px" type="submit" />
-          {/* <Box>{companyNo} </Box> */}
+          <ButtonAtom onClick={handleClose} label="破棄" width="100px" />
+          <ValidationButton label="保存" width="100px" type="submit" />
         </Box>
-      </Box>{" "}
+      </Box>
     </Box>
   );
 }

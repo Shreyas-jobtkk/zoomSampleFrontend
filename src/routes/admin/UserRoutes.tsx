@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import UserInfo from "../../components/Admin/Entities/User/UserInfo";
 import UserCreate from "../../components/Admin/Entities/User/UserCreate";
 import UserUpdate from "../../components/Admin/Entities/User/UserEdit";
+import UserUpdateConfirm from "../../components/Admin/Entities/User/UserEditConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
@@ -19,6 +20,10 @@ const InterpretersListRoutes = () => (
     <Route
       path="/UserUpdate"
       element={<ProtectedAdminRoute element={<UserUpdate />} />}
+    />
+    <Route
+      path="/UserUpdateConfirm"
+      element={<ProtectedAdminRoute element={<UserUpdateConfirm />} />}
     />
   </Routes>
 );
