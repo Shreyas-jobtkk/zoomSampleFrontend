@@ -10,7 +10,7 @@ export const showEmojiPicker = () => {
 
   // Style the picker for overlay positioning
   picker.style.position = "absolute";
-  picker.style.top = "250px";
+  picker.style.top = "100px";
   picker.style.right = "50px";
   picker.style.zIndex = "99999";
 

@@ -9,7 +9,7 @@ const activeOverlays: HTMLElement[] = [];
 export const showOverlayMessage = (message: string) => {
   const processMessage = (message: string) => {
     // Calculate the animation duration based on the queue length
-    const duration = Math.max(2000, 5000 - messageQueue.length * 200); // Slower for fewer messages, faster for more messages
+    const duration = Math.max(4000, 5000 - messageQueue.length * 500); // Slower for fewer messages, faster for more messages
 
     // Create a new overlay div element
     const overlay = document.createElement("div");
