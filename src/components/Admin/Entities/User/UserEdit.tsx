@@ -404,13 +404,13 @@ function InterpretersListUpdate() {
               labelWidth="150px"
               label="登録日時"
               width="calc(45vw-100px)"
-              value={convertToJST(formData.created_at ?? "")}
+              value={convertToJST(formData.created_at) ?? ""}
             />
             <TextBoxWithLabel
               labelWidth="150px"
               label="更新日時"
               width="calc(45vw-100px)"
-              value={convertToJST(formData.updated_at ?? "")}
+              value={convertToJST(formData.updated_at) ?? ""}
             />
           </Box>
           <Box>

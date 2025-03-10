@@ -101,14 +101,14 @@ function StoreListInfo() {
               labelWidth="125px"
               label="登録日時"
               width="30vw" // Uncomment to set a custom width
-              value={convertToJST(formData.created_at ?? "")}
+              value={convertToJST(formData.created_at) ?? ""}
               //  onChange={(e: any) => setTextValue1(e.target.value)}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
               width="30vw" // Uncomment to set a custom width
-              value={convertToJST(formData.updated_at ?? "")}
+              value={convertToJST(formData.updated_at) ?? ""}
               //  onChange={(e: any) => setTextValue1(e.target.value)}
             />
           </Box>
