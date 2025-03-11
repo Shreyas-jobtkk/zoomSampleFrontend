@@ -20,15 +20,28 @@ import { UserApiService } from "../../../../api/apiService/user/user-api-service
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function InterpretersListInfo() {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  // const location = useLocation();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const userType: string = searchParams.get("userType") as string;
 
-  const searchConditions = () => {};
+  const navigateToUserList = () => {
+    if (userType == "contractor") {
+      navigate("/ContractorList");
+    }
+
+    if (userType == "interpreter") {
+      navigate("/InterpretersList");
+    }
+    if (userType == "administrator") {
+      navigate("/AdministratorList");
+    }
+  };
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -181,11 +194,11 @@ function InterpretersListInfo() {
     setValue("store_name", store_name);
   };
 
-  const createInterpreter = () => {
+  const createInterpreter = async () => {
     console.log(1555, formData);
 
     try {
-      UserApiService.createUser(
+      const response = await UserApiService.createUser(
         formData.store_no,
         formData.user_name_last,
         formData.user_name_last_furigana,
@@ -203,6 +216,9 @@ function InterpretersListInfo() {
         new Date(),
         formData.meeting_id,
         formData.meeting_passcode
+      );
+      navigate(
+        `/UserInfo?selectedUserNo=${response.user_no}&userType=${userType}`
       );
       alert("saved");
     } catch (error) {
@@ -523,7 +539,11 @@ function InterpretersListInfo() {
           </Box>
         </Box>
         <Box className={classes.actionButtons}>
-          <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
+          <ButtonAtom
+            onClick={navigateToUserList}
+            label="閉じる"
+            width="100px"
+          />
           <ValidationButton label="保存" width="100px" type="submit" />
         </Box>
       </Box>

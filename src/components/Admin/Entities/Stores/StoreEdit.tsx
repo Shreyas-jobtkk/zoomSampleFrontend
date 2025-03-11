@@ -192,6 +192,11 @@ function StoreListInfo() {
     }));
   };
 
+  // Handle close button action
+  const handleBack = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
+
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -484,7 +489,7 @@ function StoreListInfo() {
           // disabled={true}
         />
         <Box className={classes.actionButtons}>
-          <ButtonAtom label="破棄" width="100px" />
+          <ButtonAtom onClick={handleBack} label="破棄" width="100px" />
           {/* <ButtonAtom onClick={createStore} label="編集" width="100px" /> */}
           <ValidationButton
             label="編集"

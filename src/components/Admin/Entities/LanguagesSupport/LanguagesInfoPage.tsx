@@ -59,7 +59,13 @@ const LanguageSupportInfo = () => {
     }));
   };
 
-  const searchConditions = () => {};
+  const navigateToLanguageList = () => {
+    navigate("/LanguagesSupportList");
+  };
+
+  const navigateToLanguageEdit = () => {
+    navigate(`/LanguagesEdit?selectedLanguageNo=${selectedLanguageNo}`);
+  };
 
   if (!selectedLanguageNo) {
     return null;
@@ -135,8 +141,16 @@ const LanguageSupportInfo = () => {
           name="language_note"
         />
         <Box className={classes.actionButtons}>
-          <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
-          <ButtonAtom onClick={searchConditions} label="保存" width="100px" />
+          <ButtonAtom
+            onClick={navigateToLanguageList}
+            label="閉じる"
+            width="100px"
+          />
+          <ButtonAtom
+            onClick={navigateToLanguageEdit}
+            label="編集"
+            width="100px"
+          />
         </Box>
       </Box>
     </Box>

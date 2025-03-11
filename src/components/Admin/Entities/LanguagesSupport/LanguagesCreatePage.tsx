@@ -10,8 +10,10 @@ import ValidationButton from "../../../LV1/Button/ValidationButton/ValidationBut
 import { LanguageCreateFormValues } from "../../../../types/LanguageTypes/LanguageTypes";
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
+import { useNavigate } from "react-router-dom";
 
 const LanguageCreate = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<LanguageCreateFormValues>({
     language_name: "",
     language_note: "",
@@ -34,15 +36,21 @@ const LanguageCreate = () => {
     handleSubmit,
     formState: { isSubmitted },
   } = useForm<LanguageCreateFormValues>();
-  const searchConditions = () => {};
+  const navigateToLanguagesList = () => {
+    navigate("/LanguagesSupportList");
+  };
   const saveLanguageInfo = async (data: LanguageCreateFormValues) => {
     console.log("Form Data Submitted:", data);
     try {
-      LanguageApiService.createLanguage(
+      const response = await LanguageApiService.createLanguage(
         formData.language_name,
         formData.language_name_furigana,
         formData.language_note
       );
+      navigate(
+        `/LanguagesInfo?selectedLanguageNo=${response.languages_support_no}`
+      );
+
       alert("saved");
     } catch (error) {
       alert("error");
@@ -117,7 +125,11 @@ const LanguageCreate = () => {
         />
 
         <Box className={classes.actionButtons}>
-          <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
+          <ButtonAtom
+            onClick={navigateToLanguagesList}
+            label="閉じる"
+            width="100px"
+          />
           <ValidationButton label="保存" type="submit" />
         </Box>
       </Box>

@@ -71,7 +71,10 @@ const LanguageCreate = () => {
     formState: { isSubmitted },
   } = useForm<LanguageInfo>();
 
-  const searchConditions = () => {};
+  // Handle close button action
+  const handleBack = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
 
   function checkForNoChange(obj1: any, obj2: any): boolean {
     return Object.keys(obj1).every((key) => {
@@ -195,7 +198,7 @@ const LanguageCreate = () => {
           name="language_note"
         />
         <Box className={classes.actionButtons}>
-          <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
+          <ButtonAtom onClick={handleBack} label="破棄" width="100px" />
           <ValidationButton label="保存" type="submit" />
         </Box>
       </Box>

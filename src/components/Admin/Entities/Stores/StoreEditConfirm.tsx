@@ -91,6 +91,15 @@ function StoreListInfo() {
     return null;
   }
 
+  // Handle close button action
+  const handleBack = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
+
+  const navigateToStoreList = () => {
+    navigate("/StoreList");
+  };
+
   return (
     <Box>
       <MenuHeader title="店舗情報" />
@@ -321,12 +330,16 @@ function StoreListInfo() {
           label="備考"
           margin="0 0 0 40vw"
           labelWidth="25px"
-          maxLength={5}
           name="store_note"
           disabled={true}
         />
         <Box className={classes.actionButtons}>
-          <ButtonAtom label="閉じる" width="100px" />
+          <ButtonAtom
+            onClick={navigateToStoreList}
+            label="閉じる"
+            width="100px"
+          />
+          <ButtonAtom onClick={handleBack} label="戻る" width="100px" />
           {/* <ButtonAtom onClick={createStore} label="編集" width="100px" /> */}
         </Box>
       </Box>

@@ -18,6 +18,9 @@ function StoreListInfo() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const selectedStoreNo = Number(searchParams.get("selectedStoreNo"));
+  const navigateToStoreList = () => navigate("/StoreList");
+  const navigateToStoreEdit = () =>
+    navigate(`/StoreEdit?selectedStoreNo=${selectedStoreNo}`);
   const [formData, setFormData] = useState<StoreInfoFormValues>({
     company_no: "",
     company_name: "",
@@ -326,8 +329,16 @@ function StoreListInfo() {
           disabled={true}
         />
         <Box className={classes.actionButtons}>
-          <ButtonAtom label="閉じる" width="100px" />
-          {/* <ButtonAtom onClick={createStore} label="編集" width="100px" /> */}
+          <ButtonAtom
+            onClick={navigateToStoreList}
+            label="閉じる"
+            width="100px"
+          />
+          <ButtonAtom
+            onClick={navigateToStoreEdit}
+            label="編集"
+            width="100px"
+          />{" "}
         </Box>
       </Box>
     </Box>

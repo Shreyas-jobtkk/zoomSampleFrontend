@@ -51,9 +51,11 @@ function CompanyInformation() {
   }, [selectedCompanyNo]);
 
   // Handle close button action
-  const handleClose = () => {
+  const handleBack = () => {
     navigate(-1); // Navigate back to the previous page
   };
+
+  const navigateToCompanyList = () => navigate("/CompaniesList");
 
   if (!selectedCompanyNo) {
     return null;
@@ -69,13 +71,13 @@ function CompanyInformation() {
               labelWidth="125px"
               label="登録日時"
               width="30vw"
-              value={convertToJST(formData.created_at ?? "")}
+              value={convertToJST(formData.created_at) ?? ""}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
               width="30vw"
-              value={convertToJST(formData.updated_at ?? "")}
+              value={convertToJST(formData.updated_at) ?? ""}
             />
           </Box>
           <Box>
@@ -124,8 +126,12 @@ function CompanyInformation() {
           disabled={true}
         />
         <Box className={classes.actionButtons}>
-          <ButtonAtom onClick={handleClose} label="閉じる" width="100px" />
-          <ButtonAtom label="戻る" width="100px" />
+          <ButtonAtom
+            onClick={navigateToCompanyList}
+            label="閉じる"
+            width="100px"
+          />
+          <ButtonAtom onClick={handleBack} label="戻る" width="100px" />
         </Box>
       </Box>
     </Box>

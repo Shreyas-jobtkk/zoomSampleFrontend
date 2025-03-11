@@ -34,15 +34,17 @@ const CompanyCreate = () => {
     handleSubmit,
     formState: { isSubmitted },
   } = useForm<CompanyCreateFormValues>();
-  const searchConditions = () => navigate("/CompaniesList");
+  const navigateToCompanyList = () => navigate("/CompaniesList");
   const saveCompanyInfo = async (data: CompanyCreateFormValues) => {
     console.log("Form Data Submitted:", data);
     try {
-      CompanyApiService.createCompany(
+      const response = await CompanyApiService.createCompany(
         formData.company_name,
         formData.company_name_furigana,
         formData.company_note
       );
+      console.log(155, response.company_no);
+      navigate(`/CompanyInfo?selectedCompanyNo=${response.company_no}`);
       alert("saved");
     } catch (error) {
       alert("error");
@@ -52,7 +54,7 @@ const CompanyCreate = () => {
 
   return (
     <Box onSubmit={handleSubmit(saveCompanyInfo)} component="form">
-      <MenuHeader title="企業情報" />
+      <MenuHeader title="企業追加" />
       <Box className={classes.companyCreateContainer}>
         <Box className={classes.timeDetailsDeleteFlag}>
           <Box className={classes.timeDetails}>
@@ -120,7 +122,11 @@ const CompanyCreate = () => {
         />
 
         <Box className={classes.actionButtons}>
-          <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
+          <ButtonAtom
+            onClick={navigateToCompanyList}
+            label="閉じる"
+            width="100px"
+          />
           <ValidationButton label="保存" type="submit" />
         </Box>
       </Box>

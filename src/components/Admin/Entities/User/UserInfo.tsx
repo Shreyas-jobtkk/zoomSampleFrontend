@@ -5,7 +5,7 @@ import { Box, Typography } from "@mui/material";
 import PasswordBoxWithLabel from "../../../../components/LV1/TextBox/PasswordBoxWithLabel";
 import ButtonAtom from "../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import classes from "./styles/User.module.scss";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import MultipleOptionsSelect from "../../../../components/LV1/SelectOption/MultipleOptionsSelect";
 import NumberInput from "../../../../components/LV1/NumberInput/NumberInput";
 import TextAreaWithLabel from "../../../../components/LV1/TextArea/TextAreaWithLabel";
@@ -15,15 +15,18 @@ import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
 import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function InterpretersListInfo() {
   const [languagesSupport, setLanguagesSupport] = useState<
     { label: string; value: string | number }[]
   >([]);
+  const navigate = useNavigate();
   const [optionValue, setOptionValue] = useState<Array<string>>([]);
 
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  // const location = useLocation();
+  const [searchParams] = useSearchParams();
+  // const searchParams = new URLSearchParams(location.search);
 
   const selectedUserNo = Number(searchParams.get("selectedUserNo"));
   const userType: string = searchParams.get("userType") as string;
@@ -56,7 +59,24 @@ function InterpretersListInfo() {
     user_deleted: false,
   });
 
-  const searchConditions = () => {};
+  const navigateToUserList = () => {
+    if (userType == "contractor") {
+      navigate("/ContractorList");
+    }
+
+    if (userType == "interpreter") {
+      navigate("/InterpretersList");
+    }
+    if (userType == "administrator") {
+      navigate("/AdministratorList");
+    }
+  };
+
+  const navigateToUserEdit = () => {
+    navigate(
+      `/UserUpdate?selectedUserNo=${selectedUserNo}&userType=${userType}`
+    );
+  };
 
   useEffect(() => {
     fetchUserDetails();
@@ -311,7 +331,7 @@ function InterpretersListInfo() {
               labelWidth="125px"
               label="有効期限"
               width="15vw"
-              value={convertToJST(formData.password_expire ?? "")}
+              value={convertToJST(formData.password_expire) ?? ""}
             />
             <Box className={classes.passwordInput}>
               <PasswordBoxWithLabel
@@ -356,8 +376,12 @@ function InterpretersListInfo() {
           </Box>
         </Box>
         <Box className={classes.actionButtons}>
-          <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
-          <ButtonAtom onClick={searchConditions} label="編集" width="100px" />
+          <ButtonAtom
+            onClick={navigateToUserList}
+            label="閉じる"
+            width="100px"
+          />
+          <ButtonAtom onClick={navigateToUserEdit} label="編集" width="100px" />
         </Box>
       </Box>
     </Box>

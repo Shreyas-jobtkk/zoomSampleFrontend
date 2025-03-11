@@ -18,8 +18,10 @@ import ValidationButton from "../../../LV1/Button/ValidationButton/ValidationBut
 import { useForm } from "react-hook-form";
 import { StoreCreateFormValues } from "../../../../types/StoreTypes/StoreTypes";
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
+import { useNavigate } from "react-router-dom";
 
 function StoreListInfo() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<StoreCreateFormValues>({
     company_no: "",
     company_name: "",
@@ -41,10 +43,10 @@ function StoreListInfo() {
   });
   const [textValue1, setTextValue1] = useState<string>("");
 
-  const createStore = () => {
+  const createStore = async () => {
     console.log(113, formData);
     try {
-      StoreApiService.createStore(
+      const response = await StoreApiService.createStore(
         formData.company_no,
         formData.store_name,
         formData.store_name_furigana,
@@ -62,6 +64,9 @@ function StoreListInfo() {
         formData.fax3,
         formData.store_note
       );
+      navigate(`/StoreInfo?selectedStoreNo=${response.store_no}`);
+
+      // navigate(`/CompanyInfo?selectedCompanyNo=${response.company_no}`);
       // alert("saved");
     } catch (error) {
       alert("error");
@@ -116,6 +121,10 @@ function StoreListInfo() {
 
   const handleSelectChange = (value: string) => {
     updateFormData("pref", value);
+  };
+
+  const navigateToStoreList = () => {
+    navigate("/StoreList");
   };
 
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
@@ -386,7 +395,11 @@ function StoreListInfo() {
           name="store_note"
         />
         <Box className={classes.actionButtons}>
-          <ButtonAtom onClick={createStore} label="閉じる" width="100px" />
+          <ButtonAtom
+            onClick={navigateToStoreList}
+            label="閉じる"
+            width="100px"
+          />
           <ValidationButton label="保存" width="100px" type="submit" />
         </Box>
       </Box>

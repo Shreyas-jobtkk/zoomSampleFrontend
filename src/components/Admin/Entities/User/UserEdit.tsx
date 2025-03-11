@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
 import classes from "./styles/User.module.scss";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import NumberInput from "../../../../components/LV1/NumberInput/NumberInput";
 import TextAreaWithLabel from "../../../../components/LV1/TextArea/TextAreaWithLabel";
 import { UserApiService } from "../../../../api/apiService/user/user-api-service";
@@ -22,7 +22,7 @@ import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
 import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function InterpretersListUpdate() {
   const navigate = useNavigate();
@@ -31,8 +31,8 @@ function InterpretersListUpdate() {
     { label: string; value: string | number }[]
   >([]);
   const [isStoresExist, setIsStoresExist] = useState<boolean>(true);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  // const location = useLocation();
+  const [searchParams] = useSearchParams();
   const selectedUserNo = Number(searchParams.get("selectedUserNo"));
   const userType: string = searchParams.get("userType") as string;
 
@@ -134,7 +134,10 @@ function InterpretersListUpdate() {
     formState: { isSubmitted },
   } = useForm<UserInfo>();
 
-  const searchConditions = () => {};
+  // Handle close button action
+  const handleBack = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -329,8 +332,10 @@ function InterpretersListUpdate() {
       user_no: user.user_no,
       company_no: user.company_no,
       store_no: user.store_no,
-      user_name: user.user_name,
-      user_name_furigana: user.user_name_furigana,
+      user_name_first: user.user_name_first,
+      user_name_first_furigana: user.user_name_first_furigana,
+      user_name_last: user.user_name_last,
+      user_name_last_furigana: user.user_name_last_furigana,
       mail_address: user.mail_address,
       tel: `${user.tel1}-${user.tel2}-${user.tel3}`, // Merge tel parts
       tel_extension: `${user.tel_extension}`, // Merge fax parts
@@ -355,12 +360,13 @@ function InterpretersListUpdate() {
 
   const updateInterpreter = async () => {
     const userDetails = await UserApiService.fetchUser(selectedUserNo);
-    console.log(155, JSON.stringify(userDetails));
-    console.log(2155, JSON.stringify(normalizeUserData(formData)));
-    console.log(
-      3155,
-      checkForNoChange(normalizeUserData(formData), userDetails)
-    );
+    console.log(155, userDetails);
+    console.log(1155, formData);
+    // console.log(2155, normalizeUserData(formData));
+    // console.log(
+    //   3155,
+    //   checkForNoChange(normalizeUserData(formData), userDetails)
+    // );
 
     if (checkForNoChange(normalizeUserData(formData), userDetails)) {
       alert("No changes made.");
@@ -634,7 +640,7 @@ function InterpretersListUpdate() {
               labelWidth="125px"
               label="有効期限"
               width="15vw"
-              value={convertToJST(formData.password_expire ?? "")}
+              value={convertToJST(formData.password_expire) ?? ""}
             />
             <Box className={classes.passwordInput}>
               <ValidationInputField
@@ -707,8 +713,8 @@ function InterpretersListUpdate() {
           </Box>
         </Box>
         <Box className={classes.actionButtons}>
-          <ButtonAtom onClick={searchConditions} label="閉じる" width="100px" />
-          <ValidationButton label="編集" width="100px" type="submit" />
+          <ButtonAtom onClick={handleBack} label="破棄" width="100px" />
+          <ValidationButton label="保存" width="100px" type="submit" />
         </Box>
       </Box>
     </Box>

@@ -76,7 +76,7 @@ function CompanyInfoEdit() {
   };
 
   // Handle close button action
-  const handleClose = () => {
+  const handleBack = () => {
     navigate(-1); // Navigate back to the previous page
   };
 
@@ -117,13 +117,13 @@ function CompanyInfoEdit() {
               labelWidth="125px"
               label="登録日時"
               width="30vw"
-              value={convertToJST(formData.created_at ?? "")}
+              value={convertToJST(formData.created_at) ?? ""}
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
               width="30vw"
-              value={convertToJST(formData.updated_at ?? "")}
+              value={convertToJST(formData.updated_at) ?? ""}
             />
           </Box>
           <Box>
@@ -199,7 +199,7 @@ function CompanyInfoEdit() {
         />
 
         <Box className={classes.actionButtons}>
-          <ButtonAtom onClick={handleClose} label="破棄" width="100px" />
+          <ButtonAtom onClick={handleBack} label="破棄" width="100px" />
           <ValidationButton label="保存" width="100px" type="submit" />
         </Box>
       </Box>
