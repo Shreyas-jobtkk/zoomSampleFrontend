@@ -145,6 +145,19 @@ function CompaniesList() {
     await fetchCompaniesListData();
   };
 
+  const handleRestoreCompanies = async () => {
+    try {
+      await CompanyApiService.restoreCompanies(selectedCompanyNoArray);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred while deleting the company.");
+      }
+    }
+    await fetchCompaniesListData();
+  };
+
   return (
     <Box className={classes.adminEntity}>
       <MenuHeader title="企業一覧" />
@@ -226,6 +239,11 @@ function CompaniesList() {
           onClick={handleDeleteCompanies}
           disabled={selectedData.length === 0}
           label="削除"
+        />
+        <ButtonAtom
+          onClick={handleRestoreCompanies}
+          disabled={selectedData.length === 0}
+          label="復帰"
         />
       </Box>
     </Box>
