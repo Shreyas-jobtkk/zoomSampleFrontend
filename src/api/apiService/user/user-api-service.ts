@@ -6,6 +6,7 @@ import {
   updateInterpreterStatus,
 } from "../user/actions/user-update";
 import { deleteUsers } from "../user/actions/user-delete";
+import { restoreUsers } from "../user/actions/user-restore";
 import {
   fetchInterpretersAll,
   interpreterAuth,
@@ -32,4 +33,5 @@ export const UserApiService = {
   interpreterAuth,
   administratorAuth,
   updateInterpreterStatus,
+  restoreUsers,
 };

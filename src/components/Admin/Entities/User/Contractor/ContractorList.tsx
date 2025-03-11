@@ -241,6 +241,21 @@ function ContractorList() {
     await fetchUsersListData();
   };
 
+  const handleRestoreContractors = async () => {
+    console.log(114, selectedContractorNoArray);
+    try {
+      await UserApiService.restoreUsers(selectedContractorNoArray);
+      // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred while deleting the company.");
+      }
+    }
+    await fetchUsersListData();
+  };
+
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
     setCompanyNo(company_no);
@@ -416,6 +431,11 @@ function ContractorList() {
           onClick={handleDeleteContractors}
           disabled={selectedData.length <= 0}
           label="削除"
+        />
+        <ButtonAtom
+          onClick={handleRestoreContractors}
+          disabled={selectedData.length <= 0}
+          label="復帰"
         />
       </Box>
     </Box>

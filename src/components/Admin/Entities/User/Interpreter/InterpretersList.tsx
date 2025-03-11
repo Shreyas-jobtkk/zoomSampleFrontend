@@ -317,6 +317,21 @@ function InterpretersList() {
     await fetchUsersListData();
   };
 
+  const handleRestoreInterpreters = async () => {
+    console.log(114, selectedInterpreterNoArray);
+    try {
+      await UserApiService.restoreUsers(selectedInterpreterNoArray);
+      // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred while deleting the company.");
+      }
+    }
+    await fetchUsersListData();
+  };
+
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
     setCompanyNo(company_no);
@@ -499,6 +514,11 @@ function InterpretersList() {
           onClick={handleDeleteInterpreters}
           disabled={selectedData.length <= 0}
           label="削除"
+        />
+        <ButtonAtom
+          onClick={handleRestoreInterpreters}
+          disabled={selectedData.length <= 0}
+          label="復帰"
         />
       </Box>
     </Box>

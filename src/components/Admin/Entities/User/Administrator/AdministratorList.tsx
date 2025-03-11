@@ -238,6 +238,21 @@ function AdministratorList() {
     await fetchUsersListData();
   };
 
+  const handleRestoreAdministrators = async () => {
+    console.log(114, selectedAdminNoArray);
+    try {
+      await UserApiService.restoreUsers(selectedAdminNoArray);
+      // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred while deleting the company.");
+      }
+    }
+    await fetchUsersListData();
+  };
+
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
     setCompanyNo(company_no);
@@ -410,6 +425,11 @@ function AdministratorList() {
           onClick={handleDeleteAdministrators}
           disabled={selectedData.length <= 0}
           label="削除"
+        />
+        <ButtonAtom
+          onClick={handleRestoreAdministrators}
+          disabled={selectedData.length <= 0}
+          label="復帰"
         />
       </Box>
     </Box>

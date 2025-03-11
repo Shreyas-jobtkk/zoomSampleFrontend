@@ -122,6 +122,20 @@ function LanguagesSupportList() {
     await fetchLanguagesListData();
   };
 
+  const handleRestoreLanguages = async () => {
+    try {
+      await LanguageApiService.restoreLanguages(selectedLanguageNoArray);
+      // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred while deleting the company.");
+      }
+    }
+    await fetchLanguagesListData();
+  };
+
   const handleSelectionChange = (
     newSelectedData: Array<{
       No: string | number;
@@ -206,6 +220,12 @@ function LanguagesSupportList() {
         <ButtonAtom
           onClick={handleDeleteLanguages}
           label="削除"
+          disabled={selectedData.length === 0}
+          // margin='0 2vw'
+        />
+        <ButtonAtom
+          onClick={handleRestoreLanguages}
+          label="復帰"
           disabled={selectedData.length === 0}
           // margin='0 2vw'
         />

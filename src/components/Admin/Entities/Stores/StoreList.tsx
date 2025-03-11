@@ -166,6 +166,20 @@ function StoreList() {
     await fetchStoreListData();
   };
 
+  const handleRestoreStores = async () => {
+    try {
+      await StoreApiService.restoreStores(selectedStoreNoArray);
+      // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("An unknown error occurred while deleting the company.");
+      }
+    }
+    await fetchStoreListData();
+  };
+
   const navigateToStoreCreate = () => {
     navigate("/StoreCreate");
   };
@@ -281,6 +295,11 @@ function StoreList() {
           onClick={handleDeleteStores}
           disabled={selectedData.length <= 0}
           label="削除"
+        />
+        <ButtonAtom
+          onClick={handleRestoreStores}
+          disabled={selectedData.length === 0}
+          label="復帰"
         />
       </Box>
     </Box>
