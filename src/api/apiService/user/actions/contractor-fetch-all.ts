@@ -3,9 +3,33 @@ import { USER_ENDPOINT } from "../user-api-definitions";
 import api from "../../../index";
 import axios from "axios";
 
-export const fetchContractorAll = async () => {
+export const fetchContractorAll = async (
+  page: number,
+  limit: number,
+  company_no: number | string,
+  store_no: number | string,
+  contractor_no_min: number | string,
+  contractor_no_max: number | string,
+  contractor_name_first: string,
+  contractor_name_furigana_first: string,
+  contractor_name_last: string,
+  contractor_name_furigana_last: string
+) => {
   try {
-    const response = await api.get(`${USER_ENDPOINT}/contractor`);
+    const response = await api.get(`${USER_ENDPOINT}/contractor`, {
+      params: {
+        page,
+        limit,
+        company_no,
+        store_no,
+        contractor_no_min,
+        contractor_no_max,
+        contractor_name_first,
+        contractor_name_furigana_first,
+        contractor_name_last,
+        contractor_name_furigana_last,
+      },
+    });
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {

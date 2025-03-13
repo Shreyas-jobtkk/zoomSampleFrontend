@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import DataTable from "../../../LV3/DataTable/DataTable";
+import DataTableControler from "../../../LV3/DataTable/DataTableControler";
 import { DataTableRow } from "../../../LV3/DataTable/DataTable";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
@@ -19,22 +20,44 @@ function CompaniesList() {
     number[]
   >([]);
   const [tableData, setTableData] = useState<DataTableRow[]>([]);
-  const [searchData, setSearchData] = useState<DataTableRow[]>([]);
+  // const [searchData, setSearchData] = useState<DataTableRow[]>([]);
   const [selectedData, setSelectedData] = useState<DataTableRow[]>([]);
-  const [companyNoRangeMin, setCompanyNoRangeMin] = useState<string>("");
-  const [companyNoRangeMax, setCompanyNoRangeMax] = useState<string>("");
+  const [companyNoRangeMin, setCompanyNoRangeMin] = useState<number | string>(
+    ""
+  );
+  const [companyNoRangeMax, setCompanyNoRangeMax] = useState<number | string>(
+    ""
+  );
   const [companyNameFurigana, setCompanyNameFurigana] = useState<string>("");
   const [companyName, setCompanyName] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [rowLimit, setRowLimit] = useState<number>(10);
 
   // Fetch companies on component mount
   useEffect(() => {
     fetchCompaniesListData();
-  }, []);
+  }, [page, rowLimit]);
+
+  const searchConditions = () => {
+    fetchCompaniesListData();
+  };
 
   const fetchCompaniesListData = async () => {
     try {
-      const response = await CompanyApiService.fetchCompaniesAll();
-      const sortedData: DataTableRow[] = response
+      const response = await CompanyApiService.fetchCompaniesAll(
+        page,
+        rowLimit,
+        companyNoRangeMin,
+        companyNoRangeMax,
+        companyName,
+        companyNameFurigana
+      );
+
+      setTotalPages(Math.ceil(response.totalRecords / rowLimit));
+
+      console.log(177, response.companies, response.totalRecords);
+      const sortedData: DataTableRow[] = response.companies
         .sort(
           (a: CompanyInfo, b: CompanyInfo) =>
             Number(a.company_no) - Number(b.company_no)
@@ -49,53 +72,53 @@ function CompaniesList() {
           削除: deleteStatus(item.company_deleted),
         }));
       setTableData(sortedData);
-      setSearchData(sortedData);
+      // setSearchData(sortedData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
   // Filter table data based on search input and range conditions
-  const filterTableData = () => {
-    const isInvalidRange =
-      Number(companyNoRangeMin) > Number(companyNoRangeMax);
-    const isNotEmpty = companyNoRangeMin !== "" && companyNoRangeMax !== "";
+  // const filterTableData = () => {
+  //   const isInvalidRange =
+  //     Number(companyNoRangeMin) > Number(companyNoRangeMax);
+  //   const isNotEmpty = companyNoRangeMin !== "" && companyNoRangeMax !== "";
 
-    if (isInvalidRange && isNotEmpty) {
-      return alert("min is more than max");
-    }
+  //   if (isInvalidRange && isNotEmpty) {
+  //     return alert("min is more than max");
+  //   }
 
-    const filtered = tableData.filter((item) => {
-      // Convert "企業No" (company number) to a number for range comparison
-      const companyNo = Number(item["企業No"]);
+  //   const filtered = tableData.filter((item) => {
+  //     // Convert "企業No" (company number) to a number for range comparison
+  //     const companyNo = Number(item["企業No"]);
 
-      // Range filtering logic:
-      // Check if the company number falls within the specified range.
-      // If a range boundary (min or max) is not provided, ignore that condition.
-      const isInRange =
-        (!companyNoRangeMin || companyNo >= Number(companyNoRangeMin)) &&
-        (!companyNoRangeMax || companyNo <= Number(companyNoRangeMax));
+  //     // Range filtering logic:
+  //     // Check if the company number falls within the specified range.
+  //     // If a range boundary (min or max) is not provided, ignore that condition.
+  //     const isInRange =
+  //       (!companyNoRangeMin || companyNo >= Number(companyNoRangeMin)) &&
+  //       (!companyNoRangeMax || companyNo <= Number(companyNoRangeMax));
 
-      console.log(1445, item);
+  //     console.log(1445, item);
 
-      // Search input filtering logic:
-      // Check if the item matches the specified search terms for "企業名" (company name)
-      // and "フリガナ" (company name pronunciation in Kana).
-      // Convert values to strings to safely use the `includes` method.
-      const matchesFilters =
-        (!companyName || String(item["企業名"]).includes(companyName)) &&
-        (!companyNameFurigana ||
-          String(item["フリガナ"]).includes(companyNameFurigana));
+  //     // Search input filtering logic:
+  //     // Check if the item matches the specified search terms for "企業名" (company name)
+  //     // and "フリガナ" (company name pronunciation in Kana).
+  //     // Convert values to strings to safely use the `includes` method.
+  //     const matchesFilters =
+  //       (!companyName || String(item["企業名"]).includes(companyName)) &&
+  //       (!companyNameFurigana ||
+  //         String(item["フリガナ"]).includes(companyNameFurigana));
 
-      console.log(21445, matchesFilters);
+  //     console.log(21445, matchesFilters);
 
-      // An item is included in the results only if it satisfies both range and search conditions
-      return isInRange && matchesFilters;
-    });
+  //     // An item is included in the results only if it satisfies both range and search conditions
+  //     return isInRange && matchesFilters;
+  //   });
 
-    // Update the filtered data state to reflect the search results
-    setSearchData(filtered);
-  };
+  //   // Update the filtered data state to reflect the search results
+  //   setSearchData(filtered);
+  // };
 
   const headers = [
     "No",
@@ -107,12 +130,12 @@ function CompaniesList() {
     "削除",
   ];
 
-  const searchConditions = () => {
-    filterTableData();
-    console.log("Search conditions triggered");
-  };
-
   const navigateToCompanyCreate = () => navigate("/CompanyCreate");
+
+  const handleRowsPerPage = (newSelectedData: any) => {
+    console.log(155, newSelectedData[0].rowsPerPage);
+    setRowLimit(newSelectedData[0].rowsPerPage);
+  };
 
   const handleSelectionChange = (newSelectedData: DataTableRow[]) => {
     setSelectedData(newSelectedData);
@@ -158,6 +181,14 @@ function CompaniesList() {
     await fetchCompaniesListData();
   };
 
+  // const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePageChange = (page: number) => {
+    // setCurrentPage(page); // Update the page state in the parent
+    console.log("Current page in parent:", page);
+    setPage(page + 1);
+  };
+
   return (
     <Box className={classes.adminEntity}>
       <MenuHeader title="企業一覧" />
@@ -170,7 +201,7 @@ function CompaniesList() {
             width="calc(10vw - 20px)"
             value={companyNoRangeMin}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setCompanyNoRangeMin(e.target.value);
+              setCompanyNoRangeMin(Number(e.target.value));
               // handleFilterChange("企業No", e.target.value);
             }}
             type="number"
@@ -181,7 +212,7 @@ function CompaniesList() {
             width="calc(10vw - 20px)"
             value={companyNoRangeMax}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setCompanyNoRangeMax(e.target.value);
+              setCompanyNoRangeMax(Number(e.target.value));
               // handleFilterChange("企業No", e.target.value);
             }}
             type="number"
@@ -216,13 +247,19 @@ function CompaniesList() {
           </Box>
         </Box>
       </Box>
+      <DataTableControler
+        onPageChange={handlePageChange}
+        onSelectionChange={handleRowsPerPage}
+        totalPages={totalPages}
+        onClickNew={navigateToCompanyCreate}
+        onClickReset={navigateToCompanyCreate}
+      />
+
       <DataTable
         headers={headers}
-        data={searchData}
+        data={tableData}
         maxHeight="calc(94vh - 260px)"
         onSelectionChange={handleSelectionChange}
-        operationButton="新規"
-        onClick={navigateToCompanyCreate}
       />
       <Box className={classes.actionButtons}>
         <ButtonAtom

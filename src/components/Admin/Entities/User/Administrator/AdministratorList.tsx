@@ -16,6 +16,7 @@ import { CompanyApiService } from "../../../../../api/apiService/company/company
 import { StoreInfo } from "../../../../../types/StoreTypes/StoreTypes";
 import { StoreApiService } from "../../../../../api/apiService/store/store-api-service";
 import classes from "../../styles/AdminEntities.module.scss";
+import DataTableControler from "../../../../LV3/DataTable/DataTableControler";
 
 function AdministratorList() {
   const navigate = useNavigate();
@@ -41,7 +42,9 @@ function AdministratorList() {
   const [adminNameFirst, setAdminNameFirst] = useState<string>("");
   const [adminNameFuriganaFirst, setAdminNameFuriganaFirst] =
     useState<string>("");
-  const [searchData, setSearchData] = useState<DataTableRow[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [rowLimit, setRowLimit] = useState<number>(10);
   const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
 
   const [selectedData, setSelectedData] = useState<
@@ -65,7 +68,7 @@ function AdministratorList() {
   useEffect(() => {
     fetchCompaniesNames();
     fetchUsersListData();
-  }, []);
+  }, [page, rowLimit]);
 
   useEffect(() => {
     if (!isCompanyNoEmpty) {
@@ -103,12 +106,25 @@ function AdministratorList() {
 
   const fetchUsersListData = async () => {
     try {
-      const response = await UserApiService.fetchAdministratorAll();
+      const response = await UserApiService.fetchAdministratorAll(
+        page,
+        rowLimit,
+        companyNo,
+        storeNo,
+        adminNoRangeMin,
+        adminNoRangeMax,
+        adminNameFirst,
+        adminNameFuriganaFirst,
+        adminNameLast,
+        adminNameFuriganaLast
+      );
+
+      setTotalPages(Math.ceil(response.totalRecords / rowLimit));
 
       console.log(147, response);
 
       // const response = await axios.get(`${apiUrl}/company`);
-      const sortedData = response
+      const sortedData = response.administrators
         .sort(
           (a: UserInfo, b: UserInfo) => Number(a.user_no) - Number(b.user_no)
         )
@@ -132,53 +148,14 @@ function AdministratorList() {
         }));
       console.log(141, sortedData);
       setTableData(sortedData);
-      setSearchData(sortedData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
   const searchConditions = () => {
-    filterTableData();
-  };
-
-  const filterTableData = () => {
-    const isInvalidRange = Number(adminNoRangeMin) > Number(adminNoRangeMax);
-    const isNotEmpty = adminNoRangeMin !== "" && adminNoRangeMax !== "";
-
-    if (isInvalidRange && isNotEmpty) {
-      return alert("min is more than max");
-    }
-
-    const filtered = tableData.filter((item) => {
-      const matchesCompanyNo = companyNo === "" || item["企業No"] === companyNo;
-      const matchesStoreNo = storeNo === "" || item["店舗No"] === storeNo;
-
-      const adminNo = Number(item["管理者No"]);
-
-      const isInRange =
-        (!adminNoRangeMin || adminNo >= Number(adminNoRangeMin)) &&
-        (!adminNoRangeMax || adminNo <= Number(adminNoRangeMax));
-
-      const matchesFilters =
-        (!adminNameLast || String(item["名前_last"]).includes(adminNameLast)) &&
-        (!adminNameFuriganaLast ||
-          String(item["フリガナ_last"]).includes(adminNameFuriganaLast)) &&
-        (!adminNameFirst ||
-          String(item["名前_first"]).includes(adminNameFirst)) &&
-        (!adminNameFuriganaFirst ||
-          String(item["フリガナ_first"]).includes(adminNameFuriganaFirst));
-
-      console.log(21445, matchesFilters);
-      console.log(21446, String(item["フリガナ_last"]));
-      console.log(21447, adminNameFuriganaLast);
-
-      // An item is included in the results only if it satisfies both range and search conditions
-      return isInRange && matchesFilters && matchesCompanyNo && matchesStoreNo;
-    });
-
-    // Update the table data to show filtered results
-    setSearchData(filtered);
+    fetchUsersListData();
+    // filterTableData();
   };
 
   const handleSelectionChange = (
@@ -211,6 +188,17 @@ function AdministratorList() {
     navigate(
       `/UserInfo?selectedUserNo=${selectedAdminNoArray[0]}&userType=administrator`
     );
+  };
+
+  const handlePageChange = (page: number) => {
+    // setCurrentPage(page); // Update the page state in the parent
+    console.log("Current page in parent:", page);
+    setPage(page + 1);
+  };
+
+  const handleRowsPerPage = (newSelectedData: any) => {
+    console.log(155, newSelectedData[0].rowsPerPage);
+    setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
   const navigateToCreate = () => {
@@ -402,13 +390,27 @@ function AdministratorList() {
           </Box>
         </Box>
       </Box>
-      <DataTable // Customize header height
+      {/* <DataTable // Customize header height
         headers={headers}
         data={searchData}
         maxHeight="calc(85vh - 280px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
         onClick={navigateToCreate}
+      /> */}
+      <DataTableControler
+        onPageChange={handlePageChange}
+        onSelectionChange={handleRowsPerPage}
+        totalPages={totalPages}
+        onClickNew={navigateToCreate}
+        onClickReset={navigateToCreate}
+      />
+
+      <DataTable
+        headers={headers}
+        data={tableData}
+        maxHeight="calc(94vh - 260px)"
+        onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.actionButtons}>
         <ButtonAtom

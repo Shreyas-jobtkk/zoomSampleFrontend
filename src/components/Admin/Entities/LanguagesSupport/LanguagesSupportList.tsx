@@ -10,6 +10,7 @@ import { LanguageApiService } from "../../../../api/apiService/languages/languag
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import { useState, useEffect } from "react";
 import classes from "../styles/AdminEntities.module.scss";
+import DataTableControler from "../../../LV3/DataTable/DataTableControler";
 
 function LanguagesSupportList() {
   const navigate = useNavigate();
@@ -31,21 +32,35 @@ function LanguagesSupportList() {
   );
 
   const [tableData, setTableData] = useState<any[]>([]);
-  const [searchData, setSearchData] = useState<any[]>([]);
-  const [langNo, setLangNo] = useState<string | number>("");
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [rowLimit, setRowLimit] = useState<number>(10);
+  const [langNoMin, setLangNoMin] = useState<string | number>("");
+  const [langNoMax, setLangNoMax] = useState<string | number>("");
   const [langName, setLangName] = useState<string>("");
   const [langNameJapanese, setLangNameJapanese] = useState<string>("");
 
   useEffect(() => {
     fetchLanguagesListData();
-  }, []);
+  }, [page, rowLimit]);
 
+  const searchConditions = () => {
+    fetchLanguagesListData();
+  };
   const fetchLanguagesListData = async () => {
     try {
-      const response = await LanguageApiService.fetchLanguagesAll();
+      const response = await LanguageApiService.fetchLanguagesAll(
+        page,
+        rowLimit,
+        langNoMin,
+        langNoMax,
+        langName,
+        langNameJapanese
+      );
       console.log(144, response);
+      setTotalPages(Math.ceil(response.totalRecords / rowLimit));
       // const response = await axios.get(`${apiUrl}/company`);
-      const sortedData = response
+      const sortedData = response.languages
         .sort(
           (a: LanguageInfo, b: LanguageInfo) =>
             Number(a.languages_support_no) - Number(b.languages_support_no)
@@ -61,48 +76,54 @@ function LanguagesSupportList() {
         }));
       console.log(141, sortedData);
       setTableData(sortedData);
-      setSearchData(sortedData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
-  const filterTableData = () => {
-    const filtered = tableData.filter((item) => {
-      // Convert "企業No" (company number) to a number for range comparison
-      const matchesLanguageNo =
-        langNo === "" || item["言語No"].includes(langNo);
-      const matchesLangName =
-        langName === "" || item["言語"].includes(langName);
-      const matchesLangNameJapanese =
-        langNameJapanese === "" || item["和訳"] === langNameJapanese;
+  // const filterTableData = () => {
+  //   const filtered = tableData.filter((item) => {
+  //     // Convert "企業No" (company number) to a number for range comparison
+  //     const matchesLanguageNo =
+  //       langNo === "" || item["言語No"].includes(langNo);
+  //     const matchesLangName =
+  //       langName === "" || item["言語"].includes(langName);
+  //     const matchesLangNameJapanese =
+  //       langNameJapanese === "" || item["和訳"] === langNameJapanese;
 
-      console.log(
-        21445,
-        langName,
-        langNameJapanese,
-        item["言語No"],
-        item["言語"],
-        item["和訳"]
-      );
+  //     console.log(
+  //       21445,
+  //       langName,
+  //       langNameJapanese,
+  //       item["言語No"],
+  //       item["言語"],
+  //       item["和訳"]
+  //     );
 
-      // An item is included in the results only if it satisfies both range and search conditions
-      return matchesLanguageNo && matchesLangName && matchesLangNameJapanese;
-    });
+  //     // An item is included in the results only if it satisfies both range and search conditions
+  //     return matchesLanguageNo && matchesLangName && matchesLangNameJapanese;
+  //   });
 
-    // Update the filtered data state to reflect the search results
-    setSearchData(filtered);
-  };
-
-  const searchConditions = () => {
-    filterTableData();
-  };
+  //   // Update the filtered data state to reflect the search results
+  //   setSearchData(filtered);
+  // };
 
   const navigateToInfoPage = () => {
     navigate(`/LanguagesInfo?selectedLanguageNo=${selectedLanguageNoArray[0]}`);
   };
 
+  const handlePageChange = (page: number) => {
+    // setCurrentPage(page); // Update the page state in the parent
+    console.log("Current page in parent:", page);
+    setPage(page + 1);
+  };
+
   const navigateToLanguageCreate = () => navigate("/LanguagesCreate");
+
+  const handleRowsPerPage = (newSelectedData: any) => {
+    console.log(155, newSelectedData[0].rowsPerPage);
+    setRowLimit(newSelectedData[0].rowsPerPage);
+  };
 
   const navigateToEditPage = () => {
     navigate(`/LanguagesEdit?selectedLanguageNo=${selectedLanguageNoArray[0]}`);
@@ -159,10 +180,19 @@ function LanguagesSupportList() {
           <TextBoxWithLabel
             disabled={false}
             label="言語No"
-            width="calc(10vw - 30px)" // Uncomment to set a custom width
-            value={langNo}
-            onChange={(e: any) => setLangNo(Number(e.target.value))}
+            width="calc(8vw - 30px)" // Uncomment to set a custom width
+            value={langNoMin}
+            onChange={(e: any) => setLangNoMin(Number(e.target.value))}
             type="number"
+          />
+          <TextBoxWithLabel
+            disabled={false}
+            label="~"
+            width="calc(8vw - 30px)" // Uncomment to set a custom width
+            value={langNoMax}
+            onChange={(e: any) => setLangNoMax(Number(e.target.value))}
+            type="number"
+            labelWidth="40px"
           />
 
           <Box>
@@ -171,7 +201,7 @@ function LanguagesSupportList() {
                 <TextBoxWithLabel
                   disabled={false}
                   label="和訳"
-                  width="calc(60vw - 120px)" // Uncomment to set a custom width
+                  width="calc(40vw - 180px)" // Uncomment to set a custom width
                   value={langNameJapanese}
                   onChange={(e: any) => setLangNameJapanese(e.target.value)}
                   labelWidth="70px"
@@ -180,7 +210,7 @@ function LanguagesSupportList() {
                   disabled={false}
                   labelWidth="70px"
                   label="言語"
-                  width="calc(60vw - 120px)" // Uncomment to set a custom width
+                  width="calc(40vw - 180px)" // Uncomment to set a custom width
                   value={langName}
                   onChange={(e: any) => setLangName(e.target.value)}
                 />
@@ -191,18 +221,28 @@ function LanguagesSupportList() {
           <ButtonAtom onClick={searchConditions} label="検索" margin="0 5vw" />
         </Box>
       </Box>
-      {/* <ButtonAtom
-                onClick={searchConditions}
-                label="新規"
 
-            /> */}
-      <DataTable // Customize header height
+      {/* <DataTable // Customize header height
         headers={headers}
         data={searchData}
         maxHeight="calc(87vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
         onClick={navigateToLanguageCreate}
+      /> */}
+      <DataTableControler
+        onPageChange={handlePageChange}
+        onSelectionChange={handleRowsPerPage}
+        totalPages={totalPages}
+        onClickNew={navigateToLanguageCreate}
+        onClickReset={navigateToLanguageCreate}
+      />
+
+      <DataTable
+        headers={headers}
+        data={tableData}
+        maxHeight="calc(94vh - 260px)"
+        onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.actionButtons}>
         <ButtonAtom

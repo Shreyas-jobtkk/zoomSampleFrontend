@@ -14,6 +14,7 @@ import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
 import SelectableModal from "../../../LV1/SelectableModal/SelectableModal";
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import classes from "../styles/AdminEntities.module.scss";
+import DataTableControler from "../../../LV3/DataTable/DataTableControler";
 
 function StoreList() {
   const navigate = useNavigate();
@@ -43,48 +44,28 @@ function StoreList() {
   const [storeName, setStoreName] = useState<string>("");
   const [companyName, setCompanyName] = useState<string>("");
   const [companyNo, setCompanyNo] = useState<string>("");
-  const [searchData, setSearchData] = useState<DataTableRow[]>([]);
+  const [selectedData, setSelectedData] = useState<DataTableRow[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [rowLimit, setRowLimit] = useState<number>(10);
 
   const searchConditions = () => {
-    filterTableData();
-  };
-
-  const filterTableData = () => {
-    const isInvalidRange = Number(storeNoRangeMin) > Number(storeNoRangeMax);
-    const isNotEmpty = storeNoRangeMin !== "" && storeNoRangeMax !== "";
-
-    if (isInvalidRange && isNotEmpty) {
-      return alert("min is more than max");
-    }
-
-    const filtered = tableData.filter((item) => {
-      const matchesCompanyNo = companyNo === "" || item["企業No"] === companyNo;
-
-      const storeNo = Number(item["店舗No"]);
-
-      const isInRange =
-        (!storeNoRangeMin || storeNo >= Number(storeNoRangeMin)) &&
-        (!storeNoRangeMax || storeNo <= Number(storeNoRangeMax));
-
-      const matchesFilters =
-        (!storeName || String(item["店舗名"]).includes(storeName)) &&
-        (!storeNameFurigana ||
-          String(item["フリガナ"]).includes(storeNameFurigana));
-
-      console.log(21445, matchesFilters);
-
-      // An item is included in the results only if it satisfies both range and search conditions
-      return isInRange && matchesFilters && matchesCompanyNo;
-    });
-
-    // Update the table data to show filtered results
-    setSearchData(filtered);
+    fetchStoreListData();
   };
 
   const fetchStoreListData = async () => {
     try {
-      const response = await StoreApiService.fetchStoreAll();
-      const sortedData = response
+      const response = await StoreApiService.fetchStoreAll(
+        page,
+        rowLimit,
+        companyNo,
+        storeNoRangeMin,
+        storeNoRangeMax,
+        storeName,
+        storeNameFurigana
+      );
+      setTotalPages(Math.ceil(response.totalRecords / rowLimit));
+      const sortedData = response.stores
         .sort(
           (a: StoreInfo, b: StoreInfo) =>
             Number(a.store_no) - Number(b.store_no)
@@ -102,7 +83,6 @@ function StoreList() {
         }));
 
       setTableData(sortedData); // Initial table data load
-      setSearchData(sortedData);
     } catch (error) {
       console.error("Error fetching stores:", error);
     }
@@ -111,7 +91,7 @@ function StoreList() {
   useEffect(() => {
     fetchCompaniesNames();
     fetchStoreListData();
-  }, []);
+  }, [page, rowLimit]);
 
   const fetchCompaniesNames = async () => {
     try {
@@ -123,8 +103,10 @@ function StoreList() {
     }
   };
 
-  const [selectedData, setSelectedData] = useState<DataTableRow[]>([]);
-
+  const handleRowsPerPage = (newSelectedData: any) => {
+    console.log(155, newSelectedData[0].rowsPerPage);
+    setRowLimit(newSelectedData[0].rowsPerPage);
+  };
   // Handle selection change
   const handleSelectionChange = (newSelectedData: DataTableRow[]) => {
     // Update the selected data state
@@ -188,6 +170,12 @@ function StoreList() {
     const { company_no, company_name } = company;
     setCompanyNo(company_no);
     setCompanyName(company_name);
+  };
+
+  const handlePageChange = (page: number) => {
+    // setCurrentPage(page); // Update the page state in the parent
+    console.log("Current page in parent:", page);
+    setPage(page + 1);
   };
 
   return (
@@ -272,13 +260,27 @@ function StoreList() {
           </Box>
         </Box>
       </Box>
-      <DataTable // Customize header height
+      {/* <DataTable // Customize header height
         headers={headers}
         data={searchData}
         maxHeight="calc(84vh - 260px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
         onClick={navigateToStoreCreate}
+      /> */}
+      <DataTableControler
+        onPageChange={handlePageChange}
+        onSelectionChange={handleRowsPerPage}
+        totalPages={totalPages}
+        onClickNew={navigateToStoreCreate}
+        onClickReset={navigateToStoreCreate}
+      />
+
+      <DataTable
+        headers={headers}
+        data={tableData}
+        maxHeight="calc(94vh - 260px)"
+        onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.actionButtons}>
         <ButtonAtom

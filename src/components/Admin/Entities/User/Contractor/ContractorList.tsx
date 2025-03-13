@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import ButtonAtom from "../../../../LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../../LV3/Header/MenuHeader/MenuHeader";
 import DataTable from "../../../../LV3/DataTable/DataTable";
+import DataTableControler from "../../../../LV3/DataTable/DataTableControler";
 import { useNavigate } from "react-router-dom";
 import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
 import { UserInfo } from "../../../../../types/UserTypes/UserTypes";
@@ -40,8 +41,10 @@ function ContractorList() {
   const [contractorNameFirst, setContractorNameFirst] = useState<string>("");
   const [contractorNameFuriganaFirst, setContractorNameFuriganaFirst] =
     useState<string>("");
-  const [searchData, setSearchData] = useState<DataTableRow[]>([]);
   const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [rowLimit, setRowLimit] = useState<number>(10);
 
   const [selectedData, setSelectedData] = useState<
     Array<{ No: string | number; [key: string]: string | number }>
@@ -64,7 +67,7 @@ function ContractorList() {
   useEffect(() => {
     fetchCompaniesNames();
     fetchUsersListData();
-  }, []);
+  }, [page, rowLimit]);
 
   useEffect(() => {
     if (!isCompanyNoEmpty) {
@@ -102,12 +105,24 @@ function ContractorList() {
 
   const fetchUsersListData = async () => {
     try {
-      const response = await UserApiService.fetchContractorAll();
+      const response = await UserApiService.fetchContractorAll(
+        page,
+        rowLimit,
+        companyNo,
+        storeNo,
+        contractorNoRangeMin,
+        contractorNoRangeMax,
+        contractorNameFirst,
+        contractorNameFuriganaFirst,
+        contractorNameLast,
+        contractorNameFuriganaLast
+      );
+
+      setTotalPages(Math.ceil(response.totalRecords / rowLimit));
 
       console.log(147, response);
 
-      // const response = await axios.get(`${apiUrl}/company`);
-      const sortedData = response
+      const sortedData = response.contractors
         .sort(
           (a: UserInfo, b: UserInfo) => Number(a.user_no) - Number(b.user_no)
         )
@@ -131,57 +146,13 @@ function ContractorList() {
         }));
       console.log(141, sortedData);
       setTableData(sortedData);
-      setSearchData(sortedData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
   const searchConditions = () => {
-    filterTableData();
-  };
-
-  const filterTableData = () => {
-    const isInvalidRange =
-      Number(contractorNoRangeMin) > Number(contractorNoRangeMax);
-    const isNotEmpty =
-      contractorNoRangeMin !== "" && contractorNoRangeMax !== "";
-
-    if (isInvalidRange && isNotEmpty) {
-      return alert("min is more than max");
-    }
-
-    const filtered = tableData.filter((item) => {
-      const matchesCompanyNo = companyNo === "" || item["企業No"] === companyNo;
-      const matchesStoreNo = storeNo === "" || item["店舗No"] === storeNo;
-
-      const contractorNo = Number(item["契約者No"]);
-
-      const isInRange =
-        (!contractorNoRangeMin ||
-          contractorNo >= Number(contractorNoRangeMin)) &&
-        (!contractorNoRangeMax || contractorNo <= Number(contractorNoRangeMax));
-
-      const matchesFilters =
-        (!contractorNameLast ||
-          String(item["名前_last"]).includes(contractorNameLast)) &&
-        (!contractorNameFuriganaLast ||
-          String(item["フリガナ_last"]).includes(contractorNameFuriganaLast)) &&
-        (!contractorNameFirst ||
-          String(item["名前_first"]).includes(contractorNameFirst)) &&
-        (!contractorNameFuriganaFirst ||
-          String(item["フリガナ_first"]).includes(contractorNameFuriganaFirst));
-
-      console.log(21445, matchesFilters);
-      console.log(21446, String(item["フリガナ_last"]));
-      console.log(21447, contractorNameFuriganaLast);
-
-      // An item is included in the results only if it satisfies both range and search conditions
-      return isInRange && matchesFilters && matchesCompanyNo && matchesStoreNo;
-    });
-
-    // Update the table data to show filtered results
-    setSearchData(filtered);
+    fetchUsersListData();
   };
 
   const handleSelectionChange = (
@@ -214,6 +185,17 @@ function ContractorList() {
     navigate(
       `/UserInfo?selectedUserNo=${selectedContractorNoArray[0]}&userType=contractor`
     );
+  };
+
+  const handlePageChange = (page: number) => {
+    // setCurrentPage(page); // Update the page state in the parent
+    console.log("Current page in parent:", page);
+    setPage(page + 1);
+  };
+
+  const handleRowsPerPage = (newSelectedData: any) => {
+    console.log(155, newSelectedData[0].rowsPerPage);
+    setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
   const navigateToCreate = () => {
@@ -406,15 +388,29 @@ function ContractorList() {
           </Box>
         </Box>
       </Box>
+      <DataTableControler
+        onPageChange={handlePageChange}
+        onSelectionChange={handleRowsPerPage}
+        totalPages={totalPages}
+        onClickNew={navigateToCreate}
+        onClickReset={navigateToCreate}
+      />
 
-      <DataTable // Customize header height
+      <DataTable
+        headers={headers}
+        data={tableData}
+        maxHeight="calc(94vh - 260px)"
+        onSelectionChange={handleSelectionChange}
+      />
+
+      {/* <DataTable // Customize header height
         headers={headers}
         data={searchData}
         maxHeight="calc(85vh - 280px)"
         onSelectionChange={handleSelectionChange}
         operationButton="新規"
         onClick={navigateToCreate}
-      />
+      /> */}
 
       <Box className={classes.actionButtons}>
         <ButtonAtom

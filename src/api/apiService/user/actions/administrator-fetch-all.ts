@@ -3,10 +3,34 @@ import { USER_ENDPOINT } from "../user-api-definitions";
 import api from "../../../index";
 import axios from "axios";
 
-export const fetchAdministratorAll = async () => {
+export const fetchAdministratorAll = async (
+  page: number,
+  limit: number,
+  company_no: number | string,
+  store_no: number | string,
+  admin_no_min: number | string,
+  admin_no_max: number | string,
+  admin_name_first: string,
+  admin_name_furigana_first: string,
+  admin_name_last: string,
+  admin_name_furigana_last: string
+) => {
   console.log(1567);
   try {
-    const response = await api.get(`${USER_ENDPOINT}/administrator`);
+    const response = await api.get(`${USER_ENDPOINT}/administrator`, {
+      params: {
+        page,
+        limit,
+        company_no,
+        store_no,
+        admin_no_min,
+        admin_no_max,
+        admin_name_first,
+        admin_name_furigana_first,
+        admin_name_last,
+        admin_name_furigana_last,
+      },
+    });
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {

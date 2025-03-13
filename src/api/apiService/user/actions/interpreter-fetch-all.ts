@@ -3,10 +3,36 @@ import { USER_ENDPOINT } from "../user-api-definitions";
 import api from "../../../index";
 import axios from "axios";
 
-export const fetchInterpretersAll = async () => {
+export const fetchInterpretersAll = async (
+  page: number,
+  limit: number,
+  company_no: number | string,
+  store_no: number | string,
+  interpreter_no_min: number | string,
+  interpreter_no_max: number | string,
+  interpreter_name_first: string,
+  interpreter_name_furigana_first: string,
+  interpreter_name_last: string,
+  interpreter_name_furigana_last: string,
+  languages: any
+) => {
   console.log(1567);
   try {
-    const response = await api.get(`${USER_ENDPOINT}/interpreter`);
+    const response = await api.get(`${USER_ENDPOINT}/interpreter`, {
+      params: {
+        page,
+        limit,
+        company_no,
+        store_no,
+        interpreter_no_min,
+        interpreter_no_max,
+        interpreter_name_first,
+        interpreter_name_furigana_first,
+        interpreter_name_last,
+        interpreter_name_furigana_last,
+        languages,
+      },
+    });
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {
