@@ -5,8 +5,7 @@ import ButtonAtom from "../../../../LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../../LV3/Header/MenuHeader/MenuHeader";
 import MultipleOptionsSelect from "../../../../LV1/SelectOption/MultipleOptionsSelect";
 import DataTable from "../../../../LV3/DataTable/DataTable";
-// import "./AdminMenu.scss";
-import { useNavigate } from "react-router-dom";
+import DataTableControler from "../../../../LV3/DataTable/DataTableControler";
 import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
 import { InterpreterInfo } from "../../../../../types/UserTypes/UserTypes";
 import { convertToJST } from "../../../../../utils/utils";
@@ -28,7 +27,6 @@ export interface SimpleDialogProps {
 
 function InterpretersList(props: SimpleDialogProps) {
   const { onClose, open } = props;
-  const navigate = useNavigate();
 
   const [selectedInterpreterNoArray, setSelectedInterpreterNoArray] = useState<
     number[]
@@ -53,7 +51,6 @@ function InterpretersList(props: SimpleDialogProps) {
   const [interpreterNameFirst, setInterpreterNameFirst] = useState<string>("");
   const [interpreterNameFuriganaFirst, setInterpreterNameFuriganaFirst] =
     useState<string>("");
-  const [searchData, setSearchData] = useState<DataTableRow[]>([]);
   const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
   const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
     []
@@ -65,6 +62,10 @@ function InterpretersList(props: SimpleDialogProps) {
   const [selectedData, setSelectedData] = useState<
     Array<{ No: string | number; [key: string]: string | number }>
   >([]);
+
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [rowLimit, setRowLimit] = useState<number>(10);
 
   const headers = [
     "No",
@@ -90,7 +91,7 @@ function InterpretersList(props: SimpleDialogProps) {
     fetchCompaniesNames();
     fetchUsersListData();
     fetchLanguageNames();
-  }, []);
+  }, [page, rowLimit]);
 
   useEffect(() => {
     if (!isCompanyNoEmpty) {
@@ -147,9 +148,22 @@ function InterpretersList(props: SimpleDialogProps) {
 
   const fetchUsersListData = async () => {
     try {
-      const response = await UserApiService.fetchInterpretersAll();
+      const response = await UserApiService.fetchInterpretersAll(
+        page,
+        rowLimit,
+        companyNo,
+        storeNo,
+        interpreterNoRangeMin,
+        interpreterNoRangeMax,
+        interpreterNameFirst,
+        interpreterNameFuriganaFirst,
+        interpreterNameLast,
+        interpreterNameFuriganaLast,
+        selectedOptions
+      );
 
       console.log(147, response);
+      setTotalPages(Math.ceil(response.totalRecords / rowLimit));
 
       const getLanguageDetails: LanguageInfo[] =
         await LanguageApiService.fetchLanguageNames();
@@ -168,7 +182,7 @@ function InterpretersList(props: SimpleDialogProps) {
         ); // Join the results with a comma and space
       };
 
-      const sortedData = response
+      const sortedData = response.interpreters
         .sort(
           (a: InterpreterInfo, b: InterpreterInfo) =>
             Number(a.user_no) - Number(b.user_no)
@@ -194,14 +208,13 @@ function InterpretersList(props: SimpleDialogProps) {
         }));
       console.log(141, sortedData);
       setTableData(sortedData);
-      setSearchData(sortedData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
   const searchConditions = () => {
-    filterTableData();
+    fetchUsersListData();
   };
 
   const onCancel = () => {
@@ -217,65 +230,15 @@ function InterpretersList(props: SimpleDialogProps) {
     onClose(interpreterDetails);
   };
 
-  const filterTableData = () => {
-    const isInvalidRange =
-      Number(interpreterNoRangeMin) > Number(interpreterNoRangeMax);
-    const isNotEmpty =
-      interpreterNoRangeMin !== "" && interpreterNoRangeMax !== "";
+  const handleRowsPerPage = (newSelectedData: any) => {
+    console.log(155, newSelectedData[0].rowsPerPage);
+    setRowLimit(newSelectedData[0].rowsPerPage);
+  };
 
-    if (isInvalidRange && isNotEmpty) {
-      return alert("min is more than max");
-    }
-
-    const filtered = tableData.filter((item) => {
-      const matchesCompanyNo = companyNo === "" || item["企業No"] === companyNo;
-      const matchesStoreNo = storeNo === "" || item["店舗No"] === storeNo;
-
-      const interpreterNo = Number(item["通訳者No"]);
-
-      const isInRange =
-        (!interpreterNoRangeMin ||
-          interpreterNo >= Number(interpreterNoRangeMin)) &&
-        (!interpreterNoRangeMax ||
-          interpreterNo <= Number(interpreterNoRangeMax));
-
-      const matchesFilters =
-        (!interpreterNameLast ||
-          String(item["名前_last"]).includes(interpreterNameLast)) &&
-        (!interpreterNameFuriganaLast ||
-          String(item["フリガナ_last"]).includes(
-            interpreterNameFuriganaLast
-          )) &&
-        (!interpreterNameFirst ||
-          String(item["名前_first"]).includes(interpreterNameFirst)) &&
-        (!interpreterNameFuriganaFirst ||
-          String(item["フリガナ_first"]).includes(
-            interpreterNameFuriganaFirst
-          ));
-
-      const matchesLanguageNo =
-        !selectedOptions ||
-        selectedOptions.every(
-          (element) =>
-            Array.isArray(item["通訳言語_Ids"]) &&
-            item["通訳言語_Ids"].includes(Number(element))
-        );
-
-      console.log(21445, matchesLanguageNo);
-      // console.log(21447, interpreterNameFuriganaLast);
-
-      // An item is included in the results only if it satisfies both range and search conditions
-      return (
-        isInRange &&
-        matchesFilters &&
-        matchesCompanyNo &&
-        matchesStoreNo &&
-        matchesLanguageNo
-      );
-    });
-
-    // Update the table data to show filtered results
-    setSearchData(filtered);
+  const handlePageChange = (page: number) => {
+    // setCurrentPage(page); // Update the page state in the parent
+    console.log("Current page in parent:", page);
+    setPage(page + 1);
   };
 
   const handleSelectionChange = (
@@ -294,20 +257,16 @@ function InterpretersList(props: SimpleDialogProps) {
     }
 
     // Log the selected data to the console
-    console.log("Selected Data:", newSelectedData);
+    console.log("Selected Data17:", newSelectedData);
 
     // Extract and convert "通訳者No" to number
     const selectedInterpreterNo = newSelectedData
       .map((item) => Number(item["通訳者No"]))
       .filter((value) => !isNaN(value)); // Filter out invalid numbers
 
-    setSelectedInterpreterNoArray(selectedInterpreterNo);
-  };
+    console.log("Selected Data18:", selectedInterpreterNo);
 
-  const navigateToInterpreterCreate = () => {
-    navigate("/UserCreate", {
-      state: { userType: "interpreter" },
-    });
+    setSelectedInterpreterNoArray(selectedInterpreterNo);
   };
 
   const handleCompanySelect = (company: CompanyInfo) => {
@@ -481,13 +440,26 @@ function InterpretersList(props: SimpleDialogProps) {
           </Box>
         </Box>
 
-        <DataTable // Customize header height
+        {/* <DataTable // Customize header height
           headers={headers}
           data={searchData}
           maxHeight="calc(81vh - 280px)"
           onSelectionChange={handleSelectionChange}
           operationButton="新規"
           onClick={navigateToInterpreterCreate}
+        /> */}
+
+        <DataTableControler
+          onPageChange={handlePageChange}
+          onSelectionChange={handleRowsPerPage}
+          totalPages={totalPages}
+        />
+
+        <DataTable
+          headers={headers}
+          data={tableData}
+          maxHeight="calc(94vh - 260px)"
+          onSelectionChange={handleSelectionChange}
         />
 
         <Box className={classes.actionButtons}>

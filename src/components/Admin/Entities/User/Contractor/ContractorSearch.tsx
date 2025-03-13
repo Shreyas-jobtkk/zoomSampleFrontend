@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import ButtonAtom from "../../../../LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../../LV3/Header/MenuHeader/MenuHeader";
 import DataTable from "../../../../LV3/DataTable/DataTable";
+import DataTableControler from "../../../../LV3/DataTable/DataTableControler";
 import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
 import { UserInfo } from "../../../../../types/UserTypes/UserTypes";
 import { convertToJST } from "../../../../../utils/utils";
@@ -45,7 +46,9 @@ function ContractorList(props: SimpleDialogProps) {
   const [contractorNameFirst, setContractorNameFirst] = useState<string>("");
   const [contractorNameFuriganaFirst, setContractorNameFuriganaFirst] =
     useState<string>("");
-  const [searchData, setSearchData] = useState<DataTableRow[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [rowLimit, setRowLimit] = useState<number>(10);
   const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
 
   const [selectedData, setSelectedData] = useState<
@@ -60,7 +63,7 @@ function ContractorList(props: SimpleDialogProps) {
     "企業名",
     "店舗No",
     "店舗名",
-    "契約No",
+    "契約者No",
     "契約者名",
     "フリガナ",
   ];
@@ -68,7 +71,7 @@ function ContractorList(props: SimpleDialogProps) {
   useEffect(() => {
     fetchCompaniesNames();
     fetchUsersListData();
-  }, []);
+  }, [page, rowLimit]);
 
   useEffect(() => {
     if (!isCompanyNoEmpty) {
@@ -106,88 +109,63 @@ function ContractorList(props: SimpleDialogProps) {
 
   const fetchUsersListData = async () => {
     try {
-      const response = await UserApiService.fetchContractorAll();
+      const response = await UserApiService.fetchContractorAll(
+        page,
+        rowLimit,
+        companyNo,
+        storeNo,
+        contractorNoRangeMin,
+        contractorNoRangeMax,
+        contractorNameFirst,
+        contractorNameFuriganaFirst,
+        contractorNameLast,
+        contractorNameFuriganaLast
+      );
 
-      //   console.log(147, response);
+      setTotalPages(Math.ceil(response.totalRecords / rowLimit));
 
       // const response = await axios.get(`${apiUrl}/company`);
-      const sortedData = response
+      const sortedData = response.contractors
         .sort(
           (a: UserInfo, b: UserInfo) => Number(a.user_no) - Number(b.user_no)
         )
         .map((item: UserInfo, index: number) => ({
           No: index + 1,
           登録日時: convertToJST(item.created_at),
-          // 更新日時: String(
-          //   new Date(convertToJST(item.created_at)) > new Date(0)
-          // ),
           更新日時: convertToJST(item.updated_at),
           企業No: item.company_no,
           企業名: item.company_name,
           店舗No: item.store_no,
           店舗名: item.store_name,
-          契約No: item.user_no,
+          契約者No: item.user_no,
           契約者名: `${item.user_name_last} ${item.user_name_first}`,
           フリガナ: `${item.user_name_last_furigana} ${item.user_name_first_furigana}`,
 
-          契約者名_last: item.user_name_last,
-          契約者名_first: item.user_name_first,
+          名前_last: item.user_name_last,
+          名前_first: item.user_name_first,
           フリガナ_last: item.user_name_last_furigana,
           フリガナ_first: item.user_name_first_furigana,
         }));
-      console.log(141, sortedData);
+      console.log(22141, sortedData);
       setTableData(sortedData);
-      setSearchData(sortedData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
   const searchConditions = () => {
-    filterTableData();
+    fetchUsersListData();
   };
 
-  const filterTableData = () => {
-    const isInvalidRange =
-      Number(contractorNoRangeMin) > Number(contractorNoRangeMax);
-    const isNotEmpty =
-      contractorNoRangeMin !== "" && contractorNoRangeMax !== "";
+  const handlePageChange = (page: number) => {
+    // setCurrentPage(page); // Update the page state in the parent
+    console.log("Current page in parent:", page);
+    setPage(page + 1);
+  };
 
-    if (isInvalidRange && isNotEmpty) {
-      return alert("min is more than max");
-    }
-
-    const filtered = tableData.filter((item) => {
-      const matchesCompanyNo = companyNo === "" || item["企業No"] === companyNo;
-      const matchesStoreNo = storeNo === "" || item["店舗No"] === storeNo;
-
-      const contractorNo = Number(item["契約No"]);
-
-      const isInRange =
-        (!contractorNoRangeMin ||
-          contractorNo >= Number(contractorNoRangeMin)) &&
-        (!contractorNoRangeMax || contractorNo <= Number(contractorNoRangeMax));
-
-      const matchesFilters =
-        (!contractorNameLast ||
-          String(item["契約者名_last"]).includes(contractorNameLast)) &&
-        (!contractorNameFuriganaLast ||
-          String(item["フリガナ_last"]).includes(contractorNameFuriganaLast)) &&
-        (!contractorNameFirst ||
-          String(item["契約者名_first"]).includes(contractorNameFirst)) &&
-        (!contractorNameFuriganaFirst ||
-          String(item["フリガナ_first"]).includes(contractorNameFuriganaFirst));
-
-      console.log(21445, matchesFilters);
-      console.log(21446, String(item["フリガナ_last"]));
-      console.log(21447, contractorNameFuriganaLast);
-
-      // An item is included in the results only if it satisfies both range and search conditions
-      return isInRange && matchesFilters && matchesCompanyNo && matchesStoreNo;
-    });
-
-    // Update the table data to show filtered results
-    setSearchData(filtered);
+  const handleRowsPerPage = (newSelectedData: any) => {
+    console.log(155, newSelectedData[0].rowsPerPage);
+    setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
   const handleSelectionChange = (
@@ -206,12 +184,14 @@ function ContractorList(props: SimpleDialogProps) {
     }
 
     // Log the selected data to the console
-    console.log("Selected Data:", newSelectedData);
+    console.log("Selected Data7:", newSelectedData);
 
     // Extract and convert "契約No" to number
     const selectedContractorNo = newSelectedData
-      .map((item) => Number(item["契約No"]))
+      .map((item) => Number(item["契約者No"]))
       .filter((value) => !isNaN(value)); // Filter out invalid numbers
+
+    console.log("Selected Data8:", selectedContractorNo);
 
     setSelectedContractorNoArray(selectedContractorNo);
   };
@@ -224,8 +204,8 @@ function ContractorList(props: SimpleDialogProps) {
     console.log(156, selectedContractorNoArray);
     console.log(2156, selectedData);
 
-    const [{ 契約No, 企業名, 店舗名 }] = selectedData;
-    const contractorDetails = { 契約No, 企業名, 店舗名 };
+    const [{ 契約者No, 企業名, 店舗名 }] = selectedData;
+    const contractorDetails = { 契約者No, 企業名, 店舗名 };
     onClose(contractorDetails);
   };
 
@@ -391,12 +371,25 @@ function ContractorList(props: SimpleDialogProps) {
           </Box>
         </Box>
 
-        <DataTable // Customize header height
+        {/* <DataTable // Customize header height
           headers={headers}
           data={searchData}
           maxHeight="calc(80vh - 300px)"
           onSelectionChange={handleSelectionChange}
           operationButton="新規"
+        /> */}
+
+        <DataTableControler
+          onPageChange={handlePageChange}
+          onSelectionChange={handleRowsPerPage}
+          totalPages={totalPages}
+        />
+
+        <DataTable
+          headers={headers}
+          data={tableData}
+          maxHeight="calc(94vh - 260px)"
+          onSelectionChange={handleSelectionChange}
         />
 
         <Box className={classes.actionButtons}>

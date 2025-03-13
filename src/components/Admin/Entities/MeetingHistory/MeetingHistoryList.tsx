@@ -7,6 +7,7 @@ import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import SelectOption from "../../../LV1/SelectOption/SelectOption";
 import DataTable from "../../../LV3/DataTable/DataTable";
+import DataTableControler from "../../../LV3/DataTable/DataTableControler";
 import classes from "../styles/AdminEntities.module.scss";
 import ContractorSearch from "../User/Contractor/ContractorSearch";
 import InterpreterSearch from "../User/Interpreter/InterpreterSearch";
@@ -26,7 +27,12 @@ function InterpreterEvaluationList() {
     "通訳者No",
     "通訳者名",
     "通訳言語",
+    "評価",
   ];
+
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [rowLimit, setRowLimit] = useState<number>(10);
 
   const [interpreterNo, setIinterpreterNo] = useState<string>("");
   const [interpreterFirstName, setIinterpreterFirstName] = useState<string>("");
@@ -35,13 +41,12 @@ function InterpreterEvaluationList() {
   const [companyName, setCompanyName] = useState<string>("");
   const [storeName, setStoreName] = useState<string>("");
   const [tableData, setTableData] = useState<any>([]);
-  const [searchData, setSearchData] = useState<any>([]);
   const [startDateRangeMin, setStartDateRangeMin] = useState<Date | null>(null);
   const [startDateRangeMax, setStartDateRangeMax] = useState<Date | null>(null);
-  const [startDateTimeRangeMin, setStartDateTimeRangeMin] = useState<any>(null);
+  const [startDateTimeRangeMin, setStartDateTimeRangeMin] = useState<any>("");
   // const [startTimeRangeMin, setStartTimeRangeMin] = useState<Date | null>(null);
   // const [startTimeRangeMax, setStartTimeRangeMax] = useState<Date | null>(null);
-  const [startDateTimeRangeMax, setStartDateTimeRangeMax] = useState<any>(null);
+  const [startDateTimeRangeMax, setStartDateTimeRangeMax] = useState<any>("");
   const [languagesSupport, setLanguagesSupport] = useState<
     { label: string; value: string | number }[]
   >([]);
@@ -77,60 +82,27 @@ function InterpreterEvaluationList() {
   useEffect(() => {
     fetchCallLogData();
     fetchLanguageNames();
-  }, []);
+  }, [page, rowLimit]);
 
   const searchConditions = () => {
-    filterTableData();
-  };
-
-  const filterTableData = () => {
-    console.log(1557, selectedLanguage);
-    const filtered = tableData.filter((item: any) => {
-      const matchesContractNo =
-        contractNo === "" || item["契約No"] === contractNo;
-
-      const matchesInterpreterNo =
-        interpreterNo === "" || item["通訳者No"] === interpreterNo;
-
-      const matchesLangNo =
-        selectedLanguage === "" || item["lang_no"] === selectedLanguage;
-
-      let startperiodRangeMin = startDateTimeRangeMin
-        ? new Date(startDateTimeRangeMin)
-        : null;
-
-      const matchesStartTimeMin =
-        startperiodRangeMin === null ||
-        new Date(item["開始日時"]) >= startperiodRangeMin;
-      console.log(144, startperiodRangeMin);
-      console.log(145, matchesStartTimeMin);
-
-      let startperiodRangeMax = startDateTimeRangeMax
-        ? new Date(startDateTimeRangeMax)
-        : null;
-
-      const matchesStartTimeMax =
-        startperiodRangeMax === null ||
-        new Date(item["開始日時"]) <= startperiodRangeMax;
-
-      return (
-        matchesContractNo &&
-        matchesStartTimeMin &&
-        matchesStartTimeMax &&
-        matchesInterpreterNo &&
-        matchesLangNo
-      );
-    });
-
-    // Update the table data to show filtered results
-    setSearchData(filtered);
+    fetchCallLogData();
   };
 
   const fetchCallLogData = async () => {
     try {
-      const response = await CallLogApiService.fetchCallLog();
+      const response = await CallLogApiService.fetchCallLog(
+        page,
+        rowLimit,
+        contractNo,
+        interpreterNo,
+        selectedLanguage,
+        startDateTimeRangeMin,
+        startDateTimeRangeMax
+      );
+
+      setTotalPages(Math.ceil(response.totalRecords / rowLimit));
       console.log(75589, response);
-      let apiTableData: any = response.map((item: any) => ({
+      let apiTableData: any = response.callLogs.map((item: any) => ({
         開始日時: convertToJST(item.call_start),
         終了日時: convertToJST(item.call_end),
         契約No: item.contract_no,
@@ -139,12 +111,14 @@ function InterpreterEvaluationList() {
         通訳者No: item.interpreter_no,
         通訳者名: item.interpreter_name,
         通訳言語: item.language_name,
+        評価: item.feed_back,
         lang_no: item.language_support_no,
       }));
 
-      let videoStartTableData = apiTableData.filter(
-        (item: any) => item.開始日時
-      );
+      let videoStartTableData = apiTableData;
+      // .filter(
+      //   (item: any) => item.開始日時
+      // );
 
       videoStartTableData = videoStartTableData.map(
         (item: any, index: number) => ({
@@ -154,7 +128,6 @@ function InterpreterEvaluationList() {
       );
       console.log(189, videoStartTableData);
       setTableData(videoStartTableData); // Initial table data load
-      setSearchData(videoStartTableData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
@@ -162,9 +135,10 @@ function InterpreterEvaluationList() {
 
   const setContractorDetails = (value: any) => {
     setOpenContractor(false);
+    console.log(1777, value);
 
     if (value && typeof value === "object") {
-      setContractNo(value["契約No"] || ""); // Provide a fallback if key is missing
+      setContractNo(value["契約者No"] || ""); // Provide a fallback if key is missing
       setCompanyName(value["企業名"] || "");
       setStoreName(value["店舗名"] || "");
     } else {
@@ -230,9 +204,20 @@ function InterpreterEvaluationList() {
     console.log("Selected Data:", selectedData);
   };
 
+  const handlePageChange = (page: number) => {
+    // setCurrentPage(page); // Update the page state in the parent
+    console.log("Current page in parent:", page);
+    setPage(page + 1);
+  };
+
+  const handleRowsPerPage = (newSelectedData: any) => {
+    console.log(155, newSelectedData[0].rowsPerPage);
+    setRowLimit(newSelectedData[0].rowsPerPage);
+  };
+
   return (
     <Box className={classes.adminEntity}>
-      <MenuHeader title="ミーティング履歴一覧" />
+      <MenuHeader title="通訳評価一覧" />
       <Box className={classes.searchContainer}>
         <Box className={classes.searchLabel}>検索条件</Box>
         <Box className={classes.selectRange}>
@@ -264,10 +249,11 @@ function InterpreterEvaluationList() {
             width="90px"
             margin="2px"
           />
-          <InterpreterSearch
-            open={openInterpreter}
-            onClose={setInterpreterDetails}
+          <ContractorSearch
+            open={openContractor}
+            onClose={setContractorDetails}
           />
+
           <Box className={classes.contractorDetails}>
             <TextBoxWithLabel
               label="契約No"
@@ -334,10 +320,18 @@ function InterpreterEvaluationList() {
           </Box>
         </Box>
       </Box>
-      <ContractorSearch open={openContractor} onClose={setContractorDetails} />
+      <InterpreterSearch
+        open={openInterpreter}
+        onClose={setInterpreterDetails}
+      />
+      <DataTableControler
+        onPageChange={handlePageChange}
+        onSelectionChange={handleRowsPerPage}
+        totalPages={totalPages}
+      />
       <DataTable // Customize header height
         headers={headers}
-        data={searchData}
+        data={tableData}
         maxHeight="calc(82vh - 300px)"
         onSelectionChange={handleSelectionChange}
       />

@@ -3,9 +3,27 @@ import { CALLLOG_ENDPOINT } from "../callLog-api-definitions";
 
 import api from "../../../index";
 
-export const fetchCallLog = async () => {
+export const fetchCallLog = async (
+  page: number,
+  limit: number,
+  contract_no: number | string,
+  interpreter_no: number | string,
+  lang_no: string,
+  start_time: string,
+  end_time: string
+) => {
   try {
-    const response = await api.get(CALLLOG_ENDPOINT);
+    const response = await api.get(CALLLOG_ENDPOINT, {
+      params: {
+        page,
+        limit,
+        contract_no,
+        interpreter_no,
+        lang_no,
+        start_time,
+        end_time,
+      },
+    });
     return response.data;
   } catch (error: unknown) {
     if (error instanceof Error) {
