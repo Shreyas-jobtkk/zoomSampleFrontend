@@ -34,21 +34,10 @@
   margin-top: -20px;
 }
 
-.moveTop {
-  margin-top: -2vh;
-}
-
-.marginTop {
-  margin-top: 2vh;
-}
-
-.actionButtons {
-  margin-top: 12px;
-}
-
-.contractorDetails {
+.searchRow {
   display: flex;
-  align-items: flex-start;
+  margin-top: 16px;
+  justify-content: flex-end; /* Aligns children to the end */
   gap: 3vw;
 }
 
