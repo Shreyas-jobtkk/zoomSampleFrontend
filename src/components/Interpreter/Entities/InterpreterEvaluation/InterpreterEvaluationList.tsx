@@ -24,8 +24,6 @@ function InterpreterEvaluationList() {
     "契約No",
     "企業名",
     "店舗名",
-    "通訳者No",
-    "通訳者名",
     "通訳言語",
     "評価",
   ];
@@ -104,8 +102,6 @@ function InterpreterEvaluationList() {
         契約No: item.contract_no,
         企業名: item.contract_company_name,
         店舗名: item.contract_store_name,
-        通訳者No: item.interpreter_no,
-        通訳者名: item.interpreter_name,
         通訳言語: item.language_name,
         評価: item.feed_back,
         lang_no: item.language_support_no,
