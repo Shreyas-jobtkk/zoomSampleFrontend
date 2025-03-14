@@ -11,7 +11,7 @@ const App: React.FC = () => {
       <nav>
         <List className="app-nav-bar">
           <li>
-            <Link to="/ContractorLogin">契約書</Link>
+            <Link to="/ContractorLogin">契約者</Link>
           </li>
           <li>
             <Link to="/InterpreterLogin">通訳者</Link>
