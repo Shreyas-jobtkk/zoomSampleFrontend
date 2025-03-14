@@ -130,7 +130,7 @@ function UserMenu() {
 
   const fetchLanguageNames = async () => {
     try {
-      let response = await LanguageApiService.fetchLanguagesAll();
+      let response = await LanguageApiService.fetchLanguageNames();
 
       console.log(102177, response);
       response = response.sort(
