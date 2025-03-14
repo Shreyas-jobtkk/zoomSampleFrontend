@@ -19,13 +19,9 @@ function InterpreterEvaluationList() {
     "No",
     "開始日時",
     "終了日時",
-    "契約No",
-    "企業名",
-    "店舗名",
     "通訳者No",
     "通訳者名",
     "通訳言語",
-    "評価",
   ];
 
   const [page, setPage] = useState<number>(1);
@@ -86,13 +82,10 @@ function InterpreterEvaluationList() {
       );
 
       setTotalPages(Math.ceil(response.totalRecords / rowLimit));
-      console.log(75589, response);
+      console.log(444, response);
       let apiTableData: any = response.callLogs.map((item: any) => ({
         開始日時: convertToJST(item.call_start),
         終了日時: convertToJST(item.call_end),
-        契約No: item.contract_no,
-        企業名: item.contract_company_name,
-        店舗名: item.contract_store_name,
         通訳者No: item.interpreter_no,
         通訳者名: item.interpreter_name,
         通訳言語: item.language_name,
