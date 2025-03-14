@@ -190,7 +190,7 @@ function InterpreterEvaluationList() {
 
   return (
     <Box className={classes.adminEntity}>
-      <MenuHeader title="通訳評価一覧" />
+      <MenuHeader title="ミーティング履歴一覧" />
       <Box className={classes.searchContainer}>
         <Box className={classes.searchLabel}>検索条件</Box>
         <Box className={classes.selectRange}>
