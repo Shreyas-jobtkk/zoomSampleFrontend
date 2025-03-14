@@ -27,7 +27,6 @@ function InterpreterEvaluationList() {
     "通訳者No",
     "通訳者名",
     "通訳言語",
-    "評価",
   ];
 
   const [page, setPage] = useState<number>(1);

@@ -12,9 +12,7 @@ import classes from "../styles/AdminEntities.module.scss";
 import ContractorSearch from "../User/Contractor/ContractorSearch";
 import InterpreterSearch from "../User/Interpreter/InterpreterSearch";
 import { CallLogApiService } from "../../../../api/apiService/callLog/callLog-api-service";
-import { convertToJST } from "../../../../utils/utils";
-import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
-import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
+import { convertToJST, getCallStatus } from "../../../../utils/utils";
 
 function InterpreterEvaluationList() {
   const headers = [
@@ -26,8 +24,7 @@ function InterpreterEvaluationList() {
     "店舗名",
     "通訳者No",
     "通訳者名",
-    "通訳言語",
-    "評価",
+    "承諾/拒否",
   ];
 
   const [page, setPage] = useState<number>(1);
@@ -47,30 +44,14 @@ function InterpreterEvaluationList() {
   // const [startTimeRangeMin, setStartTimeRangeMin] = useState<Date | null>(null);
   // const [startTimeRangeMax, setStartTimeRangeMax] = useState<Date | null>(null);
   const [startDateTimeRangeMax, setStartDateTimeRangeMax] = useState<any>("");
-  const [languagesSupport, setLanguagesSupport] = useState<
-    { label: string; value: string | number }[]
-  >([]);
 
-  const [selectedLanguage, setSelectedLanguage] = useState<string>("");
-
-  const fetchLanguageNames = async () => {
-    try {
-      let response = await LanguageApiService.fetchLanguageNames();
-
-      console.log(177, response);
-
-      response = response.map((item: LanguageInfo) => ({
-        label: item.language_name, // Map 'language_name' to 'label'
-        value: item.languages_support_no, // Map 'languages_support_no' to 'value'
-      }));
-
-      setLanguagesSupport(response);
-
-      // const response = await axios.get(`${apiUrl}/company`);
-    } catch (error) {
-      console.error("Error fetching companies:", error);
-    }
-  };
+  const [callStatus, setCallStatus] = useState<string>("");
+  let callStatusOptions: { label: string; value: string | number }[] = [
+    { label: "Cancel", value: "callCanceled" },
+    { label: "Time Out", value: "callTimeUp" },
+    { label: "承諾", value: "callAccepted" },
+    { label: "拒否", value: "rejected" },
+  ];
 
   const [openContractor, setOpenContractor] = useState(false);
   const [openInterpreter, setOpenInterpreter] = useState(false);
@@ -81,7 +62,6 @@ function InterpreterEvaluationList() {
 
   useEffect(() => {
     fetchCallLogData();
-    fetchLanguageNames();
   }, [page, rowLimit]);
 
   const searchConditions = () => {
@@ -95,9 +75,10 @@ function InterpreterEvaluationList() {
         rowLimit,
         contractNo,
         interpreterNo,
-        selectedLanguage,
+        "",
         startDateTimeRangeMin,
-        startDateTimeRangeMax
+        startDateTimeRangeMax,
+        callStatus
       );
 
       setTotalPages(Math.ceil(response.totalRecords / rowLimit));
@@ -110,8 +91,7 @@ function InterpreterEvaluationList() {
         店舗名: item.contract_store_name,
         通訳者No: item.interpreter_no,
         通訳者名: item.interpreter_name,
-        通訳言語: item.language_name,
-        評価: item.feed_back,
+        "承諾/拒否": getCallStatus(item.call_status),
         lang_no: item.language_support_no,
       }));
 
@@ -302,12 +282,12 @@ function InterpreterEvaluationList() {
               labelWidth="30px"
             />
             <SelectOption
-              label="通訳言語："
-              options={languagesSupport}
+              label="承諾/拒否"
+              options={callStatusOptions}
               width={"calc(10vw - 15px)"}
-              value={selectedLanguage}
-              onChange={setSelectedLanguage}
-              labelWidth={"85px"}
+              value={callStatus}
+              onChange={setCallStatus}
+              labelWidth={"90px"}
             />
 
             <Box className={classes.searchButton}>

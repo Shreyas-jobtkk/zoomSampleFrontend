@@ -10,7 +10,8 @@ export const fetchCallLog = async (
   interpreter_no: number | string,
   lang_no: string,
   start_time: string,
-  end_time: string
+  end_time: string,
+  call_status?: string
 ) => {
   try {
     const response = await api.get(CALLLOG_ENDPOINT, {
@@ -22,6 +23,7 @@ export const fetchCallLog = async (
         lang_no,
         start_time,
         end_time,
+        call_status,
       },
     });
     return response.data;
