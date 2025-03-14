@@ -70,7 +70,14 @@ function InterpretersListUpdate() {
 
   const fetchCompaniesListData = async () => {
     try {
-      const response = await CompanyApiService.fetchCompaniesAll();
+      const response = await CompanyApiService.fetchCompaniesAll(
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      );
       console.log(144, response);
       const filteredData = response.map(
         ({
@@ -170,7 +177,14 @@ function InterpretersListUpdate() {
 
   const fetchLanguageNames = async () => {
     try {
-      let response = await LanguageApiService.fetchLanguagesAll();
+      let response = await LanguageApiService.fetchLanguagesAll(
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      );
 
       console.log(177, response);
 

@@ -3,8 +3,8 @@ import { COMPANY_ENDPOINT } from "../company-api-definitions";
 import api from "../../../index";
 
 export const fetchCompaniesAll = async (
-  page: number,
-  limit: number,
+  page: number | string,
+  limit: number | string,
   company_no_min: number | string,
   company_no_max: number | string,
   company_name: string,

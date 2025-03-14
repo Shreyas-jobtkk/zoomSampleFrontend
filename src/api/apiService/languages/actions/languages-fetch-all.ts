@@ -3,8 +3,8 @@ import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
 export const fetchLanguagesAll = async (
-  page: number,
-  limit: number,
+  page: number | string,
+  limit: number | string,
   language_no_min: number | string,
   language_no_max: number | string,
   language_name: string,
