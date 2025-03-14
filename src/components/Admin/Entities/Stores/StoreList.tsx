@@ -166,6 +166,8 @@ function StoreList() {
     navigate("/StoreCreate");
   };
 
+  const onResetTable = () => fetchStoreListData();
+
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
     setCompanyNo(company_no);
@@ -273,7 +275,7 @@ function StoreList() {
         onSelectionChange={handleRowsPerPage}
         totalPages={totalPages}
         onClickNew={navigateToStoreCreate}
-        onClickReset={navigateToStoreCreate}
+        onClickReset={onResetTable}
       />
 
       <DataTable

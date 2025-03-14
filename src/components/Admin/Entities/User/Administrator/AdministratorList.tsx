@@ -201,6 +201,8 @@ function AdministratorList() {
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
+  const onResetTable = () => fetchUsersListData();
+
   const navigateToCreate = () => {
     navigate(`/UserCreate?userType=administrator`);
   };
@@ -403,7 +405,7 @@ function AdministratorList() {
         onSelectionChange={handleRowsPerPage}
         totalPages={totalPages}
         onClickNew={navigateToCreate}
-        onClickReset={navigateToCreate}
+        onClickReset={onResetTable}
       />
 
       <DataTable

@@ -264,6 +264,8 @@ function InterpretersList() {
     navigate(`/UserCreate?userType=interpreter`);
   };
 
+  const onResetTable = () => fetchUsersListData();
+
   const navigateToEditPage = () => {
     navigate(
       `/UserUpdate?selectedUserNo=${selectedInterpreterNoArray[0]}&userType=interpreter`
@@ -472,7 +474,7 @@ function InterpretersList() {
         onSelectionChange={handleRowsPerPage}
         totalPages={totalPages}
         onClickNew={navigateToCreate}
-        onClickReset={navigateToCreate}
+        onClickReset={onResetTable}
       />
 
       <DataTable

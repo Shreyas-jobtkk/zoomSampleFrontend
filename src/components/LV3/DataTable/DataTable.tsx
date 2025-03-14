@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
+  Box,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Paper,
   Checkbox,
-  Box,
+  Tooltip,
 } from "@mui/material";
+import { ArrowUpward, ArrowDownward } from "@mui/icons-material";
 
-import Tooltip from "@mui/material/Tooltip";
 export interface DataTableRow {
   No: number;
   [key: string]: string | number;
@@ -34,51 +35,60 @@ const DataTable: React.FC<DataTableProps> = ({
   const [columnWidths, setColumnWidths] = useState<number[]>(
     new Array(headers.length).fill(150)
   );
+  const [sortedData, setSortedData] = useState<DataTableRow[]>([...data]);
+  const [sortConfig, setSortConfig] = useState<{
+    key: string;
+    direction: "asc" | "desc";
+  } | null>(null);
 
   const tableRef = useRef<HTMLTableElement>(null);
 
   useEffect(() => {
     if (onSelectionChange) {
-      const selectedData = data.filter((row) => selected.includes(row.No));
+      const selectedData = sortedData.filter((row) =>
+        selected.includes(row.No)
+      );
       onSelectionChange(selectedData);
     }
-  }, [selected]); // Dependency on selected, onSelectionChange, and data
+  }, [selected, sortedData]);
+
+  useEffect(() => {
+    setSortedData([...data]); // Reset table data on prop change
+  }, [data]);
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = data.map((row) => row.No);
-      setSelected(newSelected);
-    } else {
-      setSelected([]);
-    }
+    setSelected(event.target.checked ? sortedData.map((row) => row.No) : []);
   };
 
   const handleClick = (No: string | number) => {
-    const selectedIndex = selected.indexOf(No);
-    let newSelected: Array<string | number> = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, No);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
+    setSelected((prevSelected) => {
+      const selectedIndex = prevSelected.indexOf(No);
+      if (selectedIndex === -1) return [...prevSelected, No];
+      return prevSelected.filter((id) => id !== No);
+    });
   };
 
-  const isSelected = (No: string | number) => selected.indexOf(No) !== -1;
-  const isAllSelected = () => selected.length === data.length;
+  const isSelected = (No: string | number) => selected.includes(No);
+  const isAllSelected = () => selected.length === sortedData.length;
+
+  const handleSort = (header: string) => {
+    const direction =
+      sortConfig?.key === header && sortConfig.direction === "asc"
+        ? "desc"
+        : "asc";
+    const sorted = [...sortedData].sort((a, b) => {
+      if (a[header] < b[header]) return direction === "asc" ? -1 : 1;
+      if (a[header] > b[header]) return direction === "asc" ? 1 : -1;
+      return 0;
+    });
+    setSortedData(sorted);
+    setSortConfig({ key: header, direction });
+  };
 
   const handleColumnResize = (index: number, event: React.MouseEvent) => {
     const startX = event.clientX;
     const startWidth = columnWidths[index];
+
     const onMouseMove = (moveEvent: MouseEvent) => {
       const newWidth = startWidth + moveEvent.clientX - startX;
       if (newWidth > 50) {
@@ -89,20 +99,18 @@ const DataTable: React.FC<DataTableProps> = ({
         });
       }
     };
+
     const onMouseUp = () => {
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseup", onMouseUp);
     };
+
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onMouseUp);
   };
 
   return (
-    <Box
-      sx={{
-        margin: "0px 1vw",
-      }}
-    >
+    <Box sx={{ margin: "0px 1vw" }}>
       <Paper>
         <TableContainer style={{ maxHeight: maxHeight || "none" }}>
           <Table ref={tableRef}>
@@ -112,7 +120,6 @@ const DataTable: React.FC<DataTableProps> = ({
                 top: 0,
                 backgroundColor: "lightgray",
                 zIndex: 10,
-                boxShadow: "0 -20px",
               }}
             >
               <TableRow>
@@ -139,9 +146,18 @@ const DataTable: React.FC<DataTableProps> = ({
                       cursor: "pointer",
                       textAlign: index === 0 ? "right" : "left",
                     }}
+                    onClick={() => handleSort(header)}
                   >
-                    {header}
-
+                    {header}{" "}
+                    {sortConfig?.key === header ? (
+                      sortConfig.direction === "asc" ? (
+                        <ArrowUpward fontSize="small" />
+                      ) : (
+                        <ArrowDownward fontSize="small" />
+                      )
+                    ) : (
+                      ""
+                    )}
                     <Box
                       style={{
                         position: "absolute",
@@ -158,7 +174,7 @@ const DataTable: React.FC<DataTableProps> = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((row) => (
+              {sortedData.map((row) => (
                 <TableRow key={row.No} selected={isSelected(row.No)}>
                   <TableCell
                     padding="checkbox"

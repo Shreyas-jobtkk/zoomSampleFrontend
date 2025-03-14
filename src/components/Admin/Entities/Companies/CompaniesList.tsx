@@ -132,6 +132,8 @@ function CompaniesList() {
 
   const navigateToCompanyCreate = () => navigate("/CompanyCreate");
 
+  const onResetTable = () => fetchCompaniesListData();
+
   const handleRowsPerPage = (newSelectedData: any) => {
     console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
@@ -252,7 +254,7 @@ function CompaniesList() {
         onSelectionChange={handleRowsPerPage}
         totalPages={totalPages}
         onClickNew={navigateToCompanyCreate}
-        onClickReset={navigateToCompanyCreate}
+        onClickReset={onResetTable}
       />
 
       <DataTable

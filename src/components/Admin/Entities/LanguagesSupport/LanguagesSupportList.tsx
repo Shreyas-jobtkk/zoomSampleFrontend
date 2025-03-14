@@ -118,6 +118,8 @@ function LanguagesSupportList() {
     setPage(page + 1);
   };
 
+  const onResetTable = () => fetchLanguagesListData();
+
   const navigateToLanguageCreate = () => navigate("/LanguagesCreate");
 
   const handleRowsPerPage = (newSelectedData: any) => {
@@ -235,7 +237,7 @@ function LanguagesSupportList() {
         onSelectionChange={handleRowsPerPage}
         totalPages={totalPages}
         onClickNew={navigateToLanguageCreate}
-        onClickReset={navigateToLanguageCreate}
+        onClickReset={onResetTable}
       />
 
       <DataTable

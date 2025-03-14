@@ -202,6 +202,8 @@ function ContractorList() {
     navigate(`/UserCreate?userType=contractor`);
   };
 
+  const onResetTable = () => fetchUsersListData();
+
   const navigateToEditPage = () => {
     navigate(
       `/UserUpdate?selectedUserNo=${selectedContractorNoArray[0]}&userType=contractor`
@@ -393,7 +395,7 @@ function ContractorList() {
         onSelectionChange={handleRowsPerPage}
         totalPages={totalPages}
         onClickNew={navigateToCreate}
-        onClickReset={navigateToCreate}
+        onClickReset={onResetTable}
       />
 
       <DataTable
