@@ -12,7 +12,7 @@ type ValidationInputFieldProps = {
   name: string;
   type?: string;
   register: any;
-  error?: string;
+  error?: boolean;
   maxLength?: number; // Optional dynamic maxLength
   labelWidth?: string | number; // Optional label width
   width?: string | number; // Optional input width
@@ -35,6 +35,7 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
   value, // Controlled value
   onChange, // Controlled onChange
   isSubmitted,
+  error,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -102,7 +103,7 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
             target.style.pointerEvents = "none";
           }
         }}
-        error={isError}
+        error={isError || error}
         value={value} // Set controlled value
         onChange={onChange} // Handle onChange for controlled input
         sx={{

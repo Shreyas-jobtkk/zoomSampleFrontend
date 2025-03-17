@@ -195,7 +195,9 @@ function InterpretersListInfo() {
   };
 
   const createInterpreter = async () => {
-    console.log(1555, formData);
+    if (formData.user_password !== formData.user_password_confirm) {
+      return; // Prevent form submission if passwords don't match
+    }
 
     try {
       const response = await UserApiService.createUser(
@@ -476,6 +478,10 @@ function InterpretersListInfo() {
             <Box className={classes.passwordInput}>
               <ValidationInputField
                 isSubmitted={isSubmitted}
+                error={
+                  formData.user_password !== formData.user_password_confirm &&
+                  isSubmitted
+                }
                 name="user_password" // Name for the phonetic spelling
                 labelWidth="125px"
                 label="パスワード"
@@ -488,6 +494,10 @@ function InterpretersListInfo() {
               />
               <ValidationInputField
                 isSubmitted={isSubmitted}
+                error={
+                  formData.user_password !== formData.user_password_confirm &&
+                  isSubmitted
+                }
                 name="user_password_confirm" // Name for the phonetic spelling
                 labelWidth="125px"
                 label="（再入力）"
