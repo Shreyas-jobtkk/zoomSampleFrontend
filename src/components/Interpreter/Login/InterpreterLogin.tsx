@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginHeader from "../../LV3/Header/LoginHeader/LoginHeader";
-import ValidationButton from "../../LV1/ValidationButton/ValidationButton";
+import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom";
 import { Box } from "@mui/material";
 import { UserApiService } from "../../../api/apiService/user/user-api-service";
 import ValidationInputField from "../../LV1/ValidationInputField/ValidationInputField";
@@ -104,7 +104,7 @@ const InterpreterLogin: React.FC = () => {
           />
           {error && <Box color="red">{error}</Box>}{" "}
           <Box className={classes.loginButton}>
-            <ValidationButton label="ログイン" type="submit" />
+            <ButtonAtom label="ログイン" type="submit" />
           </Box>
         </Box>
       </Box>

@@ -10,7 +10,6 @@ import TextAreaWithLabel from "../../../../components/LV1/TextArea/TextAreaWithL
 import { UserApiService } from "../../../../api/apiService/user/user-api-service";
 import { UserInfo } from "../../../../types/UserTypes/UserTypes";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
-import ValidationButton from "../../../LV1/ValidationButton/ValidationButton";
 import { useForm } from "react-hook-form";
 import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
@@ -716,7 +715,7 @@ function InterpretersListUpdate() {
         </Box>
         <Box className={classes.actionButtons}>
           <ButtonAtom onClick={handleBack} label="破棄" width="100px" />
-          <ValidationButton label="保存" width="100px" type="submit" />
+          <ButtonAtom label="保存" width="100px" type="submit" />
         </Box>
       </Box>
     </Box>

@@ -8,8 +8,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
-// import ValidationTextArea from "../../../../components/LV1/ValidationTextArea/ValidationTextArea";
-import ValidationButton from "../../../LV1/ValidationButton/ValidationButton";
+
 // import { updateCompany } from "../../../../api/apiService/company/actions/company-update";
 // import { fetchCompany } from "../../../../api/apiService/company/actions/company-fetch";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
@@ -200,7 +199,7 @@ function CompanyInfoEdit() {
 
         <Box className={classes.actionButtons}>
           <ButtonAtom onClick={handleBack} label="破棄" width="100px" />
-          <ValidationButton label="保存" width="100px" type="submit" />
+          <ButtonAtom label="保存" width="100px" type="submit" />
         </Box>
       </Box>
     </Box>

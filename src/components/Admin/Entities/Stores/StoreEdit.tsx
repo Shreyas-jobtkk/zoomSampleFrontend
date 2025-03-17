@@ -14,8 +14,6 @@ import SelectOption from "../../../LV1/SelectOption/SelectOption";
 import JapanPrefectures from "../../../../JapanPrefectures/JapanPrefectures";
 import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
 import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
-import ValidationButton from "../../../LV1/ValidationButton/ValidationButton";
-// import { StoreCreateFormValues } from "../../../../../CompanyTypes/CompanyTypes";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { StoreInfoFormValues } from "../../../../types/StoreTypes/StoreTypes";
@@ -491,7 +489,7 @@ function StoreListInfo() {
         <Box className={classes.actionButtons}>
           <ButtonAtom onClick={handleBack} label="破棄" width="100px" />
           {/* <ButtonAtom onClick={createStore} label="編集" width="100px" /> */}
-          <ValidationButton
+          <ButtonAtom
             label="編集"
             width="100px"
             //   onClick={saveCompanyInfo}

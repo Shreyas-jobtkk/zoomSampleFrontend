@@ -15,6 +15,7 @@ interface ButtonAtomProps {
 const ButtonAtom: React.FC<ButtonAtomProps> = ({
   onClick,
   label,
+  type = "button", // Default type is 'button'
   disabled = false,
   width = "70px", // Default width
   padding, // Default padding
@@ -24,6 +25,7 @@ const ButtonAtom: React.FC<ButtonAtomProps> = ({
   return (
     <Button
       onClick={onClick}
+      type={type}
       disabled={disabled}
       variant="contained" // MUI button variant
       style={{

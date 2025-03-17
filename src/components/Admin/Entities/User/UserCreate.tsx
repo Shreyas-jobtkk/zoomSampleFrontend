@@ -14,7 +14,6 @@ import { StoreApiService } from "../../../../api/apiService/store/store-api-serv
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
 import ValidateSelectMultipleOptions from "../../../../components/LV1/SelectOption/validateMultipleOptions";
 import TextAreaWithLabel from "../../../../components/LV1/TextArea/TextAreaWithLabel";
-import ValidationButton from "../../../LV1/ValidationButton/ValidationButton";
 import { UserCreateFormValues } from "../../../../types/UserTypes/UserTypes";
 import { UserApiService } from "../../../../api/apiService/user/user-api-service";
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
@@ -554,7 +553,7 @@ function InterpretersListInfo() {
             label="閉じる"
             width="100px"
           />
-          <ValidationButton label="保存" width="100px" type="submit" />
+          <ButtonAtom label="保存" width="100px" type="submit" />
         </Box>
       </Box>
     </Box>

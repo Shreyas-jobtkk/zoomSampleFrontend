@@ -6,7 +6,6 @@ import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import classes from "./styles/LanguagesList.module.scss";
 import { useForm } from "react-hook-form";
 import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
-import ValidationButton from "../../../LV1/ValidationButton/ValidationButton";
 import { LanguageCreateFormValues } from "../../../../types/LanguageTypes/LanguageTypes";
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
@@ -130,7 +129,7 @@ const LanguageCreate = () => {
             label="閉じる"
             width="100px"
           />
-          <ValidationButton label="保存" type="submit" />
+          <ButtonAtom label="保存" type="submit" />
         </Box>
       </Box>
     </Box>
