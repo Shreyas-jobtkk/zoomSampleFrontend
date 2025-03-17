@@ -128,9 +128,9 @@ function UserMenu() {
     { label: string; value: string | number }[]
   >([]);
 
-  const fetchLanguageNames = async () => {
+  const fetchLanguagesAllNames = async () => {
     try {
-      let response = await LanguageApiService.fetchLanguageNames();
+      let response = await LanguageApiService.fetchLanguagesAllNames();
 
       console.log(102177, response);
       response = response.sort(
@@ -189,7 +189,7 @@ function UserMenu() {
   }, [callStartRef.current]);
 
   useEffect(() => {
-    fetchLanguageNames();
+    fetchLanguagesAllNames();
   }, []);
 
   useEffect(() => {

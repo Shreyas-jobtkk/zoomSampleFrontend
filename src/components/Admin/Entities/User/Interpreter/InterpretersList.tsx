@@ -88,7 +88,7 @@ function InterpretersList() {
   useEffect(() => {
     fetchCompaniesNames();
     fetchUsersListData();
-    fetchLanguageNames();
+    fetchLanguagesAllNames();
   }, [page, rowLimit]);
 
   useEffect(() => {
@@ -98,9 +98,9 @@ function InterpretersList() {
     }
   }, [companyNo]);
 
-  const fetchLanguageNames = async () => {
+  const fetchLanguagesAllNames = async () => {
     try {
-      let response = await LanguageApiService.fetchLanguageNames();
+      let response = await LanguageApiService.fetchLanguagesAllNames();
 
       console.log(177, response);
 
@@ -165,7 +165,7 @@ function InterpretersList() {
       console.log(147, response);
 
       const getLanguageDetails: LanguageInfo[] =
-        await LanguageApiService.fetchLanguageNames();
+        await LanguageApiService.fetchLanguagesAllNames();
       console.log(144, getLanguageDetails);
 
       // Function to get language_name_furigana based on selected numbers

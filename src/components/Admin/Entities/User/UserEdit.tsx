@@ -165,28 +165,21 @@ function InterpretersListUpdate() {
       Array.isArray(formData.translate_languages) &&
       formData.translate_languages.length > 0
     ) {
-      fetchLanguagesById();
+      setLanguageValue();
     }
   }, [formData.translate_languages]);
 
   useEffect(() => {
-    fetchLanguageNames();
+    fetchLanguagesAllNames();
     fetchCompaniesListData();
     console.log(2477, formData.company_no);
   }, []);
 
-  const fetchLanguageNames = async () => {
+  const fetchLanguagesAllNames = async () => {
     try {
-      let response = await LanguageApiService.fetchLanguagesAll(
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      );
+      let response = await LanguageApiService.fetchLanguagesAllNames();
 
-      console.log(177, response);
+      console.log(1778, response);
 
       response = response.map((item: LanguageInfo) => ({
         label: item.language_name_furigana, // Map 'language_name' to 'label'
@@ -285,26 +278,9 @@ function InterpretersListUpdate() {
     }
   };
 
-  const fetchLanguagesById = async () => {
+  const setLanguageValue = async () => {
     console.log(289, formData);
 
-    const languageDetails = await LanguageApiService.fetchLanguagesById(
-      formData.translate_languages
-    );
-    console.log(189, languageDetails);
-    console.log(1879, typeof formData.translate_languages[0]);
-    // const transformedOptions = languageDetails.map(
-    //   (language: LanguageInfo) => ({
-    //     value: language.languages_support_no,
-    //     label: language.language_name_furigana,
-    //   })
-    // );
-
-    // console.log(117, transformedOptions);
-    console.log(997, typeof formData.translate_languages);
-    console.log(998, formData.translate_languages);
-
-    // setOptionValue(formData.translate_languages.map(Number));
     setOptionValue(formData.translate_languages);
   };
 

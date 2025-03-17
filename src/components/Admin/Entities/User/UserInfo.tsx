@@ -84,7 +84,7 @@ function InterpretersListInfo() {
 
   useEffect(() => {
     if (formData.translate_languages.length > 0) {
-      fetchLanguagesById();
+      fetchLanguagesAllNames();
     }
   }, [formData.translate_languages]);
 
@@ -127,29 +127,24 @@ function InterpretersListInfo() {
     }
   };
 
-  const fetchLanguagesById = async () => {
-    console.log(289, formData);
+  const fetchLanguagesAllNames = async () => {
+    try {
+      let response = await LanguageApiService.fetchLanguagesAllNames();
 
-    const languageDetails = await LanguageApiService.fetchLanguagesById(
-      formData.translate_languages
-    );
-    console.log(189, languageDetails);
-    const transformedOptions = languageDetails.map(
-      (language: LanguageInfo) => ({
-        value: language.languages_support_no,
-        label: language.language_name_furigana,
-      })
-    );
+      console.log(1778, response);
 
-    console.log(transformedOptions);
-    console.log(997, typeof formData.translate_languages);
-    console.log(998, formData.translate_languages);
+      response = response.map((item: LanguageInfo) => ({
+        label: item.language_name_furigana, // Map 'language_name' to 'label'
+        value: item.languages_support_no, // Map 'languages_support_no' to 'value'
+      }));
 
-    // setOptionValue(formData.translate_languages.map(Number));
-    setOptionValue(formData.translate_languages);
+      setLanguagesSupport(response);
+      setOptionValue(formData.translate_languages);
 
-    // Now you can set the options like this:
-    setLanguagesSupport(transformedOptions);
+      // const response = await axios.get(`${apiUrl}/company`);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
+    }
   };
 
   if (!selectedUserNo || !userType) {

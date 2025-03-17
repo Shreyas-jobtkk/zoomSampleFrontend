@@ -1,7 +1,7 @@
 import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
-export const fetchLanguageNames = async () => {
+export const fetchLanguagesAllNames = async () => {
   try {
     // Use the /names endpoint to fetch only language_name and languages_support_no
     const response = await api.get(`${LANGUAGE_ENDPOINT}/names`);

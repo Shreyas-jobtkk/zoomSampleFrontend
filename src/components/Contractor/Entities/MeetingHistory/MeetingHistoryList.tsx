@@ -41,9 +41,9 @@ function InterpreterEvaluationList() {
 
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
 
-  const fetchLanguageNames = async () => {
+  const fetchLanguagesAllNames = async () => {
     try {
-      let response = await LanguageApiService.fetchLanguageNames();
+      let response = await LanguageApiService.fetchLanguagesAllNames();
 
       console.log(177, response);
 
@@ -62,7 +62,7 @@ function InterpreterEvaluationList() {
 
   useEffect(() => {
     fetchCallLogData();
-    fetchLanguageNames();
+    fetchLanguagesAllNames();
   }, [page, rowLimit]);
 
   const searchConditions = () => {

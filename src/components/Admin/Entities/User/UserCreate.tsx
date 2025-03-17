@@ -102,12 +102,12 @@ function InterpretersListInfo() {
 
   useEffect(() => {
     fetchCompaniesNames();
-    fetchLanguageNames();
+    fetchLanguagesAllNames();
   }, []);
 
-  const fetchLanguageNames = async () => {
+  const fetchLanguagesAllNames = async () => {
     try {
-      let response = await LanguageApiService.fetchLanguageNames();
+      let response = await LanguageApiService.fetchLanguagesAllNames();
 
       console.log(177, response);
 
@@ -125,7 +125,7 @@ function InterpretersListInfo() {
   };
 
   const fetchCompaniesNames = async () => {
-    // console.log(244, await LanguageApiService.fetchLanguageNames());
+    // console.log(244, await LanguageApiService.fetchLanguagesAllNames());
     try {
       const response = await CompanyApiService.fetchCompaniesNameDetails();
       setCompanyData(response);
