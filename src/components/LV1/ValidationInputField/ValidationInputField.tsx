@@ -88,13 +88,11 @@ const ValidationInputField: React.FC<ValidationInputFieldProps> = ({
         {label}
       </Typography>
 
-      {/* Input Field */}
       <TextField
         variant="outlined"
         type={type === "password" && !showPassword ? "password" : "type"}
         {...register(name, rules)}
         fullWidth
-        // required={true}
         onKeyDown={(event) => {
           if (type === "none") {
             event.preventDefault(); // Prevent any key input

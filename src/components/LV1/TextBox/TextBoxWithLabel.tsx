@@ -1,6 +1,7 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 interface TextBoxWithLabelProps {
   label: string;
@@ -32,7 +33,7 @@ const TextBoxWithLabel: React.FC<TextBoxWithLabelProps> = ({
         width: `calc(${labelWidth} + ${width})`, // Ensure the width is the sum of label and input field width
       }}
     >
-      <label
+      <Typography
         style={{
           width: labelWidth, // Apply width for label
           fontSize, // Apply font size for the label in em
@@ -42,7 +43,7 @@ const TextBoxWithLabel: React.FC<TextBoxWithLabelProps> = ({
         }}
       >
         {label}
-      </label>
+      </Typography>
       <TextField
         variant="outlined"
         slotProps={{

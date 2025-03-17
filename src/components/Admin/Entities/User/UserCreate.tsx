@@ -19,7 +19,6 @@ import { UserApiService } from "../../../../api/apiService/user/user-api-service
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
-// import { useLocation } from "react-router-dom";
 import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
 import { useNavigate, useSearchParams } from "react-router-dom";
 
