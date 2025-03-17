@@ -6,7 +6,7 @@ import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import classes from "./styles/Companies.module.scss";
 import { useForm } from "react-hook-form";
 import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
-import ValidationButton from "../../../LV1/Button/ValidationButton/ValidationButton";
+import ValidationButton from "../../../LV1/ValidationButton/ValidationButton";
 import { CompanyCreateFormValues } from "../../../../types/CompanyTypes/CompanyTypes";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";

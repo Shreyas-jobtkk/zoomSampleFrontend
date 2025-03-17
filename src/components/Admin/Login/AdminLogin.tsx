@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginHeader from "../../LV3/Header/LoginHeader/LoginHeader";
-import ValidationButton from "../../LV1/Button/ValidationButton/ValidationButton";
+import ValidationButton from "../../LV1/ValidationButton/ValidationButton";
 import { Box } from "@mui/material";
 import { UserApiService } from "../../../api/apiService/user/user-api-service";
 import ValidationInputField from "../../LV1/ValidationInputField/ValidationInputField";
