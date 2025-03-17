@@ -6,8 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import BadRequest from "../Pages/badRequestPage.js";
 import Join from "../Pages/zoomApiMeetingsJoin/Sample.js"; // Adjust the import path as needed
 import Host from "../Pages/zoomApiMeetingsHost/Sample.js"; // Adjust the import path as needed
-import JoinFromAPI from "../Pages/zoomApiLatest/zoomApiMeetingsJoin/Sample.js"; // Adjust the import path as needed
-import HostFromAPI from "../Pages/zoomApiLatest/zoomApiMeetingsHost/Sample.js"; // Adjust the import path as needed
+
 const AppRoutes: React.FC = () => {
   return (
     <Box>
@@ -17,9 +16,6 @@ const AppRoutes: React.FC = () => {
       <Routes>
         <Route path="/zoomApiMeetingsJoin" element={<Join />} />
         <Route path="/zoomApiMeetingsHost" element={<Host />} />
-
-        <Route path="/zoomApiMeetingsJoin2" element={<JoinFromAPI />} />
-        <Route path="/zoomApiMeetingsHost2" element={<HostFromAPI />} />
 
         <Route path="/BadRequest" element={<BadRequest />} />
       </Routes>
