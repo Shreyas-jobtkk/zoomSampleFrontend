@@ -369,18 +369,18 @@ function InterpretersList(props: SimpleDialogProps) {
               </Box>
               <Box>
                 <TextBoxWithLabel
-                  label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                  label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                   width="calc(27vw - 100px)" // Uncomment to set a custom width
                   value={interpreterNameFuriganaLast}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setInterpreterNameFuriganaLast(e.target.value)
                   }
-                  labelWidth="130px"
+                  labelWidth="120px"
                   disabled={false}
                 />
                 <TextBoxWithLabel
-                  labelWidth="130px"
-                  label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+                  labelWidth="120px"
+                  label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                   width="calc(27vw - 100px)" // Uncomment to set a custom width
                   value={interpreterNameLast}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

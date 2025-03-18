@@ -344,18 +344,18 @@ function ContractorList() {
 
             <Box>
               <TextBoxWithLabel
-                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 width="calc(25vw - 80px)" // Uncomment to set a custom width
                 value={contractorNameFuriganaLast}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setContractorNameFuriganaLast(e.target.value)
                 }
-                labelWidth="100px"
+                labelWidth="120px"
                 disabled={false}
               />
               <TextBoxWithLabel
-                labelWidth="100px"
-                label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
+                labelWidth="120px"
+                label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                 width="calc(25vw - 80px)" // Uncomment to set a custom width
                 value={contractorNameLast}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
