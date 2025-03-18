@@ -43,7 +43,7 @@ function InterpreterEvaluationList() {
   const [startDateTimeRangeMin, setStartDateTimeRangeMin] = useState<any>("");
   // const [startTimeRangeMin, setStartTimeRangeMin] = useState<Date | null>(null);
   // const [startTimeRangeMax, setStartTimeRangeMax] = useState<Date | null>(null);
-  const [startDateTimeRangeMax, setStartDateTimeRangeMax] = useState<any>("");
+  const [endDateTimeRangeMax, setEndDateTimeRangeMax] = useState<any>("");
 
   const [callStatus, setCallStatus] = useState<string>("");
   let callStatusOptions: { label: string; value: string | number }[] = [
@@ -77,7 +77,7 @@ function InterpreterEvaluationList() {
         interpreterNo,
         "",
         startDateTimeRangeMin,
-        startDateTimeRangeMax,
+        endDateTimeRangeMax,
         callStatus
       );
 
@@ -153,7 +153,7 @@ function InterpreterEvaluationList() {
 
   // Handle end date change
   const handleEndDateChange = (date: any) => {
-    setStartDateTimeRangeMax(date);
+    setEndDateTimeRangeMax(date);
     setStartDateRangeMax(date);
     console.log("Selected End Date:", date || "None"); // Log the selected end date
   };
@@ -173,7 +173,7 @@ function InterpreterEvaluationList() {
   // Handle end time change
   const handleEndTimeChange = (newValue: any) => {
     // setStartTimeRangeMax(newValue ? newValue.format("HH:mm") : "None");
-    setStartDateTimeRangeMax(
+    setEndDateTimeRangeMax(
       `${startDateRangeMax} ${newValue.format("HH:mm") || "00:00"}`
     );
   };
@@ -214,7 +214,7 @@ function InterpreterEvaluationList() {
           <span>~</span>
 
           {/* <span>終了日時：</span> */}
-          <span>開始日時：</span>
+          <span>終了日時：</span>
           <DatePicker label="" onDateChange={handleEndDateChange} />
           <TimePicker
             label=""
