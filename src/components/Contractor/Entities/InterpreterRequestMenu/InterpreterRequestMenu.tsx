@@ -103,9 +103,6 @@ function UserMenu() {
                   "callAccepted",
                   rating
                 );
-                // setCallDial(null);
-                // callDialRef.current = null;
-                isCallEndedRef.current = true;
               } catch (error) {
                 console.error("Error saving callLog:", error);
               }
@@ -131,8 +128,6 @@ function UserMenu() {
   const fetchLanguagesAllNames = async () => {
     try {
       let response = await LanguageApiService.fetchLanguagesAllNames();
-
-      console.log(102177, response);
       response = response.sort(
         (a: any, b: any) => a.languages_support_no - b.languages_support_no
       );
@@ -268,7 +263,7 @@ function UserMenu() {
         stopRingtone();
         callTimeUp();
       }
-    }, 3000); // 10 seconds (10,000 ms)
+    }, 10000); // 10 seconds (10,000 ms)
   };
 
   const stopRingtone = () => {
@@ -348,7 +343,6 @@ function UserMenu() {
     interpreterNoRef.current = null;
 
     playRingtone();
-    console.log(15589, new Date());
 
     callDialRef.current = new Date();
 
