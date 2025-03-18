@@ -4,9 +4,7 @@ import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import classes from "./styles/StoreList.module.scss";
-// import ValidationTextArea from "../../../../components/LV1/ValidationTextArea/ValidationTextArea";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
-// import { fetchCompaniesAll } from "../../../../api/apiService/company/company";
 import SelectableModal from "../../../LV1/SelectableModal/SelectableModal";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 import NumberInput from "../../../LV1/NumberInput/NumberInput";
@@ -19,8 +17,10 @@ import { StoreCreateFormValues } from "../../../../types/StoreTypes/StoreTypes";
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import { useNavigate } from "react-router-dom";
 
-function StoreListInfo() {
+function StoreCreate() {
   const navigate = useNavigate();
+
+  // State to manage store form data
   const [formData, setFormData] = useState<StoreCreateFormValues>({
     company_no: "",
     company_name: "",
@@ -40,10 +40,14 @@ function StoreListInfo() {
     fax3: "",
     store_note: "",
   });
-  const [textValue1, setTextValue1] = useState<string>("");
 
+  // State to store the list of companies
+  const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
+
+  /**
+   * Handles form submission and saves store info
+   */
   const createStore = async () => {
-    console.log(113, formData);
     try {
       const response = await StoreApiService.createStore(
         formData.company_no,
@@ -64,15 +68,13 @@ function StoreListInfo() {
         formData.store_note
       );
       navigate(`/StoreInfo?selectedStoreNo=${response.store_no}`);
-
-      // navigate(`/CompanyInfo?selectedCompanyNo=${response.company_no}`);
-      // alert("saved");
     } catch (error) {
       alert("error");
       console.error("Error saving company:", error);
     }
   };
 
+  // React Hook Form setup
   const {
     register,
     handleSubmit,
@@ -80,10 +82,12 @@ function StoreListInfo() {
     formState: { isSubmitted },
   } = useForm<StoreCreateFormValues>();
 
+  // Fetch company data when the component mounts
   useEffect(() => {
     fetchCompaniesListData();
   }, []);
 
+  // Function to fetch the list of companies from the API
   const fetchCompaniesListData = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesNameDetails();
@@ -94,6 +98,7 @@ function StoreListInfo() {
     }
   };
 
+  // Function to update form state dynamically
   const updateFormData = (field: string, value: any) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -101,6 +106,7 @@ function StoreListInfo() {
     }));
   };
 
+  // Function to handle company selection and update form state
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
 
@@ -111,6 +117,7 @@ function StoreListInfo() {
     setValue("company_name", company_name);
   };
 
+  // Function to handle changes in input fields
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -118,15 +125,15 @@ function StoreListInfo() {
     updateFormData(name, value);
   };
 
+  // Function to handle changes in a select dropdown
   const handleSelectChange = (value: string) => {
     updateFormData("pref", value);
   };
 
+  // Function to navigate to the Store List page
   const navigateToStoreList = () => {
     navigate("/StoreList");
   };
-
-  const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
 
   return (
     <Box onSubmit={handleSubmit(createStore)} component="form">
@@ -137,25 +144,19 @@ function StoreListInfo() {
             <TextBoxWithLabel
               labelWidth="125px"
               label="登録日時"
-              width="30vw" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
+              width="30vw"
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
-              width="30vw" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
+              width="30vw"
             />
           </Box>
           <Box>
             <TextBoxWithLabel
               labelWidth="100px"
               label="削除フラグ"
-              width="10vw" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
+              width="10vw"
             />
           </Box>
         </Box>
@@ -167,80 +168,59 @@ function StoreListInfo() {
               options={companyData}
               onOptionSelect={handleCompanySelect}
               label="企業検索"
-              valueKey="company_no" // We use company_no for unique identification
-              displayKey="company_name" // We display company_name in the list
+              valueKey="company_no"
+              displayKey="company_name"
             />
 
             <ValidationInputField
               isSubmitted={isSubmitted}
-              name="company_no" // Name for the phonetic spelling
+              name="company_no"
               labelWidth="125px"
               label="企業No"
               width="30vw"
               register={register}
               maxLength={128}
-              // error={errors.company_no?.message} // Separate error for "furigana"
               value={formData.company_no}
-              // onChange={(e: any) => setSelectedCompanyNo(e.target.value)}
-              // disabled={true}
               type="none"
             />
             <ValidationInputField
               isSubmitted={isSubmitted}
-              name="company_name" // Name for the phonetic spelling
+              name="company_name"
               labelWidth="125px"
               label="企業名"
               width="30vw"
               register={register}
               maxLength={128}
-              // error={errors.company_no?.message} // Separate error for "furigana"
               value={formData.company_name}
-              // onChange={(e: any) => setSelectedCompanyName(e.target.value)}
-              // disabled={true}
               type="none"
             />
-            {/* <TextBoxWithLabel
-              labelWidth="125px"
-              label="企業名"
-              width="30vw" // Uncomment to set a custom width
-              value={selectedCompanyName}
-              onChange={(e: any) => setSelectedCompanyName(e.target.value)}
-            /> */}
           </Box>
         </Box>
         <Box className={classes.basicInfo}>
           <Box className={classes.descriptionLabel}>基本情報</Box>
           <Box>
-            <TextBoxWithLabel
-              labelWidth="125px"
-              label="店舗No"
-              width="30vw" // Uncomment to set a custom width
-              value={textValue1}
-              onChange={(e: any) => setTextValue1(e.target.value)}
-            />
+            <TextBoxWithLabel labelWidth="125px" label="店舗No" width="30vw" />
             <Box className={classes.nameRow}>
               <Box>
                 <ValidationInputField
                   isSubmitted={isSubmitted}
                   label="フリガナ"
-                  name="store_name_furigana" // Name for the phonetic spelling
+                  name="store_name_furigana"
                   labelWidth="125px"
                   width="30vw"
                   register={register}
                   maxLength={128}
-                  // error={errors.store_name_furigana?.message} // Separate error for "furigana"
                   value={formData.store_name_furigana}
                   onChange={handleChange}
                 />
                 <ValidationInputField
                   isSubmitted={isSubmitted}
-                  name="store_name" // Name for the phonetic spelling
+                  name="store_name"
                   labelWidth="125px"
                   label="店舗名"
                   width="30vw"
                   register={register}
                   maxLength={128}
-                  // error={errors.store_name?.message} // Separate error for "furigana"
                   value={formData.store_name}
                   onChange={handleChange}
                 />
@@ -288,7 +268,7 @@ function StoreListInfo() {
                   <TextBoxWithLabel
                     labelWidth="75px"
                     label="市区町村"
-                    width="30vw" // Uncomment to set a custom width
+                    width="30vw"
                     onChange={handleChange}
                     value={formData.city}
                     name="city"
@@ -297,7 +277,7 @@ function StoreListInfo() {
                   <TextBoxWithLabel
                     labelWidth="75px"
                     label="番地"
-                    width="30vw" // Uncomment to set a custom width
+                    width="30vw"
                     onChange={handleChange}
                     value={formData.street}
                     name="street"
@@ -306,7 +286,7 @@ function StoreListInfo() {
                   <TextBoxWithLabel
                     labelWidth="75px"
                     label="建物名等"
-                    width="30vw" // Uncomment to set a custom width
+                    width="30vw"
                     onChange={handleChange}
                     value={formData.building_name}
                     name="building_name"
@@ -406,4 +386,4 @@ function StoreListInfo() {
   );
 }
 
-export default StoreListInfo;
+export default StoreCreate;

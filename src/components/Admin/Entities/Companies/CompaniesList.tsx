@@ -122,7 +122,7 @@ function CompaniesList() {
   };
 
   // Navigates to the company edit page
-  const navigateToEditPage = () => {
+  const navigateToUpdatePage = () => {
     navigate(`/CompanyUpdate?selectedCompanyNo=${selectedCompanyNoArray[0]}`);
   };
 
@@ -234,7 +234,7 @@ function CompaniesList() {
           label="閲覧"
         />
         <ButtonAtom
-          onClick={navigateToEditPage}
+          onClick={navigateToUpdatePage}
           disabled={selectedRows.length !== 1}
           label="編集"
         />

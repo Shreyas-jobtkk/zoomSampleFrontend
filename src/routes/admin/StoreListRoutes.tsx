@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import StoreCreate from "../../components/Admin/Entities/Stores/StoreCreate";
 import StoreInfo from "../../components/Admin/Entities/Stores/StoreInfo";
-import StoreEdit from "../../components/Admin/Entities/Stores/StoreEdit";
-import StoreEditConfirm from "../../components/Admin/Entities/Stores/StoreEditConfirm";
+import StoreUpdate from "../../components/Admin/Entities/Stores/StoreUpdate";
+import StoreUpdateConfirm from "../../components/Admin/Entities/Stores/StoreUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
@@ -18,12 +18,12 @@ const AdministratorListRoutes = () => (
       element={<ProtectedAdminRoute element={<StoreCreate />} />}
     />
     <Route
-      path="/StoreEdit"
-      element={<ProtectedAdminRoute element={<StoreEdit />} />}
+      path="/StoreUpdate"
+      element={<ProtectedAdminRoute element={<StoreUpdate />} />}
     />
     <Route
-      path="/StoreEditConfirm"
-      element={<ProtectedAdminRoute element={<StoreEditConfirm />} />}
+      path="/StoreUpdateConfirm"
+      element={<ProtectedAdminRoute element={<StoreUpdateConfirm />} />}
     />
   </Routes>
 );

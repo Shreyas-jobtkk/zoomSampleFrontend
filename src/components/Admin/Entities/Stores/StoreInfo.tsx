@@ -14,13 +14,21 @@ import { StoreInfoFormValues } from "../../../../types/StoreTypes/StoreTypes";
 import { convertToJST } from "../../../../utils/utils";
 import classes from "./styles/StoreList.module.scss";
 
-function StoreListInfo() {
+function StoreInfo() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  // Retrieve the 'selectedStoreNo' parameter from the URL and convert it to a number
   const selectedStoreNo = Number(searchParams.get("selectedStoreNo"));
+
+  // Function to navigate to the store list page
   const navigateToStoreList = () => navigate("/StoreList");
-  const navigateToStoreEdit = () =>
-    navigate(`/StoreEdit?selectedStoreNo=${selectedStoreNo}`);
+
+  // Function to navigate to the store update page with the selected store number as a query parameter
+  const navigateToStoreUpdate = () =>
+    navigate(`/StoreUpdate?selectedStoreNo=${selectedStoreNo}`);
+
+  // Define the initial state for form data
   const [formData, setFormData] = useState<StoreInfoFormValues>({
     company_no: "",
     company_name: "",
@@ -45,6 +53,7 @@ function StoreListInfo() {
     store_delete: false,
   });
 
+  // useEffect hook to run when 'selectedStoreNo' changes
   useEffect(() => {
     if (!selectedStoreNo) {
       navigate("/BadRequest");
@@ -52,6 +61,7 @@ function StoreListInfo() {
     fetchStore();
   }, [selectedStoreNo]);
 
+  // Function to fetch store details from the API
   const fetchStore = async () => {
     try {
       const storeDetails = await StoreApiService.fetchStore(selectedStoreNo);
@@ -335,7 +345,7 @@ function StoreListInfo() {
             width="100px"
           />
           <ButtonAtom
-            onClick={navigateToStoreEdit}
+            onClick={navigateToStoreUpdate}
             label="編集"
             width="100px"
           />{" "}
@@ -345,4 +355,4 @@ function StoreListInfo() {
   );
 }
 
-export default StoreListInfo;
+export default StoreInfo;

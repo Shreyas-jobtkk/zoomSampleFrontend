@@ -21,10 +21,17 @@ import { convertToJST } from "../../../../utils/utils";
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import classes from "./styles/StoreList.module.scss";
 
-function StoreListInfo() {
+function StoreUpdate() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  // Extract selectedStoreNo from URL parameters and convert it to a number
   const selectedStoreNo = Number(searchParams.get("selectedStoreNo"));
+
+  // State to store the list of companies
+  const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
+
+  // Define the initial form state
   const [formData, setFormData] = useState<StoreInfoFormValues>({
     company_no: "",
     company_name: "",
@@ -58,6 +65,7 @@ function StoreListInfo() {
 
   const fetchStore = async () => {
     try {
+      // Fetch store details from API
       const storeDetails = await StoreApiService.fetchStore(selectedStoreNo);
       const [zip1, zip2] = storeDetails.zip.split("-");
       const [tel1, tel2, tel3] = storeDetails.tel.split("-");
@@ -97,6 +105,7 @@ function StoreListInfo() {
     }
   };
 
+  // Normalize store data for comparison before updating
   function normalizeStoreData(store: any) {
     return {
       store_no: store.store_no,
@@ -128,6 +137,7 @@ function StoreListInfo() {
     fetchCompaniesListData();
   }, []);
 
+  // Check if two objects have identical values
   function checkForNoChange(obj1: any, obj2: any) {
     return Object.keys(obj1).every((key) => {
       // Check if key exists in both objects and values match (deep comparison for arrays)
@@ -138,7 +148,8 @@ function StoreListInfo() {
     });
   }
 
-  const editStore = async () => {
+  // Handle update action
+  const handleUpdate = async () => {
     const storeDetails = await StoreApiService.fetchStore(selectedStoreNo);
 
     if (checkForNoChange(normalizeStoreData(formData), storeDetails)) {
@@ -166,9 +177,10 @@ function StoreListInfo() {
       formData.store_note,
       formData.store_no
     );
-    navigate(`/StoreEditConfirm?selectedStoreNo=${selectedStoreNo}`);
+    navigate(`/StoreUpdateConfirm?selectedStoreNo=${selectedStoreNo}`);
   };
 
+  // Fetch company list from API
   const fetchCompaniesListData = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesNameDetails();
@@ -179,7 +191,7 @@ function StoreListInfo() {
     }
   };
 
-  const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
+  // Handle selection of a company from the list
   const handleCompanySelect = (company: CompanyInfo) => {
     console.log(147, isValid);
 
@@ -190,11 +202,12 @@ function StoreListInfo() {
     }));
   };
 
-  // Handle close button action
+  // Handle back button action
   const handleBack = () => {
     navigate(-1); // Navigate back to the previous page
   };
 
+  // Handle text input changes
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -205,6 +218,7 @@ function StoreListInfo() {
     }));
   };
 
+  // Handle select dropdown change
   const handleSelectChange = (value: string) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -217,7 +231,7 @@ function StoreListInfo() {
   }
 
   return (
-    <Box onSubmit={handleSubmit(editStore)} component="form">
+    <Box onSubmit={handleSubmit(handleUpdate)} component="form">
       <MenuHeader title="店舗情報" />
       <Box className={classes.storeEditContainer}>
         <Box className={classes.timeDetailsDeleteFlag}>
@@ -501,4 +515,4 @@ function StoreListInfo() {
   );
 }
 
-export default StoreListInfo;
+export default StoreUpdate;

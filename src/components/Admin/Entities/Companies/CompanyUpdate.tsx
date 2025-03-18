@@ -81,7 +81,7 @@ function CompanyUpdate() {
   };
 
   // Handle the edit/save action
-  const handleEdit = async () => {
+  const handleUpdate = async () => {
     const companyDetails = await CompanyApiService.fetchCompany(
       selectedCompanyNo
     );
@@ -110,7 +110,7 @@ function CompanyUpdate() {
   }
 
   return (
-    <Box onSubmit={handleSubmit(handleEdit)} component="form">
+    <Box onSubmit={handleSubmit(handleUpdate)} component="form">
       <MenuHeader title="企業情報" />
       <Box className={classes.companyEditContainer}>
         <Box className={classes.timeDetailsDeleteFlag}>

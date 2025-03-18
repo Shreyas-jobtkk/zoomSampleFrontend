@@ -5,7 +5,6 @@ import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
 import DataTable from "../../../LV3/DataTable/DataTable";
 import { DataTableRow } from "../../../LV3/DataTable/DataTable";
-// import "./AdminMenu.scss";
 import { useNavigate } from "react-router-dom";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
@@ -19,12 +18,15 @@ import DataTableControler from "../../../LV3/DataTable/DataTableControler";
 function StoreList() {
   const navigate = useNavigate();
 
-  // States for data and inputs selectedStoreNo
+  // State to store selected store numbers
   const [selectedStoreNoArray, setSelectedStoreNoArray] = useState<number[]>(
     []
   );
+
+  // State to store company data
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
 
+  // Table headers
   const headers = [
     "No",
     "登録日時",
@@ -37,22 +39,37 @@ function StoreList() {
     "削除",
   ];
 
+  // State to manage table data
   const [tableData, setTableData] = useState<DataTableRow[]>([]);
+
+  // States for search filters
   const [storeNoRangeMin, setStoreNoRangeMin] = useState<string>("");
   const [storeNoRangeMax, setStoreNoRangeMax] = useState<string>("");
   const [storeNameFurigana, setStoreNameFurigana] = useState<string>("");
   const [storeName, setStoreName] = useState<string>("");
   const [companyName, setCompanyName] = useState<string>("");
   const [companyNo, setCompanyNo] = useState<string>("");
+
+  // State for selected table rows
   const [selectedData, setSelectedData] = useState<DataTableRow[]>([]);
+
+  // Pagination states
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [rowLimit, setRowLimit] = useState<number>(10);
 
+  // Function to trigger store data search based on conditions
   const searchConditions = () => {
     fetchStoreListData();
   };
 
+  // Fetch company names and store list data on component mount or when page/rowLimit changes
+  useEffect(() => {
+    fetchCompaniesNames();
+    fetchStoreListData();
+  }, [page, rowLimit]);
+
+  // Function to fetch store list data from API
   const fetchStoreListData = async () => {
     try {
       const response = await StoreApiService.fetchStoreAll(
@@ -82,17 +99,13 @@ function StoreList() {
           削除: deleteStatus(item.store_delete),
         }));
 
-      setTableData(sortedData); // Initial table data load
+      setTableData(sortedData);
     } catch (error) {
       console.error("Error fetching stores:", error);
     }
   };
 
-  useEffect(() => {
-    fetchCompaniesNames();
-    fetchStoreListData();
-  }, [page, rowLimit]);
-
+  // Function to fetch company names from API
   const fetchCompaniesNames = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesNameDetails();
@@ -103,16 +116,17 @@ function StoreList() {
     }
   };
 
+  // Function to handle changes in rows per page selection
   const handleRowsPerPage = (newSelectedData: any) => {
     console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
-  // Handle selection change
+
+  // Function to handle row selection changes
   const handleSelectionChange = (newSelectedData: DataTableRow[]) => {
-    // Update the selected data state
     setSelectedData(newSelectedData);
     console.log(123, newSelectedData);
-    // // Log the selected data to the console
+
     const selectedStoreNo = newSelectedData.map((item) =>
       Number(item["店舗No"])
     );
@@ -125,19 +139,21 @@ function StoreList() {
     );
   };
 
+  // Function to navigate to the Store Info page
   const navigateToInfoPage = () => {
     navigate(`/StoreInfo?selectedStoreNo=${selectedStoreNoArray[0]}`);
   };
 
-  const navigateToEditPage = () => {
-    navigate(`/StoreEdit?selectedStoreNo=${selectedStoreNoArray[0]}`);
+  // Function to navigate to the Store Update page
+  const navigateToUpdatePage = () => {
+    navigate(`/StoreUpdate?selectedStoreNo=${selectedStoreNoArray[0]}`);
   };
 
+  // Function to delete selected stores
   const handleDeleteStores = async () => {
     console.log(114, selectedStoreNoArray);
     try {
       await StoreApiService.deleteStores(selectedStoreNoArray);
-      // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
     } catch (error: unknown) {
       if (error instanceof Error) {
         alert(error.message);
@@ -148,10 +164,10 @@ function StoreList() {
     await fetchStoreListData();
   };
 
+  // Function to restore deleted stores
   const handleRestoreStores = async () => {
     try {
       await StoreApiService.restoreStores(selectedStoreNoArray);
-      // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
     } catch (error: unknown) {
       if (error instanceof Error) {
         alert(error.message);
@@ -162,20 +178,23 @@ function StoreList() {
     await fetchStoreListData();
   };
 
+  // Function to navigate to the Store Create page
   const navigateToStoreCreate = () => {
     navigate("/StoreCreate");
   };
 
+  // Function to reset the table data
   const onResetTable = () => fetchStoreListData();
 
+  // Function to handle company selection from dropdown
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
     setCompanyNo(company_no);
     setCompanyName(company_name);
   };
 
+  // Function to handle page change in pagination
   const handlePageChange = (page: number) => {
-    // setCurrentPage(page); // Update the page state in the parent
     console.log("Current page in parent:", page);
     setPage(page + 1);
   };
@@ -192,20 +211,20 @@ function StoreList() {
               options={companyData}
               onOptionSelect={handleCompanySelect}
               label="企業検索"
-              valueKey="company_no" // We use company_no for unique identification
-              displayKey="company_name" // We display company_name in the list
+              valueKey="company_no"
+              displayKey="company_name"
             />
             <Box className={classes.companiesDetails}>
               <Box style={{ minWidth: "35vw" }}>
                 <TextBoxWithLabel
                   label="企業No"
-                  width="calc(10vw - 20px)" // Uncomment to set a custom width
+                  width="calc(10vw - 20px)"
                   value={companyNo}
                 />
               </Box>
               <TextBoxWithLabel
                 label="企業名"
-                width="calc(45vw - 120px)" // Uncomment to set a custom width
+                width="calc(45vw - 120px)"
                 value={companyName}
               />
             </Box>
@@ -215,7 +234,7 @@ function StoreList() {
               <TextBoxWithLabel
                 disabled={false}
                 label="店舗No"
-                width="calc(10vw - 20px)" // Uncomment to set a custom width
+                width="calc(10vw - 20px)"
                 value={storeNoRangeMin}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setStoreNoRangeMin(e.target.value)
@@ -225,7 +244,7 @@ function StoreList() {
               <TextBoxWithLabel
                 disabled={false}
                 label="~"
-                width="calc(10vw - 20px)" // Uncomment to set a custom width
+                width="calc(10vw - 20px)"
                 value={storeNoRangeMax}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setStoreNoRangeMax(e.target.value)
@@ -238,18 +257,16 @@ function StoreList() {
               <TextBoxWithLabel
                 disabled={false}
                 label="フリガナ"
-                width="calc(45vw - 120px)" // Uncomment to set a custom width
+                width="calc(45vw - 120px)"
                 value={storeNameFurigana}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setStoreNameFurigana(e.target.value)
                 }
-                // labelWidth="70px"
               />
               <TextBoxWithLabel
                 disabled={false}
-                // labelWidth="70px"
                 label="店舗名"
-                width="calc(45vw - 120px)" // Uncomment to set a custom width
+                width="calc(45vw - 120px)"
                 value={storeName}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setStoreName(e.target.value)
@@ -262,14 +279,6 @@ function StoreList() {
           </Box>
         </Box>
       </Box>
-      {/* <DataTable // Customize header height
-        headers={headers}
-        data={searchData}
-        maxHeight="calc(84vh - 260px)"
-        onSelectionChange={handleSelectionChange}
-        operationButton="新規"
-        onClick={navigateToStoreCreate}
-      /> */}
       <DataTableControler
         onPageChange={handlePageChange}
         onSelectionChange={handleRowsPerPage}
@@ -291,7 +300,7 @@ function StoreList() {
           label="閲覧"
         />
         <ButtonAtom
-          onClick={navigateToEditPage}
+          onClick={navigateToUpdatePage}
           disabled={selectedData.length !== 1}
           label="編集"
         />

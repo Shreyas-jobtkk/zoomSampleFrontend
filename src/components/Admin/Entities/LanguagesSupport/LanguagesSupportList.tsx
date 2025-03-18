@@ -127,7 +127,7 @@ function LanguagesSupportList() {
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
-  const navigateToEditPage = () => {
+  const navigateToUpdatePage = () => {
     navigate(`/LanguagesEdit?selectedLanguageNo=${selectedLanguageNoArray[0]}`);
   };
 
@@ -254,7 +254,7 @@ function LanguagesSupportList() {
           // margin='0 2vw'
         />
         <ButtonAtom
-          onClick={navigateToEditPage}
+          onClick={navigateToUpdatePage}
           label="編集"
           disabled={selectedData.length !== 1}
           // margin='0 2vw'

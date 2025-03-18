@@ -266,7 +266,7 @@ function InterpretersList() {
 
   const onResetTable = () => fetchUsersListData();
 
-  const navigateToEditPage = () => {
+  const navigateToUpdatePage = () => {
     navigate(
       `/UserUpdate?selectedUserNo=${selectedInterpreterNoArray[0]}&userType=interpreter`
     );
@@ -491,7 +491,7 @@ function InterpretersList() {
           label="閲覧"
         />
         <ButtonAtom
-          onClick={navigateToEditPage}
+          onClick={navigateToUpdatePage}
           disabled={selectedData.length !== 1}
           label="編集"
         />

@@ -207,7 +207,7 @@ function AdministratorList() {
     navigate(`/UserCreate?userType=administrator`);
   };
 
-  const navigateToEditPage = () => {
+  const navigateToUpdatePage = () => {
     navigate(
       `/UserUpdate?selectedUserNo=${selectedAdminNoArray[0]}&userType=administrator`
     );
@@ -421,7 +421,7 @@ function AdministratorList() {
           label="閲覧"
         />
         <ButtonAtom
-          onClick={navigateToEditPage}
+          onClick={navigateToUpdatePage}
           disabled={selectedData.length !== 1}
           label="編集"
         />

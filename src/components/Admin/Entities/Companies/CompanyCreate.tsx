@@ -34,6 +34,7 @@ const CompanyCreate = () => {
       [name]: value,
     }));
   };
+
   // React Hook Form setup
   const {
     register,

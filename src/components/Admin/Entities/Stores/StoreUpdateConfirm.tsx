@@ -14,10 +14,14 @@ import { StoreInfoFormValues } from "../../../../types/StoreTypes/StoreTypes";
 import { convertToJST } from "../../../../utils/utils";
 import classes from "./styles/StoreList.module.scss";
 
-function StoreListInfo() {
+function StoreUpdateConfirm() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  // Retrieve the selected store number from the URL parameters
   const selectedStoreNo = Number(searchParams.get("selectedStoreNo"));
+
+  // Define the initial state for the store form data
   const [formData, setFormData] = useState<StoreInfoFormValues>({
     company_no: "",
     company_name: "",
@@ -42,6 +46,7 @@ function StoreListInfo() {
     store_delete: false,
   });
 
+  // useEffect hook to validate store number and fetch store details
   useEffect(() => {
     if (!selectedStoreNo) {
       navigate("/BadRequest");
@@ -49,6 +54,7 @@ function StoreListInfo() {
     fetchStore();
   }, [selectedStoreNo]);
 
+  // Function to fetch store details from the API
   const fetchStore = async () => {
     try {
       const storeDetails = await StoreApiService.fetchStore(selectedStoreNo);
@@ -87,18 +93,19 @@ function StoreListInfo() {
     }
   };
 
-  if (!selectedStoreNo) {
-    return null;
-  }
-
-  // Handle close button action
+  // Function to navigate back to the previous page
   const handleBack = () => {
-    navigate(-1); // Navigate back to the previous page
+    navigate(-1);
   };
 
+  // Function to navigate to the store list page
   const navigateToStoreList = () => {
     navigate("/StoreList");
   };
+
+  if (!selectedStoreNo) {
+    return null;
+  }
 
   return (
     <Box>
@@ -347,4 +354,4 @@ function StoreListInfo() {
   );
 }
 
-export default StoreListInfo;
+export default StoreUpdateConfirm;

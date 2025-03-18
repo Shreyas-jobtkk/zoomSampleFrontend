@@ -204,7 +204,7 @@ function ContractorList() {
 
   const onResetTable = () => fetchUsersListData();
 
-  const navigateToEditPage = () => {
+  const navigateToUpdatePage = () => {
     navigate(
       `/UserUpdate?selectedUserNo=${selectedContractorNoArray[0]}&userType=contractor`
     );
@@ -421,7 +421,7 @@ function ContractorList() {
           label="閲覧"
         />
         <ButtonAtom
-          onClick={navigateToEditPage}
+          onClick={navigateToUpdatePage}
           disabled={selectedData.length !== 1}
           label="編集"
         />
