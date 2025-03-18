@@ -7,7 +7,7 @@ import MultipleOptionsSelect from "../../../../LV1/SelectOption/MultipleOptionsS
 import DataTable from "../../../../LV3/DataTable/DataTable";
 import DataTableControler from "../../../../LV3/DataTable/DataTableControler";
 import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
-import { InterpreterInfo } from "../../../../../types/UserTypes/UserTypes";
+import { UserInfo } from "../../../../../types/UserTypes/UserTypes";
 import { convertToJST } from "../../../../../utils/utils";
 import { DataTableRow } from "../../../../LV3/DataTable/DataTable";
 import SelectableModal from "../../../../LV1/SelectableModal/SelectableModal";
@@ -188,10 +188,9 @@ function InterpretersList(props: SimpleDialogProps) {
 
       const sortedData = response.interpreters
         .sort(
-          (a: InterpreterInfo, b: InterpreterInfo) =>
-            Number(a.user_no) - Number(b.user_no)
+          (a: UserInfo, b: UserInfo) => Number(a.user_no) - Number(b.user_no)
         )
-        .map((item: InterpreterInfo, index: number) => ({
+        .map((item: UserInfo, index: number) => ({
           No: index + 1,
           登録日時: convertToJST(item.created_at),
           更新日時: convertToJST(item.updated_at),

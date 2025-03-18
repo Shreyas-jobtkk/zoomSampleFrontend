@@ -22,12 +22,24 @@ import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
 import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-function InterpretersListInfo() {
-  // const location = useLocation();
+function UserCreate() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const userType: string = searchParams.get("userType") as string;
 
+  // State hooks
+  const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
+  const [storeData, setStoreData] = useState<StoreInfo[]>([]);
+  const [languagesSupport, setLanguagesSupport] = useState<
+    { label: string; value: string | number }[]
+  >([]);
+  const [isStoresExist, setIsStoresExist] = useState<boolean>(false);
+  const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
+    []
+  );
+  const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
+
+  // Function to navigate to the appropriate user list based on user type
   const navigateToUserList = () => {
     if (userType == "contractor") {
       navigate("/ContractorList");
@@ -40,22 +52,14 @@ function InterpretersListInfo() {
       navigate("/AdministratorList");
     }
   };
+
+  // Handle changes in input fields and update form data
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
     updateFormData(name, value);
   };
-
-  const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
-  const [storeData, setStoreData] = useState<StoreInfo[]>([]);
-  const [languagesSupport, setLanguagesSupport] = useState<
-    { label: string; value: string | number }[]
-  >([]);
-  const [isStoresExist, setIsStoresExist] = useState<boolean>(false);
-  const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
-    []
-  );
 
   // Handler for onChange to update the selected options
   const handleSelectChange = (value: (string | number)[]) => {
@@ -68,6 +72,7 @@ function InterpretersListInfo() {
     }));
   };
 
+  // State hook to manage form data
   const [formData, setFormData] = useState<UserCreateFormValues>({
     company_no: "",
     company_name: "",
@@ -91,6 +96,7 @@ function InterpretersListInfo() {
     user_note: "",
   });
 
+  // Destructure form methods from react-hook-form
   const {
     register,
     handleSubmit,
@@ -98,11 +104,13 @@ function InterpretersListInfo() {
     formState: { isSubmitted },
   } = useForm<UserCreateFormValues>();
 
+  // Fetch company and language data on component mount
   useEffect(() => {
     fetchCompaniesNames();
     fetchLanguagesAllNames();
   }, []);
 
+  // Fetch all language names for the form
   const fetchLanguagesAllNames = async () => {
     try {
       let response = await LanguageApiService.fetchLanguagesAllNames();
@@ -122,6 +130,7 @@ function InterpretersListInfo() {
     }
   };
 
+  // Fetch company names for the form
   const fetchCompaniesNames = async () => {
     // console.log(244, await LanguageApiService.fetchLanguagesAllNames());
     try {
@@ -134,6 +143,7 @@ function InterpretersListInfo() {
     }
   };
 
+  // Fetch store names based on selected company
   const fetchStoreNames = async () => {
     try {
       const response = await StoreApiService.fetchStoreNamesByCompany(
@@ -151,14 +161,14 @@ function InterpretersListInfo() {
     }
   };
 
-  const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
-
+  // Use effect to fetch store names when company number is set
   useEffect(() => {
     if (!isCompanyNoEmpty) {
       fetchStoreNames();
     }
   }, [formData.company_no]);
 
+  // Update form data for a specific field
   const updateFormData = (field: string, value: any) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -166,6 +176,7 @@ function InterpretersListInfo() {
     }));
   };
 
+  // Handle company selection from dropdown
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
 
@@ -182,6 +193,7 @@ function InterpretersListInfo() {
     updateFormData("store_name", "");
   };
 
+  // Handle store selection from dropdown
   const handleStoreSelect = (store: StoreInfo) => {
     const { store_no, store_name } = store;
 
@@ -192,7 +204,8 @@ function InterpretersListInfo() {
     setValue("store_name", store_name);
   };
 
-  const createInterpreter = async () => {
+  // Create new user by submitting the form
+  const createUser = async () => {
     if (formData.user_password !== formData.user_password_confirm) {
       return; // Prevent form submission if passwords don't match
     }
@@ -232,7 +245,7 @@ function InterpretersListInfo() {
   }
 
   return (
-    <Box onSubmit={handleSubmit(createInterpreter)} component="form">
+    <Box onSubmit={handleSubmit(createUser)} component="form">
       <MenuHeader title={`${getUserTitle(userType)}情報`} />
       <Box className={classes.userContent}>
         <Box className={classes.timeDetailsDeleteFlag}>
@@ -559,4 +572,4 @@ function InterpretersListInfo() {
   );
 }
 
-export default InterpretersListInfo;
+export default UserCreate;

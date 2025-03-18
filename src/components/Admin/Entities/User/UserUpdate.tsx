@@ -1,45 +1,44 @@
 import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
-import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
+import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import ButtonAtom from "../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
+import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import classes from "./styles/User.module.scss";
 // import { useLocation } from "react-router-dom";
-import NumberInput from "../../../../components/LV1/NumberInput/NumberInput";
-import TextAreaWithLabel from "../../../../components/LV1/TextArea/TextAreaWithLabel";
+import NumberInput from "../../../LV1/NumberInput/NumberInput";
+import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 import { UserApiService } from "../../../../api/apiService/user/user-api-service";
 import { UserInfo } from "../../../../types/UserTypes/UserTypes";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import { useForm } from "react-hook-form";
 import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
-import SelectableModal from "../../../../components/LV1/SelectableModal/SelectableModal";
+import SelectableModal from "../../../LV1/SelectableModal/SelectableModal";
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
-import ValidationInputField from "../../../../components/LV1/ValidationInputField/ValidationInputField";
-import ValidateSelectMultipleOptions from "../../../../components/LV1/SelectOption/validateMultipleOptions";
+import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
+import ValidateSelectMultipleOptions from "../../../LV1/SelectOption/validateMultipleOptions";
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
 import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-function InterpretersListUpdate() {
+function UserUpdate() {
   const navigate = useNavigate();
+
+  // State hooks
   const [optionValue, setOptionValue] = useState<Array<number | string>>([]);
   const [languagesSupport, setLanguagesSupport] = useState<
     { label: string; value: string | number }[]
   >([]);
   const [isStoresExist, setIsStoresExist] = useState<boolean>(true);
-  // const location = useLocation();
   const [searchParams] = useSearchParams();
   const selectedUserNo = Number(searchParams.get("selectedUserNo"));
   const userType: string = searchParams.get("userType") as string;
-
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
   const [storeData, setStoreData] = useState<StoreInfo[]>([]);
 
-  console.log(1557, selectedUserNo);
-
+  // Initialize form data with default values
   const [formData, setFormData] = useState<UserInfo>({
     user_no: "",
     company_no: "",
@@ -67,6 +66,7 @@ function InterpretersListUpdate() {
     user_deleted: false,
   });
 
+  // Function to fetch the list of companies
   const fetchCompaniesListData = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesAll(
@@ -101,6 +101,7 @@ function InterpretersListUpdate() {
     }
   };
 
+  // Function to update form data state
   const updateFormData = (field: string, value: any) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -108,6 +109,7 @@ function InterpretersListUpdate() {
     }));
   };
 
+  // Handles company selection and fetches store names
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
 
@@ -123,6 +125,7 @@ function InterpretersListUpdate() {
     fetchStoreNames();
   };
 
+  // Handles store selection and updates form data
   const handleStoreSelect = (store: StoreInfo) => {
     const { store_no, store_name } = store;
 
@@ -133,6 +136,7 @@ function InterpretersListUpdate() {
     setValue("store_name", store_name);
   };
 
+  // React Hook Form methods
   const {
     register,
     handleSubmit,
@@ -140,11 +144,12 @@ function InterpretersListUpdate() {
     formState: { isSubmitted },
   } = useForm<UserInfo>();
 
-  // Handle close button action
+  // Navigate back to the previous page
   const handleBack = () => {
     navigate(-1); // Navigate back to the previous page
   };
 
+  // Handle input change and update the corresponding field in the form data
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -155,10 +160,12 @@ function InterpretersListUpdate() {
     }));
   };
 
+  // Fetch user details when the component is mounted or selectedUserNo changes
   useEffect(() => {
     fetchUserDetails();
   }, [selectedUserNo]);
 
+  // Update the translate_languages field when its value changes
   useEffect(() => {
     if (
       Array.isArray(formData.translate_languages) &&
@@ -168,12 +175,14 @@ function InterpretersListUpdate() {
     }
   }, [formData.translate_languages]);
 
+  // Fetch available languages and companies on initial render
   useEffect(() => {
     fetchLanguagesAllNames();
     fetchCompaniesListData();
     console.log(2477, formData.company_no);
   }, []);
 
+  // Fetch all language names for the select dropdown
   const fetchLanguagesAllNames = async () => {
     try {
       let response = await LanguageApiService.fetchLanguagesAllNames();
@@ -193,6 +202,7 @@ function InterpretersListUpdate() {
     }
   };
 
+  // Fetch user details based on the selected user number
   const fetchUserDetails = async () => {
     if (!selectedUserNo) return; // Early return if no selectedUserNo
 
@@ -277,12 +287,14 @@ function InterpretersListUpdate() {
     }
   };
 
+  // Set selected language values from form data
   const setLanguageValue = async () => {
     console.log(289, formData);
 
     setOptionValue(formData.translate_languages);
   };
 
+  // Handle language selection change and update state
   const handleSelectChange = (value: (string | number)[]) => {
     console.log(655, value);
     setOptionValue(value); // Update the state with selected options
@@ -293,12 +305,14 @@ function InterpretersListUpdate() {
     }));
   };
 
+  // Fetch store names based on selected company
   useEffect(() => {
     if (formData.company_no !== "") {
       fetchStoreNames();
     }
   }, [formData.company_no]);
 
+  // Fetch store names based on company number
   const fetchStoreNames = async () => {
     try {
       const response = await StoreApiService.fetchStoreNamesByCompany(
@@ -316,6 +330,7 @@ function InterpretersListUpdate() {
     }
   };
 
+  // Normalize user data for comparison
   function normalizeUserData(user: any) {
     return {
       user_no: user.user_no,
@@ -337,6 +352,7 @@ function InterpretersListUpdate() {
     };
   }
 
+  // Check if there are no changes in the form data
   function checkForNoChange(obj1: any, obj2: any) {
     return Object.keys(obj1).every((key) => {
       // Check if key exists in both objects and values match (deep comparison for arrays)
@@ -347,15 +363,11 @@ function InterpretersListUpdate() {
     });
   }
 
+  // Update user details if changes are made
   const updateInterpreter = async () => {
     const userDetails = await UserApiService.fetchUser(selectedUserNo);
     console.log(155, userDetails);
     console.log(1155, formData);
-    // console.log(2155, normalizeUserData(formData));
-    // console.log(
-    //   3155,
-    //   checkForNoChange(normalizeUserData(formData), userDetails)
-    // );
 
     if (formData.user_password !== formData.user_password_confirm) {
       return; // Prevent form submission if passwords don't match
@@ -722,4 +734,4 @@ function InterpretersListUpdate() {
   );
 }
 
-export default InterpretersListUpdate;
+export default UserUpdate;

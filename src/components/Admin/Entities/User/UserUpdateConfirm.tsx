@@ -1,37 +1,36 @@
 import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
-import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
+import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import PasswordBoxWithLabel from "../../../../components/LV1/TextBox/PasswordBoxWithLabel";
-import ButtonAtom from "../../../../components/LV1/Button/ButtonAtom/ButtonAtom";
+import PasswordBoxWithLabel from "../../../LV1/TextBox/PasswordBoxWithLabel";
+import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import classes from "./styles/User.module.scss";
 // import { useLocation } from "react-router-dom";
-import MultipleOptionsSelect from "../../../../components/LV1/SelectOption/MultipleOptionsSelect";
-import NumberInput from "../../../../components/LV1/NumberInput/NumberInput";
-import TextAreaWithLabel from "../../../../components/LV1/TextArea/TextAreaWithLabel";
+import MultipleOptionsSelect from "../../../LV1/SelectOption/MultipleOptionsSelect";
+import NumberInput from "../../../LV1/NumberInput/NumberInput";
+import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 import { UserApiService } from "../../../../api/apiService/user/user-api-service";
-import { InterpreterInfo } from "../../../../types/UserTypes/UserTypes";
+import { UserInfo } from "../../../../types/UserTypes/UserTypes";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
 import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-function InterpretersListInfo() {
+function UserUpdateConfirm() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const selectedUserNo = Number(searchParams.get("selectedUserNo"));
+  const userType: string = searchParams.get("userType") as string;
+
+  // State hooks
   const [languagesSupport, setLanguagesSupport] = useState<
     { label: string; value: string | number }[]
   >([]);
   const [optionValue, setOptionValue] = useState<Array<string>>([]);
 
-  // const location = useLocation();
-  const [searchParams] = useSearchParams();
-
-  const selectedUserNo = Number(searchParams.get("selectedUserNo"));
-  const userType: string = searchParams.get("userType") as string;
-  console.log(1557, selectedUserNo);
-
-  const [formData, setFormData] = useState<InterpreterInfo>({
+  // State hook to manage form data
+  const [formData, setFormData] = useState<UserInfo>({
     user_no: "",
     company_no: "",
     company_name: "",
@@ -58,11 +57,12 @@ function InterpretersListInfo() {
     user_deleted: false,
   });
 
-  // Handle close button action
+  // Navigate back button action
   const handleBack = () => {
     navigate(-1); // Navigate back to the previous page
   };
 
+  // Function to navigate to the appropriate user list based on user type
   const navigateToUserList = () => {
     if (userType == "contractor") {
       navigate("/ContractorList");
@@ -76,16 +76,19 @@ function InterpretersListInfo() {
     }
   };
 
+  // useEffect to fetch user details whenever selectedUserNo changes
   useEffect(() => {
     fetchUserDetails();
   }, [selectedUserNo]);
 
+  // useEffect to fetch all languages' names if translate_languages is not empty
   useEffect(() => {
     if (formData.translate_languages.length > 0) {
       fetchLanguagesAllNames();
     }
   }, [formData.translate_languages]);
 
+  // Function to fetch the user details using selectedUserNo
   const fetchUserDetails = async () => {
     if (!selectedUserNo) return; // Early return if no selectedCompanyNo
     try {
@@ -125,6 +128,7 @@ function InterpretersListInfo() {
     }
   };
 
+  // Function to fetch all language names and map them to a usable format
   const fetchLanguagesAllNames = async () => {
     try {
       let response = await LanguageApiService.fetchLanguagesAllNames();
@@ -223,7 +227,7 @@ function InterpretersListInfo() {
             <Box className={classes.lastName}>
               <TextBoxWithLabel
                 labelWidth="125px"
-                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 width="calc(35vw - 80px);"
                 value={formData.user_name_last_furigana}
               />
@@ -381,4 +385,4 @@ function InterpretersListInfo() {
   );
 }
 
-export default InterpretersListInfo;
+export default UserUpdateConfirm;

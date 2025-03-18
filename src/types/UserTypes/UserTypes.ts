@@ -60,9 +60,3 @@ export interface InterpreterCreateFormValues extends UserCreateFormValues {
   meeting_id: string;
   meeting_passcode: string;
 }
-
-export interface InterpreterInfo extends UserInfo {
-  translate_languages: any;
-  meeting_id: string;
-  meeting_passcode: string;
-}
