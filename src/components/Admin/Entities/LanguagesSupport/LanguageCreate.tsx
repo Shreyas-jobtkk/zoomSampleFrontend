@@ -13,14 +13,15 @@ import { useNavigate } from "react-router-dom";
 
 const LanguageCreate = () => {
   const navigate = useNavigate();
+
+  // State to store form input values
   const [formData, setFormData] = useState<LanguageCreateFormValues>({
     language_name: "",
     language_note: "",
     language_name_furigana: "",
   });
 
-  console.log(144, formData);
-
+  // Handles changes in input fields and updates the state
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -30,15 +31,21 @@ const LanguageCreate = () => {
       [name]: value,
     }));
   };
+
+  // React Hook Form for managing form state and validation
   const {
     register,
     handleSubmit,
     formState: { isSubmitted },
   } = useForm<LanguageCreateFormValues>();
+
+  // Function to navigate back to the languages list page
   const navigateToLanguagesList = () => {
     navigate("/LanguagesSupportList");
   };
-  const saveLanguageInfo = async (data: LanguageCreateFormValues) => {
+
+  // Function to create a new language entry
+  const createLanguage = async (data: LanguageCreateFormValues) => {
     console.log("Form Data Submitted:", data);
     try {
       const response = await LanguageApiService.createLanguage(
@@ -58,7 +65,7 @@ const LanguageCreate = () => {
   };
 
   return (
-    <Box onSubmit={handleSubmit(saveLanguageInfo)} component="form">
+    <Box onSubmit={handleSubmit(createLanguage)} component="form">
       <MenuHeader title="言語情報" />
       <Box className={classes.langContent}>
         <Box className={classes.timeDetailsDeleteFlag}>

@@ -15,22 +15,13 @@ import DataTableControler from "../../../LV3/DataTable/DataTableControler";
 function LanguagesSupportList() {
   const navigate = useNavigate();
 
+  // State hooks
   const [selectedData, setSelectedData] = useState<
     Array<{ No: string | number; [key: string]: string | number }>
   >([]);
-  const headers = [
-    "No",
-    "登録日時",
-    "更新日時",
-    "言語No",
-    "言語",
-    "和訳",
-    "削除",
-  ];
   const [selectedLanguageNoArray, setSelectedLanguageNoArray] = useState<any[]>(
     []
   );
-
   const [tableData, setTableData] = useState<any[]>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -40,13 +31,28 @@ function LanguagesSupportList() {
   const [langName, setLangName] = useState<string>("");
   const [langNameJapanese, setLangNameJapanese] = useState<string>("");
 
+  // Table headers
+  const headers = [
+    "No",
+    "登録日時",
+    "更新日時",
+    "言語No",
+    "言語",
+    "和訳",
+    "削除",
+  ];
+
+  // Fetch data when page or row limit changes
   useEffect(() => {
     fetchLanguagesListData();
   }, [page, rowLimit]);
 
+  // Fetches language list based on search conditions
   const searchConditions = () => {
     fetchLanguagesListData();
   };
+
+  // Fetches the language data from API
   const fetchLanguagesListData = async () => {
     try {
       const response = await LanguageApiService.fetchLanguagesAll(
@@ -81,56 +87,38 @@ function LanguagesSupportList() {
     }
   };
 
-  // const filterTableData = () => {
-  //   const filtered = tableData.filter((item) => {
-  //     // Convert "企業No" (company number) to a number for range comparison
-  //     const matchesLanguageNo =
-  //       langNo === "" || item["言語No"].includes(langNo);
-  //     const matchesLangName =
-  //       langName === "" || item["言語"].includes(langName);
-  //     const matchesLangNameJapanese =
-  //       langNameJapanese === "" || item["和訳"] === langNameJapanese;
-
-  //     console.log(
-  //       21445,
-  //       langName,
-  //       langNameJapanese,
-  //       item["言語No"],
-  //       item["言語"],
-  //       item["和訳"]
-  //     );
-
-  //     // An item is included in the results only if it satisfies both range and search conditions
-  //     return matchesLanguageNo && matchesLangName && matchesLangNameJapanese;
-  //   });
-
-  //   // Update the filtered data state to reflect the search results
-  //   setSearchData(filtered);
-  // };
-
+  // Navigates to the language information page for the selected language
   const navigateToInfoPage = () => {
     navigate(`/LanguagesInfo?selectedLanguageNo=${selectedLanguageNoArray[0]}`);
   };
 
+  // Handles page change in pagination
   const handlePageChange = (page: number) => {
     // setCurrentPage(page); // Update the page state in the parent
     console.log("Current page in parent:", page);
     setPage(page + 1);
   };
 
+  // Resets the table data by re-fetching from API
   const onResetTable = () => fetchLanguagesListData();
 
+  // Navigates to the language creation page
   const navigateToLanguageCreate = () => navigate("/LanguagesCreate");
 
+  // Handles change in the number of rows per page
   const handleRowsPerPage = (newSelectedData: any) => {
     console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
+  // Navigates to the language update/edit page
   const navigateToUpdatePage = () => {
-    navigate(`/LanguagesEdit?selectedLanguageNo=${selectedLanguageNoArray[0]}`);
+    navigate(
+      `/LanguagesUpdate?selectedLanguageNo=${selectedLanguageNoArray[0]}`
+    );
   };
 
+  // Handles deletion of selected languages
   const handleDeleteLanguages = async () => {
     try {
       await LanguageApiService.deleteLanguages(selectedLanguageNoArray);
@@ -145,6 +133,7 @@ function LanguagesSupportList() {
     await fetchLanguagesListData();
   };
 
+  // Handles restoration of deleted languages
   const handleRestoreLanguages = async () => {
     try {
       await LanguageApiService.restoreLanguages(selectedLanguageNoArray);
@@ -159,6 +148,7 @@ function LanguagesSupportList() {
     await fetchLanguagesListData();
   };
 
+  // Handles selection of rows in the table
   const handleSelectionChange = (
     newSelectedData: Array<{
       No: string | number;
@@ -170,7 +160,6 @@ function LanguagesSupportList() {
 
     const selectedCompanyNo = newSelectedData.map((item) => item["言語No"]);
     setSelectedLanguageNoArray(selectedCompanyNo);
-    // setSelectedLanguageNoArray(selectedCompanyNo);
   };
 
   return (
@@ -224,14 +213,6 @@ function LanguagesSupportList() {
         </Box>
       </Box>
 
-      {/* <DataTable // Customize header height
-        headers={headers}
-        data={searchData}
-        maxHeight="calc(87vh - 260px)"
-        onSelectionChange={handleSelectionChange}
-        operationButton="新規"
-        onClick={navigateToLanguageCreate}
-      /> */}
       <DataTableControler
         onPageChange={handlePageChange}
         onSelectionChange={handleRowsPerPage}
@@ -251,25 +232,21 @@ function LanguagesSupportList() {
           onClick={navigateToInfoPage}
           label="閲覧"
           disabled={selectedData.length !== 1}
-          // margin='0 2vw'
         />
         <ButtonAtom
           onClick={navigateToUpdatePage}
           label="編集"
           disabled={selectedData.length !== 1}
-          // margin='0 2vw'
         />
         <ButtonAtom
           onClick={handleDeleteLanguages}
           label="削除"
           disabled={selectedData.length === 0}
-          // margin='0 2vw'
         />
         <ButtonAtom
           onClick={handleRestoreLanguages}
           label="復帰"
           disabled={selectedData.length === 0}
-          // margin='0 2vw'
         />
       </Box>
     </Box>

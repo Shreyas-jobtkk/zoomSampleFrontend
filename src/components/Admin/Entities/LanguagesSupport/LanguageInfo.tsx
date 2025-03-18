@@ -10,8 +10,10 @@ import { LanguageApiService } from "../../../../api/apiService/languages/languag
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 
-const LanguageSupportInfo = () => {
+const LanguageInformation = () => {
   const navigate = useNavigate();
+
+  // State to store language details
   const [formData, setFormData] = useState<LanguageInfo>({
     languages_support_no: "",
     language_name: "",
@@ -22,11 +24,12 @@ const LanguageSupportInfo = () => {
     language_deleted: false,
   });
 
+  // Extract query parameters from the URL
   const [searchParams] = useSearchParams();
   const selectedLanguageNo = Number(searchParams.get("selectedLanguageNo"));
 
+  // Function to fetch language details from the API
   const fetchCompany = async () => {
-    console.log(145, selectedLanguageNo);
     if (!selectedLanguageNo) return; // Early return if no selectedLanguageNo
     try {
       const languageDetails = await LanguageApiService.fetchLanguage(
@@ -40,6 +43,7 @@ const LanguageSupportInfo = () => {
     }
   };
 
+  // useEffect to fetch language data on component mount or when selectedLanguageNo changes
   useEffect(() => {
     if (!selectedLanguageNo) {
       navigate("/BadRequest");
@@ -49,6 +53,7 @@ const LanguageSupportInfo = () => {
 
   console.log(144, formData);
 
+  // Handle input field changes and update the state accordingly
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -59,12 +64,14 @@ const LanguageSupportInfo = () => {
     }));
   };
 
+  // Navigate to the language list page
   const navigateToLanguageList = () => {
     navigate("/LanguagesSupportList");
   };
 
-  const navigateToLanguageEdit = () => {
-    navigate(`/LanguagesEdit?selectedLanguageNo=${selectedLanguageNo}`);
+  // Navigate to the language update page with selectedLanguageNo as a query parameter
+  const navigateToLanguageUpdate = () => {
+    navigate(`/LanguagesUpdate?selectedLanguageNo=${selectedLanguageNo}`);
   };
 
   if (!selectedLanguageNo) {
@@ -147,7 +154,7 @@ const LanguageSupportInfo = () => {
             width="100px"
           />
           <ButtonAtom
-            onClick={navigateToLanguageEdit}
+            onClick={navigateToLanguageUpdate}
             label="編集"
             width="100px"
           />
@@ -157,4 +164,4 @@ const LanguageSupportInfo = () => {
   );
 };
 
-export default LanguageSupportInfo;
+export default LanguageInformation;

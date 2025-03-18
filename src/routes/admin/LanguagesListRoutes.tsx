@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import LanguagesCreate from "../../components/Admin/Entities/LanguagesSupport/LanguagesCreatePage";
-import LanguagesInfo from "../../components/Admin/Entities/LanguagesSupport/LanguagesInfoPage";
-import LanguagesEdit from "../../components/Admin/Entities/LanguagesSupport/LanguagesEditPage";
-import LanguagesEditConfirm from "../../components/Admin/Entities/LanguagesSupport/LanguagesEditConfirmPage";
+import LanguagesCreate from "../../components/Admin/Entities/LanguagesSupport/LanguageCreate";
+import LanguagesInfo from "../../components/Admin/Entities/LanguagesSupport/LanguageInfo";
+import LanguagesUpdate from "../../components/Admin/Entities/LanguagesSupport/LanguageUpdate";
+import LanguagesUpdateConfirm from "../../components/Admin/Entities/LanguagesSupport/LanguageUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
@@ -18,12 +18,12 @@ const LanguagesListRoutes = () => (
       element={<ProtectedAdminRoute element={<LanguagesInfo />} />}
     />
     <Route
-      path="/LanguagesEdit"
-      element={<ProtectedAdminRoute element={<LanguagesEdit />} />}
+      path="/LanguagesUpdate"
+      element={<ProtectedAdminRoute element={<LanguagesUpdate />} />}
     />
     <Route
-      path="/LanguagesEditConfirm"
-      element={<ProtectedAdminRoute element={<LanguagesEditConfirm />} />}
+      path="/LanguagesUpdateConfirm"
+      element={<ProtectedAdminRoute element={<LanguagesUpdateConfirm />} />}
     />
   </Routes>
 );

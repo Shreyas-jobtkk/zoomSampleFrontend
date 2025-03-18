@@ -12,8 +12,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 
-const LanguageCreate = () => {
+const LanguageUpdate = () => {
   const navigate = useNavigate();
+
+  // State to store language details
   const [formData, setFormData] = useState<LanguageInfo>({
     languages_support_no: "",
     language_name: "",
@@ -25,10 +27,10 @@ const LanguageCreate = () => {
   });
 
   const [searchParams] = useSearchParams();
-
   const selectedLanguageNo = Number(searchParams.get("selectedLanguageNo"));
 
-  const fetchCompany = async () => {
+  // Function to fetch language details from the API
+  const fetchLanguage = async () => {
     if (!selectedLanguageNo) return; // Early return if no selectedLanguageNo
     try {
       const languageDetails = await LanguageApiService.fetchLanguage(
@@ -46,13 +48,15 @@ const LanguageCreate = () => {
     }
   };
 
+  // Redirect to BadRequest page if selectedLanguageNo is not provided
   useEffect(() => {
     if (!selectedLanguageNo) {
       navigate("/BadRequest");
     }
-    fetchCompany();
+    fetchLanguage();
   }, [selectedLanguageNo]);
 
+  // Handles input field changes and updates the form data state
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -63,6 +67,7 @@ const LanguageCreate = () => {
     }));
   };
 
+  // useForm hook to manage form validation and state
   const {
     register,
     handleSubmit,
@@ -70,11 +75,12 @@ const LanguageCreate = () => {
     formState: { isSubmitted },
   } = useForm<LanguageInfo>();
 
-  // Handle close button action
+  // Navigates back to the previous page
   const handleBack = () => {
     navigate(-1); // Navigate back to the previous page
   };
 
+  // Compares two objects and returns true if they have the same values.
   function checkForNoChange(obj1: any, obj2: any): boolean {
     return Object.keys(obj1).every((key) => {
       // Check if key exists in both objects and values match (deep comparison for arrays)
@@ -85,6 +91,7 @@ const LanguageCreate = () => {
     });
   }
 
+  // Normalizes language data by extracting only the necessary properties.
   function normalizeLanguageData(language: any) {
     return {
       language_name: language.language_name,
@@ -93,7 +100,8 @@ const LanguageCreate = () => {
     };
   }
 
-  const editLanguageInfo = async (data: LanguageInfo) => {
+  // Calls the API to update the language details and navigates to confirmation.
+  const updateLanguageInfo = async (data: LanguageInfo) => {
     const languageDetails = await LanguageApiService.fetchLanguage(
       selectedLanguageNo
     );
@@ -111,7 +119,7 @@ const LanguageCreate = () => {
       );
       alert("saved");
       navigate(
-        `/LanguagesEditConfirm?selectedLanguageNo=${selectedLanguageNo}`
+        `/LanguagesUpdateConfirm?selectedLanguageNo=${selectedLanguageNo}`
       );
     } catch (error) {
       alert("error");
@@ -124,7 +132,7 @@ const LanguageCreate = () => {
   }
 
   return (
-    <Box onSubmit={handleSubmit(editLanguageInfo)} component="form">
+    <Box onSubmit={handleSubmit(updateLanguageInfo)} component="form">
       <MenuHeader title="言語情報" />
       <Box className={classes.langContent}>
         <Box className={classes.timeDetailsDeleteFlag}>
@@ -205,4 +213,4 @@ const LanguageCreate = () => {
   );
 };
 
-export default LanguageCreate;
+export default LanguageUpdate;

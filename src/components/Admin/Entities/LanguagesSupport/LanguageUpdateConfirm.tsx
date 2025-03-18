@@ -10,8 +10,12 @@ import { LanguageApiService } from "../../../../api/apiService/languages/languag
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 
-const LanguageSupportInfo = () => {
+const LanguageUpdateConfirm = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const selectedLanguageNo = Number(searchParams.get("selectedLanguageNo"));
+
+  // State to store the language details
   const [formData, setFormData] = useState<LanguageInfo>({
     languages_support_no: "",
     language_name: "",
@@ -22,24 +26,23 @@ const LanguageSupportInfo = () => {
     language_deleted: false,
   });
 
-  const [searchParams] = useSearchParams();
-  const selectedLanguageNo = Number(searchParams.get("selectedLanguageNo"));
-
+  // Function to fetch language details from the API
   const fetchCompany = async () => {
     console.log(145, selectedLanguageNo);
-    if (!selectedLanguageNo) return; // Early return if no selectedLanguageNo
+    if (!selectedLanguageNo) return;
     try {
       const languageDetails = await LanguageApiService.fetchLanguage(
         selectedLanguageNo
       );
       setFormData(languageDetails);
-      // setCompanyDetails(companyDetails);
+
       console.log(133, languageDetails);
     } catch (error: any) {
       console.log(133, Error);
     }
   };
 
+  // useEffect hook to fetch language details when selectedLanguageNo changes
   useEffect(() => {
     if (!selectedLanguageNo) {
       navigate("/BadRequest");
@@ -49,6 +52,7 @@ const LanguageSupportInfo = () => {
 
   console.log(144, formData);
 
+  // Handle input field changes
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -59,11 +63,12 @@ const LanguageSupportInfo = () => {
     }));
   };
 
+  // Navigate to the languages list page
   const navigateToLanguagesList = () => {
     navigate("/LanguagesSupportList");
   };
 
-  // Handle close button action
+  // Navigate back to the previous page
   const handleBack = () => {
     navigate(-1); // Navigate back to the previous page
   };
@@ -154,4 +159,4 @@ const LanguageSupportInfo = () => {
   );
 };
 
-export default LanguageSupportInfo;
+export default LanguageUpdateConfirm;

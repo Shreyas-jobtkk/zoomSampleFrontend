@@ -364,7 +364,7 @@ function UserUpdate() {
   }
 
   // Update user details if changes are made
-  const updateInterpreter = async () => {
+  const updateUser = async () => {
     const userDetails = await UserApiService.fetchUser(selectedUserNo);
     console.log(155, userDetails);
     console.log(1155, formData);
@@ -406,7 +406,7 @@ function UserUpdate() {
   }
 
   return (
-    <Box onSubmit={handleSubmit(updateInterpreter)} component="form">
+    <Box onSubmit={handleSubmit(updateUser)} component="form">
       <MenuHeader title={`${getUserTitle(userType)}情報`} />
       <Box className={classes.userContent}>
         <Box className={classes.timeDetailsDeleteFlag}>
