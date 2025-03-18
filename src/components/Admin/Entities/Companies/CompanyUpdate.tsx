@@ -8,9 +8,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
-
-// import { updateCompany } from "../../../../api/apiService/company/actions/company-update";
-// import { fetchCompany } from "../../../../api/apiService/company/actions/company-fetch";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 import {
   CompanyCreateFormValues,
@@ -18,10 +15,12 @@ import {
 } from "../../../../types/CompanyTypes/CompanyTypes";
 import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
 
-function CompanyInfoEdit() {
+function CompanyUpdate() {
+  // Extract query parameters from the URL
   const [searchParams] = useSearchParams();
   const selectedCompanyNo = Number(searchParams.get("selectedCompanyNo"));
 
+  // React Hook Form setup for form handling
   const {
     register,
     setValue,
@@ -29,6 +28,7 @@ function CompanyInfoEdit() {
     formState: { isSubmitted },
   } = useForm<CompanyCreateFormValues>();
 
+  // State to hold company information
   const [formData, setFormData] = useState<CompanyInfo>({
     company_no: "",
     company_name: "",
@@ -40,8 +40,8 @@ function CompanyInfoEdit() {
   });
 
   const navigate = useNavigate();
-  console.log("Selected Company No:", selectedCompanyNo);
 
+  // Fetch company details when the component mounts or when selectedCompanyNo changes
   useEffect(() => {
     const fetchCompany = async () => {
       if (!selectedCompanyNo) {
@@ -63,6 +63,7 @@ function CompanyInfoEdit() {
     fetchCompany();
   }, [selectedCompanyNo, setValue]);
 
+  // Handle input changes for both text fields and text areas
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -74,18 +75,18 @@ function CompanyInfoEdit() {
     setValue(name as keyof CompanyCreateFormValues, value);
   };
 
-  // Handle close button action
+  // Navigate back to the previous page when the close button is clicked
   const handleBack = () => {
     navigate(-1); // Navigate back to the previous page
   };
 
-  // Handle edit button action
+  // Handle the edit/save action
   const handleEdit = async () => {
     const companyDetails = await CompanyApiService.fetchCompany(
       selectedCompanyNo
     );
 
-    // Check if there are any changes
+    // Check if there are any changes in the form data
     const isUnchanged =
       JSON.stringify(companyDetails) === JSON.stringify(formData);
 
@@ -93,13 +94,15 @@ function CompanyInfoEdit() {
       alert("No changes made.");
       return;
     }
+
+    // Send the updated data to the API
     await CompanyApiService.updateCompany(
       formData.company_no,
       formData.company_name,
       formData.company_name_furigana,
       formData.company_note
     );
-    navigate(`/CompanyEditConfirm?selectedCompanyNo=${selectedCompanyNo}`);
+    navigate(`/CompanyUpdateConfirm?selectedCompanyNo=${selectedCompanyNo}`);
   };
 
   if (!selectedCompanyNo) {
@@ -206,4 +209,4 @@ function CompanyInfoEdit() {
   );
 }
 
-export default CompanyInfoEdit;
+export default CompanyUpdate;

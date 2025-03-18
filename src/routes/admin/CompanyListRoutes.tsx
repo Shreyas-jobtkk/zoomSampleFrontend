@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import CompanyInfo from "../../components/Admin/Entities/Companies/CompanyInfo";
 import CompanyCreate from "../../components/Admin/Entities/Companies/CompanyCreate";
-import CompanyEdit from "../../components/Admin/Entities/Companies/CompanyEdit";
-import CompanyEditConfirm from "../../components/Admin/Entities/Companies/CompanyEditConfirm";
+import CompanyUpdate from "../../components/Admin/Entities/Companies/CompanyUpdate";
+import CompanyUpdateConfirm from "../../components/Admin/Entities/Companies/CompanyUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
@@ -18,10 +18,10 @@ const AdministratorListRoutes = () => (
       element={<ProtectedAdminRoute element={<CompanyCreate />} />}
     />
     <Route
-      path="/CompanyEdit"
-      element={<ProtectedAdminRoute element={<CompanyEdit />} />}
+      path="/CompanyUpdate"
+      element={<ProtectedAdminRoute element={<CompanyUpdate />} />}
     />
-    <Route path="/CompanyEditConfirm" element={<CompanyEditConfirm />} />
+    <Route path="/CompanyUpdateConfirm" element={<CompanyUpdateConfirm />} />
   </Routes>
 );
 

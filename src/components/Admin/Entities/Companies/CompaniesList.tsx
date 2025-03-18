@@ -13,15 +13,17 @@ import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import classes from "../styles/AdminEntities.module.scss";
 
 function CompaniesList() {
+  // Hook for navigating to different pages
   const navigate = useNavigate();
 
-  // States for data and inputs selectedCompanyNo
+  // State variables for managing selected company numbers, table data, and selected table rows
   const [selectedCompanyNoArray, setSelectedCompanyNoArray] = useState<
     number[]
   >([]);
   const [tableData, setTableData] = useState<DataTableRow[]>([]);
-  // const [searchData, setSearchData] = useState<DataTableRow[]>([]);
-  const [selectedData, setSelectedData] = useState<DataTableRow[]>([]);
+  const [selectedRows, setSelectedRows] = useState<DataTableRow[]>([]);
+
+  // State variables for search filters (Company No range, Furigana, and Name)
   const [companyNoRangeMin, setCompanyNoRangeMin] = useState<number | string>(
     ""
   );
@@ -30,19 +32,23 @@ function CompaniesList() {
   );
   const [companyNameFurigana, setCompanyNameFurigana] = useState<string>("");
   const [companyName, setCompanyName] = useState<string>("");
+
+  // State variables for pagination
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [rowLimit, setRowLimit] = useState<number>(10);
 
-  // Fetch companies on component mount
+  // Fetch company data when page or row limit changes
   useEffect(() => {
     fetchCompaniesListData();
   }, [page, rowLimit]);
 
+  // Triggers fetching data based on search conditions
   const searchConditions = () => {
     fetchCompaniesListData();
   };
 
+  // Fetches the list of companies from the API
   const fetchCompaniesListData = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesAll(
@@ -54,9 +60,10 @@ function CompaniesList() {
         companyNameFurigana
       );
 
+      // Calculate total pages based on received records
       setTotalPages(Math.ceil(response.totalRecords / rowLimit));
 
-      console.log(177, response.companies, response.totalRecords);
+      // Sort and format the data for display
       const sortedData: DataTableRow[] = response.companies
         .sort(
           (a: CompanyInfo, b: CompanyInfo) =>
@@ -72,54 +79,12 @@ function CompaniesList() {
           削除: deleteStatus(item.company_deleted),
         }));
       setTableData(sortedData);
-      // setSearchData(sortedData);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
-  // Filter table data based on search input and range conditions
-  // const filterTableData = () => {
-  //   const isInvalidRange =
-  //     Number(companyNoRangeMin) > Number(companyNoRangeMax);
-  //   const isNotEmpty = companyNoRangeMin !== "" && companyNoRangeMax !== "";
-
-  //   if (isInvalidRange && isNotEmpty) {
-  //     return alert("min is more than max");
-  //   }
-
-  //   const filtered = tableData.filter((item) => {
-  //     // Convert "企業No" (company number) to a number for range comparison
-  //     const companyNo = Number(item["企業No"]);
-
-  //     // Range filtering logic:
-  //     // Check if the company number falls within the specified range.
-  //     // If a range boundary (min or max) is not provided, ignore that condition.
-  //     const isInRange =
-  //       (!companyNoRangeMin || companyNo >= Number(companyNoRangeMin)) &&
-  //       (!companyNoRangeMax || companyNo <= Number(companyNoRangeMax));
-
-  //     console.log(1445, item);
-
-  //     // Search input filtering logic:
-  //     // Check if the item matches the specified search terms for "企業名" (company name)
-  //     // and "フリガナ" (company name pronunciation in Kana).
-  //     // Convert values to strings to safely use the `includes` method.
-  //     const matchesFilters =
-  //       (!companyName || String(item["企業名"]).includes(companyName)) &&
-  //       (!companyNameFurigana ||
-  //         String(item["フリガナ"]).includes(companyNameFurigana));
-
-  //     console.log(21445, matchesFilters);
-
-  //     // An item is included in the results only if it satisfies both range and search conditions
-  //     return isInRange && matchesFilters;
-  //   });
-
-  //   // Update the filtered data state to reflect the search results
-  //   setSearchData(filtered);
-  // };
-
+  // Table column headers
   const headers = [
     "No",
     "登録日時",
@@ -130,18 +95,20 @@ function CompaniesList() {
     "削除",
   ];
 
+  // Navigates to the company creation page
   const navigateToCompanyCreate = () => navigate("/CompanyCreate");
 
+  // Resets the table data by re-fetching the list
   const onResetTable = () => fetchCompaniesListData();
 
+  // Updates row limit based on user selection
   const handleRowsPerPage = (newSelectedData: any) => {
-    console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
+  // Handles selection changes in the table
   const handleSelectionChange = (newSelectedData: DataTableRow[]) => {
-    setSelectedData(newSelectedData);
-    console.log("Selected Data:", newSelectedData);
+    setSelectedRows(newSelectedData);
 
     const selectedCompanyNo = newSelectedData.map((item) =>
       Number(item["企業No"])
@@ -149,14 +116,17 @@ function CompaniesList() {
     setSelectedCompanyNoArray(selectedCompanyNo);
   };
 
+  // Navigates to the company details page
   const navigateToInfoPage = () => {
     navigate(`/CompanyInfo?selectedCompanyNo=${selectedCompanyNoArray[0]}`);
   };
 
+  // Navigates to the company edit page
   const navigateToEditPage = () => {
-    navigate(`/CompanyEdit?selectedCompanyNo=${selectedCompanyNoArray[0]}`);
+    navigate(`/CompanyUpdate?selectedCompanyNo=${selectedCompanyNoArray[0]}`);
   };
 
+  // Handles deleting selected companies
   const handleDeleteCompanies = async () => {
     try {
       await CompanyApiService.deleteCompanies(selectedCompanyNoArray);
@@ -170,6 +140,7 @@ function CompaniesList() {
     await fetchCompaniesListData();
   };
 
+  // Handles restoring deleted selected companies
   const handleRestoreCompanies = async () => {
     try {
       await CompanyApiService.restoreCompanies(selectedCompanyNoArray);
@@ -183,11 +154,8 @@ function CompaniesList() {
     await fetchCompaniesListData();
   };
 
-  // const [currentPage, setCurrentPage] = useState(0);
-
+  // Updates the current page when pagination is changed
   const handlePageChange = (page: number) => {
-    // setCurrentPage(page); // Update the page state in the parent
-    console.log("Current page in parent:", page);
     setPage(page + 1);
   };
 
@@ -204,7 +172,6 @@ function CompaniesList() {
             value={companyNoRangeMin}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setCompanyNoRangeMin(Number(e.target.value));
-              // handleFilterChange("企業No", e.target.value);
             }}
             type="number"
           />
@@ -215,7 +182,6 @@ function CompaniesList() {
             value={companyNoRangeMax}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setCompanyNoRangeMax(Number(e.target.value));
-              // handleFilterChange("企業No", e.target.value);
             }}
             type="number"
             labelWidth="3vw"
@@ -228,7 +194,6 @@ function CompaniesList() {
               value={companyNameFurigana}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setCompanyNameFurigana(e.target.value);
-                // handleFilterChange("フリガナ", e.target.value);
               }}
               labelWidth="70px"
             />
@@ -239,7 +204,6 @@ function CompaniesList() {
               value={companyName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setCompanyName(e.target.value);
-                // handleFilterChange("企業名", e.target.value);
               }}
               labelWidth="70px"
             />
@@ -266,22 +230,22 @@ function CompaniesList() {
       <Box className={classes.actionButtons}>
         <ButtonAtom
           onClick={navigateToInfoPage}
-          disabled={selectedData.length !== 1}
+          disabled={selectedRows.length !== 1}
           label="閲覧"
         />
         <ButtonAtom
           onClick={navigateToEditPage}
-          disabled={selectedData.length !== 1}
+          disabled={selectedRows.length !== 1}
           label="編集"
         />
         <ButtonAtom
           onClick={handleDeleteCompanies}
-          disabled={selectedData.length === 0}
+          disabled={selectedRows.length === 0}
           label="削除"
         />
         <ButtonAtom
           onClick={handleRestoreCompanies}
-          disabled={selectedData.length === 0}
+          disabled={selectedRows.length === 0}
           label="復帰"
         />
       </Box>

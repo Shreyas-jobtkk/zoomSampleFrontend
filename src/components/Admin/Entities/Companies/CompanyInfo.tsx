@@ -13,11 +13,11 @@ import { CompanyApiService } from "../../../../api/apiService/company/company-ap
 function CompanyInformation() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
+  // Retrieve the 'selectedCompanyNo' query parameter from the URL and convert it to a number
   const selectedCompanyNo = Number(searchParams.get("selectedCompanyNo"));
 
-  console.log("Selected Company No:", selectedCompanyNo);
-  console.log(7789, selectedCompanyNo);
-
+  // Initialize state for company information with default values
   const [formData, setFormData] = useState<CompanyInfo>({
     company_no: "",
     company_name: "",
@@ -28,9 +28,8 @@ function CompanyInformation() {
     company_deleted: false,
   });
 
+  // Function to fetch company details based on the selectedCompanyNo
   const fetchCompany = async () => {
-    console.log(1557, selectedCompanyNo);
-
     if (!selectedCompanyNo) {
       navigate("/BadRequest");
     }
@@ -39,22 +38,23 @@ function CompanyInformation() {
         selectedCompanyNo
       );
       setFormData(companyDetails);
-      // setCompanyDetails(companyDetails);
       console.log(133, companyDetails);
     } catch (error) {
       console.error("Error fetching company:", error);
     }
   };
 
+  // Fetch company details when 'selectedCompanyNo' changes
   useEffect(() => {
     fetchCompany();
   }, [selectedCompanyNo]);
 
-  // Handle close button action
+  // Navigate to the company list page
   const navigateToCompanyList = () => navigate("/CompaniesList");
 
-  const navigateToCompanyEdit = () =>
-    navigate(`/CompanyEdit?selectedCompanyNo=${selectedCompanyNo}`);
+  // Navigate to the company update page with the selected company number as a query parameter
+  const navigateToCompanyUpdate = () =>
+    navigate(`/CompanyUpdate?selectedCompanyNo=${selectedCompanyNo}`);
 
   if (!selectedCompanyNo) {
     return null;
@@ -84,8 +84,7 @@ function CompanyInformation() {
               labelWidth="100px"
               label="削除フラグ"
               width="10vw"
-              value={deleteStatus(formData.company_deleted ?? false)} // Defaults to false if `formData.company_deleted` is undefined
-              // onChange={(e) => setTextValue1(e.target.value)} // update for specific field
+              value={deleteStatus(formData.company_deleted ?? false)}
             />
           </Box>
         </Box>
@@ -96,7 +95,6 @@ function CompanyInformation() {
             label="企業No"
             width="30vw"
             value={formData.company_no}
-            // Optionally disable this field as it's a read-only field
             disabled={true}
           />
           <Box className={classes.nameRow}>
@@ -106,14 +104,12 @@ function CompanyInformation() {
                 label="企業名"
                 width="30vw"
                 value={formData.company_name}
-                // disabled={true} // Optionally disable this field as it's a read-only field
               />
               <TextBoxWithLabel
                 labelWidth="125px"
                 label="フリガナ"
                 width="30vw"
                 value={formData.company_name_furigana}
-                // disabled={true} // Optionally disable this field as it's a read-only field
               />
             </Box>
           </Box>
@@ -131,7 +127,7 @@ function CompanyInformation() {
             width="100px"
           />
           <ButtonAtom
-            onClick={navigateToCompanyEdit}
+            onClick={navigateToCompanyUpdate}
             label="編集"
             width="100px"
           />

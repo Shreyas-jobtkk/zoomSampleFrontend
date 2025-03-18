@@ -6,7 +6,6 @@ import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
 import classes from "./styles/Companies.module.scss";
 import { useForm } from "react-hook-form";
 import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
-// import ValidationButton from "../../../LV1/ValidationButton/ValidationButton";
 import { CompanyCreateFormValues } from "../../../../types/CompanyTypes/CompanyTypes";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
@@ -14,12 +13,18 @@ import { useNavigate } from "react-router-dom";
 
 const CompanyCreate = () => {
   const navigate = useNavigate();
+
+  // State to manage company form data
   const [formData, setFormData] = useState<CompanyCreateFormValues>({
     company_name: "",
     company_note: "",
     company_name_furigana: "",
   });
 
+  /**
+   * Handles changes to input fields and updates state
+   * @param event - React change event for input and textarea elements
+   */
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -29,31 +34,40 @@ const CompanyCreate = () => {
       [name]: value,
     }));
   };
+  // React Hook Form setup
   const {
     register,
     handleSubmit,
     formState: { isSubmitted },
   } = useForm<CompanyCreateFormValues>();
+
+  /**
+   * Navigates to the Company List page
+   */
   const navigateToCompanyList = () => navigate("/CompaniesList");
-  const saveCompanyInfo = async (data: CompanyCreateFormValues) => {
-    console.log("Form Data Submitted:", data);
+
+  /**
+   * Handles form submission and saves company info
+   */
+  const createCompany = async () => {
     try {
       const response = await CompanyApiService.createCompany(
         formData.company_name,
         formData.company_name_furigana,
         formData.company_note
       );
-      console.log(155, response.company_no);
-      navigate(`/CompanyInfo?selectedCompanyNo=${response.company_no}`);
-      alert("saved");
+
+      // Navigate to the company info page with the newly created company number
+      navigate(
+        `/CompanyUpdateConfirm?selectedCompanyNo=${response.company_no}`
+      );
     } catch (error) {
-      alert("error");
       console.error("Error saving company:", error);
     }
   };
 
   return (
-    <Box onSubmit={handleSubmit(saveCompanyInfo)} component="form">
+    <Box onSubmit={handleSubmit(createCompany)} component="form">
       <MenuHeader title="企業追加" />
       <Box className={classes.companyCreateContainer}>
         <Box className={classes.timeDetailsDeleteFlag}>
@@ -61,19 +75,19 @@ const CompanyCreate = () => {
             <TextBoxWithLabel
               labelWidth="125px"
               label="登録日時"
-              width="30vw" // Uncomment to set a custom width
+              width="30vw"
             />
             <TextBoxWithLabel
               labelWidth="125px"
               label="更新日時"
-              width="30vw" // Uncomment to set a custom width
+              width="30vw"
             />
           </Box>
           <Box>
             <TextBoxWithLabel
               labelWidth="100px"
               label="削除フラグ"
-              width="10vw" // Uncomment to set a custom width
+              width="10vw"
             />
           </Box>
         </Box>
@@ -85,14 +99,12 @@ const CompanyCreate = () => {
               <ValidationInputField
                 isSubmitted={isSubmitted}
                 label="企業名"
-                name="company_name" // This name is for the company name
+                name="company_name"
                 labelWidth="125px"
                 width="30vw"
                 maxLength={64}
                 register={register}
-                // error={errors.company_name?.message} // Separate error for "name"
                 value={formData.company_name}
-                // required={true}
                 onChange={handleChange}
               />
 
