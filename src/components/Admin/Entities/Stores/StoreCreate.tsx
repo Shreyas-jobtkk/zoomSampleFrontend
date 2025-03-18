@@ -369,7 +369,7 @@ function StoreCreate() {
           label="備考"
           margin="0 0 0 40vw"
           labelWidth="25px"
-          maxLength={5}
+          maxLength={128}
           register={register}
           name="store_note"
         />

@@ -225,7 +225,7 @@ function InterpretersListInfo() {
             <Box className={classes.lastName}>
               <TextBoxWithLabel
                 labelWidth="125px"
-                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
+                label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 width="calc(35vw - 80px);"
                 value={formData.user_name_last_furigana}
               />

@@ -24,10 +24,10 @@ import classes from "../../styles/AdminEntities.module.scss";
 function InterpretersList() {
   const navigate = useNavigate();
 
+  // State variables
   const [selectedInterpreterNoArray, setSelectedInterpreterNoArray] = useState<
     number[]
   >([]);
-
   const [tableData, setTableData] = useState<DataTableRow[]>([]);
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
   const [storeData, setStoreData] = useState<StoreInfo[]>([]);
@@ -36,7 +36,6 @@ function InterpretersList() {
   const [companyName, setCompanyName] = useState<string>("");
   const [storeNo, setStoreNo] = useState<string>("");
   const [storeName, setStoreName] = useState<string>("");
-
   const [interpreterNoRangeMin, setInterpreterNoRangeMin] =
     useState<string>("");
   const [interpreterNoRangeMax, setInterpreterNoRangeMax] =
@@ -51,19 +50,17 @@ function InterpretersList() {
   const [selectedOptions, setSelectedOptions] = useState<(string | number)[]>(
     []
   );
-
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [rowLimit, setRowLimit] = useState<number>(10);
-
   const [languagesSupport, setLanguagesSupport] = useState<
     { label: string; value: string | number }[]
   >([]);
-
   const [selectedData, setSelectedData] = useState<
     Array<{ No: string | number; [key: string]: string | number }>
   >([]);
 
+  // Table headers
   const headers = [
     "No",
     "登録日時",
@@ -80,17 +77,19 @@ function InterpretersList() {
   ];
 
   // Handler for onChange to update the selected options
-  const handleSelectChange = (value: (string | number)[]) => {
+  const handleLanguageChange = (value: (string | number)[]) => {
     console.log(655, value);
     setSelectedOptions(value); // Update the state with selected options
   };
 
+  // useEffect to fetch initial data when page or rowLimit changes
   useEffect(() => {
     fetchCompaniesNames();
     fetchUsersListData();
     fetchLanguagesAllNames();
   }, [page, rowLimit]);
 
+  // useEffect to fetch store data if companyNo is not empty
   useEffect(() => {
     if (!isCompanyNoEmpty) {
       console.log(155, isCompanyNoEmpty);
@@ -98,6 +97,7 @@ function InterpretersList() {
     }
   }, [companyNo]);
 
+  // Fetch languages names from API
   const fetchLanguagesAllNames = async () => {
     try {
       let response = await LanguageApiService.fetchLanguagesAllNames();
@@ -117,6 +117,7 @@ function InterpretersList() {
     }
   };
 
+  // Fetch company names from API
   const fetchCompaniesNames = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesNameDetails();
@@ -127,6 +128,7 @@ function InterpretersList() {
     }
   };
 
+  // Fetch store names based on selected company
   const fetchStoreNames = async () => {
     try {
       const response = await StoreApiService.fetchStoreNamesByCompany(
@@ -144,6 +146,7 @@ function InterpretersList() {
     }
   };
 
+  // Fetch users list data based on filters
   const fetchUsersListData = async () => {
     try {
       const response = await UserApiService.fetchInterpretersAll(
@@ -213,10 +216,12 @@ function InterpretersList() {
     }
   };
 
+  // Function to trigger user data fetching when search conditions change
   const searchConditions = () => {
     fetchUsersListData();
   };
 
+  // Handler to manage data selection changes
   const handleSelectionChange = (
     newSelectedData: Array<{
       No: string | number;
@@ -225,12 +230,6 @@ function InterpretersList() {
   ) => {
     // Update the selected data state
     setSelectedData(newSelectedData);
-
-    // Validate input
-    if (!Array.isArray(newSelectedData)) {
-      console.error("newSelectedData must be an array");
-      return;
-    }
 
     // Log the selected data to the console
     console.log("Selected Data:", newSelectedData);
@@ -243,28 +242,29 @@ function InterpretersList() {
     setSelectedInterpreterNoArray(selectedInterpreterNo);
   };
 
-  const navigateToInfoPage = () => {
-    navigate(
-      `/UserInfo?selectedUserNo=${selectedInterpreterNoArray[0]}&userType=interpreter`
-    );
-  };
-
+  // Handler for rows per page selection
   const handleRowsPerPage = (newSelectedData: any) => {
     console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
+  // Handler for page change
   const handlePageChange = (page: number) => {
     // setCurrentPage(page); // Update the page state in the parent
     console.log("Current page in parent:", page);
     setPage(page + 1);
   };
 
+  // Navigate pages
   const navigateToCreate = () => {
     navigate(`/UserCreate?userType=interpreter`);
   };
 
-  const onResetTable = () => fetchUsersListData();
+  const navigateToInfoPage = () => {
+    navigate(
+      `/UserInfo?selectedUserNo=${selectedInterpreterNoArray[0]}&userType=interpreter`
+    );
+  };
 
   const navigateToUpdatePage = () => {
     navigate(
@@ -272,6 +272,10 @@ function InterpretersList() {
     );
   };
 
+  // Reset the table by fetching the data again
+  const onResetTable = () => fetchUsersListData();
+
+  // Handle deleting selected interpreters
   const handleDeleteInterpreters = async () => {
     console.log(114, selectedInterpreterNoArray);
     try {
@@ -287,6 +291,7 @@ function InterpretersList() {
     await fetchUsersListData();
   };
 
+  // Handle restoring deleted interpreters
   const handleRestoreInterpreters = async () => {
     console.log(114, selectedInterpreterNoArray);
     try {
@@ -302,6 +307,7 @@ function InterpretersList() {
     await fetchUsersListData();
   };
 
+  // Handle selecting a company
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
     setCompanyNo(company_no);
@@ -310,13 +316,12 @@ function InterpretersList() {
     setCompanyNoIsEmpty(!company_no || company_no === "");
   };
 
+  // Handle selecting a store
   const handleStoreSelect = (store: StoreInfo) => {
     const { store_no, store_name } = store;
 
     setStoreName(store_name);
     setStoreNo(store_no);
-
-    console.log(133, store);
   };
 
   return (
@@ -452,7 +457,7 @@ function InterpretersList() {
               label="通訳言語："
               options={languagesSupport}
               value={selectedOptions}
-              onChange={handleSelectChange}
+              onChange={handleLanguageChange}
               width="calc(10vw - 30px)"
             />
             <ButtonAtom onClick={searchConditions} label="検索" />

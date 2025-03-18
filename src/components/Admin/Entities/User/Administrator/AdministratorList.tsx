@@ -4,7 +4,6 @@ import { Box } from "@mui/material";
 import ButtonAtom from "../../../../LV1/Button/ButtonAtom/ButtonAtom";
 import MenuHeader from "../../../../LV3/Header/MenuHeader/MenuHeader";
 import DataTable from "../../../../LV3/DataTable/DataTable";
-// import "./AdminMenu.scss";
 import { useNavigate } from "react-router-dom";
 import { UserApiService } from "../../../../../api/apiService/user/user-api-service";
 import { UserInfo } from "../../../../../types/UserTypes/UserTypes";
@@ -21,10 +20,10 @@ import DataTableControler from "../../../../LV3/DataTable/DataTableControler";
 function AdministratorList() {
   const navigate = useNavigate();
 
+  // State variables for managing selected administrators, table data, and company/store information
   const [selectedAdminNoArray, setSelectedAdminNoArray] = useState<number[]>(
     []
   );
-
   const [tableData, setTableData] = useState<DataTableRow[]>([]);
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
   const [storeData, setStoreData] = useState<StoreInfo[]>([]);
@@ -34,6 +33,7 @@ function AdministratorList() {
   const [storeNo, setStoreNo] = useState<string>("");
   const [storeName, setStoreName] = useState<string>("");
 
+  // State variables for filtering administrators
   const [adminNoRangeMin, setAdminNoRangeMin] = useState<string>("");
   const [adminNoRangeMax, setAdminNoRangeMax] = useState<string>("");
   const [adminNameLast, setAdminNameLast] = useState<string>("");
@@ -42,6 +42,8 @@ function AdministratorList() {
   const [adminNameFirst, setAdminNameFirst] = useState<string>("");
   const [adminNameFuriganaFirst, setAdminNameFuriganaFirst] =
     useState<string>("");
+
+  // Pagination and table settings
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [rowLimit, setRowLimit] = useState<number>(10);
@@ -51,6 +53,7 @@ function AdministratorList() {
     Array<{ No: string | number; [key: string]: string | number }>
   >([]);
 
+  // Table headers
   const headers = [
     "No",
     "登録日時",
@@ -65,11 +68,13 @@ function AdministratorList() {
     "削除",
   ];
 
+  // Fetch company and user data when page or row limit changes
   useEffect(() => {
     fetchCompaniesNames();
     fetchUsersListData();
   }, [page, rowLimit]);
 
+  // Fetch store names when a valid company number is selected
   useEffect(() => {
     if (!isCompanyNoEmpty) {
       console.log(155, isCompanyNoEmpty);
@@ -77,6 +82,7 @@ function AdministratorList() {
     }
   }, [companyNo]);
 
+  // Fetch company names
   const fetchCompaniesNames = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesNameDetails();
@@ -87,6 +93,7 @@ function AdministratorList() {
     }
   };
 
+  // Fetch store names based on selected company number
   const fetchStoreNames = async () => {
     try {
       const response = await StoreApiService.fetchStoreNamesByCompany(
@@ -95,15 +102,13 @@ function AdministratorList() {
       console.log(247, response);
       setStoreData(response);
       setIsStoresExist(true);
-
-      // const response = await axios.get(`${apiUrl}/company`);
     } catch (error) {
       setIsStoresExist(false);
       alert("no stores exist");
-      // console.error("Error fetching companies:", error);
     }
   };
 
+  // Fetch the list of administrators based on filters
   const fetchUsersListData = async () => {
     try {
       const response = await UserApiService.fetchAdministratorAll(
@@ -120,10 +125,6 @@ function AdministratorList() {
       );
 
       setTotalPages(Math.ceil(response.totalRecords / rowLimit));
-
-      console.log(147, response);
-
-      // const response = await axios.get(`${apiUrl}/company`);
       const sortedData = response.administrators
         .sort(
           (a: UserInfo, b: UserInfo) => Number(a.user_no) - Number(b.user_no)
@@ -153,28 +154,19 @@ function AdministratorList() {
     }
   };
 
+  // Search function to trigger fetching filtered data
   const searchConditions = () => {
     fetchUsersListData();
-    // filterTableData();
   };
 
+  // Handle selection of rows in the table
   const handleSelectionChange = (
     newSelectedData: Array<{
       No: string | number;
       [key: string]: string | number;
     }>
   ) => {
-    // Update the selected data state
     setSelectedData(newSelectedData);
-
-    // Validate input
-    if (!Array.isArray(newSelectedData)) {
-      console.error("newSelectedData must be an array");
-      return;
-    }
-
-    // Log the selected data to the console
-    console.log("Selected Data:", newSelectedData);
 
     // Extract and convert "管理者No" to number
     const selectedAdminNo = newSelectedData
@@ -184,24 +176,12 @@ function AdministratorList() {
     setSelectedAdminNoArray(selectedAdminNo);
   };
 
+  // Navigation functions
   const navigateToInfoPage = () => {
     navigate(
       `/UserInfo?selectedUserNo=${selectedAdminNoArray[0]}&userType=administrator`
     );
   };
-
-  const handlePageChange = (page: number) => {
-    // setCurrentPage(page); // Update the page state in the parent
-    console.log("Current page in parent:", page);
-    setPage(page + 1);
-  };
-
-  const handleRowsPerPage = (newSelectedData: any) => {
-    console.log(155, newSelectedData[0].rowsPerPage);
-    setRowLimit(newSelectedData[0].rowsPerPage);
-  };
-
-  const onResetTable = () => fetchUsersListData();
 
   const navigateToCreate = () => {
     navigate(`/UserCreate?userType=administrator`);
@@ -213,6 +193,20 @@ function AdministratorList() {
     );
   };
 
+  // Handle page change for pagination
+  const handlePageChange = (page: number) => {
+    setPage(page + 1);
+  };
+
+  // Handle change in rows per page (pagination limit)
+  const handleRowsPerPage = (newSelectedData: any) => {
+    setRowLimit(newSelectedData[0].rowsPerPage);
+  };
+
+  // Reset the table and fetch the user data again
+  const onResetTable = () => fetchUsersListData();
+
+  // Handle deletion and restoration of administrators
   const handleDeleteAdministrators = async () => {
     console.log(114, selectedAdminNoArray);
     try {
@@ -243,6 +237,7 @@ function AdministratorList() {
     await fetchUsersListData();
   };
 
+  // Handle selection of a company
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
     setCompanyNo(company_no);
@@ -251,6 +246,7 @@ function AdministratorList() {
     setCompanyNoIsEmpty(!company_no || company_no === "");
   };
 
+  // Handle selection of a store
   const handleStoreSelect = (store: StoreInfo) => {
     const { store_no, store_name } = store;
 

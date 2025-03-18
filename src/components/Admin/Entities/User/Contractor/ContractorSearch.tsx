@@ -25,10 +25,7 @@ export interface SimpleDialogProps {
 function ContractorList(props: SimpleDialogProps) {
   const { onClose, open } = props;
 
-  const [selectedContractorNoArray, setSelectedContractorNoArray] = useState<
-    number[]
-  >([]);
-
+  // State variables
   const [tableData, setTableData] = useState<DataTableRow[]>([]);
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
   const [storeData, setStoreData] = useState<StoreInfo[]>([]);
@@ -55,6 +52,7 @@ function ContractorList(props: SimpleDialogProps) {
     Array<{ No: string | number; [key: string]: string | number }>
   >([]);
 
+  // Table headers
   const headers = [
     "No",
     "登録日時",
@@ -68,11 +66,13 @@ function ContractorList(props: SimpleDialogProps) {
     "フリガナ",
   ];
 
+  // Fetch company names and contractor data on page change or row limit change
   useEffect(() => {
     fetchCompaniesNames();
     fetchUsersListData();
   }, [page, rowLimit]);
 
+  // Fetch store names when company number is set
   useEffect(() => {
     if (!isCompanyNoEmpty) {
       console.log(155, isCompanyNoEmpty);
@@ -80,6 +80,7 @@ function ContractorList(props: SimpleDialogProps) {
     }
   }, [companyNo]);
 
+  // Fetch list of companies and update companyData state
   const fetchCompaniesNames = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesNameDetails();
@@ -90,6 +91,7 @@ function ContractorList(props: SimpleDialogProps) {
     }
   };
 
+  // Fetch store names for the selected company
   const fetchStoreNames = async () => {
     try {
       const response = await StoreApiService.fetchStoreNamesByCompany(
@@ -98,15 +100,13 @@ function ContractorList(props: SimpleDialogProps) {
       console.log(247, response);
       setStoreData(response);
       setIsStoresExist(true);
-
-      // const response = await axios.get(`${apiUrl}/company`);
     } catch (error) {
       setIsStoresExist(false);
       alert("no stores exist");
-      // console.error("Error fetching companies:", error);
     }
   };
 
+  // Fetch user (contractor) data based on various filter conditions
   const fetchUsersListData = async () => {
     try {
       const response = await UserApiService.fetchContractorAll(
@@ -153,21 +153,25 @@ function ContractorList(props: SimpleDialogProps) {
     }
   };
 
+  // Function to trigger user list data fetching when search conditions are set
   const searchConditions = () => {
     fetchUsersListData();
   };
 
+  // Handle page change for pagination
   const handlePageChange = (page: number) => {
     // setCurrentPage(page); // Update the page state in the parent
     console.log("Current page in parent:", page);
     setPage(page + 1);
   };
 
+  // Handle change in rows per page (pagination limit)
   const handleRowsPerPage = (newSelectedData: any) => {
     console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
+  // Handle changes in selected data (rows selected in the table)
   const handleSelectionChange = (
     newSelectedData: Array<{
       No: string | number;
@@ -176,39 +180,21 @@ function ContractorList(props: SimpleDialogProps) {
   ) => {
     // Update the selected data state
     setSelectedData(newSelectedData);
-
-    // Validate input
-    if (!Array.isArray(newSelectedData)) {
-      console.error("newSelectedData must be an array");
-      return;
-    }
-
-    // Log the selected data to the console
-    console.log("Selected Data7:", newSelectedData);
-
-    // Extract and convert "契約No" to number
-    const selectedContractorNo = newSelectedData
-      .map((item) => Number(item["契約者No"]))
-      .filter((value) => !isNaN(value)); // Filter out invalid numbers
-
-    console.log("Selected Data8:", selectedContractorNo);
-
-    setSelectedContractorNoArray(selectedContractorNo);
   };
 
+  // Function to handle modal cancel action
   const onCancel = () => {
     onClose();
   };
 
+  // Function to handle contractor selection and pass details back to parent component
   const onSelectContractDetails = () => {
-    console.log(156, selectedContractorNoArray);
-    console.log(2156, selectedData);
-
     const [{ 契約者No, 企業名, 店舗名 }] = selectedData;
     const contractorDetails = { 契約者No, 企業名, 店舗名 };
     onClose(contractorDetails);
   };
 
+  // Function to handle company selection
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
     setCompanyNo(company_no);
@@ -217,6 +203,7 @@ function ContractorList(props: SimpleDialogProps) {
     setCompanyNoIsEmpty(!company_no || company_no === "");
   };
 
+  // Function to handle store selection
   const handleStoreSelect = (store: StoreInfo) => {
     const { store_no, store_name } = store;
 

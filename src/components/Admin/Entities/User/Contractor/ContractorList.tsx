@@ -20,10 +20,10 @@ import classes from "../../styles/AdminEntities.module.scss";
 function ContractorList() {
   const navigate = useNavigate();
 
+  // State variables
   const [selectedContractorNoArray, setSelectedContractorNoArray] = useState<
     number[]
   >([]);
-
   const [tableData, setTableData] = useState<DataTableRow[]>([]);
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
   const [storeData, setStoreData] = useState<StoreInfo[]>([]);
@@ -32,7 +32,6 @@ function ContractorList() {
   const [companyName, setCompanyName] = useState<string>("");
   const [storeNo, setStoreNo] = useState<string>("");
   const [storeName, setStoreName] = useState<string>("");
-
   const [contractorNoRangeMin, setContractorNoRangeMin] = useState<string>("");
   const [contractorNoRangeMax, setContractorNoRangeMax] = useState<string>("");
   const [contractorNameLast, setContractorNameLast] = useState<string>("");
@@ -50,6 +49,7 @@ function ContractorList() {
     Array<{ No: string | number; [key: string]: string | number }>
   >([]);
 
+  // Table headers
   const headers = [
     "No",
     "登録日時",
@@ -64,18 +64,20 @@ function ContractorList() {
     "削除",
   ];
 
+  // Fetch company names and contractor data on page change or row limit change
   useEffect(() => {
     fetchCompaniesNames();
     fetchUsersListData();
   }, [page, rowLimit]);
 
+  // Fetch store names when company number is set
   useEffect(() => {
     if (!isCompanyNoEmpty) {
-      console.log(155, isCompanyNoEmpty);
       fetchStoreNames();
     }
   }, [companyNo]);
 
+  // Fetch list of companies and update companyData state
   const fetchCompaniesNames = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesNameDetails();
@@ -86,6 +88,7 @@ function ContractorList() {
     }
   };
 
+  // Fetch store names for the selected company
   const fetchStoreNames = async () => {
     try {
       const response = await StoreApiService.fetchStoreNamesByCompany(
@@ -94,15 +97,13 @@ function ContractorList() {
       console.log(247, response);
       setStoreData(response);
       setIsStoresExist(true);
-
-      // const response = await axios.get(`${apiUrl}/company`);
     } catch (error) {
       setIsStoresExist(false);
       alert("no stores exist");
-      // console.error("Error fetching companies:", error);
     }
   };
 
+  // Fetch user (contractor) data based on various filter conditions
   const fetchUsersListData = async () => {
     try {
       const response = await UserApiService.fetchContractorAll(
@@ -151,10 +152,12 @@ function ContractorList() {
     }
   };
 
+  // Function to trigger user list data fetching when search conditions are set
   const searchConditions = () => {
     fetchUsersListData();
   };
 
+  // Handle changes in selected data (rows selected in the table)
   const handleSelectionChange = (
     newSelectedData: Array<{
       No: string | number;
@@ -163,12 +166,6 @@ function ContractorList() {
   ) => {
     // Update the selected data state
     setSelectedData(newSelectedData);
-
-    // Validate input
-    if (!Array.isArray(newSelectedData)) {
-      console.error("newSelectedData must be an array");
-      return;
-    }
 
     // Log the selected data to the console
     console.log("Selected Data:", newSelectedData);
@@ -181,28 +178,16 @@ function ContractorList() {
     setSelectedContractorNoArray(selectedContractorNo);
   };
 
+  // Navigation functions
   const navigateToInfoPage = () => {
     navigate(
       `/UserInfo?selectedUserNo=${selectedContractorNoArray[0]}&userType=contractor`
     );
   };
 
-  const handlePageChange = (page: number) => {
-    // setCurrentPage(page); // Update the page state in the parent
-    console.log("Current page in parent:", page);
-    setPage(page + 1);
-  };
-
-  const handleRowsPerPage = (newSelectedData: any) => {
-    console.log(155, newSelectedData[0].rowsPerPage);
-    setRowLimit(newSelectedData[0].rowsPerPage);
-  };
-
   const navigateToCreate = () => {
     navigate(`/UserCreate?userType=contractor`);
   };
-
-  const onResetTable = () => fetchUsersListData();
 
   const navigateToUpdatePage = () => {
     navigate(
@@ -210,6 +195,23 @@ function ContractorList() {
     );
   };
 
+  // Reset the table and fetch the user data again
+  const onResetTable = () => fetchUsersListData();
+
+  // Handle page change for pagination
+  const handlePageChange = (page: number) => {
+    // setCurrentPage(page); // Update the page state in the parent
+    console.log("Current page in parent:", page);
+    setPage(page + 1);
+  };
+
+  // Handle change in rows per page (pagination limit)
+  const handleRowsPerPage = (newSelectedData: any) => {
+    console.log(155, newSelectedData[0].rowsPerPage);
+    setRowLimit(newSelectedData[0].rowsPerPage);
+  };
+
+  // Handle deletion and restoration of Contractors
   const handleDeleteContractors = async () => {
     console.log(114, selectedContractorNoArray);
     try {
@@ -240,6 +242,7 @@ function ContractorList() {
     await fetchUsersListData();
   };
 
+  // Handle selection of a company
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
     setCompanyNo(company_no);
@@ -248,6 +251,7 @@ function ContractorList() {
     setCompanyNoIsEmpty(!company_no || company_no === "");
   };
 
+  // Handle selection of a store
   const handleStoreSelect = (store: StoreInfo) => {
     const { store_no, store_name } = store;
 

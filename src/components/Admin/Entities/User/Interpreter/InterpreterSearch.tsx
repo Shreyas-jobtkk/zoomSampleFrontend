@@ -28,10 +28,10 @@ export interface SimpleDialogProps {
 function InterpretersList(props: SimpleDialogProps) {
   const { onClose, open } = props;
 
-  const [selectedInterpreterNoArray, setSelectedInterpreterNoArray] = useState<
-    number[]
-  >([]);
-
+  // State variables
+  // const [selectedInterpreterNoArray, setSelectedInterpreterNoArray] = useState<
+  //   number[]
+  // >([]);
   const [tableData, setTableData] = useState<DataTableRow[]>([]);
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
   const [storeData, setStoreData] = useState<StoreInfo[]>([]);
@@ -40,7 +40,6 @@ function InterpretersList(props: SimpleDialogProps) {
   const [companyName, setCompanyName] = useState<string>("");
   const [storeNo, setStoreNo] = useState<string>("");
   const [storeName, setStoreName] = useState<string>("");
-
   const [interpreterNoRangeMin, setInterpreterNoRangeMin] =
     useState<string>("");
   const [interpreterNoRangeMax, setInterpreterNoRangeMax] =
@@ -58,15 +57,14 @@ function InterpretersList(props: SimpleDialogProps) {
   const [languagesSupport, setLanguagesSupport] = useState<
     { label: string; value: string | number }[]
   >([]);
-
   const [selectedData, setSelectedData] = useState<
     Array<{ No: string | number; [key: string]: string | number }>
   >([]);
-
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [rowLimit, setRowLimit] = useState<number>(10);
 
+  // Table headers
   const headers = [
     "No",
     "登録日時",
@@ -87,12 +85,14 @@ function InterpretersList(props: SimpleDialogProps) {
     setSelectedOptions(value); // Update the state with selected options
   };
 
+  // useEffect to fetch initial data when page or rowLimit changes
   useEffect(() => {
     fetchCompaniesNames();
     fetchUsersListData();
     fetchLanguagesAllNames();
   }, [page, rowLimit]);
 
+  // useEffect to fetch store data if companyNo is not empty
   useEffect(() => {
     if (!isCompanyNoEmpty) {
       console.log(155, isCompanyNoEmpty);
@@ -100,6 +100,7 @@ function InterpretersList(props: SimpleDialogProps) {
     }
   }, [companyNo]);
 
+  // Fetch languages names from API
   const fetchLanguagesAllNames = async () => {
     try {
       let response = await LanguageApiService.fetchLanguagesAllNames();
@@ -119,6 +120,7 @@ function InterpretersList(props: SimpleDialogProps) {
     }
   };
 
+  // Fetch company names from API
   const fetchCompaniesNames = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesNameDetails();
@@ -129,6 +131,7 @@ function InterpretersList(props: SimpleDialogProps) {
     }
   };
 
+  // Fetch store names based on selected company
   const fetchStoreNames = async () => {
     try {
       const response = await StoreApiService.fetchStoreNamesByCompany(
@@ -146,6 +149,7 @@ function InterpretersList(props: SimpleDialogProps) {
     }
   };
 
+  // Fetch users list data based on filters
   const fetchUsersListData = async () => {
     try {
       const response = await UserApiService.fetchInterpretersAll(
@@ -213,34 +217,37 @@ function InterpretersList(props: SimpleDialogProps) {
     }
   };
 
+  // Function to trigger user data fetching when search conditions change
   const searchConditions = () => {
     fetchUsersListData();
   };
 
+  // Function to handle modal cancel action
   const onCancel = () => {
     onClose();
   };
 
+  // Function to handle interpreter selection and pass details back to parent component
   const onSelectInterpreterDetails = () => {
-    console.log(156, selectedInterpreterNoArray);
-    console.log(2156, selectedData);
-
     const [{ 通訳者No, 名前_first, 名前_last }] = selectedData;
     const interpreterDetails = { 通訳者No, 名前_first, 名前_last };
     onClose(interpreterDetails);
   };
 
+  // Handler for rows per page selection
   const handleRowsPerPage = (newSelectedData: any) => {
     console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
+  // Handler for page change
   const handlePageChange = (page: number) => {
     // setCurrentPage(page); // Update the page state in the parent
     console.log("Current page in parent:", page);
     setPage(page + 1);
   };
 
+  // Handler to manage data selection changes
   const handleSelectionChange = (
     newSelectedData: Array<{
       No: string | number;
@@ -249,26 +256,9 @@ function InterpretersList(props: SimpleDialogProps) {
   ) => {
     // Update the selected data state
     setSelectedData(newSelectedData);
-
-    // Validate input
-    if (!Array.isArray(newSelectedData)) {
-      console.error("newSelectedData must be an array");
-      return;
-    }
-
-    // Log the selected data to the console
-    console.log("Selected Data17:", newSelectedData);
-
-    // Extract and convert "通訳者No" to number
-    const selectedInterpreterNo = newSelectedData
-      .map((item) => Number(item["通訳者No"]))
-      .filter((value) => !isNaN(value)); // Filter out invalid numbers
-
-    console.log("Selected Data18:", selectedInterpreterNo);
-
-    setSelectedInterpreterNoArray(selectedInterpreterNo);
   };
 
+  // Handle selecting a company
   const handleCompanySelect = (company: CompanyInfo) => {
     const { company_no, company_name } = company;
     setCompanyNo(company_no);
@@ -277,13 +267,12 @@ function InterpretersList(props: SimpleDialogProps) {
     setCompanyNoIsEmpty(!company_no || company_no === "");
   };
 
+  // Handle selecting a store
   const handleStoreSelect = (store: StoreInfo) => {
     const { store_no, store_name } = store;
 
     setStoreName(store_name);
     setStoreNo(store_no);
-
-    console.log(133, store);
   };
 
   return (
