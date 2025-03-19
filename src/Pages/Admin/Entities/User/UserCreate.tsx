@@ -91,8 +91,8 @@ function UserCreate() {
     password_expire: "",
     user_password: "",
     user_password_confirm: "",
-    meeting_id: null,
-    meeting_passcode: null,
+    // meeting_id: null,
+    // meeting_passcode: null,
     user_note: "",
   });
 
@@ -226,9 +226,9 @@ function UserCreate() {
         userType,
         formData.user_note,
         formData.translate_languages,
-        new Date(),
-        formData.meeting_id,
-        formData.meeting_passcode
+        new Date()
+        // formData.meeting_id,
+        // formData.meeting_passcode
       );
       navigate(
         `/UserInfo?selectedUserNo=${response.user_no}&userType=${userType}`
@@ -522,32 +522,6 @@ function UserCreate() {
             </Box>
           </Box>
           <Box className={classes.meetingInfo}>
-            {userType === "interpreter" && (
-              <Box className={classes.meetingCredentials}>
-                <ValidationInputField
-                  isSubmitted={isSubmitted}
-                  name="meeting_id" // Name for the phonetic spelling
-                  labelWidth="125px"
-                  label="ミーティングID"
-                  width="12vw"
-                  register={register}
-                  maxLength={128}
-                  value={formData.meeting_id}
-                  onChange={handleChange}
-                />
-                <ValidationInputField
-                  isSubmitted={isSubmitted}
-                  name="meeting_passcode" // Name for the phonetic spelling
-                  labelWidth="85px"
-                  label="パスコード"
-                  width="12vw"
-                  register={register}
-                  maxLength={128}
-                  value={formData.meeting_passcode}
-                  onChange={handleChange}
-                />
-              </Box>
-            )}
             <TextAreaWithLabel
               label="備考"
               value={formData.user_note}

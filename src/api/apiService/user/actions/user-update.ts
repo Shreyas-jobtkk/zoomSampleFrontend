@@ -16,8 +16,7 @@ export const updateUser = async (
   telExtension: string | number, // Telephone extension
   note: string,
   languages: number[] | null, // Ensure this is an array of integers
-  meetingId: string | null,
-  meetingPasscode: string | null,
+
   storeNo: string
 ) => {
   try {
@@ -33,8 +32,7 @@ export const updateUser = async (
       translate_languages: languages, // Send languages array as integers
       // password_expire: passwordExpire,
       user_password: password,
-      meeting_id: meetingId,
-      meeting_passcode: meetingPasscode,
+
       user_note: note,
       store_no: storeNo,
     });

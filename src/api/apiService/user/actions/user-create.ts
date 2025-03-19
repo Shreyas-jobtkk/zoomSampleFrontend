@@ -17,9 +17,7 @@ export const createUser = async (
   userType: string, // user_type is fixed in backend as "interpreter"
   note: string,
   languages: number[] | null, // Ensure this is an array of integers
-  passwordExpire: Date,
-  meetingId: string | null,
-  meetingPasscode: string | null
+  passwordExpire: Date
 ) => {
   try {
     // Combine the tel1, tel2, and tel3 into a single string
@@ -38,8 +36,7 @@ export const createUser = async (
       translate_languages: languages, // Send languages array as integers
       password_expire: passwordExpire,
       user_password: password,
-      meeting_id: meetingId,
-      meeting_passcode: meetingPasscode,
+
       user_note: note,
     });
 

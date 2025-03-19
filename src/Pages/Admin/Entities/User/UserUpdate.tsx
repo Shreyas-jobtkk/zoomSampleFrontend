@@ -58,8 +58,8 @@ function UserUpdate() {
     password_expire: "",
     user_password: "",
     user_password_confirm: "",
-    meeting_id: null,
-    meeting_passcode: null,
+    // meeting_id: null,
+    // meeting_passcode: null,
     user_note: "",
     updated_at: "",
     created_at: "",
@@ -280,8 +280,8 @@ function UserUpdate() {
       setValue("translate_languages", apiFormData.translate_languages);
       setValue("user_password", apiFormData.user_password);
       setValue("user_password_confirm", apiFormData.user_password);
-      setValue("meeting_id", apiFormData.meeting_id);
-      setValue("meeting_passcode", apiFormData.meeting_passcode);
+      // setValue("meeting_id", apiFormData.meeting_id);
+      // setValue("meeting_passcode", apiFormData.meeting_passcode);
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
@@ -392,8 +392,8 @@ function UserUpdate() {
       formData.tel_extension,
       formData.user_note,
       formData.translate_languages,
-      formData.meeting_id,
-      formData.meeting_passcode,
+      // formData.meeting_id,
+      // formData.meeting_passcode,
       formData.store_no
     );
     navigate(
@@ -688,32 +688,6 @@ function UserUpdate() {
             </Box>
           </Box>
           <Box className={classes.meetingInfo}>
-            {userType === "interpreter" && (
-              <Box className={classes.meetingCredentials}>
-                <ValidationInputField
-                  isSubmitted={isSubmitted}
-                  name="meeting_id" // Name for the phonetic spelling
-                  labelWidth="125px"
-                  label="ミーティングID"
-                  width="12vw"
-                  register={register}
-                  maxLength={128}
-                  value={formData.meeting_id}
-                  onChange={handleChange}
-                />
-                <ValidationInputField
-                  isSubmitted={isSubmitted}
-                  name="meeting_passcode" // Name for the phonetic spelling
-                  labelWidth="85px"
-                  label="パスコード"
-                  width="12vw"
-                  register={register}
-                  maxLength={128}
-                  value={formData.meeting_passcode}
-                  onChange={handleChange}
-                />
-              </Box>
-            )}
             <TextAreaWithLabel
               label="備考"
               value={formData.user_note}
