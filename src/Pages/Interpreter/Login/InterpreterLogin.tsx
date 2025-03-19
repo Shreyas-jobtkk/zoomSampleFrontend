@@ -8,7 +8,7 @@ import { UserApiService } from "../../../api/apiService/user/user-api-service";
 import ValidationInputField from "../../../components/LV1/ValidationInputField/ValidationInputField";
 import { useForm } from "react-hook-form";
 import { UserAuth } from "../../../types/UserTypes/UserTypes";
-import classes from "../../../styles/Login.module.scss";
+import classes from "../../../Pages/styles/Login.module.scss";
 
 const InterpreterLogin: React.FC = () => {
   const [formData, setFormData] = useState<UserAuth>({
