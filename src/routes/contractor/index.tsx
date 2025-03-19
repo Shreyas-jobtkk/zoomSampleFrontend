@@ -1,5 +1,5 @@
-import ContractorLogin from "../../components/Contractor/Login/ContractorLogin"; // Adjust the import path as needed
-import ResponderMenu from "../../components/Contractor/Menu/ContractorMenu";
+import ContractorLogin from "../../Pages/Contractor/Login/ContractorLogin"; // Adjust the import path as needed
+import ResponderMenu from "../../Pages/Contractor/Menu/ContractorMenu";
 import { Route, Routes } from "react-router-dom";
 import ContractorMenuRoutes from "./ContractorMenuRoutes";
 import { Box } from "@mui/material";

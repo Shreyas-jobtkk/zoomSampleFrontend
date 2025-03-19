@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import LanguagesCreate from "../../components/Admin/Entities/LanguagesSupport/LanguageCreate";
-import LanguagesInfo from "../../components/Admin/Entities/LanguagesSupport/LanguageInfo";
-import LanguagesUpdate from "../../components/Admin/Entities/LanguagesSupport/LanguageUpdate";
-import LanguagesUpdateConfirm from "../../components/Admin/Entities/LanguagesSupport/LanguageUpdateConfirm";
+import LanguagesCreate from "../../Pages/Admin/Entities/LanguagesSupport/LanguageCreate";
+import LanguagesInfo from "../../Pages/Admin/Entities/LanguagesSupport/LanguageInfo";
+import LanguagesUpdate from "../../Pages/Admin/Entities/LanguagesSupport/LanguageUpdate";
+import LanguagesUpdateConfirm from "../../Pages/Admin/Entities/LanguagesSupport/LanguageUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;

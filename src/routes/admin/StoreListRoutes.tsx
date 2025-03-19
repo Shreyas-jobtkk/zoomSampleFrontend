@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import StoreCreate from "../../components/Admin/Entities/Stores/StoreCreate";
-import StoreInfo from "../../components/Admin/Entities/Stores/StoreInfo";
-import StoreUpdate from "../../components/Admin/Entities/Stores/StoreUpdate";
-import StoreUpdateConfirm from "../../components/Admin/Entities/Stores/StoreUpdateConfirm";
+import StoreCreate from "../../Pages/Admin/Entities/Stores/StoreCreate";
+import StoreInfo from "../../Pages/Admin/Entities/Stores/StoreInfo";
+import StoreUpdate from "../../Pages/Admin/Entities/Stores/StoreUpdate";
+import StoreUpdateConfirm from "../../Pages/Admin/Entities/Stores/StoreUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
