@@ -11,7 +11,7 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import ButtonAtom from "../Button/ButtonAtom/ButtonAtom";
+import ButtonAtom from "../ButtonAtom/ButtonAtom";
 
 // Define the props interface
 interface SelectableModalProps<T> {

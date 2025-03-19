@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
-import DataTable from "../../../LV3/DataTable/DataTable";
-import DataTableControler from "../../../LV3/DataTable/DataTableControler";
-import { DataTableRow } from "../../../LV3/DataTable/DataTable";
-import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
-import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
+import MenuHeader from "../../../../components/LV3/Header/MenuHeader/MenuHeader";
+import DataTable from "../../../../components/LV3/DataTable/DataTable";
+import DataTableControler from "../../../../components/LV3/DataTable/DataTableControler";
+import { DataTableRow } from "../../../../components/LV3/DataTable/DataTable";
+import ButtonAtom from "../../../../components/LV1/ButtonAtom/ButtonAtom";
+import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";

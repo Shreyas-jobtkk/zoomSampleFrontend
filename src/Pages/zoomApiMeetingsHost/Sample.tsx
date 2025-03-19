@@ -1,6 +1,6 @@
 import { ZoomMtg } from "@zoom/meetingsdk";
 // import { Box, Typography, Button, Container } from "@mui/material";
-import ValidationInputField from "../../Pages/LV1/ValidationInputField/ValidationInputField";
+import ValidationInputField from "../../components/LV1/ValidationInputField/ValidationInputField";
 import React, { useState } from "react";
 import { Container, Box, Typography, Button } from "@mui/material";
 // import { showOverlayMessage } from "./OverlayMessage"; // Import the function

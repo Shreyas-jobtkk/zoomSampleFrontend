@@ -1,13 +1,13 @@
-import DatePicker from "../../../LV1/DatePicker/DatePicker";
-import TimePicker from "../../../LV1/TimePicker/TimePicker"; // Adjust the import path as needed
-import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
+import DatePicker from "../../../../components/LV1/DatePicker/DatePicker";
+import TimePicker from "../../../../components/LV1/TimePicker/TimePicker"; // Adjust the import path as needed
+import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
-import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
-import SelectOption from "../../../LV1/SelectOption/SelectOption";
-import DataTable from "../../../LV3/DataTable/DataTable";
-import DataTableControler from "../../../LV3/DataTable/DataTableControler";
+import ButtonAtom from "../../../../components/LV1/ButtonAtom/ButtonAtom";
+import MenuHeader from "../../../../components/LV3/Header/MenuHeader/MenuHeader";
+import SelectOption from "../../../../components/LV1/SelectOption/SelectOption";
+import DataTable from "../../../../components/LV3/DataTable/DataTable";
+import DataTableControler from "../../../../components/LV3/DataTable/DataTableControler";
 import classes from "../styles/InterpreterEntities.module.scss";
 import ContractorSearch from "../../../../Pages/Admin/Entities/User/Contractor/ContractorSearch";
 // import InterpreterSearch from "../User/Interpreter/InterpreterSearch";

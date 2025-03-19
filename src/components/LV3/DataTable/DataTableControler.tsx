@@ -7,7 +7,7 @@ import {
   ArrowForward,
 } from "@mui/icons-material";
 import SelectOption from "../../LV1/SelectOption/SelectOption";
-import ButtonAtom from "../../LV1/Button/ButtonAtom/ButtonAtom";
+import ButtonAtom from "../../LV1/ButtonAtom/ButtonAtom";
 import NumberInput from "../../LV1/NumberInput/NumberInput";
 
 interface DataTableProps {

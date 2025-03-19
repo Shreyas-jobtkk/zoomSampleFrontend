@@ -1,16 +1,16 @@
-import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
-import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
+import MenuHeader from "../../../../components/LV3/Header/MenuHeader/MenuHeader";
+import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
+import ButtonAtom from "../../../../components/LV1/ButtonAtom/ButtonAtom";
 import classes from "./styles/LanguagesList.module.scss";
 import { useForm } from "react-hook-form";
-import ValidationInputField from "../../../LV1/ValidationInputField/ValidationInputField";
+import ValidationInputField from "../../../../components/LV1/ValidationInputField/ValidationInputField";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
-import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
+import TextAreaWithLabel from "../../../../components/LV1/TextArea/TextAreaWithLabel";
 
 const LanguageUpdate = () => {
   const navigate = useNavigate();

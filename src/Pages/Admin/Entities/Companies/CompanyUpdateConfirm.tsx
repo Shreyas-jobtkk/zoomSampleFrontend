@@ -1,12 +1,12 @@
-import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
-import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
+import MenuHeader from "../../../../components/LV3/Header/MenuHeader/MenuHeader";
+import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
+import ButtonAtom from "../../../../components/LV1/ButtonAtom/ButtonAtom";
 import classes from "./styles/Companies.module.scss";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
-import TextAreaWithLabel from "../../../LV1/TextArea/TextAreaWithLabel";
+import TextAreaWithLabel from "../../../../components/LV1/TextArea/TextAreaWithLabel";
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 

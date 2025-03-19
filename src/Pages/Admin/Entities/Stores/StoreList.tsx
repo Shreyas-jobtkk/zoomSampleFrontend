@@ -1,19 +1,19 @@
-import TextBoxWithLabel from "../../../LV1/TextBox/TextBoxWithLabel";
+import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../LV1/Button/ButtonAtom/ButtonAtom";
-import MenuHeader from "../../../LV3/Header/MenuHeader/MenuHeader";
-import DataTable from "../../../LV3/DataTable/DataTable";
-import { DataTableRow } from "../../../LV3/DataTable/DataTable";
+import ButtonAtom from "../../../../components/LV1/ButtonAtom/ButtonAtom";
+import MenuHeader from "../../../../components/LV3/Header/MenuHeader/MenuHeader";
+import DataTable from "../../../../components/LV3/DataTable/DataTable";
+import { DataTableRow } from "../../../../components/LV3/DataTable/DataTable";
 import { useNavigate } from "react-router-dom";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
 import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
-import SelectableModal from "../../../LV1/SelectableModal/SelectableModal";
+import SelectableModal from "../../../../components/LV1/SelectableModal/SelectableModal";
 import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import classes from "../styles/AdminEntities.module.scss";
-import DataTableControler from "../../../LV3/DataTable/DataTableControler";
+import DataTableControler from "../../../../components/LV3/DataTable/DataTableControler";
 
 function StoreList() {
   const navigate = useNavigate();
