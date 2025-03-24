@@ -9,8 +9,8 @@ import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
 import DataTableControler from "../../../components/LV3/DataTable/DataTableControler";
 import classes from "../../../styles/AdminEntities.module.scss";
-import ContractorSearch from "../User/Contractor/ContractorSearch";
-import InterpreterSearch from "../User/Interpreter/InterpreterSearch";
+import ContractorSearch from "../User/UserSearch/ContractorSearch";
+import InterpreterSearch from "../User/UserSearch/InterpreterSearch";
 import { CallLogApiService } from "../../../api/apiService/callLog/callLog-api-service";
 import { convertToJST, getCallStatus } from "../../../utils/utils";
 
