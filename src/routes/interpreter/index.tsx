@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import InterpreterLogin from "../../Pages/Interpreter/Login/InterpreterLogin"; // Adjust the import path as needed
 import InterpreterMenu from "../../Pages/Interpreter/Menu/InterpreterMenu"; // Adjust the import path as needed
 import InterpreterMenuRoutes from "./InterpreterMenuRoutes";
+import InterpreterLoginRoutes from "./LoginRoutes";
+
 import { Box } from "@mui/material";
 import ProtectedRoutes from "../ProtectedRoute";
 
@@ -10,8 +11,8 @@ const { ProtectedInterpreterRoute } = ProtectedRoutes;
 const NavRoutes = () => (
   <Box>
     <InterpreterMenuRoutes />
+    <InterpreterLoginRoutes />
     <Routes>
-      <Route path="/InterpreterLogin" element={<InterpreterLogin />} />
       <Route
         path="/InterpreterMenu"
         element={<ProtectedInterpreterRoute element={<InterpreterMenu />} />}

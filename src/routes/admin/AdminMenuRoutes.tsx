@@ -1,14 +1,14 @@
 import { Route, Routes } from "react-router-dom";
-import AdministratorList from "../../Pages/Admin/Entities/User/Administrator/AdministratorList";
-import CompaniesList from "../../Pages/Admin/Entities/Companies/CompaniesList";
-import InterpreterEvaluationList from "../../Pages/Admin/Entities/InterpreterEvaluation/InterpreterEvaluationList";
-import InterpretersList from "../../Pages/Admin/Entities/User/Interpreter/InterpretersList";
-import LanguagesSupportList from "../../Pages/Admin/Entities/LanguagesSupport/LanguagesSupportList";
-import LogList from "../../Pages/Admin/Entities/Log/LogList";
-import MeetingHistoryList from "../../Pages/Admin/Entities/MeetingHistory/MeetingHistoryList";
-import MeetingInvitationList from "../../Pages/Admin/Entities/MeetingInvitation/MeetingInvitationList";
-import ContractorList from "../../Pages/Admin/Entities/User/Contractor/ContractorList";
-import StoreList from "../../Pages/Admin/Entities/Stores/StoreList";
+import AdministratorList from "../../Pages/Admin/User/Administrator/AdministratorList";
+import CompaniesList from "../../Pages/Admin/Companies/CompaniesList";
+import InterpreterEvaluationList from "../../Pages/Admin/InterpreterEvaluation/InterpreterEvaluationList";
+import InterpretersList from "../../Pages/Admin/User/Interpreter/InterpretersList";
+import LanguagesSupportList from "../../Pages/Admin/LanguagesSupport/LanguagesSupportList";
+import LogList from "../../Pages/Admin/Log/LogList";
+import MeetingHistoryList from "../../Pages/Admin/MeetingHistory/MeetingHistoryList";
+import MeetingInvitationList from "../../Pages/Admin/MeetingInvitation/MeetingInvitationList";
+import ContractorList from "../../Pages/Admin/User/Contractor/ContractorList";
+import StoreList from "../../Pages/Admin/Stores/StoreList";
 import ProtectedRoutes from "../ProtectedRoute";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;

@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import MeetingHistoryList from "../../Pages/Interpreter/Entities/MeetingHistory/MeetingHistoryList";
-import MeetingInvitationList from "../../Pages/Interpreter/Entities/MeetingInvitation/MeetingInvitationList";
-import InterpreterEvaluationList from "../../Pages/Interpreter/Entities/InterpreterEvaluation/InterpreterEvaluationList";
+import MeetingHistoryList from "../../Pages/Interpreter/MeetingHistory/MeetingHistoryList";
+import MeetingInvitationList from "../../Pages/Interpreter/MeetingInvitation/MeetingInvitationList";
+import InterpreterEvaluationList from "../../Pages/Interpreter/InterpreterEvaluation/InterpreterEvaluationList";
 import ProtectedRoutes from "../ProtectedRoute";
 
 const { ProtectedInterpreterRoute } = ProtectedRoutes;

@@ -132,8 +132,6 @@ function AdminMenu() {
           padding="5vh 5vw 5vh 2vw"
           margin="2vh 5vw"
         />
-        {/* <button >管理者一覧</button>
-                <button >ログ一覧</button> */}
       </Box>
     </Box>
   );

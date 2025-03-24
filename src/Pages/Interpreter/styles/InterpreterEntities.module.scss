@@ -1,0 +1,64 @@
+@use "../../../styles/variables";
+
+.interpreterEntity {
+  height: 100%;
+  overflow-y: auto;
+  white-space: nowrap; /* Prevents text from wrapping to the next line */
+  overflow: hidden; /* Hides any overflowed content */
+  text-overflow: ellipsis;
+}
+
+.searchContainer {
+  border: variables.$light-border;
+  border-radius: 8px;
+  padding: 1vh 1vw;
+  display: flex;
+  flex-direction: column;
+  margin: 3vh 1vw;
+}
+
+.searchLabel {
+  position: relative;
+  bottom: 3vh;
+  left: 1vw;
+  background-color: #f1f2f3;
+  border: variables.$light-border;
+  width: 150px;
+  text-align: center;
+}
+
+.selectRange {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: -20px;
+}
+
+.moveTop {
+  margin-top: -2vh;
+}
+
+.marginTop {
+  margin-top: 2vh;
+}
+
+.actionButtons {
+  margin-top: 12px;
+}
+
+.contractorDetails {
+  display: flex;
+  align-items: flex-start;
+  gap: 3vw;
+}
+
+.lastRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 3vw;
+  margin-top: 12px;
+}
+
+.actionButtons {
+  margin-top: 8px;
+}

@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import MeetingHistoryList from "../../Pages/Contractor/Entities/MeetingHistory/MeetingHistoryList";
-import MeetingInvitationList from "../../Pages/Contractor/Entities/MeetingInvitation/MeetingInvitationList";
-import ContractorCallingMenu from "../../Pages/Contractor/Entities/InterpreterRequestMenu/InterpreterRequestMenu"; // Adjust the import path as needed
-import InterpreterEvaluationList from "../../Pages/Contractor/Entities/InterpreterEvaluation/InterpreterEvaluationList";
+import MeetingHistoryList from "../../Pages/Contractor/MeetingHistory/MeetingHistoryList";
+import MeetingInvitationList from "../../Pages/Contractor/MeetingInvitation/MeetingInvitationList";
+import ContractorCallingMenu from "../../Pages/Contractor/InterpreterRequestMenu/InterpreterRequestMenu"; // Adjust the import path as needed
+import InterpreterEvaluationList from "../../Pages/Contractor/InterpreterEvaluation/InterpreterEvaluationList";
 import ProtectedRoutes from "../ProtectedRoute";
 
 const { ProtectedContractRoute } = ProtectedRoutes;

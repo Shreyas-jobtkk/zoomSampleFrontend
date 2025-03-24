@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import UserInfo from "../../Pages/Admin/Entities/User/UserInfo";
-import UserCreate from "../../Pages/Admin/Entities/User/UserCreate";
-import UserUpdate from "../../Pages/Admin/Entities/User/UserUpdate";
-import UserUpdateConfirm from "../../Pages/Admin/Entities/User/UserUpdateConfirm";
+import UserInfo from "../../Pages/Admin/User/UserInfo";
+import UserCreate from "../../Pages/Admin/User/UserCreate";
+import UserUpdate from "../../Pages/Admin/User/UserUpdate";
+import UserUpdateConfirm from "../../Pages/Admin/User/UserUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;

@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import CompanyInfo from "../../Pages/Admin/Entities/Companies/CompanyInfo";
-import CompanyCreate from "../../Pages/Admin/Entities/Companies/CompanyCreate";
-import CompanyUpdate from "../../Pages/Admin/Entities/Companies/CompanyUpdate";
-import CompanyUpdateConfirm from "../../Pages/Admin/Entities/Companies/CompanyUpdateConfirm";
+import CompanyInfo from "../../Pages/Admin/Companies/CompanyInfo";
+import CompanyCreate from "../../Pages/Admin/Companies/CompanyCreate";
+import CompanyUpdate from "../../Pages/Admin/Companies/CompanyUpdate";
+import CompanyUpdateConfirm from "../../Pages/Admin/Companies/CompanyUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
