@@ -44,7 +44,7 @@ const InterpreterLogin: React.FC = () => {
         // Successful login
         console.log("Login successful", response.user_no);
         sessionStorage.setItem("interpreterNo", response.user_no);
-        navigate("/InterpreterMenu", {
+        navigate("Menu", {
           state: {
             message: response.user_no,
           },

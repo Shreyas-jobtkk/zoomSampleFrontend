@@ -50,7 +50,7 @@ function CompanyInformation() {
   }, [selectedCompanyNo]);
 
   // Navigate to the company list page
-  const navigateToCompanyList = () => navigate("/CompaniesList");
+  const navigateToCompanyList = () => navigate("Companies/List");
 
   // Navigate to the company update page with the selected company number as a query parameter
   const navigateToCompanyUpdate = () =>

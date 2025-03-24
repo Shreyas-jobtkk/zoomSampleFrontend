@@ -6,7 +6,7 @@ const AppRoutes: React.FC = () => {
   return (
     <Box>
       <Routes>
-        <Route path="/AdminLogin" element={<AdminLogin />} />
+        <Route path="/Admin" element={<AdminLogin />} />
       </Routes>
     </Box>
   );

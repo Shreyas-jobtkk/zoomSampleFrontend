@@ -20,7 +20,7 @@ const AppMenuRoutes = () => (
       element={<ProtectedAdminRoute element={<AdministratorList />} />}
     />
     <Route
-      path="/CompaniesList"
+      path="/Companies/List"
       element={<ProtectedAdminRoute element={<CompaniesList />} />}
     />
     <Route
@@ -52,7 +52,7 @@ const AppMenuRoutes = () => (
       element={<ProtectedAdminRoute element={<ContractorList />} />}
     />
     <Route
-      path="/StoreList"
+      path="/Store/List"
       element={<ProtectedAdminRoute element={<StoreList />} />}
     />
   </Routes>

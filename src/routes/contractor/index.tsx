@@ -12,9 +12,8 @@ const NavRoutes = () => (
     <ContractorMenuRoutes />
     <ContractorLoginRoutes />
     <Routes>
-      {/* <Route path="/ContractorLogin" element={<ContractorLogin />} /> */}
       <Route
-        path="/ContractorMenu"
+        path="/Contractor/Menu"
         element={<ProtectedContractRoute element={<ResponderMenu />} />}
       />
     </Routes>

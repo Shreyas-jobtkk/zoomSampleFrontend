@@ -7,27 +7,27 @@ import ProtectedRoutes from "../ProtectedRoute";
 
 const { ProtectedContractRoute } = ProtectedRoutes;
 
-const AppMenuRoutes = () => (
+const ContractorMenuRoutes = () => (
   <Routes>
     <Route
-      path="/ContractorMeetingHistoryList"
+      path="/Contractor/Menu/MeetingHistoryList"
       element={<ProtectedContractRoute element={<MeetingHistoryList />} />}
     />
     <Route
-      path="/ContractorMeetingInvitationList"
+      path="/Contractor/Menu/MeetingInvitationList"
       element={<ProtectedContractRoute element={<MeetingInvitationList />} />}
     />
     <Route
-      path="/ContractorsInterpreterEvaluationList"
+      path="/Contractor/Menu/InterpreterEvaluationList"
       element={
         <ProtectedContractRoute element={<InterpreterEvaluationList />} />
       }
     />
     <Route
-      path="/ContractorCallingMenu"
+      path="/Contractor/Menu/CallingMenu"
       element={<ProtectedContractRoute element={<ContractorCallingMenu />} />}
     />
   </Routes>
 );
 
-export default AppMenuRoutes;
+export default ContractorMenuRoutes;

@@ -22,7 +22,7 @@ function StoreInfo() {
   const selectedStoreNo = Number(searchParams.get("selectedStoreNo"));
 
   // Function to navigate to the store list page
-  const navigateToStoreList = () => navigate("/StoreList");
+  const navigateToStoreList = () => navigate("/Store/List");
 
   // Function to navigate to the store update page with the selected store number as a query parameter
   const navigateToStoreUpdate = () =>

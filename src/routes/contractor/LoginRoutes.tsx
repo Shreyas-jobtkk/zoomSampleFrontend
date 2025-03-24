@@ -6,7 +6,7 @@ const AppRoutes: React.FC = () => {
   return (
     <Box>
       <Routes>
-        <Route path="/ContractorLogin" element={<ContractorLogin />} />
+        <Route path="/Contractor" element={<ContractorLogin />} />
       </Routes>
     </Box>
   );

@@ -22,7 +22,7 @@ const AppRoutes: React.FC = () => {
       <AdminLogin />
       <Routes>
         <Route
-          path="/AdminMenu"
+          path="/Admin/Menu"
           element={<ProtectedAdminRoute element={<AdminMenu />} />}
         />
       </Routes>

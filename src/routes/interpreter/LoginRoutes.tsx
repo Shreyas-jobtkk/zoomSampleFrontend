@@ -6,7 +6,7 @@ const AppRoutes: React.FC = () => {
   return (
     <Box>
       <Routes>
-        <Route path="/InterpreterLogin" element={<InterpreterLogin />} />
+        <Route path="/Interpreter" element={<InterpreterLogin />} />
       </Routes>
     </Box>
   );

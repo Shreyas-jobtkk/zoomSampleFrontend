@@ -132,7 +132,7 @@ function StoreCreate() {
 
   // Function to navigate to the Store List page
   const navigateToStoreList = () => {
-    navigate("/StoreList");
+    navigate("/Store/List");
   };
 
   return (

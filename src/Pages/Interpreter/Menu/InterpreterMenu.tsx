@@ -39,7 +39,7 @@ function InterpreterLogin() {
     document.getElementById("zmmtg-root")!.style.display = "block";
 
     ZoomMtg.init({
-      leaveUrl: `${import.meta.env.VITE_REACT_APP_URL}/InterpreterMenu`,
+      leaveUrl: `${import.meta.env.VITE_REACT_APP_URL}/Interpreter/Menu`,
       loginWindow: {
         width: "100", // Set your desired width as a string
         height: "380", // Set your desired height as a string
@@ -183,83 +183,6 @@ function InterpreterLogin() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   socket.on("callRequestFromServer", (data) => {
-  //     // setCallRequest(true);
-  //     console.log(112, "Call dial", new Date().toISOString());
-  //     console.log(458, data);
-  //   });
-
-  //   socket.on("cancelCallRequestFromServer", (data) => {
-  //     // setCallRequest(false);
-  //     console.log(1458, data);
-  //   });
-  //   // Add path to your ringtone file
-  //   // if (message.status == "active") {
-  //   // Listen for messages from the server when notifications are enabled
-  //   socket.on("message", (data) => {
-  //     console.log(141, data);
-  //     console.log(111, data.terminal_id);
-
-  //     if (message.terminal_id == data.terminal_id) {
-  //       if (data.connectingLink === "calling") {
-  //         uniqueId = data.uniqueId;
-  //         // console.log(2457, status);
-  //         console.log(21, data, uniqueId);
-  //         // Play ringtone when there is an incoming call
-  //         handleRingtoneStart();
-  //         setStatus("inactive");
-  //         sendActivityStatus("inactive");
-  //         // console.log(189, status)
-  //       }
-  //     }
-  //     if (data.connectingLink === "disconnected" && data.uniqueId == uniqueId) {
-  //       console.log(31, data, uniqueId);
-  //       // Stop the ringtone if the call is disconnected
-  //       handleRingtoneStop();
-  //       // console.log(243, notResponded)
-  //       // if (notResponded == false) {
-  //       setStatus("active");
-  //       sendActivityStatus("active");
-  //       // }
-  //     }
-  //     if (
-  //       data.connectingLink === "terminal joined" &&
-  //       data.terminal_id == message.terminal_id
-  //     ) {
-  //       console.log(111, data.terminal_id);
-  //       console.log(211, message.terminal_id);
-  //       console.log(411, data);
-  //       // console.log(3357, data.connectingLink);
-  //       handleRingtoneStop();
-  //       setStatus("inactive");
-  //       sendActivityStatus("inactive");
-  //     }
-  //     // setStatus('inactive');
-  //   });
-
-  //   socket.on("startUrl", (meetingData) => {
-  //     if (meetingData.uniqueId == uniqueId) {
-  //       console.log(136, meetingData, uniqueId);
-  //     }
-  //   });
-
-  //   // Clean up the socket connection on component unmount
-  //   return () => {
-  //     socket.off("message");
-  //   };
-  // }, [status]);
-
-  // useEffect(() => {
-  //   if (message) {
-  //     console.log(155, message.status); // Log the message to the console
-  //   }
-  // }, [message]);
-
-  // const toggleNotifications = () => {
-  //   setNotificationsEnabled((prev) => !prev); // Toggle notifications state
-  // };
-
   const getSignature = async () => {
     console.log(21897, meetingNo);
     {
@@ -273,48 +196,7 @@ function InterpreterLogin() {
       socket.emit("interpreterResponse", data);
       startMeeting(signature);
     }
-    // try {
-    //   startMeeting();
-    //   setIsPlaying(false);
-
-    //   // setStatus('inactive');
-
-    //   const date = new Date()
-    //     .toLocaleString("ja-JP", {
-    //       timeZone: "Asia/Tokyo",
-    //       hour12: false,
-    //     })
-    //     .replace(/\//g, "-")
-    //     .replace(",", "");
-
-    //   const data = {
-    //     dial: "terminal joined", // Replace with actual value
-    //     terminal_id: message.terminal_id, // Replace with actual value
-    //     date: date,
-    //     uniqueId: uniqueId,
-    //   };
-
-    //   console.log(158, data);
-    //   // Emit the 'dataFromFrontend' event to the server
-    //   socket.emit("dataFromFrontend", data);
-
-    //   // // Emit data to the server
-    //   // socket.emit('dataFromFrontend', { username: 'admin', action: 'startMeeting' });
-    // } catch (e) {
-    //   console.log(e);
-    // }
   };
-
-  // function startMeeting() {
-  //   console.log(137);
-
-  //   // const zoomLink = `https://zoom.us/j/7193586721?pwd=OUcLui5QIHATeQ0B0JCzl11RbRQVCO.1`;
-
-  //   // Set a fallback in case the Zoom app doesn't open immediately
-  //   setTimeout(() => {
-  //     window.open(zoomStartURL, "_blank");
-  //   }, 1000); // 1 second delay
-  // }
 
   const rejectCall = () => {
     const data = {
@@ -331,15 +213,15 @@ function InterpreterLogin() {
   };
 
   const navigateToInterpreterEvaluationList = () => {
-    navigate("/InterpretersInterpreterEvaluationList");
+    navigate("InterpreterEvaluationList");
   };
 
   const navigateToMeetingHistoryList = () => {
-    navigate("/InterpreterMeetingHistoryList");
+    navigate("MeetingHistoryList");
   };
 
   const navigateToMeetingInvitationList = () => {
-    navigate("/InterpreterMeetingInvitationList");
+    navigate("MeetingInvitationList");
   };
 
   const setStatusToActive = () => {

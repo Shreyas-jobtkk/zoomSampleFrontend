@@ -100,7 +100,7 @@ function StoreUpdateConfirm() {
 
   // Function to navigate to the store list page
   const navigateToStoreList = () => {
-    navigate("/StoreList");
+    navigate("/Store/List");
   };
 
   if (!selectedStoreNo) {

@@ -8,20 +8,17 @@ const { ProtectedInterpreterRoute } = ProtectedRoutes;
 const AppMenuRoutes = () => (
   <Routes>
     <Route
-      path="/InterpreterMeetingHistoryList"
-      // element={<MeetingHistoryList />}
+      path="/Interpreter/Menu/MeetingHistoryList"
       element={<ProtectedInterpreterRoute element={<MeetingHistoryList />} />}
     />
     <Route
-      path="/InterpretersInterpreterEvaluationList"
-      // element={<InterpreterEvaluationList />}
+      path="/Interpreter/Menu/InterpreterEvaluationList"
       element={
         <ProtectedInterpreterRoute element={<InterpreterEvaluationList />} />
       }
     />
     <Route
-      path="/InterpreterMeetingInvitationList"
-      // element={<MeetingInvitationList />}
+      path="/Interpreter/Menu/MeetingInvitationList"
       element={
         <ProtectedInterpreterRoute element={<MeetingInvitationList />} />
       }

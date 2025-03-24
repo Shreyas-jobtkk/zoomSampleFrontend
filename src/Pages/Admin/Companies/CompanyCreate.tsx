@@ -45,7 +45,7 @@ const CompanyCreate = () => {
   /**
    * Navigates to the Company List page
    */
-  const navigateToCompanyList = () => navigate("/CompaniesList");
+  const navigateToCompanyList = () => navigate("Companies/List");
 
   /**
    * Handles form submission and saves company info

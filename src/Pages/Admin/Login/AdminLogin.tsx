@@ -44,7 +44,7 @@ const InterpreterLogin: React.FC = () => {
         // Successful login
         console.log("Login successful", response.user_no);
         sessionStorage.setItem("adminNo", response.user_no);
-        navigate("/AdminMenu", {
+        navigate("/Admin/Menu", {
           state: {
             userNo: response.user_no,
           },

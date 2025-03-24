@@ -40,7 +40,7 @@ function UserMenu() {
     // let interpreterNo: null | number = interpreterNoRef.current;
 
     ZoomMtg.init({
-      leaveUrl: `${import.meta.env.VITE_REACT_APP_URL}/ContractorCallingMenu`,
+      leaveUrl: `${import.meta.env.VITE_REACT_APP_URL}/Contractor/CallingMenu`,
       loginWindow: {
         width: "100", // Set your desired width as a string
         height: "380", // Set your desired height as a string

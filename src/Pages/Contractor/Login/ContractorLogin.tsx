@@ -43,7 +43,7 @@ const ResponderLogin: React.FC = () => {
         // Successful login
         console.log(89, "Login successful", typeof response.user_no);
         sessionStorage.setItem("contractorNo", response.user_no);
-        navigate("/ContractorMenu", {
+        navigate("Menu", {
           state: {
             message: response.user_no,
           },

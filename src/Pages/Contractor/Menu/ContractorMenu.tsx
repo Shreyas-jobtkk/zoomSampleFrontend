@@ -12,21 +12,21 @@ function ResponderMenu() {
 
   const navigateToUserMenu = () => {
     // Navigate to UserMenu and pass the message data along
-    navigate("/ContractorCallingMenu", {
+    navigate("CallingMenu", {
       state: { message },
     });
   };
 
   const navigateToInterpreterEvaluationList = () => {
-    navigate("/ContractorsInterpreterEvaluationList");
+    navigate("InterpreterEvaluationList");
   };
 
   const navigateToMeetingHistoryList = () => {
-    navigate("/ContractorMeetingHistoryList");
+    navigate("MeetingHistoryList");
   };
 
   const navigateToMeetingInvitationList = () => {
-    navigate("/ContractorMeetingInvitationList");
+    navigate("MeetingInvitationList");
   };
 
   return (

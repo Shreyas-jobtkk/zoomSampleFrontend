@@ -15,11 +15,11 @@ function AdminMenu() {
   const navigate = useNavigate();
 
   const navigateToCompaniesList = () => {
-    navigate("/CompaniesList");
+    navigate("/Companies/List");
   };
 
   const navigateToStoresList = () => {
-    navigate("/StoreList");
+    navigate("/Store/List");
   };
 
   const navigateToContractorList = () => {

@@ -14,7 +14,7 @@ const NavRoutes = () => (
     <InterpreterLoginRoutes />
     <Routes>
       <Route
-        path="/InterpreterMenu"
+        path="/Interpreter/Menu"
         element={<ProtectedInterpreterRoute element={<InterpreterMenu />} />}
       />
     </Routes>

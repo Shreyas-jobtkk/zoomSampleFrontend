@@ -11,13 +11,13 @@ const App: React.FC = () => {
       <nav>
         <List className="app-nav-bar">
           <li>
-            <Link to="/ContractorLogin">契約者</Link>
+            <Link to="/Contractor">契約者</Link>
           </li>
           <li>
-            <Link to="/InterpreterLogin">通訳者</Link>
+            <Link to="/Interpreter">通訳者</Link>
           </li>
           <li>
-            <Link to="/AdminLogin">管理者</Link>
+            <Link to="/Admin">管理者</Link>
           </li>
           <li>
             <Link to="/zoomApiMeetingsJoin">Join</Link>
