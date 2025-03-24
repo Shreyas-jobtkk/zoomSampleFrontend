@@ -5,7 +5,7 @@ import LanguagesRoutes from "./LanguagesRoutes.js";
 import AdminLogin from "../admin/LoginRoutes.js";
 import { Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
-import AdminMenu from "../../Pages/Admin/AdminMenuPage.js"; // Adjust the import path as needed
+import AdminMenu from "../../Pages/Admin/AdminMenu.js"; // Adjust the import path as needed
 import ProtectedRoutes from "../ProtectedRoute";
 import InterpreterEvaluationList from "../../Pages/Admin/InterpreterEvaluationList.js";
 import LogList from "../../Pages/Admin/LogList.js";
