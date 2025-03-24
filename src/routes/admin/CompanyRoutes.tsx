@@ -4,24 +4,32 @@ import CompanyCreate from "../../Pages/Admin/Companies/CompanyCreate";
 import CompanyUpdate from "../../Pages/Admin/Companies/CompanyUpdate";
 import CompanyUpdateConfirm from "../../Pages/Admin/Companies/CompanyUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
+import CompaniesList from "../../Pages/Admin/Companies/CompaniesList";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
 
 const AdministratorListRoutes = () => (
   <Routes>
     <Route
-      path="/CompanyInfo"
+      path="/Admin/Company/Info"
       element={<ProtectedAdminRoute element={<CompanyInfo />} />}
     />
     <Route
-      path="/CompanyCreate"
+      path="/Admin/Company/Create"
       element={<ProtectedAdminRoute element={<CompanyCreate />} />}
     />
     <Route
-      path="/CompanyUpdate"
+      path="/Admin/Company/Update"
       element={<ProtectedAdminRoute element={<CompanyUpdate />} />}
     />
-    <Route path="/CompanyUpdateConfirm" element={<CompanyUpdateConfirm />} />
+    <Route
+      path="/Admin/Companies/List"
+      element={<ProtectedAdminRoute element={<CompaniesList />} />}
+    />
+    <Route
+      path="/Admin/Company/UpdateConfirm"
+      element={<CompanyUpdateConfirm />}
+    />
   </Routes>
 );
 

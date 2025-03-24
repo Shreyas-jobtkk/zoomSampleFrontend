@@ -96,7 +96,7 @@ function CompaniesList() {
   ];
 
   // Navigates to the company creation page
-  const navigateToCompanyCreate = () => navigate("/CompanyCreate");
+  const navigateToCompanyCreate = () => navigate("/Admin/Company/Create");
 
   // Resets the table data by re-fetching the list
   const onResetTable = () => fetchCompaniesListData();
@@ -118,12 +118,16 @@ function CompaniesList() {
 
   // Navigates to the company details page
   const navigateToInfoPage = () => {
-    navigate(`/CompanyInfo?selectedCompanyNo=${selectedCompanyNoArray[0]}`);
+    navigate(
+      `/Admin/Company/Info?selectedCompanyNo=${selectedCompanyNoArray[0]}`
+    );
   };
 
   // Navigates to the company edit page
   const navigateToUpdatePage = () => {
-    navigate(`/CompanyUpdate?selectedCompanyNo=${selectedCompanyNoArray[0]}`);
+    navigate(
+      `/Admin/Company/Update?selectedCompanyNo=${selectedCompanyNoArray[0]}`
+    );
   };
 
   // Handles deleting selected companies

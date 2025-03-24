@@ -4,6 +4,9 @@ import UserCreate from "../../Pages/Admin/User/UserCreate";
 import UserUpdate from "../../Pages/Admin/User/UserUpdate";
 import UserUpdateConfirm from "../../Pages/Admin/User/UserUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
+import AdministratorList from "../../Pages/Admin/User/UserList/AdministratorList";
+import InterpretersList from "../../Pages/Admin/User/UserList/InterpretersList";
+import ContractorList from "../../Pages/Admin/User/UserList/ContractorList";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
 
@@ -24,6 +27,20 @@ const InterpretersListRoutes = () => (
     <Route
       path="/UserUpdateConfirm"
       element={<ProtectedAdminRoute element={<UserUpdateConfirm />} />}
+    />
+    <Route
+      path="/AdministratorList"
+      element={<ProtectedAdminRoute element={<AdministratorList />} />}
+    />
+
+    <Route
+      path="/InterpretersList"
+      element={<ProtectedAdminRoute element={<InterpretersList />} />}
+    />
+
+    <Route
+      path="/ContractorList"
+      element={<ProtectedAdminRoute element={<ContractorList />} />}
     />
   </Routes>
 );

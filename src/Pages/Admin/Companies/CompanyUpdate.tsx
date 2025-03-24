@@ -102,7 +102,9 @@ function CompanyUpdate() {
       formData.company_name_furigana,
       formData.company_note
     );
-    navigate(`/CompanyUpdateConfirm?selectedCompanyNo=${selectedCompanyNo}`);
+    navigate(
+      `/Admin/Company/UpdateConfirm?selectedCompanyNo=${selectedCompanyNo}`
+    );
   };
 
   if (!selectedCompanyNo) {

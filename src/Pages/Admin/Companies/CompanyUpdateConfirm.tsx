@@ -56,7 +56,7 @@ function CompanyUpdateConfirm() {
   };
 
   // Navigate to the company update page with the selected company number as a query parameter
-  const navigateToCompanyList = () => navigate("Companies/List");
+  const navigateToCompanyList = () => navigate("/Admin/Companies/List");
 
   if (!selectedCompanyNo) {
     return null;

@@ -4,6 +4,7 @@ import LanguagesInfo from "../../Pages/Admin/LanguagesSupport/LanguageInfo";
 import LanguagesUpdate from "../../Pages/Admin/LanguagesSupport/LanguageUpdate";
 import LanguagesUpdateConfirm from "../../Pages/Admin/LanguagesSupport/LanguageUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
+import LanguagesSupportList from "../../Pages/Admin/LanguagesSupport/LanguagesSupportList";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
 
@@ -24,6 +25,10 @@ const LanguagesListRoutes = () => (
     <Route
       path="/LanguagesUpdateConfirm"
       element={<ProtectedAdminRoute element={<LanguagesUpdateConfirm />} />}
+    />
+    <Route
+      path="/LanguagesSupportList"
+      element={<ProtectedAdminRoute element={<LanguagesSupportList />} />}
     />
   </Routes>
 );

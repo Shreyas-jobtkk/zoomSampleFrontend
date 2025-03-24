@@ -45,7 +45,7 @@ const CompanyCreate = () => {
   /**
    * Navigates to the Company List page
    */
-  const navigateToCompanyList = () => navigate("Companies/List");
+  const navigateToCompanyList = () => navigate("/Admin/Companies/List");
 
   /**
    * Handles form submission and saves company info
@@ -60,7 +60,7 @@ const CompanyCreate = () => {
 
       // Navigate to the company info page with the newly created company number
       navigate(
-        `/CompanyUpdateConfirm?selectedCompanyNo=${response.company_no}`
+        `/Admin/Company/UpdateConfirm?selectedCompanyNo=${response.company_no}`
       );
     } catch (error) {
       console.error("Error saving company:", error);

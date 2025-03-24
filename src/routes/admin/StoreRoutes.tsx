@@ -4,6 +4,7 @@ import StoreInfo from "../../Pages/Admin/Stores/StoreInfo";
 import StoreUpdate from "../../Pages/Admin/Stores/StoreUpdate";
 import StoreUpdateConfirm from "../../Pages/Admin/Stores/StoreUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
+import StoreList from "../../Pages/Admin/Stores/StoreList";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
 
@@ -24,6 +25,10 @@ const AdministratorListRoutes = () => (
     <Route
       path="/StoreUpdateConfirm"
       element={<ProtectedAdminRoute element={<StoreUpdateConfirm />} />}
+    />
+    <Route
+      path="/Store/List"
+      element={<ProtectedAdminRoute element={<StoreList />} />}
     />
   </Routes>
 );

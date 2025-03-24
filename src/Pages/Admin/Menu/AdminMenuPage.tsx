@@ -15,7 +15,7 @@ function AdminMenu() {
   const navigate = useNavigate();
 
   const navigateToCompaniesList = () => {
-    navigate("/Companies/List");
+    navigate("/Admin/Companies/List");
   };
 
   const navigateToStoresList = () => {
@@ -35,15 +35,15 @@ function AdminMenu() {
   };
 
   const navigateToInterpreterEvaluationList = () => {
-    navigate("/AdminsInterpreterEvaluationList");
+    navigate("/Admin/InterpreterEvaluationList");
   };
 
   const navigateToMeetingHistoryList = () => {
-    navigate("/AdminMeetingHistoryList");
+    navigate("/Admin/MeetingHistoryList");
   };
 
   const navigateToMeetingInvitationList = () => {
-    navigate("/AdminMeetingInvitationList");
+    navigate("/Admin/MeetingInvitationList");
   };
 
   const navigateToLanguagesSupportList = () => {
@@ -51,7 +51,7 @@ function AdminMenu() {
   };
 
   const navigateToLogList = () => {
-    navigate("/LogList");
+    navigate("/Admin/LogList");
   };
 
   return (
