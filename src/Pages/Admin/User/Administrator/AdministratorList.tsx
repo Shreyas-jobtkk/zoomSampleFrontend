@@ -14,7 +14,7 @@ import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
 import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
 import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
-import classes from "../../styles/AdminEntities.module.scss";
+import classes from "../../../../styles/AdminEntities.module.scss";
 import DataTableControler from "../../../../components/LV3/DataTable/DataTableControler";
 
 function AdministratorList() {

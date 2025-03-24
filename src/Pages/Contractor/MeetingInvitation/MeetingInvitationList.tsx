@@ -7,7 +7,7 @@ import MenuHeader from "../../../components/LV3/Header/MenuHeader/MenuHeader";
 import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
 import DataTableControler from "../../../components/LV3/DataTable/DataTableControler";
-import classes from "../styles/ContractorEntities.module.scss";
+import classes from "../../../styles/ContractorEntities.module.scss";
 
 import { CallLogApiService } from "../../../api/apiService/callLog/callLog-api-service";
 import { convertToJST, getCallStatus } from "../../../utils/utils";

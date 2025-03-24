@@ -17,7 +17,7 @@ import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
 import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
 import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
 import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
-import classes from "../../styles/AdminEntities.module.scss";
+import classes from "../../../../styles/AdminEntities.module.scss";
 import Dialog from "@mui/material/Dialog";
 
 export interface SimpleDialogProps {

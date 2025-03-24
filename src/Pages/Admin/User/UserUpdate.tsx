@@ -3,7 +3,7 @@ import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
-import classes from "./styles/User.module.scss";
+import classes from "../../../styles/User.module.scss";
 // import { useLocation } from "react-router-dom";
 import NumberInput from "../../../components/LV1/NumberInput/NumberInput";
 import TextAreaWithLabel from "../../../components/LV1/TextArea/TextAreaWithLabel";
@@ -20,7 +20,7 @@ import ValidateSelectMultipleOptions from "../../../components/LV1/SelectOption/
 import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
 import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
 import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
-import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
+import { getUserTitle } from "../../../utils/userTitle"; // Adjust the path as necessary
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 function UserUpdate() {

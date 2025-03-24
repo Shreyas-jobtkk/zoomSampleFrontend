@@ -1,6 +1,6 @@
-@use "../../../styles/variables";
+@use "./variables";
 
-.interpreterEntity {
+.adminEntity {
   height: 100%;
   overflow-y: auto;
   white-space: nowrap; /* Prevents text from wrapping to the next line */
@@ -42,23 +42,52 @@
   margin-top: 2vh;
 }
 
-.actionButtons {
-  margin-top: 12px;
-}
-
-.contractorDetails {
-  display: flex;
-  align-items: flex-start;
-  gap: 3vw;
+.searchButton {
+  // display: flex;
+  // justify-content: flex-end;
+  margin-left: auto;
+  margin-top: auto;
+  margin-top: 8px;
 }
 
 .lastRow {
   display: flex;
   justify-content: flex-end;
   gap: 3vw;
-  margin-top: 12px;
+  margin: 12px 0 4px 0;
 }
 
 .actionButtons {
   margin-top: 8px;
+}
+
+.contractorDetails,
+.languageSearchDetails,
+.companiesDetails,
+.adminDetails,
+.interpreterDetails,
+.storeDetails {
+  display: flex;
+  align-items: flex-start;
+  gap: 3vw;
+}
+
+.contractorRange,
+.adminRange,
+.interpreterNoRange {
+  display: flex;
+  align-items: flex-start;
+  gap: 2vw;
+}
+
+.storeDetails {
+  display: flex;
+  align-items: flex-start;
+  gap: 2vw;
+}
+
+.companyStoreRow {
+  display: flex;
+  gap: 10vw;
+  margin-bottom: 2vw;
 }

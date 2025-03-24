@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import PasswordBoxWithLabel from "../../../components/LV1/TextBox/PasswordBoxWithLabel";
 import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
-import classes from "./styles/User.module.scss";
+import classes from "../../../styles/User.module.scss";
 // import { useLocation } from "react-router-dom";
 import MultipleOptionsSelect from "../../../components/LV1/SelectOption/MultipleOptionsSelect";
 import NumberInput from "../../../components/LV1/NumberInput/NumberInput";
@@ -14,7 +14,7 @@ import { UserInfo } from "../../../types/UserTypes/UserTypes";
 import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
 import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";
-import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
+import { getUserTitle } from "../../../utils/userTitle"; // Adjust the path as necessary
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 function UserUpdateConfirm() {

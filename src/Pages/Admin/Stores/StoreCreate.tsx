@@ -3,7 +3,7 @@ import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
-import classes from "./styles/StoreList.module.scss";
+import classes from "../../../styles/StoreList.module.scss";
 import TextAreaWithLabel from "../../../components/LV1/TextArea/TextAreaWithLabel";
 import SelectableModal from "../../../components/LV1/SelectableModal/SelectableModal";
 import { CompanyApiService } from "../../../api/apiService/company/company-api-service";

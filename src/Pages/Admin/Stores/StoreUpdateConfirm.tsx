@@ -12,7 +12,7 @@ import { StoreApiService } from "../../../api/apiService/store/store-api-service
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { StoreInfoFormValues } from "../../../types/StoreTypes/StoreTypes";
 import { convertToJST } from "../../../utils/utils";
-import classes from "./styles/StoreList.module.scss";
+import classes from "../../../styles/StoreList.module.scss";
 
 function StoreUpdateConfirm() {
   const [searchParams] = useSearchParams();

@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import "../../../i18n/i18n.js";
 import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom.js";
 import { Box } from "@mui/material";
-import classes from "../styles/ContractorEntities.module.scss";
+import classes from "../../../styles/ContractorEntities.module.scss";
 import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service.js";
 import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes.js";
 import { ZoomMtg } from "@zoom/meetingsdk";

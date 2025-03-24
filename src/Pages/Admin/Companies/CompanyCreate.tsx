@@ -3,7 +3,7 @@ import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState } from "react";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
-import classes from "./styles/Companies.module.scss";
+import classes from "../../../styles/Companies.module.scss";
 import { useForm } from "react-hook-form";
 import ValidationInputField from "../../../components/LV1/ValidationInputField/ValidationInputField";
 import { CompanyCreateFormValues } from "../../../types/CompanyTypes/CompanyTypes";

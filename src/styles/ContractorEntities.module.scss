@@ -1,6 +1,6 @@
-@use "../../../styles/variables";
+@use "./variables";
 
-.adminEntity {
+.interpreterEntity {
   height: 100%;
   overflow-y: auto;
   white-space: nowrap; /* Prevents text from wrapping to the next line */
@@ -34,60 +34,38 @@
   margin-top: -20px;
 }
 
-.moveTop {
-  margin-top: -2vh;
-}
-
-.marginTop {
-  margin-top: 2vh;
-}
-
-.searchButton {
-  // display: flex;
-  // justify-content: flex-end;
-  margin-left: auto;
-  margin-top: auto;
-  margin-top: 8px;
+.searchRow {
+  display: flex;
+  margin-top: 16px;
+  justify-content: flex-end; /* Aligns children to the end */
+  gap: 3vw;
 }
 
 .lastRow {
   display: flex;
   justify-content: flex-end;
   gap: 3vw;
-  margin: 12px 0 4px 0;
+  margin-top: 12px;
 }
 
 .actionButtons {
   margin-top: 8px;
 }
 
-.contractorDetails,
-.languageSearchDetails,
-.companiesDetails,
-.adminDetails,
-.interpreterDetails,
-.storeDetails {
-  display: flex;
-  align-items: flex-start;
-  gap: 3vw;
+.userMessage {
+  border: variables.$dark-border;
+  padding: 10px;
+  width: fit-content;
+  border-radius: 5px;
+  margin: 20px;
 }
 
-.contractorRange,
-.adminRange,
-.interpreterNoRange {
+.userCallRow {
+  margin-left: 100px;
   display: flex;
-  align-items: flex-start;
-  gap: 2vw;
 }
 
-.storeDetails {
-  display: flex;
-  align-items: flex-start;
-  gap: 2vw;
-}
-
-.companyStoreRow {
-  display: flex;
-  gap: 10vw;
-  margin-bottom: 2vw;
+.timer {
+  border: variables.$dark-border;
+  padding: 10px;
 }

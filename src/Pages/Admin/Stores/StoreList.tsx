@@ -12,7 +12,7 @@ import { StoreApiService } from "../../../api/apiService/store/store-api-service
 import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
 import SelectableModal from "../../../components/LV1/SelectableModal/SelectableModal";
 import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
-import classes from "../styles/AdminEntities.module.scss";
+import classes from "../../../styles/AdminEntities.module.scss";
 import DataTableControler from "../../../components/LV3/DataTable/DataTableControler";
 
 function StoreList() {

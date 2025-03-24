@@ -10,7 +10,7 @@ import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
 import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
 import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
-import classes from "../styles/AdminEntities.module.scss";
+import classes from "../../../styles/AdminEntities.module.scss";
 
 function CompaniesList() {
   // Hook for navigating to different pages

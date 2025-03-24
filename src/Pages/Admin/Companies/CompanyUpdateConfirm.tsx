@@ -3,7 +3,7 @@ import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
-import classes from "./styles/Companies.module.scss";
+import classes from "../../../styles/Companies.module.scss";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
 import TextAreaWithLabel from "../../../components/LV1/TextArea/TextAreaWithLabel";

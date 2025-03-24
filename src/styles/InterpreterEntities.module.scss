@@ -1,4 +1,4 @@
-@use "../../../styles/variables";
+@use "./variables";
 
 .interpreterEntity {
   height: 100%;
@@ -34,10 +34,21 @@
   margin-top: -20px;
 }
 
-.searchRow {
+.moveTop {
+  margin-top: -2vh;
+}
+
+.marginTop {
+  margin-top: 2vh;
+}
+
+.actionButtons {
+  margin-top: 12px;
+}
+
+.contractorDetails {
   display: flex;
-  margin-top: 16px;
-  justify-content: flex-end; /* Aligns children to the end */
+  align-items: flex-start;
   gap: 3vw;
 }
 
@@ -50,22 +61,4 @@
 
 .actionButtons {
   margin-top: 8px;
-}
-
-.userMessage {
-  border: variables.$dark-border;
-  padding: 10px;
-  width: fit-content;
-  border-radius: 5px;
-  margin: 20px;
-}
-
-.userCallRow {
-  margin-left: 100px;
-  display: flex;
-}
-
-.timer {
-  border: variables.$dark-border;
-  padding: 10px;
 }

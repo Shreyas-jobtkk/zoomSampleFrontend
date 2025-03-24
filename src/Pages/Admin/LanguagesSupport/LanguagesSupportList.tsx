@@ -9,7 +9,7 @@ import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
 import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
 import { useState, useEffect } from "react";
-import classes from "../styles/AdminEntities.module.scss";
+import classes from "../../../styles/AdminEntities.module.scss";
 import DataTableControler from "../../../components/LV3/DataTable/DataTableControler";
 
 function LanguagesSupportList() {

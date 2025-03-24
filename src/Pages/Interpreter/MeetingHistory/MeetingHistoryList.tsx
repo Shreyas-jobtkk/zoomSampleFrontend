@@ -8,7 +8,7 @@ import MenuHeader from "../../../components/LV3/Header/MenuHeader/MenuHeader";
 import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
 import DataTableControler from "../../../components/LV3/DataTable/DataTableControler";
-import classes from "../styles/InterpreterEntities.module.scss";
+import classes from "../../../styles/InterpreterEntities.module.scss";
 import ContractorSearch from "../../Admin/User/Contractor/ContractorSearch";
 // import InterpreterSearch from "../User/Interpreter/InterpreterSearch";
 import { CallLogApiService } from "../../../api/apiService/callLog/callLog-api-service";

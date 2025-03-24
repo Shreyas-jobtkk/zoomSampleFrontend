@@ -4,7 +4,7 @@ import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
-import classes from "./styles/User.module.scss";
+import classes from "../../../styles/User.module.scss";
 import NumberInput from "../../../components/LV1/NumberInput/NumberInput";
 import ValidationInputField from "../../../components/LV1/ValidationInputField/ValidationInputField";
 import SelectableModal from "../../../components/LV1/SelectableModal/SelectableModal";
@@ -19,7 +19,7 @@ import { UserApiService } from "../../../api/apiService/user/user-api-service";
 import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
 import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
 import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
-import { getUserTitle } from "./userTitle"; // Adjust the path as necessary
+import { getUserTitle } from "../../../utils/userTitle"; // Adjust the path as necessary
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 function UserCreate() {
