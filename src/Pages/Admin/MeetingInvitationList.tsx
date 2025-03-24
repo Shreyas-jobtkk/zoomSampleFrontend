@@ -1,20 +1,18 @@
-import DatePicker from "../../../components/LV1/DatePicker/DatePicker";
-import TimePicker from "../../../components/LV1/TimePicker/TimePicker"; // Adjust the import path as needed
-import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
+import DatePicker from "../../components/LV1/DatePicker/DatePicker";
+import TimePicker from "../../components/LV1/TimePicker/TimePicker"; // Adjust the import path as needed
+import TextBoxWithLabel from "../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
-import MenuHeader from "../../../components/LV3/Header/MenuHeader/MenuHeader";
-import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
-import DataTable from "../../../components/LV3/DataTable/DataTable";
-import DataTableControler from "../../../components/LV3/DataTable/DataTableControler";
-import classes from "../../../styles/AdminEntities.module.scss";
-import ContractorSearch from "../User/UserSearch/ContractorSearch";
-import InterpreterSearch from "../User/UserSearch/InterpreterSearch";
-import { CallLogApiService } from "../../../api/apiService/callLog/callLog-api-service";
-import { convertToJST } from "../../../utils/utils";
-import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";
-import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
+import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom";
+import MenuHeader from "../../components/LV3/Header/MenuHeader/MenuHeader";
+import SelectOption from "../../components/LV1/SelectOption/SelectOption";
+import DataTable from "../../components/LV3/DataTable/DataTable";
+import DataTableControler from "../../components/LV3/DataTable/DataTableControler";
+import classes from "../../styles/AdminEntities.module.scss";
+import ContractorSearch from "./User/UserSearch/ContractorSearch";
+import InterpreterSearch from "./User/UserSearch/InterpreterSearch";
+import { CallLogApiService } from "../../api/apiService/callLog/callLog-api-service";
+import { convertToJST, getCallStatus } from "../../utils/utils";
 
 function InterpreterEvaluationList() {
   const headers = [
@@ -26,8 +24,7 @@ function InterpreterEvaluationList() {
     "店舗名",
     "通訳者No",
     "通訳者名",
-    "通訳言語",
-    "評価",
+    "承諾/拒否",
   ];
 
   const [page, setPage] = useState<number>(1);
@@ -47,30 +44,14 @@ function InterpreterEvaluationList() {
   // const [startTimeRangeMin, setStartTimeRangeMin] = useState<Date | null>(null);
   // const [startTimeRangeMax, setStartTimeRangeMax] = useState<Date | null>(null);
   const [endDateTimeRangeMax, setEndDateTimeRangeMax] = useState<any>("");
-  const [languagesSupport, setLanguagesSupport] = useState<
-    { label: string; value: string | number }[]
-  >([]);
 
-  const [selectedLanguage, setSelectedLanguage] = useState<string>("");
-
-  const fetchLanguagesAllNames = async () => {
-    try {
-      let response = await LanguageApiService.fetchLanguagesAllNames();
-
-      console.log(177, response);
-
-      response = response.map((item: LanguageInfo) => ({
-        label: item.language_name, // Map 'language_name' to 'label'
-        value: item.languages_support_no, // Map 'languages_support_no' to 'value'
-      }));
-
-      setLanguagesSupport(response);
-
-      // const response = await axios.get(`${apiUrl}/company`);
-    } catch (error) {
-      console.error("Error fetching companies:", error);
-    }
-  };
+  const [callStatus, setCallStatus] = useState<string>("");
+  let callStatusOptions: { label: string; value: string | number }[] = [
+    { label: "Cancel", value: "callCanceled" },
+    { label: "Time Out", value: "callTimeUp" },
+    { label: "承諾", value: "callAccepted" },
+    { label: "拒否", value: "rejected" },
+  ];
 
   const [openContractor, setOpenContractor] = useState(false);
   const [openInterpreter, setOpenInterpreter] = useState(false);
@@ -81,7 +62,6 @@ function InterpreterEvaluationList() {
 
   useEffect(() => {
     fetchCallLogData();
-    fetchLanguagesAllNames();
   }, [page, rowLimit]);
 
   const searchConditions = () => {
@@ -95,9 +75,10 @@ function InterpreterEvaluationList() {
         rowLimit,
         contractNo,
         interpreterNo,
-        selectedLanguage,
+        "",
         startDateTimeRangeMin,
-        endDateTimeRangeMax
+        endDateTimeRangeMax,
+        callStatus
       );
 
       setTotalPages(Math.ceil(response.totalRecords / rowLimit));
@@ -110,8 +91,7 @@ function InterpreterEvaluationList() {
         店舗名: item.contract_store_name,
         通訳者No: item.interpreter_no,
         通訳者名: item.interpreter_name,
-        通訳言語: item.language_name,
-        評価: item.feed_back,
+        "承諾/拒否": getCallStatus(item.call_status),
         lang_no: item.language_support_no,
       }));
 
@@ -217,7 +197,7 @@ function InterpreterEvaluationList() {
 
   return (
     <Box className={classes.adminEntity}>
-      <MenuHeader title="通訳評価一覧" />
+      <MenuHeader title="ミーティング招待一覧" />
       <Box className={classes.searchContainer}>
         <Box className={classes.searchLabel}>検索条件</Box>
         <Box className={classes.selectRange}>
@@ -302,12 +282,12 @@ function InterpreterEvaluationList() {
               labelWidth="30px"
             />
             <SelectOption
-              label="通訳言語："
-              options={languagesSupport}
+              label="承諾/拒否"
+              options={callStatusOptions}
               width={"calc(10vw - 15px)"}
-              value={selectedLanguage}
-              onChange={setSelectedLanguage}
-              labelWidth={"85px"}
+              value={callStatus}
+              onChange={setCallStatus}
+              labelWidth={"90px"}
             />
 
             <Box className={classes.searchButton}>

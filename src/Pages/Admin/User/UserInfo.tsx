@@ -60,21 +60,21 @@ function UserInformation() {
   // Function to navigate to the appropriate user list based on user type
   const navigateToUserList = () => {
     if (userType == "contractor") {
-      navigate("/ContractorList");
+      navigate("/Admin/User/ContractorList");
     }
 
     if (userType == "interpreter") {
-      navigate("/InterpretersList");
+      navigate("/Admin/User/InterpretersList");
     }
     if (userType == "administrator") {
-      navigate("/AdministratorList");
+      navigate("/Admin/User/AdministratorList");
     }
   };
 
   // Function to navigate to the appropriate user update based on user type
   const navigateToUserUpdate = () => {
     navigate(
-      `/UserUpdate?selectedUserNo=${selectedUserNo}&userType=${userType}`
+      `/Admin/User/Update?selectedUserNo=${selectedUserNo}&userType=${userType}`
     );
   };
 

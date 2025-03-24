@@ -67,7 +67,10 @@ function StoreCreate() {
         formData.fax3,
         formData.store_note
       );
-      navigate(`/StoreInfo?selectedStoreNo=${response.store_no}`);
+      // navigate(`/Admin/Store/Info?selectedStoreNo=${response.store_no}`);
+      navigate(
+        `/Admin/Store/UpdateConfirm?selectedStoreNo=${response.store_no}`
+      );
     } catch (error) {
       alert("error");
       console.error("Error saving company:", error);
@@ -132,7 +135,7 @@ function StoreCreate() {
 
   // Function to navigate to the Store List page
   const navigateToStoreList = () => {
-    navigate("/Store/List");
+    navigate("/Admin/Store/List");
   };
 
   return (

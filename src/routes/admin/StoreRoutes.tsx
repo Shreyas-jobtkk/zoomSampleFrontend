@@ -11,23 +11,23 @@ const { ProtectedAdminRoute } = ProtectedRoutes;
 const AdministratorListRoutes = () => (
   <Routes>
     <Route
-      path="/StoreInfo"
+      path="/Admin/Store/Info"
       element={<ProtectedAdminRoute element={<StoreInfo />} />}
     />
     <Route
-      path="/StoreCreate"
+      path="/Admin/Store/Create"
       element={<ProtectedAdminRoute element={<StoreCreate />} />}
     />
     <Route
-      path="/StoreUpdate"
+      path="/Admin/Store/Update"
       element={<ProtectedAdminRoute element={<StoreUpdate />} />}
     />
     <Route
-      path="/StoreUpdateConfirm"
+      path="/Admin/Store/UpdateConfirm"
       element={<ProtectedAdminRoute element={<StoreUpdateConfirm />} />}
     />
     <Route
-      path="/Store/List"
+      path="/Admin/Store/List"
       element={<ProtectedAdminRoute element={<StoreList />} />}
     />
   </Routes>

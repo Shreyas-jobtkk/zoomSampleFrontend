@@ -5,12 +5,12 @@ import LanguagesRoutes from "./LanguagesRoutes.js";
 import AdminLogin from "../admin/LoginRoutes.js";
 import { Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
-import AdminMenu from "../../Pages/Admin/Menu/AdminMenuPage.js"; // Adjust the import path as needed
+import AdminMenu from "../../Pages/Admin/AdminMenuPage.js"; // Adjust the import path as needed
 import ProtectedRoutes from "../ProtectedRoute";
-import InterpreterEvaluationList from "../../Pages/Admin/InterpreterEvaluation/InterpreterEvaluationList";
-import LogList from "../../Pages/Admin/Log/LogList";
-import MeetingHistoryList from "../../Pages/Admin/MeetingHistory/MeetingHistoryList";
-import MeetingInvitationList from "../../Pages/Admin/MeetingInvitation/MeetingInvitationList.js";
+import InterpreterEvaluationList from "../../Pages/Admin/InterpreterEvaluationList.js";
+import LogList from "../../Pages/Admin/LogList.js";
+import MeetingHistoryList from "../../Pages/Admin/MeetingHistoryList.js";
+import MeetingInvitationList from "../../Pages/Admin/MeetingInvitationList.js";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
 

@@ -1,6 +1,6 @@
-import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
+import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
-import MenuHeader from "../../../components/LV3/Header/MenuHeader/MenuHeader";
+import MenuHeader from "../../components/LV3/Header/MenuHeader/MenuHeader";
 import { Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
@@ -19,19 +19,19 @@ function AdminMenu() {
   };
 
   const navigateToStoresList = () => {
-    navigate("/Store/List");
+    navigate("/Admin/Store/List");
   };
 
   const navigateToContractorList = () => {
-    navigate("/ContractorList");
+    navigate("/Admin/User/ContractorList");
   };
 
   const navigateToInterpretersList = () => {
-    navigate("/InterpretersList");
+    navigate("/Admin/User/InterpretersList");
   };
 
   const navigateToAdministratorList = () => {
-    navigate("/AdministratorList");
+    navigate("/Admin/User/AdministratorList");
   };
 
   const navigateToInterpreterEvaluationList = () => {
@@ -47,7 +47,7 @@ function AdminMenu() {
   };
 
   const navigateToLanguagesSupportList = () => {
-    navigate("/LanguagesSupportList");
+    navigate("/Admin/LanguagesSupport/List");
   };
 
   const navigateToLogList = () => {

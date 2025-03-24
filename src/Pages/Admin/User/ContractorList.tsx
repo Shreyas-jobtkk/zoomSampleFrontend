@@ -1,29 +1,29 @@
-import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
+import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../../components/LV1/ButtonAtom/ButtonAtom";
-import MenuHeader from "../../../../components/LV3/Header/MenuHeader/MenuHeader";
-import DataTable from "../../../../components/LV3/DataTable/DataTable";
+import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
+import MenuHeader from "../../../components/LV3/Header/MenuHeader/MenuHeader";
+import DataTable from "../../../components/LV3/DataTable/DataTable";
+import DataTableControler from "../../../components/LV3/DataTable/DataTableControler";
 import { useNavigate } from "react-router-dom";
-import { UserApiService } from "../../../../api/apiService/user/user-api-service";
-import { UserInfo } from "../../../../types/UserTypes/UserTypes";
-import { convertToJST, deleteStatus } from "../../../../utils/utils";
-import { DataTableRow } from "../../../../components/LV3/DataTable/DataTable";
-import SelectableModal from "../../../../components/LV1/SelectableModal/SelectableModal";
-import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
-import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
-import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
-import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
-import classes from "../../../../styles/AdminEntities.module.scss";
-import DataTableControler from "../../../../components/LV3/DataTable/DataTableControler";
+import { UserApiService } from "../../../api/apiService/user/user-api-service";
+import { UserInfo } from "../../../types/UserTypes/UserTypes";
+import { convertToJST, deleteStatus } from "../../../utils/utils";
+import { DataTableRow } from "../../../components/LV3/DataTable/DataTable";
+import SelectableModal from "../../../components/LV1/SelectableModal/SelectableModal";
+import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
+import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
+import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
+import { StoreApiService } from "../../../api/apiService/store/store-api-service";
+import classes from "../../../styles/AdminEntities.module.scss";
 
-function AdministratorList() {
+function ContractorList() {
   const navigate = useNavigate();
 
-  // State variables for managing selected administrators, table data, and company/store information
-  const [selectedAdminNoArray, setSelectedAdminNoArray] = useState<number[]>(
-    []
-  );
+  // State variables
+  const [selectedContractorNoArray, setSelectedContractorNoArray] = useState<
+    number[]
+  >([]);
   const [tableData, setTableData] = useState<DataTableRow[]>([]);
   const [companyData, setCompanyData] = useState<CompanyInfo[]>([]);
   const [storeData, setStoreData] = useState<StoreInfo[]>([]);
@@ -32,22 +32,18 @@ function AdministratorList() {
   const [companyName, setCompanyName] = useState<string>("");
   const [storeNo, setStoreNo] = useState<string>("");
   const [storeName, setStoreName] = useState<string>("");
-
-  // State variables for filtering administrators
-  const [adminNoRangeMin, setAdminNoRangeMin] = useState<string>("");
-  const [adminNoRangeMax, setAdminNoRangeMax] = useState<string>("");
-  const [adminNameLast, setAdminNameLast] = useState<string>("");
-  const [adminNameFuriganaLast, setAdminNameFuriganaLast] =
+  const [contractorNoRangeMin, setContractorNoRangeMin] = useState<string>("");
+  const [contractorNoRangeMax, setContractorNoRangeMax] = useState<string>("");
+  const [contractorNameLast, setContractorNameLast] = useState<string>("");
+  const [contractorNameFuriganaLast, setContractorNameFuriganaLast] =
     useState<string>("");
-  const [adminNameFirst, setAdminNameFirst] = useState<string>("");
-  const [adminNameFuriganaFirst, setAdminNameFuriganaFirst] =
+  const [contractorNameFirst, setContractorNameFirst] = useState<string>("");
+  const [contractorNameFuriganaFirst, setContractorNameFuriganaFirst] =
     useState<string>("");
-
-  // Pagination and table settings
+  const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [rowLimit, setRowLimit] = useState<number>(10);
-  const [isCompanyNoEmpty, setCompanyNoIsEmpty] = useState<boolean>(true);
 
   const [selectedData, setSelectedData] = useState<
     Array<{ No: string | number; [key: string]: string | number }>
@@ -62,27 +58,26 @@ function AdministratorList() {
     "企業名",
     "店舗No",
     "店舗名",
-    "管理者No",
+    "契約者No",
     "名前",
     "フリガナ",
     "削除",
   ];
 
-  // Fetch company and user data when page or row limit changes
+  // Fetch company names and contractor data on page change or row limit change
   useEffect(() => {
     fetchCompaniesNames();
     fetchUsersListData();
   }, [page, rowLimit]);
 
-  // Fetch store names when a valid company number is selected
+  // Fetch store names when company number is set
   useEffect(() => {
     if (!isCompanyNoEmpty) {
-      console.log(155, isCompanyNoEmpty);
       fetchStoreNames();
     }
   }, [companyNo]);
 
-  // Fetch company names
+  // Fetch list of companies and update companyData state
   const fetchCompaniesNames = async () => {
     try {
       const response = await CompanyApiService.fetchCompaniesNameDetails();
@@ -93,7 +88,7 @@ function AdministratorList() {
     }
   };
 
-  // Fetch store names based on selected company number
+  // Fetch store names for the selected company
   const fetchStoreNames = async () => {
     try {
       const response = await StoreApiService.fetchStoreNamesByCompany(
@@ -108,24 +103,27 @@ function AdministratorList() {
     }
   };
 
-  // Fetch the list of administrators based on filters
+  // Fetch user (contractor) data based on various filter conditions
   const fetchUsersListData = async () => {
     try {
-      const response = await UserApiService.fetchAdministratorAll(
+      const response = await UserApiService.fetchContractorAll(
         page,
         rowLimit,
         companyNo,
         storeNo,
-        adminNoRangeMin,
-        adminNoRangeMax,
-        adminNameFirst,
-        adminNameFuriganaFirst,
-        adminNameLast,
-        adminNameFuriganaLast
+        contractorNoRangeMin,
+        contractorNoRangeMax,
+        contractorNameFirst,
+        contractorNameFuriganaFirst,
+        contractorNameLast,
+        contractorNameFuriganaLast
       );
 
       setTotalPages(Math.ceil(response.totalRecords / rowLimit));
-      const sortedData = response.administrators
+
+      console.log(147, response);
+
+      const sortedData = response.contractors
         .sort(
           (a: UserInfo, b: UserInfo) => Number(a.user_no) - Number(b.user_no)
         )
@@ -137,7 +135,7 @@ function AdministratorList() {
           企業名: item.company_name,
           店舗No: item.store_no,
           店舗名: item.store_name,
-          管理者No: item.user_no,
+          契約者No: item.user_no,
           名前: `${item.user_name_last} ${item.user_name_first}`,
           フリガナ: `${item.user_name_last_furigana} ${item.user_name_first_furigana}`,
           削除: deleteStatus(item.user_deleted),
@@ -154,63 +152,70 @@ function AdministratorList() {
     }
   };
 
-  // Search function to trigger fetching filtered data
+  // Function to trigger user list data fetching when search conditions are set
   const searchConditions = () => {
     fetchUsersListData();
   };
 
-  // Handle selection of rows in the table
+  // Handle changes in selected data (rows selected in the table)
   const handleSelectionChange = (
     newSelectedData: Array<{
       No: string | number;
       [key: string]: string | number;
     }>
   ) => {
+    // Update the selected data state
     setSelectedData(newSelectedData);
 
-    // Extract and convert "管理者No" to number
-    const selectedAdminNo = newSelectedData
-      .map((item) => Number(item["管理者No"]))
+    // Log the selected data to the console
+    console.log("Selected Data:", newSelectedData);
+
+    // Extract and convert "契約者No" to number
+    const selectedContractorNo = newSelectedData
+      .map((item) => Number(item["契約者No"]))
       .filter((value) => !isNaN(value)); // Filter out invalid numbers
 
-    setSelectedAdminNoArray(selectedAdminNo);
+    setSelectedContractorNoArray(selectedContractorNo);
   };
 
   // Navigation functions
   const navigateToInfoPage = () => {
     navigate(
-      `/UserInfo?selectedUserNo=${selectedAdminNoArray[0]}&userType=administrator`
+      `/Admin/User/Info?selectedUserNo=${selectedContractorNoArray[0]}&userType=contractor`
     );
   };
 
   const navigateToCreate = () => {
-    navigate(`/UserCreate?userType=administrator`);
+    navigate(`/Admin/User/Create?userType=contractor`);
   };
 
   const navigateToUpdatePage = () => {
     navigate(
-      `/UserUpdate?selectedUserNo=${selectedAdminNoArray[0]}&userType=administrator`
+      `/Admin/User/Update?selectedUserNo=${selectedContractorNoArray[0]}&userType=contractor`
     );
-  };
-
-  // Handle page change for pagination
-  const handlePageChange = (page: number) => {
-    setPage(page + 1);
-  };
-
-  // Handle change in rows per page (pagination limit)
-  const handleRowsPerPage = (newSelectedData: any) => {
-    setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
   // Reset the table and fetch the user data again
   const onResetTable = () => fetchUsersListData();
 
-  // Handle deletion and restoration of administrators
-  const handleDeleteAdministrators = async () => {
-    console.log(114, selectedAdminNoArray);
+  // Handle page change for pagination
+  const handlePageChange = (page: number) => {
+    // setCurrentPage(page); // Update the page state in the parent
+    console.log("Current page in parent:", page);
+    setPage(page + 1);
+  };
+
+  // Handle change in rows per page (pagination limit)
+  const handleRowsPerPage = (newSelectedData: any) => {
+    console.log(155, newSelectedData[0].rowsPerPage);
+    setRowLimit(newSelectedData[0].rowsPerPage);
+  };
+
+  // Handle deletion and restoration of Contractors
+  const handleDeleteContractors = async () => {
+    console.log(114, selectedContractorNoArray);
     try {
-      await UserApiService.deleteUsers(selectedAdminNoArray);
+      await UserApiService.deleteUsers(selectedContractorNoArray);
       // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -222,10 +227,10 @@ function AdministratorList() {
     await fetchUsersListData();
   };
 
-  const handleRestoreAdministrators = async () => {
-    console.log(114, selectedAdminNoArray);
+  const handleRestoreContractors = async () => {
+    console.log(114, selectedContractorNoArray);
     try {
-      await UserApiService.restoreUsers(selectedAdminNoArray);
+      await UserApiService.restoreUsers(selectedContractorNoArray);
       // setCompanyList(companyList.filter((company) => company.id !== id)); // Update the list locally
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -256,7 +261,7 @@ function AdministratorList() {
 
   return (
     <Box className={classes.adminEntity}>
-      <MenuHeader title="管理者一覧" />
+      <MenuHeader title="契約者一覧" />
       <Box className={classes.searchContainer}>
         <Box className={classes.searchLabel}>検索条件</Box>
         <Box className={classes.moveTop}>
@@ -311,38 +316,39 @@ function AdministratorList() {
               </Box>
             </Box>
           </Box>
-          <Box className={classes.adminDetails}>
-            <Box className={classes.adminRange}>
+          <Box className={classes.contractorDetails}>
+            <Box className={classes.contractorRange}>
               <TextBoxWithLabel
                 labelWidth="70px"
-                label="管理者No"
+                label="契約者No"
                 width="calc(10vw - 30px)" // Uncomment to set a custom width
                 disabled={false}
                 type="number"
-                value={adminNoRangeMin}
+                value={contractorNoRangeMin}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setAdminNoRangeMin(e.target.value)
+                  setContractorNoRangeMin(e.target.value)
                 }
               />
               <TextBoxWithLabel
                 label="~"
                 width="calc(10vw - 30px)" // Uncomment to set a custom width
-                value={adminNoRangeMax}
+                value={contractorNoRangeMax}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setAdminNoRangeMax(e.target.value)
+                  setContractorNoRangeMax(e.target.value)
                 }
                 disabled={false}
                 type="number"
                 labelWidth="3vw"
               />
             </Box>
+
             <Box>
               <TextBoxWithLabel
                 label="フリガナ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;セイ"
                 width="calc(25vw - 80px)" // Uncomment to set a custom width
-                value={adminNameFuriganaLast}
+                value={contractorNameFuriganaLast}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setAdminNameFuriganaLast(e.target.value)
+                  setContractorNameFuriganaLast(e.target.value)
                 }
                 labelWidth="120px"
                 disabled={false}
@@ -351,9 +357,9 @@ function AdministratorList() {
                 labelWidth="120px"
                 label="名前&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;姓"
                 width="calc(25vw - 80px)" // Uncomment to set a custom width
-                value={adminNameLast}
+                value={contractorNameLast}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setAdminNameLast(e.target.value)
+                  setContractorNameLast(e.target.value)
                 }
                 disabled={false}
               />
@@ -364,9 +370,9 @@ function AdministratorList() {
                 label="メイ"
                 labelWidth="40px"
                 width="calc(25vw - 80px)" // Uncomment to set a custom width
-                value={adminNameFuriganaFirst}
+                value={contractorNameFuriganaFirst}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setAdminNameFuriganaFirst(e.target.value)
+                  setContractorNameFuriganaFirst(e.target.value)
                 }
                 disabled={false}
               />
@@ -374,9 +380,9 @@ function AdministratorList() {
                 label="名"
                 labelWidth="40px"
                 width="calc(25vw - 80px)" // Uncomment to set a custom width
-                value={adminNameFirst}
+                value={contractorNameFirst}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setAdminNameFirst(e.target.value)
+                  setContractorNameFirst(e.target.value)
                 }
                 disabled={false}
               />
@@ -388,14 +394,6 @@ function AdministratorList() {
           </Box>
         </Box>
       </Box>
-      {/* <DataTable // Customize header height
-        headers={headers}
-        data={searchData}
-        maxHeight="calc(85vh - 280px)"
-        onSelectionChange={handleSelectionChange}
-        operationButton="新規"
-        onClick={navigateToCreate}
-      /> */}
       <DataTableControler
         onPageChange={handlePageChange}
         onSelectionChange={handleRowsPerPage}
@@ -410,6 +408,16 @@ function AdministratorList() {
         maxHeight="calc(94vh - 260px)"
         onSelectionChange={handleSelectionChange}
       />
+
+      {/* <DataTable // Customize header height
+        headers={headers}
+        data={searchData}
+        maxHeight="calc(85vh - 280px)"
+        onSelectionChange={handleSelectionChange}
+        operationButton="新規"
+        onClick={navigateToCreate}
+      /> */}
+
       <Box className={classes.actionButtons}>
         <ButtonAtom
           onClick={navigateToInfoPage}
@@ -422,12 +430,12 @@ function AdministratorList() {
           label="編集"
         />
         <ButtonAtom
-          onClick={handleDeleteAdministrators}
+          onClick={handleDeleteContractors}
           disabled={selectedData.length <= 0}
           label="削除"
         />
         <ButtonAtom
-          onClick={handleRestoreAdministrators}
+          onClick={handleRestoreContractors}
           disabled={selectedData.length <= 0}
           label="復帰"
         />
@@ -436,4 +444,4 @@ function AdministratorList() {
   );
 }
 
-export default AdministratorList;
+export default ContractorList;

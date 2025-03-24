@@ -53,8 +53,11 @@ const LanguageCreate = () => {
         formData.language_name_furigana,
         formData.language_note
       );
+      // navigate(
+      //   `/Admin/Language/Info?selectedLanguageNo=${response.languages_support_no}`
+      // );
       navigate(
-        `/LanguagesInfo?selectedLanguageNo=${response.languages_support_no}`
+        `/Admin/Language/UpdateConfirm?selectedLanguageNo=${response.languages_support_no}`
       );
 
       alert("saved");

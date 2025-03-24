@@ -42,14 +42,14 @@ function UserCreate() {
   // Function to navigate to the appropriate user list based on user type
   const navigateToUserList = () => {
     if (userType == "contractor") {
-      navigate("/ContractorList");
+      navigate("/Admin/User/ContractorList");
     }
 
     if (userType == "interpreter") {
-      navigate("/InterpretersList");
+      navigate("/Admin/User/InterpretersList");
     }
     if (userType == "administrator") {
-      navigate("/AdministratorList");
+      navigate("/Admin/User/AdministratorList");
     }
   };
 
@@ -230,8 +230,11 @@ function UserCreate() {
         // formData.meeting_id,
         // formData.meeting_passcode
       );
+      // navigate(
+      //   `/Admin/User/Info?selectedUserNo=${response.user_no}&userType=${userType}`
+      // );
       navigate(
-        `/UserInfo?selectedUserNo=${response.user_no}&userType=${userType}`
+        `/Admin/User/UpdateConfirm?selectedUserNo=${response.user_no}&userType=${userType}`
       );
       alert("saved");
     } catch (error) {

@@ -397,7 +397,7 @@ function UserUpdate() {
       formData.store_no
     );
     navigate(
-      `/UserUpdateConfirm?selectedUserNo=${selectedUserNo}&userType=${userType}`
+      `/Admin/User/UpdateConfirm?selectedUserNo=${selectedUserNo}&userType=${userType}`
     );
   };
 

@@ -141,12 +141,12 @@ function StoreList() {
 
   // Function to navigate to the Store Info page
   const navigateToInfoPage = () => {
-    navigate(`/StoreInfo?selectedStoreNo=${selectedStoreNoArray[0]}`);
+    navigate(`/Admin/Store/Info?selectedStoreNo=${selectedStoreNoArray[0]}`);
   };
 
   // Function to navigate to the Store Update page
   const navigateToUpdatePage = () => {
-    navigate(`/StoreUpdate?selectedStoreNo=${selectedStoreNoArray[0]}`);
+    navigate(`/Admin/Store/Update?selectedStoreNo=${selectedStoreNoArray[0]}`);
   };
 
   // Function to delete selected stores
@@ -180,7 +180,7 @@ function StoreList() {
 
   // Function to navigate to the Store Create page
   const navigateToStoreCreate = () => {
-    navigate("/StoreCreate");
+    navigate("/Admin/Store/Create");
   };
 
   // Function to reset the table data

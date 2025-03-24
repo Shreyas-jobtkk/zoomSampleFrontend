@@ -119,7 +119,7 @@ const LanguageUpdate = () => {
       );
       alert("saved");
       navigate(
-        `/LanguagesUpdateConfirm?selectedLanguageNo=${selectedLanguageNo}`
+        `/Admin/Language/UpdateConfirm?selectedLanguageNo=${selectedLanguageNo}`
       );
     } catch (error) {
       alert("error");

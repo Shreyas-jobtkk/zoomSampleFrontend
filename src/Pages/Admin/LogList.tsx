@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
-import MenuHeader from "../../../components/LV3/Header/MenuHeader/MenuHeader";
-// import "./AdminMenu.scss";
+import MenuHeader from "../../components/LV3/Header/MenuHeader/MenuHeader";
 
 function LogList() {
   return (

@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
-import AdminLogin from "./../../Pages/Admin/Login/AdminLogin";
+import AdminLogin from "../../Pages/Admin/AdminLogin";
 
 const AppRoutes: React.FC = () => {
   return (

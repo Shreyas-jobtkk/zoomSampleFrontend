@@ -65,7 +65,7 @@ const LanguageUpdateConfirm = () => {
 
   // Navigate to the languages list page
   const navigateToLanguagesList = () => {
-    navigate("/LanguagesSupportList");
+    navigate("/Admin/LanguagesSupport/List");
   };
 
   // Navigate back to the previous page

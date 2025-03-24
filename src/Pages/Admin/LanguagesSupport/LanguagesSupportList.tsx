@@ -89,7 +89,9 @@ function LanguagesSupportList() {
 
   // Navigates to the language information page for the selected language
   const navigateToInfoPage = () => {
-    navigate(`/LanguagesInfo?selectedLanguageNo=${selectedLanguageNoArray[0]}`);
+    navigate(
+      `/Admin/Language/Info?selectedLanguageNo=${selectedLanguageNoArray[0]}`
+    );
   };
 
   // Handles page change in pagination
@@ -103,7 +105,7 @@ function LanguagesSupportList() {
   const onResetTable = () => fetchLanguagesListData();
 
   // Navigates to the language creation page
-  const navigateToLanguageCreate = () => navigate("/LanguagesCreate");
+  const navigateToLanguageCreate = () => navigate("/Admin/Language/Create");
 
   // Handles change in the number of rows per page
   const handleRowsPerPage = (newSelectedData: any) => {
@@ -114,7 +116,7 @@ function LanguagesSupportList() {
   // Navigates to the language update/edit page
   const navigateToUpdatePage = () => {
     navigate(
-      `/LanguagesUpdate?selectedLanguageNo=${selectedLanguageNoArray[0]}`
+      `/Admin/Language/Update?selectedLanguageNo=${selectedLanguageNoArray[0]}`
     );
   };
 

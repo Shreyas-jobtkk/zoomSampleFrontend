@@ -22,11 +22,11 @@ function StoreInfo() {
   const selectedStoreNo = Number(searchParams.get("selectedStoreNo"));
 
   // Function to navigate to the store list page
-  const navigateToStoreList = () => navigate("/Store/List");
+  const navigateToStoreList = () => navigate("/Admin/Store/List");
 
   // Function to navigate to the store update page with the selected store number as a query parameter
   const navigateToStoreUpdate = () =>
-    navigate(`/StoreUpdate?selectedStoreNo=${selectedStoreNo}`);
+    navigate(`/Admin/Store/UpdateselectedStoreNo=${selectedStoreNo}`);
 
   // Define the initial state for form data
   const [formData, setFormData] = useState<StoreInfoFormValues>({

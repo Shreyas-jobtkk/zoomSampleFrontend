@@ -4,42 +4,42 @@ import UserCreate from "../../Pages/Admin/User/UserCreate";
 import UserUpdate from "../../Pages/Admin/User/UserUpdate";
 import UserUpdateConfirm from "../../Pages/Admin/User/UserUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
-import AdministratorList from "../../Pages/Admin/User/UserList/AdministratorList";
-import InterpretersList from "../../Pages/Admin/User/UserList/InterpretersList";
-import ContractorList from "../../Pages/Admin/User/UserList/ContractorList";
+import AdministratorList from "../../Pages/Admin/User/AdministratorList";
+import InterpretersList from "../../Pages/Admin/User/InterpretersList";
+import ContractorList from "../../Pages/Admin/User/ContractorList";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
 
 const InterpretersListRoutes = () => (
   <Routes>
     <Route
-      path="/UserInfo"
+      path="/Admin/User/Info"
       element={<ProtectedAdminRoute element={<UserInfo />} />}
     />
     <Route
-      path="/UserCreate"
+      path="/Admin/User/Create"
       element={<ProtectedAdminRoute element={<UserCreate />} />}
     />
     <Route
-      path="/UserUpdate"
+      path="/Admin/User/Update"
       element={<ProtectedAdminRoute element={<UserUpdate />} />}
     />
     <Route
-      path="/UserUpdateConfirm"
+      path="/Admin/User/UpdateConfirm"
       element={<ProtectedAdminRoute element={<UserUpdateConfirm />} />}
     />
     <Route
-      path="/AdministratorList"
+      path="/Admin/User/AdministratorList"
       element={<ProtectedAdminRoute element={<AdministratorList />} />}
     />
 
     <Route
-      path="/InterpretersList"
+      path="/Admin/User/InterpretersList"
       element={<ProtectedAdminRoute element={<InterpretersList />} />}
     />
 
     <Route
-      path="/ContractorList"
+      path="/Admin/User/ContractorList"
       element={<ProtectedAdminRoute element={<ContractorList />} />}
     />
   </Routes>

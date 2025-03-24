@@ -177,7 +177,7 @@ function StoreUpdate() {
       formData.store_note,
       formData.store_no
     );
-    navigate(`/StoreUpdateConfirm?selectedStoreNo=${selectedStoreNo}`);
+    navigate(`/Admin/Store/UpdateConfirm?selectedStoreNo=${selectedStoreNo}`);
   };
 
   // Fetch company list from API

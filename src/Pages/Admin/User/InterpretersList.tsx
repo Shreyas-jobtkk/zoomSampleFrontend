@@ -1,25 +1,25 @@
-import TextBoxWithLabel from "../../../../components/LV1/TextBox/TextBoxWithLabel";
+import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../../components/LV1/ButtonAtom/ButtonAtom";
-import MenuHeader from "../../../../components/LV3/Header/MenuHeader/MenuHeader";
-import MultipleOptionsSelect from "../../../../components/LV1/SelectOption/MultipleOptionsSelect";
-import DataTable from "../../../../components/LV3/DataTable/DataTable";
-import DataTableControler from "../../../../components/LV3/DataTable/DataTableControler";
+import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
+import MenuHeader from "../../../components/LV3/Header/MenuHeader/MenuHeader";
+import MultipleOptionsSelect from "../../../components/LV1/SelectOption/MultipleOptionsSelect";
+import DataTable from "../../../components/LV3/DataTable/DataTable";
+import DataTableControler from "../../../components/LV3/DataTable/DataTableControler";
 
 import { useNavigate } from "react-router-dom";
-import { UserApiService } from "../../../../api/apiService/user/user-api-service";
-import { UserInfo } from "../../../../types/UserTypes/UserTypes";
-import { convertToJST, deleteStatus } from "../../../../utils/utils";
-import { DataTableRow } from "../../../../components/LV3/DataTable/DataTable";
-import SelectableModal from "../../../../components/LV1/SelectableModal/SelectableModal";
-import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
-import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
-import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
-import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
-import { LanguageApiService } from "../../../../api/apiService/languages/languages-api-service";
-import { LanguageInfo } from "../../../../types/LanguageTypes/LanguageTypes";
-import classes from "../../../../styles/AdminEntities.module.scss";
+import { UserApiService } from "../../../api/apiService/user/user-api-service";
+import { UserInfo } from "../../../types/UserTypes/UserTypes";
+import { convertToJST, deleteStatus } from "../../../utils/utils";
+import { DataTableRow } from "../../../components/LV3/DataTable/DataTable";
+import SelectableModal from "../../../components/LV1/SelectableModal/SelectableModal";
+import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
+import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
+import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
+import { StoreApiService } from "../../../api/apiService/store/store-api-service";
+import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";
+import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
+import classes from "../../../styles/AdminEntities.module.scss";
 
 function InterpretersList() {
   const navigate = useNavigate();
@@ -256,18 +256,18 @@ function InterpretersList() {
 
   // Navigate pages
   const navigateToCreate = () => {
-    navigate(`/UserCreate?userType=interpreter`);
+    navigate(`/Admin/User/Create?userType=interpreter`);
   };
 
   const navigateToInfoPage = () => {
     navigate(
-      `/UserInfo?selectedUserNo=${selectedInterpreterNoArray[0]}&userType=interpreter`
+      `/Admin/User/Info?selectedUserNo=${selectedInterpreterNoArray[0]}&userType=interpreter`
     );
   };
 
   const navigateToUpdatePage = () => {
     navigate(
-      `/UserUpdate?selectedUserNo=${selectedInterpreterNoArray[0]}&userType=interpreter`
+      `/Admin/User/Update?selectedUserNo=${selectedInterpreterNoArray[0]}&userType=interpreter`
     );
   };
 

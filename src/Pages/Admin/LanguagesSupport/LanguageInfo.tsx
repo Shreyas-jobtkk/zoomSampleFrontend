@@ -71,7 +71,7 @@ const LanguageInformation = () => {
 
   // Navigate to the language update page with selectedLanguageNo as a query parameter
   const navigateToLanguageUpdate = () => {
-    navigate(`/LanguagesUpdate?selectedLanguageNo=${selectedLanguageNo}`);
+    navigate(`/Admin/Language/Update?selectedLanguageNo=${selectedLanguageNo}`);
   };
 
   if (!selectedLanguageNo) {

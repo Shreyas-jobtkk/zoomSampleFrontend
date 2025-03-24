@@ -11,23 +11,23 @@ const { ProtectedAdminRoute } = ProtectedRoutes;
 const LanguagesListRoutes = () => (
   <Routes>
     <Route
-      path="/LanguagesCreate"
+      path="/Admin/Language/Create"
       element={<ProtectedAdminRoute element={<LanguagesCreate />} />}
     />
     <Route
-      path="/LanguagesInfo"
+      path="/Admin/Language/Info"
       element={<ProtectedAdminRoute element={<LanguagesInfo />} />}
     />
     <Route
-      path="/LanguagesUpdate"
+      path="/Admin/Language/Update"
       element={<ProtectedAdminRoute element={<LanguagesUpdate />} />}
     />
     <Route
-      path="/LanguagesUpdateConfirm"
+      path="/Admin/Language/UpdateConfirm"
       element={<ProtectedAdminRoute element={<LanguagesUpdateConfirm />} />}
     />
     <Route
-      path="/LanguagesSupportList"
+      path="/Admin/LanguagesSupport/List"
       element={<ProtectedAdminRoute element={<LanguagesSupportList />} />}
     />
   </Routes>
