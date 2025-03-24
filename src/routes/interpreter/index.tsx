@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import InterpreterMenu from "../../Pages/Interpreter/Menu/InterpreterMenu"; // Adjust the import path as needed
+import InterpreterMenu from "../../Pages/Interpreter/InterpreterMenu"; // Adjust the import path as needed
 import InterpreterMenuRoutes from "./InterpreterMenuRoutes";
 import InterpreterLoginRoutes from "./LoginRoutes";
 

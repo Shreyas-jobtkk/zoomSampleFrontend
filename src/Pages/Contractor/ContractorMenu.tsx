@@ -1,8 +1,8 @@
-import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
+import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom";
 import { useNavigate, useLocation } from "react-router-dom";
-import MenuHeader from "../../../components/LV3/Header/MenuHeader/MenuHeader";
+import MenuHeader from "../../components/LV3/Header/MenuHeader/MenuHeader";
 import { Box } from "@mui/material";
-import classes from "./ContractorMenu.module.scss";
+import classes from "../../styles/ContractorMenu.module.scss";
 
 function ResponderMenu() {
   const navigate = useNavigate();
@@ -12,21 +12,21 @@ function ResponderMenu() {
 
   const navigateToUserMenu = () => {
     // Navigate to UserMenu and pass the message data along
-    navigate("CallingMenu", {
+    navigate("/Contractor/CallingMenu", {
       state: { message },
     });
   };
 
   const navigateToInterpreterEvaluationList = () => {
-    navigate("InterpreterEvaluationList");
+    navigate("/Contractor/InterpreterEvaluationList");
   };
 
   const navigateToMeetingHistoryList = () => {
-    navigate("MeetingHistoryList");
+    navigate("/Contractor/MeetingHistoryList");
   };
 
   const navigateToMeetingInvitationList = () => {
-    navigate("MeetingInvitationList");
+    navigate("/Contractor/MeetingInvitationList");
   };
 
   return (

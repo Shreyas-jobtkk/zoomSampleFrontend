@@ -1,4 +1,4 @@
-import ResponderMenu from "../../Pages/Contractor/Menu/ContractorMenu";
+import ResponderMenu from "../../Pages/Contractor/ContractorMenu";
 import { Route, Routes } from "react-router-dom";
 import ContractorMenuRoutes from "./ContractorMenuRoutes";
 import ContractorLoginRoutes from "./LoginRoutes";

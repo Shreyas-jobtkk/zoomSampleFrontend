@@ -1,18 +1,18 @@
 import { useEffect, useState, useRef, MutableRefObject } from "react";
 import io from "socket.io-client";
-import ringtone from "../../ringtone.mp3";
-import { apiUrl } from "../../../apiUrl.js";
-import MenuHeader from "../../../components/LV3/Header/MenuHeader/MenuHeader.js";
-import RadioButtonGroupRound from "../../../components/LV1/RadioButton/RadioButtonGroupRound.js";
+import ringtone from "../ringtone.mp3";
+import { apiUrl } from "../../apiUrl.js";
+import MenuHeader from "../../components/LV3/Header/MenuHeader/MenuHeader.js";
+import RadioButtonGroupRound from "../../components/LV1/RadioButton/RadioButtonGroupRound.js";
 import { useTranslation } from "react-i18next";
-import "../../../i18n/i18n.js";
-import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom.js";
+import "../../i18n/i18n.js";
+import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom.js";
 import { Box } from "@mui/material";
-import classes from "../../../styles/ContractorEntities.module.scss";
-import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service.js";
-import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes.js";
+import classes from "../../styles/ContractorEntities.module.scss";
+import { LanguageApiService } from "../../api/apiService/languages/languages-api-service.js";
+import { LanguageInfo } from "../../types/LanguageTypes/LanguageTypes.js";
 import { ZoomMtg } from "@zoom/meetingsdk";
-import { CallLogApiService } from "../../../api/apiService/callLog/callLog-api-service.js";
+import { CallLogApiService } from "../../api/apiService/callLog/callLog-api-service.js";
 
 const socket = io(apiUrl);
 

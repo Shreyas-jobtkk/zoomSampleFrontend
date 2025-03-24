@@ -1,16 +1,16 @@
-import DatePicker from "../../../components/LV1/DatePicker/DatePicker";
-import TimePicker from "../../../components/LV1/TimePicker/TimePicker"; // Adjust the import path as needed
+import DatePicker from "../../components/LV1/DatePicker/DatePicker";
+import TimePicker from "../../components/LV1/TimePicker/TimePicker"; // Adjust the import path as needed
 import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
-import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
-import MenuHeader from "../../../components/LV3/Header/MenuHeader/MenuHeader";
-import SelectOption from "../../../components/LV1/SelectOption/SelectOption";
-import DataTable from "../../../components/LV3/DataTable/DataTable";
-import DataTableControler from "../../../components/LV3/DataTable/DataTableControler";
-import classes from "../../../styles/ContractorEntities.module.scss";
+import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom";
+import MenuHeader from "../../components/LV3/Header/MenuHeader/MenuHeader";
+import SelectOption from "../../components/LV1/SelectOption/SelectOption";
+import DataTable from "../../components/LV3/DataTable/DataTable";
+import DataTableControler from "../../components/LV3/DataTable/DataTableControler";
+import classes from "../../styles/ContractorEntities.module.scss";
 
-import { CallLogApiService } from "../../../api/apiService/callLog/callLog-api-service";
-import { convertToJST, getCallStatus } from "../../../utils/utils";
+import { CallLogApiService } from "../../api/apiService/callLog/callLog-api-service";
+import { convertToJST, getCallStatus } from "../../utils/utils";
 
 function InterpreterEvaluationList() {
   const headers = [

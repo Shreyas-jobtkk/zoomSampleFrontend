@@ -1,14 +1,14 @@
 // components/Login.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginHeader from "../../../components/LV3/Header/LoginHeader/LoginHeader";
-import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
+import LoginHeader from "../../components/LV3/Header/LoginHeader/LoginHeader";
+import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom";
 import { Box } from "@mui/material";
-import { UserApiService } from "../../../api/apiService/user/user-api-service";
-import ValidationInputField from "../../../components/LV1/ValidationInputField/ValidationInputField";
+import { UserApiService } from "../../api/apiService/user/user-api-service";
+import ValidationInputField from "../../components/LV1/ValidationInputField/ValidationInputField";
 import { useForm } from "react-hook-form";
-import { UserAuth } from "../../../types/UserTypes/UserTypes";
-import classes from "../../../styles/Login.module.scss";
+import { UserAuth } from "../../types/UserTypes/UserTypes";
+import classes from "../../styles/Login.module.scss";
 
 const ResponderLogin: React.FC = () => {
   const [formData, setFormData] = useState<UserAuth>({
@@ -43,7 +43,7 @@ const ResponderLogin: React.FC = () => {
         // Successful login
         console.log(89, "Login successful", typeof response.user_no);
         sessionStorage.setItem("contractorNo", response.user_no);
-        navigate("Menu", {
+        navigate("/Contractor/Menu", {
           state: {
             message: response.user_no,
           },

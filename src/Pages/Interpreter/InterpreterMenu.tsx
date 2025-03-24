@@ -7,23 +7,18 @@ import io from "socket.io-client";
 import { ZoomMtg } from "@zoom/meetingsdk";
 // import ringtoneFile from "../../ringtone.mp3";
 import { useLocation } from "react-router-dom";
-import MenuHeader from "../../../components/LV3/Header/MenuHeader/MenuHeader";
-import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
+import MenuHeader from "../../components/LV3/Header/MenuHeader/MenuHeader";
+import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
-import { UserApiService } from "../../../api/apiService/user/user-api-service";
-import classes from "./InterpreterMenu.module.scss";
-import { apiUrl } from "../../../apiUrl";
+import { UserApiService } from "../../api/apiService/user/user-api-service";
+import classes from "../../styles/InterpreterMenu.module.scss";
+import { apiUrl } from "../../apiUrl";
 
 // Connect to the socket.io server
 const socket = io(apiUrl);
 
-// let uniqueId: string;
-
 function InterpreterLogin() {
-  // const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  // const audioRef = useRef<HTMLAudioElement>(new Audio(ringtoneFile));
-  // const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [callRequest, setCallRequest] = useState<boolean>(false);
   const navigate = useNavigate();
   const interpreterNo = sessionStorage.getItem("interpreterNo");
@@ -99,55 +94,6 @@ function InterpreterLogin() {
     UserApiService.updateInterpreterStatus(interpreterNo, status);
   };
 
-  // const handleRingtoneStop = () => {
-  //   if (audioRef.current) {
-  //     audioRef.current.pause();
-  //     audioRef.current.currentTime = 0; // Reset playback to the start
-  //     setIsPlaying(false); // Set state to indicate ringtone has stopped
-  //     // ringing = false
-  //   }
-  // };
-  // const timeoutRef = useRef(null);
-
-  // const isAudioPlaying = () => {
-  //   return audioRef.current && !audioRef.current.paused;
-  // };
-
-  // const handleRingtoneStart = () => {
-  //   if (audioRef.current) {
-  //     audioRef.current.play();
-  //     setIsPlaying(true);
-  //     // ringing = true
-  //     setTimeout(() => {
-  //       // handleRingtoneStop();
-  //       console.log(144, isAudioPlaying());
-
-  //       // if (ringing && !callReceived) {
-  //       if (isAudioPlaying()) {
-  //         setIsPlaying(false);
-  //         const data = {
-  //           dial: "forcible disconnect", // Replace with actual value
-  //           uniqueId: uniqueId,
-  //         };
-
-  //         const now = new Date();
-  //         const formattedDate =
-  //           now.toLocaleString() +
-  //           "." +
-  //           String(now.getMilliseconds()).padStart(3, "0");
-  //         console.log(123, formattedDate);
-
-  //         socket.emit("dataFromFrontend", data);
-  //         // notResponded = true
-  //         // console.log(143, notResponded)
-  //         // handleRingtoneStop();
-  //         alert("you missed a call");
-  //       }
-  //       // handleDisconnect();
-  //     }, 10000);
-  //   }
-  // };
-
   useEffect(() => {
     socket.on("meetingHostData", (meetingHostData) => {
       console.log(189, meetingHostData, meetingHostData.signature.signature);
@@ -213,15 +159,15 @@ function InterpreterLogin() {
   };
 
   const navigateToInterpreterEvaluationList = () => {
-    navigate("InterpreterEvaluationList");
+    navigate("/Interpreter/InterpreterEvaluationList");
   };
 
   const navigateToMeetingHistoryList = () => {
-    navigate("MeetingHistoryList");
+    navigate("/Interpreter/MeetingHistoryList");
   };
 
   const navigateToMeetingInvitationList = () => {
-    navigate("MeetingInvitationList");
+    navigate("/Interpreter/MeetingInvitationList");
   };
 
   const setStatusToActive = () => {

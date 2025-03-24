@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
-import ContractorLogin from "./../../Pages/Contractor/Login/ContractorLogin";
+import ContractorLogin from "../../Pages/Contractor/ContractorLogin";
 
 const AppRoutes: React.FC = () => {
   return (
     <Box>
       <Routes>
-        <Route path="/Contractor" element={<ContractorLogin />} />
+        <Route path="/Contractor/login" element={<ContractorLogin />} />
       </Routes>
     </Box>
   );
