@@ -1,6 +1,6 @@
 import { ZoomMtg } from "@zoom/meetingsdk";
 // import { Box, Typography, Button, Container } from "@mui/material";
-import ValidationInputField from "../../components/LV1/Validation/ValidationInputField";
+import ValidationInputField from "../../../components/LV1/Validation/ValidationInputField";
 import React, { useState } from "react";
 import { Container, Box, Typography, Button } from "@mui/material";
 // import { showOverlayMessage } from "./OverlayMessage"; // Import the function
@@ -14,12 +14,11 @@ import {
   hideEmojiPicker,
   createEmojiReactionAnimation,
 } from "./showEmojiPicker"; // Import the function
-import { apiUrl } from "../../apiUrl";
+import { apiUrl } from "../../../apiUrl";
 import io from "socket.io-client";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-
 // Connect to the socket.io server
 const socket = io(apiUrl);
 
@@ -79,8 +78,8 @@ const Sample: React.FC = () => {
   //   console.log(155, import.meta.env[`VITE_SAMPLE_${i}`]);
   // }
 
-  const role = 1;
-  const userName = "Host";
+  const role = 0;
+  const userName = "Join";
   const leaveUrl = import.meta.env.VITE_REACT_APP_URL;
 
   const getSignature = async () => {
@@ -201,6 +200,12 @@ const Sample: React.FC = () => {
           // zak: zakToken,
           success: (success: unknown) => {
             console.log(114, success);
+            // console.log(189, ZoomMtg.inMeetingServiceListener.toString());
+            // console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
+            // console.log(
+            //   144,
+            //   sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
+            // );
 
             showInputField();
 

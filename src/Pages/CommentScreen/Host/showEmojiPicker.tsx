@@ -1,6 +1,6 @@
 import "emoji-picker-element";
 import io from "socket.io-client";
-import { apiUrl } from "../../apiUrl";
+import { apiUrl } from "../../../apiUrl";
 const socket = io(apiUrl);
 
 export const showEmojiPicker = () => {
