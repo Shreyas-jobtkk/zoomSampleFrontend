@@ -32,7 +32,7 @@
     "./src/pages/admin/user/userupdate.tsx",
     "./src/pages/admin/user/userupdateconfirm.tsx",
     "./src/pages/admin/user/administrator/administratorlist.tsx",
-    "./src/pages/admin/user/contractor/Admin/User/ContractorList.tsx",
+    "./src/pages/admin/user/contractor/Admin/User/List/Contractor.tsx",
     "./src/pages/admin/user/contractor/contractorsearch.tsx",
     "./src/pages/admin/user/interpreter/interpretersearch.tsx",
     "./src/pages/admin/user/interpreter/interpreterslist.tsx",

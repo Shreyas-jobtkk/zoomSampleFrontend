@@ -23,15 +23,15 @@ function AdminMenu() {
   };
 
   const navigateToContractorList = () => {
-    navigate("/Admin/User/ContractorList");
+    navigate("/Admin/User/List/Contractor");
   };
 
   const navigateToInterpretersList = () => {
-    navigate("/Admin/User/InterpretersList");
+    navigate("/Admin/User/List/Interpreters");
   };
 
   const navigateToAdministratorList = () => {
-    navigate("/Admin/User/AdministratorList");
+    navigate("/Admin/User/List/Administrator");
   };
 
   const navigateToInterpreterEvaluationList = () => {

@@ -29,17 +29,17 @@ const InterpretersListRoutes = () => (
       element={<ProtectedAdminRoute element={<UserUpdateConfirm />} />}
     />
     <Route
-      path="/Admin/User/AdministratorList"
+      path="/Admin/User/List/Administrator"
       element={<ProtectedAdminRoute element={<AdministratorList />} />}
     />
 
     <Route
-      path="/Admin/User/InterpretersList"
+      path="/Admin/User/List/Interpreters"
       element={<ProtectedAdminRoute element={<InterpretersList />} />}
     />
 
     <Route
-      path="/Admin/User/ContractorList"
+      path="/Admin/User/List/Contractor"
       element={<ProtectedAdminRoute element={<ContractorList />} />}
     />
   </Routes>

@@ -60,14 +60,14 @@ function UserInformation() {
   // Function to navigate to the appropriate user list based on user type
   const navigateToUserList = () => {
     if (userType == "contractor") {
-      navigate("/Admin/User/ContractorList");
+      navigate("/Admin/User/List/Contractor");
     }
 
     if (userType == "interpreter") {
-      navigate("/Admin/User/InterpretersList");
+      navigate("/Admin/User/List/Interpreters");
     }
     if (userType == "administrator") {
-      navigate("/Admin/User/AdministratorList");
+      navigate("/Admin/User/List/Administrator");
     }
   };
 
