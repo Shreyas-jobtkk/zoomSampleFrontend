@@ -8,18 +8,16 @@ import {
 import { deleteUsers } from "../user/actions/user-delete";
 import { restoreUsers } from "../user/actions/user-restore";
 import {
-  fetchInterpretersAll,
   interpreterAuth,
-} from "./actions/interpreter-fetch-all";
-import {
-  fetchContractorAll,
   contractorAuth,
-  // fetchContractorsLoginInfo,
-} from "./actions/contractor-fetch-all";
+  administratorAuth,
+} from "./actions/user-auth";
+
 import {
   fetchAdministratorAll,
-  administratorAuth,
-} from "./actions/administrator-fetch-all";
+  fetchContractorAll,
+  fetchInterpretersAll,
+} from "./actions/user-fetch-all";
 
 export const UserApiService = {
   fetchUser,

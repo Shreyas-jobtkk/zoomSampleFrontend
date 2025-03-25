@@ -1,6 +1,9 @@
 import { USER_ENDPOINT } from "../user-api-definitions";
 import api from "../../../index";
 
+/**
+ * Restores multiple users by sending their company numbers to the API.
+ */
 export const restoreUsers = async (user_nos: number[]) => {
   try {
     const response = await api.put(`/${USER_ENDPOINT}/restore`, {

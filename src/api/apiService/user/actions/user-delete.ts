@@ -2,6 +2,9 @@
 import { USER_ENDPOINT } from "../user-api-definitions";
 import api from "../../../index";
 
+/**
+ * Deletes users by sending a DELETE request to the API.
+ */
 export const deleteUsers = async (user_nos: number[]) => {
   try {
     const response = await api.delete(`/${USER_ENDPOINT}`, {

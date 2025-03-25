@@ -2,6 +2,9 @@
 import { USER_ENDPOINT } from "../user-api-definitions";
 import api from "../../../index";
 
+/**
+ * Creates a new user by sending a POST request to the API.
+ */
 export const createUser = async (
   storeNo: string,
   userNameLast: string,
@@ -20,9 +23,6 @@ export const createUser = async (
   passwordExpire: Date
 ) => {
   try {
-    // Combine the tel1, tel2, and tel3 into a single string
-    // const tel = `${tel1}-${tel2}-${tel3}`; // Remove trailing hyphen if present
-
     const response = await api.post(USER_ENDPOINT, {
       store_no: storeNo,
       user_name_last: userNameLast,
@@ -36,7 +36,6 @@ export const createUser = async (
       translate_languages: languages, // Send languages array as integers
       password_expire: passwordExpire,
       user_password: password,
-
       user_note: note,
     });
 

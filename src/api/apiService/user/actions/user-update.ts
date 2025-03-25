@@ -2,6 +2,9 @@
 import { USER_ENDPOINT } from "../user-api-definitions";
 import api from "../../../index";
 
+/**
+ * Updates a user details by sending a PUT request to the API.
+ */
 export const updateUser = async (
   userNo: string,
   userNameLast: string,
