@@ -309,7 +309,6 @@ function InterpreterEvaluationList() {
         headers={headers}
         data={tableData}
         maxHeight="calc(82vh - 300px)"
-        // onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.searchButton}>
         <ButtonAtom onClick={searchConditions} label="閲覧" />

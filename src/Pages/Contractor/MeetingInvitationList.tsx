@@ -13,6 +13,7 @@ import { CallLogApiService } from "../../api/apiService/callLog/callLog-api-serv
 import { convertToJST, getCallStatus } from "../../utils/utils";
 
 function InterpreterEvaluationList() {
+  // Define table headers for displaying call log data
   const headers = [
     "No",
     "開始日時",
@@ -22,18 +23,15 @@ function InterpreterEvaluationList() {
     "承諾/拒否",
   ];
 
+  // State variables
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [rowLimit, setRowLimit] = useState<number>(10);
-
   const [tableData, setTableData] = useState<any>([]);
   const [startDateRangeMin, setStartDateRangeMin] = useState<Date | null>(null);
   const [startDateRangeMax, setStartDateRangeMax] = useState<Date | null>(null);
   const [startDateTimeRangeMin, setStartDateTimeRangeMin] = useState<any>("");
-  // const [startTimeRangeMin, setStartTimeRangeMin] = useState<Date | null>(null);
-  // const [startTimeRangeMax, setStartTimeRangeMax] = useState<Date | null>(null);
   const [endDateTimeRangeMax, setEndDateTimeRangeMax] = useState<any>("");
-
   const [callStatus, setCallStatus] = useState<string>("");
   let callStatusOptions: { label: string; value: string | number }[] = [
     { label: "Cancel", value: "callCanceled" },
@@ -42,14 +40,17 @@ function InterpreterEvaluationList() {
     { label: "拒否", value: "rejected" },
   ];
 
+  // Fetch call log data when page or row limit changes
   useEffect(() => {
     fetchCallLogData();
   }, [page, rowLimit]);
 
+  // Trigger data search
   const searchConditions = () => {
     fetchCallLogData();
   };
 
+  // Fetch call logs based on filters
   const fetchCallLogData = async () => {
     try {
       const response = await CallLogApiService.fetchCallLog(
@@ -126,20 +127,13 @@ function InterpreterEvaluationList() {
     );
   };
 
-  const handleSelectionChange = (
-    selectedData: Array<{ No: string | number; [key: string]: string | number }>
-  ) => {
-    console.log("Selected Data:", selectedData);
-  };
-
+  // Handle page change in pagination
   const handlePageChange = (page: number) => {
-    // setCurrentPage(page); // Update the page state in the parent
-    console.log("Current page in parent:", page);
     setPage(page + 1);
   };
 
+  // Handle row limit change in pagination
   const handleRowsPerPage = (newSelectedData: any) => {
-    console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
@@ -202,7 +196,6 @@ function InterpreterEvaluationList() {
         headers={headers}
         data={tableData}
         maxHeight="calc(82vh - 300px)"
-        onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.actionButtons}>
         <ButtonAtom onClick={searchConditions} label="閲覧" />
