@@ -1,5 +1,5 @@
 // components/Login.tsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginHeader from "../../components/LV3/Header/LoginHeader/LoginHeader";
 import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom";
@@ -15,6 +15,14 @@ const InterpreterLogin: React.FC = () => {
     mail_address: "",
     user_password: "",
   });
+
+  useEffect(() => {
+    if (formData.mail_address && formData.user_password) {
+      setValue("mail_address", formData.mail_address);
+      setValue("user_password", formData.user_password);
+      console.log(144, formData);
+    }
+  }, [formData.mail_address, formData.user_password]);
 
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
@@ -69,6 +77,7 @@ const InterpreterLogin: React.FC = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { isSubmitted },
   } = useForm<UserAuth>();
 

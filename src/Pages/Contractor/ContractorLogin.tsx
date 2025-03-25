@@ -1,5 +1,5 @@
 // components/Login.tsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginHeader from "../../components/LV3/Header/LoginHeader/LoginHeader";
 import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom";
@@ -27,6 +27,14 @@ const ResponderLogin: React.FC = () => {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    if (formData.mail_address && formData.user_password) {
+      setValue("mail_address", formData.mail_address);
+      setValue("user_password", formData.user_password);
+      console.log(144, formData);
+    }
+  }, [formData.mail_address, formData.user_password]);
 
   // Fetch users list and check credentials
   const contractorAuth = async (
@@ -68,6 +76,7 @@ const ResponderLogin: React.FC = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { isSubmitted },
   } = useForm<UserAuth>();
 

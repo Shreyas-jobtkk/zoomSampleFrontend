@@ -29,10 +29,10 @@ function InterpreterEvaluationList() {
     "通訳言語",
   ];
 
+  // State variables
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [rowLimit, setRowLimit] = useState<number>(10);
-
   const [interpreterNo, setIinterpreterNo] = useState<string>("");
   const [interpreterFirstName, setIinterpreterFirstName] = useState<string>("");
   const [interpreterLastName, setIinterpreterLastName] = useState<string>("");
@@ -43,50 +43,46 @@ function InterpreterEvaluationList() {
   const [startDateRangeMin, setStartDateRangeMin] = useState<Date | null>(null);
   const [startDateRangeMax, setStartDateRangeMax] = useState<Date | null>(null);
   const [startDateTimeRangeMin, setStartDateTimeRangeMin] = useState<any>("");
-  // const [startTimeRangeMin, setStartTimeRangeMin] = useState<Date | null>(null);
-  // const [startTimeRangeMax, setStartTimeRangeMax] = useState<Date | null>(null);
   const [endDateTimeRangeMax, setEndDateTimeRangeMax] = useState<any>("");
   const [languagesSupport, setLanguagesSupport] = useState<
     { label: string; value: string | number }[]
   >([]);
-
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
+  const [openContractor, setOpenContractor] = useState(false);
+  const [openInterpreter, setOpenInterpreter] = useState(false);
 
+  // Fetch available languages from the API
   const fetchLanguagesAllNames = async () => {
     try {
       let response = await LanguageApiService.fetchLanguagesAllNames();
-
-      console.log(177, response);
-
       response = response.map((item: LanguageInfo) => ({
         label: item.language_name, // Map 'language_name' to 'label'
         value: item.languages_support_no, // Map 'languages_support_no' to 'value'
       }));
 
       setLanguagesSupport(response);
-
-      // const response = await axios.get(`${apiUrl}/company`);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
-  const [openContractor, setOpenContractor] = useState(false);
-  const [openInterpreter, setOpenInterpreter] = useState(false);
-
+  // Open contractor search modal
   const handleSearchContractor = () => {
     setOpenContractor(true);
   };
 
+  // Fetch call log data when page or row limit changes
   useEffect(() => {
     fetchCallLogData();
     fetchLanguagesAllNames();
   }, [page, rowLimit]);
 
+  // Trigger data search
   const searchConditions = () => {
     fetchCallLogData();
   };
 
+  // Fetch call logs based on filters
   const fetchCallLogData = async () => {
     try {
       const response = await CallLogApiService.fetchCallLog(
@@ -115,9 +111,6 @@ function InterpreterEvaluationList() {
       }));
 
       let videoStartTableData = apiTableData;
-      // .filter(
-      //   (item: any) => item.開始日時
-      // );
 
       videoStartTableData = videoStartTableData.map(
         (item: any, index: number) => ({
@@ -132,6 +125,7 @@ function InterpreterEvaluationList() {
     }
   };
 
+  // Set contractor details from selection
   const setContractorDetails = (value: any) => {
     setOpenContractor(false);
     console.log(1777, value);
@@ -149,8 +143,8 @@ function InterpreterEvaluationList() {
     setOpenInterpreter(true);
   };
 
+  // Open interpreter search modal
   const setInterpreterDetails = (value: any) => {
-    console.log(589, value);
     setOpenInterpreter(false);
 
     if (value && typeof value === "object") {
@@ -197,14 +191,13 @@ function InterpreterEvaluationList() {
     );
   };
 
+  // Handle page change in pagination
   const handlePageChange = (page: number) => {
-    // setCurrentPage(page); // Update the page state in the parent
-    console.log("Current page in parent:", page);
     setPage(page + 1);
   };
 
+  // Handle row limit change in pagination
   const handleRowsPerPage = (newSelectedData: any) => {
-    console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 

@@ -15,6 +15,7 @@ import { CallLogApiService } from "../../api/apiService/callLog/callLog-api-serv
 import { convertToJST, getCallStatus } from "../../utils/utils";
 
 function InterpreterEvaluationList() {
+  // Define table headers for displaying call log data
   const headers = [
     "No",
     "開始日時",
@@ -27,10 +28,10 @@ function InterpreterEvaluationList() {
     "承諾/拒否",
   ];
 
+  // State variables
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [rowLimit, setRowLimit] = useState<number>(10);
-
   const [interpreterNo, setIinterpreterNo] = useState<string>("");
   const [interpreterFirstName, setIinterpreterFirstName] = useState<string>("");
   const [interpreterLastName, setIinterpreterLastName] = useState<string>("");
@@ -41,10 +42,7 @@ function InterpreterEvaluationList() {
   const [startDateRangeMin, setStartDateRangeMin] = useState<Date | null>(null);
   const [startDateRangeMax, setStartDateRangeMax] = useState<Date | null>(null);
   const [startDateTimeRangeMin, setStartDateTimeRangeMin] = useState<any>("");
-  // const [startTimeRangeMin, setStartTimeRangeMin] = useState<Date | null>(null);
-  // const [startTimeRangeMax, setStartTimeRangeMax] = useState<Date | null>(null);
   const [endDateTimeRangeMax, setEndDateTimeRangeMax] = useState<any>("");
-
   const [callStatus, setCallStatus] = useState<string>("");
   let callStatusOptions: { label: string; value: string | number }[] = [
     { label: "Cancel", value: "callCanceled" },
@@ -52,22 +50,25 @@ function InterpreterEvaluationList() {
     { label: "承諾", value: "callAccepted" },
     { label: "拒否", value: "rejected" },
   ];
-
   const [openContractor, setOpenContractor] = useState(false);
   const [openInterpreter, setOpenInterpreter] = useState(false);
 
+  // Open contractor search modal
   const handleSearchContractor = () => {
     setOpenContractor(true);
   };
 
+  // Fetch call log data when page or row limit changes
   useEffect(() => {
     fetchCallLogData();
   }, [page, rowLimit]);
 
+  // Trigger data search
   const searchConditions = () => {
     fetchCallLogData();
   };
 
+  // Fetch call logs based on filters
   const fetchCallLogData = async () => {
     try {
       const response = await CallLogApiService.fetchCallLog(
@@ -113,6 +114,7 @@ function InterpreterEvaluationList() {
     }
   };
 
+  // Set contractor details from selection
   const setContractorDetails = (value: any) => {
     setOpenContractor(false);
     console.log(1777, value);
@@ -130,6 +132,7 @@ function InterpreterEvaluationList() {
     setOpenInterpreter(true);
   };
 
+  // Open interpreter search modal
   const setInterpreterDetails = (value: any) => {
     console.log(589, value);
     setOpenInterpreter(false);
@@ -178,14 +181,13 @@ function InterpreterEvaluationList() {
     );
   };
 
+  // Handle page change in pagination
   const handlePageChange = (page: number) => {
-    // setCurrentPage(page); // Update the page state in the parent
-    console.log("Current page in parent:", page);
     setPage(page + 1);
   };
 
+  // Handle row limit change in pagination
   const handleRowsPerPage = (newSelectedData: any) => {
-    console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 

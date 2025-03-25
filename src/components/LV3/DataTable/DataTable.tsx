@@ -76,11 +76,16 @@ const DataTable: React.FC<DataTableProps> = ({
       sortConfig?.key === header && sortConfig.direction === "asc"
         ? "desc"
         : "asc";
+
     const sorted = [...sortedData].sort((a, b) => {
-      if (a[header] < b[header]) return direction === "asc" ? -1 : 1;
-      if (a[header] > b[header]) return direction === "asc" ? 1 : -1;
+      const aValue = a[header] ?? ""; // Treat null as an empty string or another fallback value
+      const bValue = b[header] ?? "";
+
+      if (aValue < bValue) return direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return direction === "asc" ? 1 : -1;
       return 0;
     });
+
     setSortedData(sorted);
     setSortConfig({ key: header, direction });
   };
