@@ -27,10 +27,10 @@ function InterpreterEvaluationList() {
     "通訳言語",
   ];
 
+  // State variables
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [rowLimit, setRowLimit] = useState<number>(10);
-
   const [contractNo, setContractNo] = useState<string>("");
   const [companyName, setCompanyName] = useState<string>("");
   const [storeName, setStoreName] = useState<string>("");
@@ -38,49 +38,45 @@ function InterpreterEvaluationList() {
   const [startDateRangeMin, setStartDateRangeMin] = useState<Date | null>(null);
   const [startDateRangeMax, setStartDateRangeMax] = useState<Date | null>(null);
   const [startDateTimeRangeMin, setStartDateTimeRangeMin] = useState<any>("");
-  // const [startTimeRangeMin, setStartTimeRangeMin] = useState<Date | null>(null);
-  // const [startTimeRangeMax, setStartTimeRangeMax] = useState<Date | null>(null);
   const [endDateTimeRangeMax, setEndDateTimeRangeMax] = useState<any>("");
   const [languagesSupport, setLanguagesSupport] = useState<
     { label: string; value: string | number }[]
   >([]);
-
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
+  const [openContractor, setOpenContractor] = useState(false);
 
+  // Fetch all supported languages from the API
   const fetchLanguagesAllNames = async () => {
     try {
       let response = await LanguageApiService.fetchLanguagesAllNames();
-
-      console.log(177, response);
-
       response = response.map((item: LanguageInfo) => ({
         label: item.language_name, // Map 'language_name' to 'label'
         value: item.languages_support_no, // Map 'languages_support_no' to 'value'
       }));
 
       setLanguagesSupport(response);
-
-      // const response = await axios.get(`${apiUrl}/company`);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
   };
 
-  const [openContractor, setOpenContractor] = useState(false);
-
+  // Open contractor search modal
   const handleSearchContractor = () => {
     setOpenContractor(true);
   };
 
+  // Fetch call log data and supported languages when page or row limit changes
   useEffect(() => {
     fetchCallLogData();
     fetchLanguagesAllNames();
   }, [page, rowLimit]);
 
+  // Trigger a new search based on conditions
   const searchConditions = () => {
     fetchCallLogData();
   };
 
+  // Fetch call log data from the API
   const fetchCallLogData = async () => {
     try {
       const response = await CallLogApiService.fetchCallLog(
@@ -107,9 +103,6 @@ function InterpreterEvaluationList() {
       }));
 
       let videoStartTableData = apiTableData;
-      // .filter(
-      //   (item: any) => item.開始日時
-      // );
 
       videoStartTableData = videoStartTableData.map(
         (item: any, index: number) => ({
@@ -124,12 +117,13 @@ function InterpreterEvaluationList() {
     }
   };
 
+  // Set contractor details when selected from modal
   const setContractorDetails = (value: any) => {
     setOpenContractor(false);
     console.log(1777, value);
 
     if (value && typeof value === "object") {
-      setContractNo(value["契約者No"] || ""); // Provide a fallback if key is missing
+      setContractNo(value["契約者No"] || "");
       setCompanyName(value["企業名"] || "");
       setStoreName(value["店舗名"] || "");
     } else {
@@ -157,7 +151,6 @@ function InterpreterEvaluationList() {
       "Selected Start Time:",
       newValue ? newValue.format("HH:mm") : "None"
     ); // Log the selected start time
-    // setStartTimeRangeMin(newValue ? newValue.format("HH:mm") : "None");
     setStartDateTimeRangeMin(
       `${startDateRangeMin} ${newValue.format("HH:mm") || "00:00"}`
     );
@@ -165,26 +158,18 @@ function InterpreterEvaluationList() {
 
   // Handle end time change
   const handleEndTimeChange = (newValue: any) => {
-    // setStartTimeRangeMax(newValue ? newValue.format("HH:mm") : "None");
     setEndDateTimeRangeMax(
       `${startDateRangeMax} ${newValue.format("HH:mm") || "00:00"}`
     );
   };
 
-  const handleSelectionChange = (
-    selectedData: Array<{ No: string | number; [key: string]: string | number }>
-  ) => {
-    console.log("Selected Data:", selectedData);
-  };
-
+  // Handle page change in the pagination component
   const handlePageChange = (page: number) => {
-    // setCurrentPage(page); // Update the page state in the parent
-    console.log("Current page in parent:", page);
     setPage(page + 1);
   };
 
+  // Handle rows per page change in the pagination component
   const handleRowsPerPage = (newSelectedData: any) => {
-    console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
@@ -279,7 +264,6 @@ function InterpreterEvaluationList() {
         headers={headers}
         data={tableData}
         maxHeight="calc(82vh - 300px)"
-        onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.actionButtons}>
         <ButtonAtom onClick={searchConditions} label="閲覧" />

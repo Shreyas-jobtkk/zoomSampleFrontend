@@ -10,11 +10,11 @@ import DataTable from "../../components/LV3/DataTable/DataTable";
 import DataTableControler from "../../components/LV3/DataTable/DataTableControler";
 import classes from "../../styles/InterpreterEntities.module.scss";
 import ContractorSearch from "../../dialog/UserSearch/ContractorSearch";
-// import InterpreterSearch from "../User/Interpreter/InterpreterSearch";
 import { CallLogApiService } from "../../api/apiService/callLog/callLog-api-service";
 import { convertToJST, getCallStatus } from "../../utils/utils";
 
 function InterpreterEvaluationList() {
+  // Define table headers for displaying call log data
   const headers = [
     "No",
     "開始日時",
@@ -25,10 +25,10 @@ function InterpreterEvaluationList() {
     "承諾/拒否",
   ];
 
+  // State variables
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [rowLimit, setRowLimit] = useState<number>(10);
-
   const [contractNo, setContractNo] = useState<string>("");
   const [companyName, setCompanyName] = useState<string>("");
   const [storeName, setStoreName] = useState<string>("");
@@ -39,7 +39,6 @@ function InterpreterEvaluationList() {
   // const [startTimeRangeMin, setStartTimeRangeMin] = useState<Date | null>(null);
   // const [startTimeRangeMax, setStartTimeRangeMax] = useState<Date | null>(null);
   const [endDateTimeRangeMax, setEndDateTimeRangeMax] = useState<any>("");
-
   const [callStatus, setCallStatus] = useState<string>("");
   let callStatusOptions: { label: string; value: string | number }[] = [
     { label: "Cancel", value: "callCanceled" },
@@ -47,21 +46,24 @@ function InterpreterEvaluationList() {
     { label: "承諾", value: "callAccepted" },
     { label: "拒否", value: "rejected" },
   ];
-
   const [openContractor, setOpenContractor] = useState(false);
 
+  // Open contractor search modal
   const handleSearchContractor = () => {
     setOpenContractor(true);
   };
 
+  // Fetch call log data when page or row limit changes
   useEffect(() => {
     fetchCallLogData();
   }, [page, rowLimit]);
 
+  // Trigger data search
   const searchConditions = () => {
     fetchCallLogData();
   };
 
+  // Fetch call logs based on filters
   const fetchCallLogData = async () => {
     try {
       const response = await CallLogApiService.fetchCallLog(
@@ -105,6 +107,7 @@ function InterpreterEvaluationList() {
     }
   };
 
+  // Set contractor details from selection
   const setContractorDetails = (value: any) => {
     setOpenContractor(false);
     console.log(1777, value);
@@ -152,20 +155,13 @@ function InterpreterEvaluationList() {
     );
   };
 
-  const handleSelectionChange = (
-    selectedData: Array<{ No: string | number; [key: string]: string | number }>
-  ) => {
-    console.log("Selected Data:", selectedData);
-  };
-
+  // Handle page change in pagination
   const handlePageChange = (page: number) => {
-    // setCurrentPage(page); // Update the page state in the parent
-    console.log("Current page in parent:", page);
     setPage(page + 1);
   };
 
+  // Handle row limit change in pagination
   const handleRowsPerPage = (newSelectedData: any) => {
-    console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
@@ -260,7 +256,6 @@ function InterpreterEvaluationList() {
         headers={headers}
         data={tableData}
         maxHeight="calc(82vh - 300px)"
-        onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.actionButtons}>
         <ButtonAtom onClick={searchConditions} label="閲覧" />

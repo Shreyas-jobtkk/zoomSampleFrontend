@@ -165,22 +165,13 @@ function InterpreterEvaluationList() {
     );
   };
 
-  // Handle row selection in the table
-  const handleSelectionChange = (
-    selectedData: Array<{ No: string | number; [key: string]: string | number }>
-  ) => {
-    console.log("Selected Data:", selectedData);
-  };
-
   // Handle page change in the pagination component
   const handlePageChange = (page: number) => {
-    console.log("Current page in parent:", page);
     setPage(page + 1);
   };
 
   // Handle rows per page change in the pagination component
   const handleRowsPerPage = (newSelectedData: any) => {
-    console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
@@ -275,7 +266,6 @@ function InterpreterEvaluationList() {
         headers={headers}
         data={tableData}
         maxHeight="calc(82vh - 300px)"
-        onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.actionButtons}>
         <ButtonAtom onClick={searchConditions} label="閲覧" />
