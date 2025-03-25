@@ -1,6 +1,9 @@
 import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
+/**
+ * Restores multiple languages by sending their company numbers to the API.
+ */
 export const restoreLanguages = async (language_nos: number[]) => {
   try {
     const response = await api.put(`/${LANGUAGE_ENDPOINT}/restore`, {

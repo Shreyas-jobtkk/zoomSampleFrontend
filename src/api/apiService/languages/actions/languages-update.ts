@@ -2,6 +2,9 @@
 import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
+/**
+ * Updates a language details by sending a PUT request to the API.
+ */
 export const updateLanguage = async (
   language_no: string | number,
   languageName: string,

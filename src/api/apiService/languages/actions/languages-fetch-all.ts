@@ -2,6 +2,9 @@
 import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
+/**
+ * Fetches all languages details by sending a GET request to the API.
+ */
 export const fetchLanguagesAll = async (
   page: number | string,
   limit: number | string,

@@ -2,6 +2,9 @@
 import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
+/**
+ * Fetches a single language details by sending a GET request to the API.
+ */
 export const fetchLanguage = async (language_no: number) => {
   try {
     const response = await api.get(`/${LANGUAGE_ENDPOINT}/${language_no}`);

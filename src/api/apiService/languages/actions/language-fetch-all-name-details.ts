@@ -1,6 +1,9 @@
 import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
+/**
+ * Fetches the details of Languages names by sending a GET request to the API.
+ */
 export const fetchLanguagesAllNames = async () => {
   try {
     // Use the /names endpoint to fetch only language_name and languages_support_no

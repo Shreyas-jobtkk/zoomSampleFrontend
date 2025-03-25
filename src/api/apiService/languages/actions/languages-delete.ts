@@ -2,6 +2,9 @@
 import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
+/**
+ * Deletes languages by sending a DELETE request to the API.
+ */
 export const deleteLanguages = async (language_nos: number[]) => {
   try {
     const response = await api.delete(`/${LANGUAGE_ENDPOINT}`, {

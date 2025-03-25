@@ -2,6 +2,9 @@
 import { LANGUAGE_ENDPOINT } from "../languages-api-definitions";
 import api from "../../../index";
 
+/**
+ * Creates a new language by sending a POST request to the API.
+ */
 export const createLanguage = async (
   languageName: string,
   languageNameFurigana: string,
