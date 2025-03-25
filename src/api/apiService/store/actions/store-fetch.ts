@@ -2,8 +2,10 @@
 import { STORE_ENDPOINT } from "../store-api-definitions";
 import api from "../../../index";
 
+/**
+ * Fetches a single store details by sending a GET request to the API.
+ */
 export const fetchStore = async (store: number) => {
-  console.log(1466);
   try {
     const response = await api.get(`/${STORE_ENDPOINT}/${store}`);
     return response.data;

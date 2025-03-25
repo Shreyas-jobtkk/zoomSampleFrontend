@@ -2,6 +2,9 @@
 import { STORE_ENDPOINT } from "../store-api-definitions";
 import api from "../../../index";
 
+/**
+ * Updates a store details by sending a PUT request to the API.
+ */
 export const updateStore = async (
   company_no: string,
   store_name: string,
@@ -42,7 +45,7 @@ export const updateStore = async (
     if (error instanceof Error) {
       throw new Error("Failed to update: " + error.message);
     } else {
-      throw new Error("An unknown error occurred while updating the company");
+      throw new Error("An unknown error occurred while updating the store");
     }
   }
 };

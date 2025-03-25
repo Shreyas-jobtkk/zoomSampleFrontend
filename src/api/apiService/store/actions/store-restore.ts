@@ -1,6 +1,9 @@
 import { STORE_ENDPOINT } from "../store-api-definitions";
 import api from "../../../index";
 
+/**
+ * Restores multiple stores by sending their company numbers to the API.
+ */
 export const restoreStores = async (store_nos: number[]) => {
   try {
     const response = await api.put(`/${STORE_ENDPOINT}/restore`, {

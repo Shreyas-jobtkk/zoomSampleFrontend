@@ -1,6 +1,9 @@
 import { STORE_ENDPOINT } from "../store-api-definitions";
 import api from "../../../index";
 
+/**
+ * Fetches the details of store names by sending a GET request to the API.
+ */
 export const fetchStoreNamesByCompany = async (companyNo: string) => {
   try {
     // Adjusted the endpoint to match the backend route

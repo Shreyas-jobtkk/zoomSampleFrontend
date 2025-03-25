@@ -2,7 +2,9 @@
 import { STORE_ENDPOINT } from "../store-api-definitions"; // Define the correct endpoint here
 import api from "../../../index"; // Assuming you're using a central API file to configure axios
 
-// Create store function
+/**
+ * Creates a new store by sending a POST request to the API.
+ */
 export const createStore = async (
   company_no: string,
   store_name: string,

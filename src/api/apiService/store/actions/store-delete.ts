@@ -2,6 +2,9 @@
 import { STORE_ENDPOINT } from "../store-api-definitions";
 import api from "../../../index";
 
+/**
+ * Deletes Stores by sending a DELETE request to the API.
+ */
 export const deleteStores = async (store_nos: number[]) => {
   console.log(139, store_nos); // You can remove this line in production
 

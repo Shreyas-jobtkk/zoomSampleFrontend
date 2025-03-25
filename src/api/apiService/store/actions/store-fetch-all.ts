@@ -2,6 +2,9 @@
 import { STORE_ENDPOINT } from "../store-api-definitions";
 import api from "../../../index";
 
+/**
+ * Fetches all store details by sending a GET request to the API.
+ */
 export const fetchStoreAll = async (
   page: number,
   limit: number,
