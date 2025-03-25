@@ -1,6 +1,9 @@
 import { COMPANY_ENDPOINT } from "../company-api-definitions";
 import api from "../../../index";
 
+/**
+ * Fetches the details of company names by sending a GET request to the API.
+ */
 export const fetchCompaniesNameDetails = async () => {
   try {
     const response = await api.get(`${COMPANY_ENDPOINT}/names`);

@@ -1,7 +1,9 @@
-// todo-create.ts
 import { COMPANY_ENDPOINT } from "../company-api-definitions";
 import api from "../../../index";
 
+/**
+ * Creates a new company by sending a POST request to the API.
+ */
 export const createCompany = async (
   companyName: string,
   companyNameFurigana: string,

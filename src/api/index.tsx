@@ -12,4 +12,3 @@ const api = axios.create({
 });
 
 export default api;
-// export * from "./apiService/company/company-api-service";

@@ -2,6 +2,9 @@
 import { COMPANY_ENDPOINT } from "../company-api-definitions";
 import api from "../../../index";
 
+/**
+ * Fetches a single company's details by sending a GET request to the API.
+ */
 export const fetchCompany = async (company_no: number) => {
   try {
     const response = await api.get(`/${COMPANY_ENDPOINT}/${company_no}`);

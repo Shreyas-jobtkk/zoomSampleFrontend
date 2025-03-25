@@ -2,6 +2,9 @@
 import { COMPANY_ENDPOINT } from "../company-api-definitions";
 import api from "../../../index";
 
+/**
+ * Updates a company's details by sending a PUT request to the API.
+ */
 export const updateCompany = async (
   id: string,
   companyName: string,

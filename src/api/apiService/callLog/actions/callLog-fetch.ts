@@ -1,8 +1,8 @@
 // todo-create.ts
 import { CALLLOG_ENDPOINT } from "../callLog-api-definitions";
-
 import api from "../../../index";
 
+// fetch a call log entry by sending a GET request to the API.
 export const fetchCallLog = async (
   page: number,
   limit: number,

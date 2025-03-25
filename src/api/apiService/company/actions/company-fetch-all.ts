@@ -2,6 +2,9 @@
 import { COMPANY_ENDPOINT } from "../company-api-definitions";
 import api from "../../../index";
 
+/**
+ * Fetches all company details by sending a GET request to the API.
+ */
 export const fetchCompaniesAll = async (
   page: number | string,
   limit: number | string,

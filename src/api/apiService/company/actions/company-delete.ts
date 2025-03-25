@@ -1,10 +1,10 @@
-// todo-create.ts
 import { COMPANY_ENDPOINT } from "../company-api-definitions";
 import api from "../../../index";
 
+/**
+ * Deletes companies by sending a DELETE request to the API.
+ */
 export const deleteCompanies = async (company_nos: number[]) => {
-  console.log(139, company_nos);
-
   try {
     const response = await api.delete(`/${COMPANY_ENDPOINT}`, {
       data: { company_nos }, // Pass the array in the request body

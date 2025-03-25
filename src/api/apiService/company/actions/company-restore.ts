@@ -1,10 +1,10 @@
-// todo-create.ts
 import { COMPANY_ENDPOINT } from "../company-api-definitions";
 import api from "../../../index";
 
+/**
+ * Restores multiple companies by sending their company numbers to the API.
+ */
 export const restoreCompanies = async (company_nos: number[]) => {
-  console.log(139, company_nos);
-
   try {
     const response = await api.put(`/${COMPANY_ENDPOINT}/restore`, {
       company_nos,

@@ -2,6 +2,7 @@
 import { CALLLOG_ENDPOINT } from "../callLog-api-definitions";
 import api from "../../../index";
 
+// Creates a call log entry by sending a POST request to the API.
 export const createCallLog = async (
   interpreterNo: number | null,
   languagesSupportNo: number,
@@ -13,7 +14,6 @@ export const createCallLog = async (
   callStatus: string | null,
   feedBack: number | null
 ) => {
-  console.log(2189);
   try {
     const response = await api.post(CALLLOG_ENDPOINT, {
       interpreter_no: interpreterNo,
