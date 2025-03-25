@@ -218,11 +218,6 @@ function InterpreterEvaluationList() {
         data={tableData}
         maxHeight="calc(82vh - 300px)"
       />
-      <Box className={classes.actionButtons}>
-        <ButtonAtom onClick={searchConditions} label="閲覧" />
-        <ButtonAtom onClick={searchConditions} label="編集" />
-        <ButtonAtom onClick={searchConditions} label="削除" />
-      </Box>
     </Box>
   );
 }
