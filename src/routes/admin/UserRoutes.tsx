@@ -4,9 +4,9 @@ import UserCreate from "../../Pages/Admin/User/UserCreate";
 import UserUpdate from "../../Pages/Admin/User/UserUpdate";
 import UserUpdateConfirm from "../../Pages/Admin/User/UserUpdateConfirm";
 import ProtectedRoutes from "../ProtectedRoute";
-import AdministratorList from "../../Pages/Admin/User/AdministratorList";
-import InterpretersList from "../../Pages/Admin/User/InterpretersList";
-import ContractorList from "../../Pages/Admin/User/ContractorList";
+import AdministratorList from "../../Pages/Admin/User/List/AdministratorList";
+import InterpretersList from "../../Pages/Admin/User/List/InterpretersList";
+import ContractorList from "../../Pages/Admin/User/List/ContractorList";
 
 const { ProtectedAdminRoute } = ProtectedRoutes;
 
