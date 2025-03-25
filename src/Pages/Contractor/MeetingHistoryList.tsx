@@ -12,7 +12,7 @@ import classes from "../../styles/ContractorEntities.module.scss";
 import { CallLogApiService } from "../../api/apiService/callLog/callLog-api-service";
 import { convertToJST } from "../../utils/utils";
 import { LanguageApiService } from "../../api/apiService/languages/languages-api-service";
-import { LanguageInfo } from "../../types/LanguageTypes/LanguageTypes";
+import { LanguageInfo } from "../../types/LanguageTypes";
 
 function InterpreterEvaluationList() {
   const headers = [

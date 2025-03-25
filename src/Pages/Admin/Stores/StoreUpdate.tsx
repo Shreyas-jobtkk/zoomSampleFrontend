@@ -16,9 +16,9 @@ import { StoreApiService } from "../../../api/apiService/store/store-api-service
 import ValidationInputField from "../../../components/LV1/Validation/ValidationInputField";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { StoreInfoFormValues } from "../../../types/StoreTypes/StoreTypes";
+import { StoreInfoFormValues } from "../../../types/StoreTypes";
 import { convertToJST } from "../../../utils/utils";
-import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
+import { CompanyInfo } from "../../../types/CompanyTypes";
 import classes from "../../../styles/StoreList.module.scss";
 
 function StoreUpdate() {

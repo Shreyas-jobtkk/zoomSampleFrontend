@@ -7,7 +7,7 @@ import classes from "../../../styles/Companies.module.scss";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
 import TextAreaWithLabel from "../../../components/LV1/TextArea/TextAreaWithLabel";
-import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
+import { CompanyInfo } from "../../../types/CompanyTypes";
 import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
 
 function CompanyUpdateConfirm() {

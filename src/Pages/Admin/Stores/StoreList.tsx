@@ -9,9 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
 import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
 import { StoreApiService } from "../../../api/apiService/store/store-api-service";
-import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
+import { StoreInfo } from "../../../types/StoreTypes";
 import SelectableModal from "../../../components/LV1/SelectableModal/SelectableModal";
-import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
+import { CompanyInfo } from "../../../types/CompanyTypes";
 import classes from "../../../styles/AdminEntities.module.scss";
 import DataTableControler from "../../../components/LV3/DataTable/DataTableControler";
 

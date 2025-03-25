@@ -8,7 +8,7 @@ import classes from "../../../styles/User.module.scss";
 import NumberInput from "../../../components/LV1/NumberInput/NumberInput";
 import TextAreaWithLabel from "../../../components/LV1/TextArea/TextAreaWithLabel";
 import { UserApiService } from "../../../api/apiService/user/user-api-service";
-import { UserInfo } from "../../../types/UserTypes/UserTypes";
+import { UserInfo } from "../../../types/UserTypes";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
 import { useForm } from "react-hook-form";
 import { StoreApiService } from "../../../api/apiService/store/store-api-service";
@@ -17,9 +17,9 @@ import SelectableModal from "../../../components/LV1/SelectableModal/SelectableM
 import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";
 import ValidationInputField from "../../../components/LV1/Validation/ValidationInputField";
 import ValidateSelectMultipleOptions from "../../../components/LV1/Validation/validateMultipleOptions";
-import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
-import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
-import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
+import { CompanyInfo } from "../../../types/CompanyTypes";
+import { StoreInfo } from "../../../types/StoreTypes";
+import { LanguageInfo } from "../../../types/LanguageTypes";
 import { getUserTitle } from "../../../utils/userTitle"; // Adjust the path as necessary
 import { useNavigate, useSearchParams } from "react-router-dom";
 

@@ -6,7 +6,7 @@ import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
 import classes from "../../../styles/Companies.module.scss";
 import { useForm } from "react-hook-form";
 import ValidationInputField from "../../../components/LV1/Validation/ValidationInputField";
-import { CompanyCreateFormValues } from "../../../types/CompanyTypes/CompanyTypes";
+import { CompanyCreateFormValues } from "../../../types/CompanyTypes";
 import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
 import TextAreaWithLabel from "../../../components/LV1/TextArea/TextAreaWithLabel";
 import { useNavigate } from "react-router-dom";

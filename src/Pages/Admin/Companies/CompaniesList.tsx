@@ -9,7 +9,7 @@ import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
 import TextBoxWithLabel from "../../../components/LV1/TextBox/TextBoxWithLabel";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
 import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
-import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
+import { CompanyInfo } from "../../../types/CompanyTypes";
 import classes from "../../../styles/AdminEntities.module.scss";
 
 function CompaniesList() {

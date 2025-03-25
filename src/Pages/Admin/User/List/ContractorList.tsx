@@ -7,13 +7,13 @@ import DataTable from "../../../../components/LV3/DataTable/DataTable";
 import DataTableControler from "../../../../components/LV3/DataTable/DataTableControler";
 import { useNavigate } from "react-router-dom";
 import { UserApiService } from "../../../../api/apiService/user/user-api-service";
-import { UserInfo } from "../../../../types/UserTypes/UserTypes";
+import { UserInfo } from "../../../../types/UserTypes";
 import { convertToJST, deleteStatus } from "../../../../utils/utils";
 import { DataTableRow } from "../../../../components/LV3/DataTable/DataTable";
 import SelectableModal from "../../../../components/LV1/SelectableModal/SelectableModal";
-import { CompanyInfo } from "../../../../types/CompanyTypes/CompanyTypes";
+import { CompanyInfo } from "../../../../types/CompanyTypes";
 import { CompanyApiService } from "../../../../api/apiService/company/company-api-service";
-import { StoreInfo } from "../../../../types/StoreTypes/StoreTypes";
+import { StoreInfo } from "../../../../types/StoreTypes";
 import { StoreApiService } from "../../../../api/apiService/store/store-api-service";
 import classes from "../../../../styles/AdminEntities.module.scss";
 

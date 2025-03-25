@@ -12,7 +12,7 @@ import { CompanyApiService } from "../../../api/apiService/company/company-api-s
 import {
   CompanyCreateFormValues,
   CompanyInfo,
-} from "../../../types/CompanyTypes/CompanyTypes";
+} from "../../../types/CompanyTypes";
 import ValidationInputField from "../../../components/LV1/Validation/ValidationInputField";
 
 function CompanyUpdate() {

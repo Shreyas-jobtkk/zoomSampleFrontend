@@ -10,7 +10,7 @@ import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom.js";
 import { Box } from "@mui/material";
 import classes from "../../styles/ContractorEntities.module.scss";
 import { LanguageApiService } from "../../api/apiService/languages/languages-api-service.js";
-import { LanguageInfo } from "../../types/LanguageTypes/LanguageTypes.js";
+import { LanguageInfo } from "../../types/LanguageTypes.js";
 import { ZoomMtg } from "@zoom/meetingsdk";
 import { CallLogApiService } from "../../api/apiService/callLog/callLog-api-service.js";
 

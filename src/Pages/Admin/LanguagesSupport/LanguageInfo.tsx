@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
 import classes from "../../../styles/LanguagesList.module.scss";
-import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
+import { LanguageInfo } from "../../../types/LanguageTypes";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";
 import TextAreaWithLabel from "../../../components/LV1/TextArea/TextAreaWithLabel";

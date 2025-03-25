@@ -10,8 +10,8 @@ import MultipleOptionsSelect from "../../../components/LV1/SelectOption/Multiple
 import NumberInput from "../../../components/LV1/NumberInput/NumberInput";
 import TextAreaWithLabel from "../../../components/LV1/TextArea/TextAreaWithLabel";
 import { UserApiService } from "../../../api/apiService/user/user-api-service";
-import { UserInfo } from "../../../types/UserTypes/UserTypes";
-import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
+import { UserInfo } from "../../../types/UserTypes";
+import { LanguageInfo } from "../../../types/LanguageTypes";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
 import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";
 import { getUserTitle } from "../../../utils/userTitle"; // Adjust the path as necessary

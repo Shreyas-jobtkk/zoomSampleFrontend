@@ -6,7 +6,7 @@ import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
 import classes from "../../../styles/LanguagesList.module.scss";
 import { useForm } from "react-hook-form";
 import ValidationInputField from "../../../components/LV1/Validation/ValidationInputField";
-import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
+import { LanguageInfo } from "../../../types/LanguageTypes";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";

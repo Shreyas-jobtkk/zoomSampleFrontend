@@ -5,7 +5,7 @@ import MenuHeader from "../../../components/LV3/Header/MenuHeader/MenuHeader";
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../../components/LV3/DataTable/DataTable";
 // import "./AdminMenu.scss";
-import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
+import { LanguageInfo } from "../../../types/LanguageTypes";
 import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";
 import { convertToJST, deleteStatus } from "../../../utils/utils";
 import { useState, useEffect } from "react";

@@ -14,11 +14,11 @@ import { StoreApiService } from "../../../api/apiService/store/store-api-service
 import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";
 import ValidateSelectMultipleOptions from "../../../components/LV1/Validation/validateMultipleOptions";
 import TextAreaWithLabel from "../../../components/LV1/TextArea/TextAreaWithLabel";
-import { UserCreateFormValues } from "../../../types/UserTypes/UserTypes";
+import { UserCreateFormValues } from "../../../types/UserTypes";
 import { UserApiService } from "../../../api/apiService/user/user-api-service";
-import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
-import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
-import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
+import { CompanyInfo } from "../../../types/CompanyTypes";
+import { StoreInfo } from "../../../types/StoreTypes";
+import { LanguageInfo } from "../../../types/LanguageTypes";
 import { getUserTitle } from "../../../utils/userTitle"; // Adjust the path as necessary
 import { useNavigate, useSearchParams } from "react-router-dom";
 

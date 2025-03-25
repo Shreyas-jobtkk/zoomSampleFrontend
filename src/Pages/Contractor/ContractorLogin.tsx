@@ -7,7 +7,7 @@ import { Box } from "@mui/material";
 import { UserApiService } from "../../api/apiService/user/user-api-service";
 import ValidationInputField from "../../components/LV1/Validation/ValidationInputField";
 import { useForm } from "react-hook-form";
-import { UserAuth } from "../../types/UserTypes/UserTypes";
+import { UserAuth } from "../../types/UserTypes";
 import classes from "../../styles/Login.module.scss";
 
 const ResponderLogin: React.FC = () => {
