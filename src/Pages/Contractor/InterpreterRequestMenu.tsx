@@ -27,7 +27,6 @@ function UserMenu() {
   const isCallCanceledRef = useRef<boolean>(false);
   const contractorNo = Number(sessionStorage.getItem("contractorNo"));
   const interpreterNoRef = useRef<number | null>(null);
-  // const [interpreterNo, setInterpreterNo] = useState<number | null>(null);
   const [selectedLanguageNo, setSelectedLanguageNo] = useState(() => {
     return localStorage.getItem("selectedLanguage") || "1";
   });
@@ -35,9 +34,6 @@ function UserMenu() {
 
   const startMeeting = (signature: string) => {
     document.getElementById("zmmtg-root")!.style.display = "block";
-
-    // let zoomCallStart: null | Date;
-    // let interpreterNo: null | number = interpreterNoRef.current;
 
     ZoomMtg.init({
       leaveUrl: `${import.meta.env.VITE_REACT_APP_URL}/Contractor/CallingMenu`,
@@ -69,8 +65,6 @@ function UserMenu() {
             );
 
             ZoomMtg.inMeetingServiceListener("onUserJoin", function () {
-              // zoomCallStart = new Date();
-              // setCallStart(new Date());
               callStartRef.current = new Date();
             });
 
@@ -229,9 +223,9 @@ function UserMenu() {
     socket.on("interpreterServerResponse", (data) => {
       if (data.contractorNo == contractorNo && data.response == "accepted") {
         isCallAcceptedRef.current = true;
-        // setInterpreterNo(data.interpreterNumber);
         interpreterNoRef.current = Number(data.interpreterNumber);
         console.log(1787, interpreterNoRef.current);
+        stopRingtone();
         startMeeting(data.signature.signature);
       }
     });
@@ -267,7 +261,6 @@ function UserMenu() {
   };
 
   const stopRingtone = () => {
-    // setCallCancel(new Date());
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0; // Reset playback to the start

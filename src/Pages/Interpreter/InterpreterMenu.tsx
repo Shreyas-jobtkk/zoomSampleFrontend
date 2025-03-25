@@ -1,11 +1,6 @@
-import {
-  useEffect,
-  useState,
-  // useRef
-} from "react";
+import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { ZoomMtg } from "@zoom/meetingsdk";
-// import ringtoneFile from "../../ringtone.mp3";
 import { useLocation } from "react-router-dom";
 import MenuHeader from "../../components/LV3/Header/MenuHeader/MenuHeader";
 import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom";
@@ -80,12 +75,6 @@ function InterpreterLogin() {
       },
     });
   };
-
-  console.log(
-    33,
-    "interpreterNo",
-    Number(sessionStorage.getItem("interpreterNo"))
-  );
 
   const [status, setStatus] = useState("inactive"); // State to hold the selected status
 
@@ -182,30 +171,6 @@ function InterpreterLogin() {
   return (
     <Box>
       <MenuHeader title="通訳者メニュー" />
-      {/* <Box>
-        {isPlaying && (
-          <ButtonAtom
-            onClick={getSignature}
-            label="Ringing"
-            width="100px"
-          />
-        )}
-      </Box> */}
-      {/* {!isPlaying && ( // Hide the Box if isPlaying is true
-
-          <Box>
-            <label htmlFor="status">Select Status:</label>
-            <select id="status" value={status} onChange={handleChange}>
-              <option value="inactive">Inactive</option>
-              <option value="active">Active</option>
-            </select>    
-          </Box>
-        )} */}
-      {status && <p>Selected Status: {status}</p>}
-
-      {/* <Box>languages:{message.languages_known}</Box>
-        <Box>terminal_id:{message.terminal_id}</Box> */}
-
       <Box className={classes.interpreterMenuContainer}>
         <Box className={classes.navigateButtons}>
           <ButtonAtom
