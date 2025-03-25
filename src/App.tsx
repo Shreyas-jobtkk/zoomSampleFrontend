@@ -1,31 +1,16 @@
 // App.tsx
 import React from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import AppRoutes from "./routes";
 import "./App.scss";
-import { List } from "@mui/material";
+
+import NavBar from "./components/NavBar";
 
 const App: React.FC = () => {
   return (
     <Router>
       <nav>
-        <List className="app-nav-bar">
-          <li>
-            <Link to="/Contractor/login">契約者</Link>
-          </li>
-          <li>
-            <Link to="/Interpreter/login">通訳者</Link>
-          </li>
-          <li>
-            <Link to="/Admin/login">管理者</Link>
-          </li>
-          <li>
-            <Link to="/zoomApiMeetingsJoin">Join</Link>
-          </li>
-          <li>
-            <Link to="/zoomApiMeetingsHost">Host</Link>
-          </li>
-        </List>
+        <NavBar />
       </nav>
       <AppRoutes />
     </Router>
