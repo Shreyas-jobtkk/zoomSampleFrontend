@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, MutableRefObject } from "react";
 import io from "socket.io-client";
-import ringtone from "../ringtone.mp3";
+import ringtone from "../../components/ringtone.mp3";
 import { apiUrl } from "../../apiUrl.js";
 import MenuHeader from "../../components/LV3/Header/MenuHeader/MenuHeader.js";
 import RadioButtonGroupRound from "../../components/LV1/RadioButton/RadioButtonGroupRound.js";
