@@ -15,8 +15,8 @@ import { StoreApiService } from "../../../api/apiService/store/store-api-service
 import { CompanyApiService } from "../../../api/apiService/company/company-api-service";
 import SelectableModal from "../../../components/LV1/SelectableModal/SelectableModal";
 import { LanguageApiService } from "../../../api/apiService/languages/languages-api-service";
-import ValidationInputField from "../../../components/LV1/ValidationInputField/ValidationInputField";
-import ValidateSelectMultipleOptions from "../../../components/LV1/SelectOption/validateMultipleOptions";
+import ValidationInputField from "../../../components/LV1/Validation/ValidationInputField";
+import ValidateSelectMultipleOptions from "../../../components/LV1/Validation/validateMultipleOptions";
 import { CompanyInfo } from "../../../types/CompanyTypes/CompanyTypes";
 import { StoreInfo } from "../../../types/StoreTypes/StoreTypes";
 import { LanguageInfo } from "../../../types/LanguageTypes/LanguageTypes";
@@ -58,8 +58,6 @@ function UserUpdate() {
     password_expire: "",
     user_password: "",
     user_password_confirm: "",
-    // meeting_id: null,
-    // meeting_passcode: null,
     user_note: "",
     updated_at: "",
     created_at: "",
@@ -224,8 +222,6 @@ function UserUpdate() {
         translate_languages,
         password_expire,
         user_password,
-        // meeting_id,
-        // meeting_passcode,
         user_note,
         updated_at,
         created_at,
@@ -255,8 +251,6 @@ function UserUpdate() {
         password_expire,
         user_password,
         user_password_confirm: user_password,
-        // meeting_id,
-        // meeting_passcode,
         user_note,
         updated_at,
         created_at,
@@ -280,8 +274,6 @@ function UserUpdate() {
       setValue("translate_languages", apiFormData.translate_languages);
       setValue("user_password", apiFormData.user_password);
       setValue("user_password_confirm", apiFormData.user_password);
-      // setValue("meeting_id", apiFormData.meeting_id);
-      // setValue("meeting_passcode", apiFormData.meeting_passcode);
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
@@ -345,8 +337,6 @@ function UserUpdate() {
       tel_extension: `${user.tel_extension}`, // Merge fax parts
       translate_languages: user.translate_languages,
       user_password: user.user_password,
-      // meeting_id: user.meeting_id,
-      // meeting_passcode: user.meeting_passcode,
       password_expire: user.password_expire,
       user_note: user.user_note,
     };
@@ -392,8 +382,6 @@ function UserUpdate() {
       formData.tel_extension,
       formData.user_note,
       formData.translate_languages,
-      // formData.meeting_id,
-      // formData.meeting_passcode,
       formData.store_no
     );
     navigate(

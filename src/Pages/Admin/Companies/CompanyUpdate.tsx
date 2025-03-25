@@ -13,7 +13,7 @@ import {
   CompanyCreateFormValues,
   CompanyInfo,
 } from "../../../types/CompanyTypes/CompanyTypes";
-import ValidationInputField from "../../../components/LV1/ValidationInputField/ValidationInputField";
+import ValidationInputField from "../../../components/LV1/Validation/ValidationInputField";
 
 function CompanyUpdate() {
   // Extract query parameters from the URL

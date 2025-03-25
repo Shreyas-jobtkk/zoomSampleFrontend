@@ -33,7 +33,7 @@ const NavRoutes = () => (
         }
       />
       <Route
-        path="/Contractor/CallingMenu"
+        path="/Contractor/InterpretRequest"
         element={<ProtectedContractRoute element={<ContractorCallingMenu />} />}
       />
     </Routes>

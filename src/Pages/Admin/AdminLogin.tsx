@@ -5,7 +5,7 @@ import LoginHeader from "../../components/LV3/Header/LoginHeader/LoginHeader";
 import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom";
 import { Box } from "@mui/material";
 import { UserApiService } from "../../api/apiService/user/user-api-service";
-import ValidationInputField from "../../components/LV1/ValidationInputField/ValidationInputField";
+import ValidationInputField from "../../components/LV1/Validation/ValidationInputField";
 import { useForm } from "react-hook-form";
 import { UserAuth } from "../../types/UserTypes/UserTypes";
 import classes from "../../styles/Login.module.scss";

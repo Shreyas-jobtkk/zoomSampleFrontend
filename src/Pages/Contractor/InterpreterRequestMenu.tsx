@@ -36,7 +36,9 @@ function UserMenu() {
     document.getElementById("zmmtg-root")!.style.display = "block";
 
     ZoomMtg.init({
-      leaveUrl: `${import.meta.env.VITE_REACT_APP_URL}/Contractor/CallingMenu`,
+      leaveUrl: `${
+        import.meta.env.VITE_REACT_APP_URL
+      }/Contractor/InterpretRequest`,
       loginWindow: {
         width: "100", // Set your desired width as a string
         height: "380", // Set your desired height as a string

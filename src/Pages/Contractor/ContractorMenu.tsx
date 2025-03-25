@@ -12,7 +12,7 @@ function ResponderMenu() {
 
   const navigateToUserMenu = () => {
     // Navigate to UserMenu and pass the message data along
-    navigate("/Contractor/CallingMenu", {
+    navigate("/Contractor/InterpretRequest", {
       state: { message },
     });
   };

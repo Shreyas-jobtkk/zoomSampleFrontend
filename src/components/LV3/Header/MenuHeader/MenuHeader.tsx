@@ -1,7 +1,6 @@
 // Header.tsx
 import React from "react";
 import Typography from "@mui/material/Typography";
-import classes from "../styles/Header.module.scss";
 
 interface MenuHeaderProps {
   title: string;
@@ -9,7 +8,7 @@ interface MenuHeaderProps {
 
 const MenuHeader: React.FC<MenuHeaderProps> = ({ title }) => {
   return (
-    <Typography variant="h5" className={classes.headerTitle}>
+    <Typography variant="h5" className="header-title">
       {title}
     </Typography>
   );

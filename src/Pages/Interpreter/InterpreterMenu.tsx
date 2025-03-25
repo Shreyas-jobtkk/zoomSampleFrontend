@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { ZoomMtg } from "@zoom/meetingsdk";
-import { useLocation } from "react-router-dom";
 import MenuHeader from "../../components/LV3/Header/MenuHeader/MenuHeader";
 import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
@@ -20,10 +19,6 @@ function InterpreterLogin() {
   const [signature, setSignature] = useState<string>("");
   const [contractorNo, setContractorNo] = useState<any>("");
   const [meetingNo, setMeetingNo] = useState<any>("");
-  const location = useLocation();
-  const { message } = location.state || {}; // Safely access state
-
-  console.log(144, message);
 
   const startMeeting = (signature: string) => {
     document.getElementById("zmmtg-root")!.style.display = "block";

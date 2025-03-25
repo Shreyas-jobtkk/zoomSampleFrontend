@@ -44,8 +44,6 @@ function InterpreterEvaluationList() {
   const [startDateRangeMin, setStartDateRangeMin] = useState<Date | null>(null);
   const [startDateRangeMax, setStartDateRangeMax] = useState<Date | null>(null);
   const [startDateTimeRangeMin, setStartDateTimeRangeMin] = useState<any>("");
-  // const [startTimeRangeMin, setStartTimeRangeMin] = useState<Date | null>(null);
-  // const [startTimeRangeMax, setStartTimeRangeMax] = useState<Date | null>(null);
   const [endDateTimeRangeMax, setEndDateTimeRangeMax] = useState<any>("");
   const [languagesSupport, setLanguagesSupport] = useState<
     { label: string; value: string | number }[]
@@ -198,20 +196,11 @@ function InterpreterEvaluationList() {
     );
   };
 
-  const handleSelectionChange = (
-    selectedData: Array<{ No: string | number; [key: string]: string | number }>
-  ) => {
-    console.log("Selected Data:", selectedData);
-  };
-
   const handlePageChange = (page: number) => {
-    // setCurrentPage(page); // Update the page state in the parent
-    console.log("Current page in parent:", page);
     setPage(page + 1);
   };
 
   const handleRowsPerPage = (newSelectedData: any) => {
-    console.log(155, newSelectedData[0].rowsPerPage);
     setRowLimit(newSelectedData[0].rowsPerPage);
   };
 
@@ -333,7 +322,7 @@ function InterpreterEvaluationList() {
         headers={headers}
         data={tableData}
         maxHeight="calc(82vh - 300px)"
-        onSelectionChange={handleSelectionChange}
+        // onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.searchButton}>
         <ButtonAtom onClick={searchConditions} label="閲覧" />

@@ -2,16 +2,8 @@ import ButtonAtom from "../../components/LV1/ButtonAtom/ButtonAtom";
 import { useNavigate } from "react-router-dom";
 import MenuHeader from "../../components/LV3/Header/MenuHeader/MenuHeader";
 import { Box } from "@mui/material";
-import { useLocation } from "react-router-dom";
 
 function AdminMenu() {
-  const location = useLocation();
-  const userNo = location.state?.userNo; // This will be the value passed as 'response.user_no'
-
-  if (userNo) {
-    console.log(155, userNo);
-  }
-
   const navigate = useNavigate();
 
   const navigateToCompaniesList = () => {

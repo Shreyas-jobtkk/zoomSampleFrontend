@@ -1,5 +1,14 @@
+@use "./styles/variables";
+
 .app-nav-bar {
   display: flex;
   justify-content: center;
   gap: 20px;
+}
+
+.header-title {
+  text-align: center;
+  background-color: #b3cee5;
+  border: variables.$dark-border;
+  padding: 1vh;
 }

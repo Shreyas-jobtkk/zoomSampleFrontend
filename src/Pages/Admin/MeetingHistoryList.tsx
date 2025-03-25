@@ -197,12 +197,6 @@ function InterpreterEvaluationList() {
     );
   };
 
-  const handleSelectionChange = (
-    selectedData: Array<{ No: string | number; [key: string]: string | number }>
-  ) => {
-    console.log("Selected Data:", selectedData);
-  };
-
   const handlePageChange = (page: number) => {
     // setCurrentPage(page); // Update the page state in the parent
     console.log("Current page in parent:", page);
@@ -332,7 +326,7 @@ function InterpreterEvaluationList() {
         headers={headers}
         data={tableData}
         maxHeight="calc(82vh - 300px)"
-        onSelectionChange={handleSelectionChange}
+        // onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.searchButton}>
         <ButtonAtom onClick={searchConditions} label="閲覧" />

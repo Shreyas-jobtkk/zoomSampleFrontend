@@ -5,7 +5,6 @@ import { Box, Typography } from "@mui/material";
 import PasswordBoxWithLabel from "../../../components/LV1/TextBox/PasswordBoxWithLabel";
 import ButtonAtom from "../../../components/LV1/ButtonAtom/ButtonAtom";
 import classes from "../../../styles/User.module.scss";
-// import { useLocation } from "react-router-dom";
 import MultipleOptionsSelect from "../../../components/LV1/SelectOption/MultipleOptionsSelect";
 import NumberInput from "../../../components/LV1/NumberInput/NumberInput";
 import TextAreaWithLabel from "../../../components/LV1/TextArea/TextAreaWithLabel";
@@ -49,8 +48,6 @@ function UserInformation() {
     password_expire: "",
     user_password: "",
     user_password_confirm: "",
-    // meeting_id: "",
-    // meeting_passcode: "",
     user_note: "",
     updated_at: "",
     created_at: "",
@@ -116,8 +113,6 @@ function UserInformation() {
         password_expire: userDetails.password_expire,
         user_password: userDetails.user_password,
         user_password_confirm: userDetails.user_password,
-        // meeting_id: userDetails.meeting_id,
-        // meeting_passcode: userDetails.meeting_passcode,
         user_note: userDetails.user_note,
         updated_at: userDetails.updated_at,
         created_at: userDetails.created_at,
@@ -142,8 +137,6 @@ function UserInformation() {
 
       setLanguagesSupport(response);
       setOptionValue(formData.translate_languages);
-
-      // const response = await axios.get(`${apiUrl}/company`);
     } catch (error) {
       console.error("Error fetching companies:", error);
     }
@@ -348,22 +341,6 @@ function UserInformation() {
             </Box>
           </Box>
           <Box className={classes.meetingInfo}>
-            {/* {userType === "interpreter" && (
-              <Box className={classes.meetingCredentials}>
-                <TextBoxWithLabel
-                  labelWidth="125px"
-                  label="ミーティングID"
-                  width="12vw"
-                  value={formData.meeting_id}
-                />
-                <TextBoxWithLabel
-                  labelWidth="85px"
-                  label="パスコード"
-                  width="12vw"
-                  value={formData.meeting_passcode}
-                />
-              </Box>
-            )} */}
             <TextAreaWithLabel
               label="備考"
               value={formData.user_note}
