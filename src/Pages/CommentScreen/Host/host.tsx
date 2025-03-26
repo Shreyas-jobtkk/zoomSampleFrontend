@@ -1,9 +1,7 @@
 import { ZoomMtg } from "@zoom/meetingsdk";
-// import { Box, Typography, Button, Container } from "@mui/material";
 import ValidationInputField from "../../../components/LV1/Validation/ValidationInputField";
 import React, { useState } from "react";
 import { Container, Box, Typography, Button } from "@mui/material";
-// import { showOverlayMessage } from "./OverlayMessage"; // Import the function
 import {
   showInputFieldOverlay,
   hideInputFieldOverlay,
@@ -72,13 +70,6 @@ const Sample: React.FC = () => {
   const authEndpoint = import.meta.env.VITE_REACT_APP_API_URL;
   const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
 
-  console.log(import.meta.env.VITE_ZOOM_MEETING_SDK_KEY?.slice(0, 5));
-  // console.log(2557, import.meta.env.VITE_SAMPLE_2);
-
-  // for (let i = 1; i <= 2; i++) {
-  //   console.log(155, import.meta.env[`VITE_SAMPLE_${i}`]);
-  // }
-
   const role = 1;
   const userName = "Host";
   const leaveUrl = import.meta.env.VITE_REACT_APP_URL;
@@ -106,7 +97,6 @@ const Sample: React.FC = () => {
   const showInputField = () => {
     const MessageButton = document.createElement("button");
     const emojiButton = document.createElement("button");
-    // const hideButtons = document.createElement("button");
 
     MessageButton.innerHTML = "&#128172;"; // HTML entity for check mark
     MessageButton.style.fontSize = "16px";
@@ -164,13 +154,6 @@ const Sample: React.FC = () => {
       }
     };
 
-    // else {
-    //   MessageButton.onclick = () => {
-    //     hideInputFieldOverlay(); // Hide the input field overlay
-    //     // hideEmojiPicker();        // Hide the emoji picker
-    //   };
-    // }
-
     // Append the button to the body or another container
     document.body.appendChild(MessageButton);
     document.body.appendChild(emojiButton);
@@ -225,14 +208,7 @@ const Sample: React.FC = () => {
         <Typography variant="h5" component="h1" gutterBottom>
           Zoom Meeting SDK Sample React Host
         </Typography>
-        {/* <TextField
-          label="Meeting Number"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={meetingNumber}
-          onChange={(e) => setMeetingNumber(e.target.value)}
-        /> */}
+
         <ValidationInputField
           isSubmitted={isSubmitted}
           label="Meeting Number"
@@ -243,15 +219,7 @@ const Sample: React.FC = () => {
           onChange={(e: any) => setMeetingNumber(e.target.value)} // Update mail_address state on change
           register={register}
         />
-        {/* <TextField
-          label="Password"
-          type="password"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        /> */}
+
         <ValidationInputField
           isSubmitted={isSubmitted}
           label="Password"

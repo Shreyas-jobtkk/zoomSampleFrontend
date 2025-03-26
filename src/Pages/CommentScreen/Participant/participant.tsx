@@ -71,13 +71,6 @@ const Sample: React.FC = () => {
   const authEndpoint = import.meta.env.VITE_REACT_APP_API_URL;
   const sdkKey = import.meta.env.VITE_ZOOM_MEETING_SDK_KEY;
 
-  console.log(import.meta.env.VITE_ZOOM_MEETING_SDK_KEY?.slice(0, 5));
-  // console.log(2557, import.meta.env.VITE_SAMPLE_2);
-
-  // for (let i = 1; i <= 2; i++) {
-  //   console.log(155, import.meta.env[`VITE_SAMPLE_${i}`]);
-  // }
-
   const role = 0;
   const userName = "Join";
   const leaveUrl = import.meta.env.VITE_REACT_APP_URL;
@@ -163,13 +156,6 @@ const Sample: React.FC = () => {
       }
     };
 
-    // else {
-    //   MessageButton.onclick = () => {
-    //     hideInputFieldOverlay(); // Hide the input field overlay
-    //     // hideEmojiPicker();        // Hide the emoji picker
-    //   };
-    // }
-
     // Append the button to the body or another container
     document.body.appendChild(MessageButton);
     document.body.appendChild(emojiButton);
@@ -200,12 +186,6 @@ const Sample: React.FC = () => {
           // zak: zakToken,
           success: (success: unknown) => {
             console.log(114, success);
-            // console.log(189, ZoomMtg.inMeetingServiceListener.toString());
-            // console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
-            // console.log(
-            //   144,
-            //   sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
-            // );
 
             showInputField();
 
@@ -228,16 +208,9 @@ const Sample: React.FC = () => {
     <Container maxWidth="sm">
       <Box component="main" sx={{ textAlign: "center", mt: 4 }}>
         <Typography variant="h5" component="h1" gutterBottom>
-          Zoom Meeting SDK Sample React Host
+          Zoom Meeting SDK Sample React Join
         </Typography>
-        {/* <TextField
-          label="Meeting Number"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={meetingNumber}
-          onChange={(e) => setMeetingNumber(e.target.value)}
-        /> */}
+
         <ValidationInputField
           isSubmitted={isSubmitted}
           label="Meeting Number"
@@ -248,15 +221,7 @@ const Sample: React.FC = () => {
           onChange={(e: any) => setMeetingNumber(e.target.value)} // Update mail_address state on change
           register={register}
         />
-        {/* <TextField
-          label="Password"
-          type="password"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        /> */}
+
         <ValidationInputField
           isSubmitted={isSubmitted}
           label="Password"
