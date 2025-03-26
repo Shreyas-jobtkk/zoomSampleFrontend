@@ -405,18 +405,9 @@ function ContractorList() {
       <DataTable
         headers={headers}
         data={tableData}
-        maxHeight="calc(94vh - 260px)"
+        maxHeight="calc(100vh - 400px)"
         onSelectionChange={handleSelectionChange}
       />
-
-      {/* <DataTable // Customize header height
-        headers={headers}
-        data={searchData}
-        maxHeight="calc(85vh - 280px)"
-        onSelectionChange={handleSelectionChange}
-        operationButton="新規"
-        onClick={navigateToCreate}
-      /> */}
 
       <Box className={classes.actionButtons}>
         <ButtonAtom

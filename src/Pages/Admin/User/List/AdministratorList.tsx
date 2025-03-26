@@ -407,7 +407,7 @@ function AdministratorList() {
       <DataTable
         headers={headers}
         data={tableData}
-        maxHeight="calc(94vh - 260px)"
+        maxHeight="calc(100vh - 400px)"
         onSelectionChange={handleSelectionChange}
       />
       <Box className={classes.actionButtons}>

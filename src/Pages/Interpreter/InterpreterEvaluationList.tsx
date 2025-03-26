@@ -265,7 +265,7 @@ function InterpreterEvaluationList() {
       <DataTable // Customize header height
         headers={headers}
         data={tableData}
-        maxHeight="calc(82vh - 300px)"
+        maxHeight="calc(100vh - 350px)"
       />
     </Box>
   );
