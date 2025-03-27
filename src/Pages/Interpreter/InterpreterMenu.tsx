@@ -13,13 +13,17 @@ import { apiUrl } from "../../apiUrl";
 const socket = io(apiUrl);
 
 function InterpreterLogin() {
-  const [callRequest, setCallRequest] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  // State variables
+  const [callRequest, setCallRequest] = useState<boolean>(false);
   const interpreterNo = sessionStorage.getItem("interpreterNo");
   const [signature, setSignature] = useState<string>("");
   const [contractorNo, setContractorNo] = useState<any>("");
   const [meetingNo, setMeetingNo] = useState<any>("");
+  const [status, setStatus] = useState("inactive");
 
+  // Function to initialize and start a Zoom meeting
   const startMeeting = (signature: string) => {
     document.getElementById("zmmtg-root")!.style.display = "block";
 
@@ -38,13 +42,9 @@ function InterpreterLogin() {
         ZoomMtg.join({
           signature: signature,
           sdkKey: import.meta.env.VITE_ZOOM_MEETING_SDK_KEY,
-          // meetingNumber: meetingNumber,
-          // passWord: password,
           meetingNumber: "7193586721",
           passWord: "B0h6vX",
           userName: "Host",
-
-          // zak: zakToken,
           success: (success: unknown) => {
             console.log(success);
             console.log(189, ZoomMtg.inMeetingServiceListener.toString());
@@ -53,11 +53,6 @@ function InterpreterLogin() {
               144,
               sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
             );
-
-            // showInputField();
-
-            ZoomMtg.inMeetingServiceListener("onUserLeave", function () {});
-            ZoomMtg.inMeetingServiceListener("onUserJoin", function () {});
           },
 
           error: (error: unknown) => {
@@ -71,16 +66,14 @@ function InterpreterLogin() {
     });
   };
 
-  const [status, setStatus] = useState("inactive"); // State to hold the selected status
-
   // Send API request when user is active or inactive
   const sendActivityStatus = async (status: any) => {
     UserApiService.updateInterpreterStatus(interpreterNo, status);
   };
 
+  // Handle incoming meeting request from the server
   useEffect(() => {
     socket.on("meetingHostData", (meetingHostData) => {
-      console.log(189, meetingHostData, meetingHostData.signature.signature);
       if (meetingHostData.interpreterNo == interpreterNo) {
         setSignature(meetingHostData.signature.signature);
         setCallRequest(true);
@@ -90,6 +83,7 @@ function InterpreterLogin() {
     });
   });
 
+  // Handle call request cancellation from the server
   useEffect(() => {
     socket.on("cancelCallRequestFromServer", (data) => {
       setCallRequest(false);
@@ -100,6 +94,7 @@ function InterpreterLogin() {
     });
   });
 
+  // Handle page unload event to mark the interpreter as inactive
   useEffect(() => {
     const handleBeforeUnload = () => {
       sendActivityStatus("inactive");
@@ -113,8 +108,8 @@ function InterpreterLogin() {
     };
   }, []);
 
+  // Function to accept a call request and start a meeting
   const getSignature = async () => {
-    console.log(21897, meetingNo);
     {
       const data = {
         contractorNo: contractorNo,
@@ -128,6 +123,7 @@ function InterpreterLogin() {
     }
   };
 
+  // Function to reject a call request
   const rejectCall = () => {
     const data = {
       contractorNo: contractorNo,
@@ -142,6 +138,7 @@ function InterpreterLogin() {
     socket.emit("interpreterResponse", data);
   };
 
+  // Navigation functions
   const navigateToInterpreterEvaluationList = () => {
     navigate("/Interpreter/InterpreterEvaluationList");
   };
@@ -154,10 +151,12 @@ function InterpreterLogin() {
     navigate("/Interpreter/MeetingInvitationList");
   };
 
+  // Functions to set interpreter status
   const setStatusToActive = () => {
     setStatus("active");
     sendActivityStatus("active");
   };
+
   const setStatusToInactive = () => {
     setStatus("inactive");
     sendActivityStatus("inactive");

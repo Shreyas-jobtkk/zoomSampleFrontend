@@ -18,20 +18,25 @@ const socket = io(apiUrl);
 
 function UserMenu() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const callDialRef = useRef<Date | null>(null);
-  let callStartRef = useRef<Date | null>(null);
+  const callStartRef = useRef<Date | null>(null);
   const isCallEndedRef = useRef<boolean>(false);
   const isCallAcceptedRef = useRef<boolean>(false);
   const isCallRejectedRef = useRef<boolean>(false);
   const isCallCanceledRef = useRef<boolean>(false);
-  const contractorNo = Number(sessionStorage.getItem("contractorNo"));
   const interpreterNoRef = useRef<number | null>(null);
+
+  const [isPlaying, setIsPlaying] = useState(false);
+  const contractorNo = Number(sessionStorage.getItem("contractorNo"));
+  const [ringingTime, setRingingTime] = useState(0);
+  const intervalRef: MutableRefObject<number | null> = useRef(null);
+
   const [selectedLanguageNo, setSelectedLanguageNo] = useState(() => {
     return localStorage.getItem("selectedLanguage") || "1";
   });
   let meetingEnded = false;
 
+  // Function to start a Zoom meeting
   const startMeeting = (signature: string) => {
     document.getElementById("zmmtg-root")!.style.display = "block";
 
@@ -47,7 +52,6 @@ function UserMenu() {
       leaveOnPageUnload: true,
       isSupportChat: false,
       success: (success: unknown) => {
-        // alert("You have successfully joined the meeting!");
         console.log(success);
 
         ZoomMtg.join({
@@ -59,13 +63,6 @@ function UserMenu() {
 
           success: (success: unknown) => {
             console.log(success);
-            console.log(189, ZoomMtg.inMeetingServiceListener.toString());
-            console.log(133, Object.keys(ZoomMtg.inMeetingServiceListener));
-            console.log(
-              144,
-              sessionStorage.getItem("s3.pg.isSupportInMeetingListener")
-            );
-
             ZoomMtg.inMeetingServiceListener("onUserJoin", function () {
               callStartRef.current = new Date();
             });
@@ -85,8 +82,7 @@ function UserMenu() {
                   ? Number(input)
                   : null;
 
-              console.log(2787, interpreterNoRef.current);
-
+              // Create a call log entry when the user leaves the meeting
               try {
                 CallLogApiService.createCallLog(
                   interpreterNoRef.current,
@@ -122,6 +118,7 @@ function UserMenu() {
     { label: string; value: string | number }[]
   >([]);
 
+  // Function to fetch all available languages
   const fetchLanguagesAllNames = async () => {
     try {
       let response = await LanguageApiService.fetchLanguagesAllNames();
@@ -143,6 +140,7 @@ function UserMenu() {
     ["1", "2", "3"].map((num) => [num, num])
   );
 
+  // Handle radio button changes to select language
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(18999, event.target.value);
     setSelectedLanguageNo(event.target.value);
@@ -151,10 +149,10 @@ function UserMenu() {
     const selectedLanguage = languageMap[event.target.value] || "ja";
 
     i18n.changeLanguage(selectedLanguage);
-
     localStorage.setItem("selectedLanguage", event.target.value); // Save to localStorage
   };
 
+  // Cleanup before unloading the page, saving call logs if necessary
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (!isCallEndedRef.current && callStartRef.current) {
@@ -171,7 +169,6 @@ function UserMenu() {
         );
       }
     };
-
     window.addEventListener("beforeunload", handleBeforeUnload);
 
     // Cleanup the event listener when the component is unmounted
@@ -180,18 +177,20 @@ function UserMenu() {
     };
   }, [callStartRef.current]);
 
+  // Fetch languages on component mount
   useEffect(() => {
     fetchLanguagesAllNames();
   }, []);
 
+  // Retrieve the selected language from localStorage on mount
   useEffect(() => {
-    // Retrieve the selected value from localStorage on mount
-    const savedValue = localStorage.getItem("selectedLanguage");
-    if (savedValue) {
-      setSelectedLanguageNo(savedValue);
+    const selectedLanguage = localStorage.getItem("selectedLanguage");
+    if (selectedLanguage) {
+      setSelectedLanguageNo(selectedLanguage);
     }
   }, []);
 
+  // Handle rejected interpreter response
   useEffect(() => {
     const handleInterpreterResponseReject = (data: any) => {
       if (data.contractorNo === contractorNo && data.response === "rejected") {
@@ -222,22 +221,19 @@ function UserMenu() {
     };
   }, [contractorNo]);
 
+  // Handle accepted interpreter response
   useEffect(() => {
     socket.on("interpreterServerResponse", (data) => {
       if (data.contractorNo == contractorNo && data.response == "accepted") {
         isCallAcceptedRef.current = true;
         interpreterNoRef.current = Number(data.interpreterNumber);
-        console.log(1787, interpreterNoRef.current);
         stopRingtone();
         startMeeting(data.signature.signature);
       }
     });
   }, [contractorNo]); // Only re-run if contractorNo changes
 
-  const [ringingTime, setRingingTime] = useState(0);
-  const intervalRef: MutableRefObject<number | null> = useRef(null);
-
-  // Function to handle button press
+  // Function to handle button press for playing the ringtone
   const playRingtone = () => {
     if (audioRef.current) {
       audioRef.current.play();
@@ -263,6 +259,7 @@ function UserMenu() {
     }, 10000); // 10 seconds (10,000 ms)
   };
 
+  // Function to stop the ringtone
   const stopRingtone = () => {
     if (audioRef.current) {
       audioRef.current.pause();
@@ -278,6 +275,7 @@ function UserMenu() {
     setRingingTime(0);
   };
 
+  // Function to handle call time-out scenario
   const callTimeUp = () => {
     const data = {
       contractorNo: contractorNo,
@@ -301,6 +299,7 @@ function UserMenu() {
     stopRingtone();
   };
 
+  // Function to cancel the call
   const callCancel = () => {
     console.log("Call terminated", new Date().toISOString());
     const data = {
@@ -326,6 +325,7 @@ function UserMenu() {
     stopRingtone();
   };
 
+  // Function to handle the call request process
   const callRequest = async () => {
     if (!selectedLanguageNo) {
       alert("Please select a language before joining a meeting.");
@@ -337,9 +337,7 @@ function UserMenu() {
     isCallRejectedRef.current = false;
     callStartRef.current = null;
     interpreterNoRef.current = null;
-
     playRingtone();
-
     callDialRef.current = new Date();
 
     const data = {
@@ -351,6 +349,7 @@ function UserMenu() {
     socket.emit("callRequest", data);
   };
 
+  // Function to format the time in minutes, seconds, and milliseconds
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60000);
     const seconds = Math.floor((time % 60000) / 1000);
