@@ -99,6 +99,7 @@ function UserMenu() {
                   "callAccepted",
                   rating
                 );
+                isCallEndedRef.current = true;
               } catch (error) {
                 console.error("Error saving callLog:", error);
               }
